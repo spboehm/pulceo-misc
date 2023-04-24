@@ -1,0 +1,14 @@
+# SLR
+
+## Read the csv
+
+```{r}
+slr_nodes <- read.csv2("csv/slr-nodes.csv", header = TRUE, sep = ",")
+```
+
+## Export as LaTeX table
+
+```{r}
+
+```
+
