@@ -1,20 +1,43 @@
-# SLR
+# Structured Literature Review for Universal and Lighweight Cloud-Edge Orchestration 
 
-## Libraries
+## Required Libraries
+
 ```{r}
-library()
+if(!require(kableExtra)){
+    install.packages("kableExtra")
+    library(kableExtra)
+}
+if(!require(tidyverse)){
+    install.packages("tidyverse")
+    library(tidyverse)
+}
 ```
 
 
 ## Read the csv
 
 ```{r}
-slr_nodes <- read.csv2("csv/slr-nodes.csv", header = TRUE, sep = ",")
+nodes <- read.csv("csv/nodes.csv")
 ```
 
-## Export as LaTeX table
+## Modify values
 
 ```{r}
-xtabl
+nodes %>% mutate_at(c("Cloud","Fog","Edge","Gateway"), funs(gsub("y","y",.,)))
+```
+
+
+## Show table
+
+```{r}
+kbl.nodes <- kbl(nodes)
+```
+
+
+## Export as LaTeX Table
+
+```{r}
+save_kable(kbl(nodes, "latex"),
+           "latex/nodes.tex")
 ```
 
