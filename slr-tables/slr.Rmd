@@ -13,26 +13,43 @@ if(!require(tidyverse)){
 }
 ```
 
-## Constants
+## Mapping of Values
 
 ```{r}
-
+replaceValue <- function(letter) {
+  switch(letter,
+         y = "\\\\ding{51}",
+         x = "\\\\ding{55}",
+         "#" = "\\\\#",
+         "~" = "\\\\ding{109}",
+         "*" = "\\ding{82}"
+         )
+}
 ```
 
 ## Read the csv
 
 ```{r}
-nodes <- read.csv("csv/nodes.csv")
+nodes <- read.csv2("csv/nodes.csv")
 ```
 
-## Modify values
+## Modify Values in Columns
 
-```{r}
-nodes.mutated <- nodes %>% mutate_at(c("Cloud","Fog","Edge","Gateway"), funs(gsub('y',"\\\\ding{151}",.,fixed=FALSE)))
+```{r warning=FALSE}
+nodes.mutated <- nodes %>% 
+  mutate_at(c("CPU", "Memory", "Storage"), funs(gsub('#', replaceValue("#"),. , fixed = FALSE))) %>% 
+  mutate_at(c("C","F","E","G","CPU","Memory","Storage"), funs(gsub('y', replaceValue("y"),. ,fixed=FALSE))) %>% 
+  mutate_at(c("CPU", "Memory", "Storage"), funs(gsub('~', replaceValue("~"),. , fixed = FALSE))) %>% 
+  mutate_at(c("C","F","E","G","CPU","Memory","Storage"), funs(gsub('x', replaceValue("x"),. ,fixed=FALSE))) %>% 
+  mutate_at(c("C","F","E","G"), funs(gsub('*', replaceValue("*"),. ,fixed=TRUE)))
 ```
 
 ## Export as LaTeX Table
 
 ```{r}
-save_kable(kbl(nodes.mutated, "latex", escape = FALSE), "latex/nodes.tex")
+nodes.mutated.kbl <- kbl(nodes.mutated, "latex", escape = FALSE, caption="Test", booktabs = TRUE) %>% 
+  kable_styling(latex_options="scale_down") %>%
+  footnote(., general=c("C: Cloud, F: Fog, E: Edge, G: Gateway"), general_title = "")
+
+save_kable(nodes.mutated.kbl, "latex/nodes.tex")
 ```
