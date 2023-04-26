@@ -13,6 +13,11 @@ if(!require(tidyverse)){
 }
 ```
 
+## Constants
+
+```{r}
+
+```
 
 ## Read the csv
 
@@ -23,21 +28,11 @@ nodes <- read.csv("csv/nodes.csv")
 ## Modify values
 
 ```{r}
-nodes %>% mutate_at(c("Cloud","Fog","Edge","Gateway"), funs(gsub("y","y",.,)))
+nodes.mutated <- nodes %>% mutate_at(c("Cloud","Fog","Edge","Gateway"), funs(gsub('y',"\\\\ding{151}",.,fixed=FALSE)))
 ```
-
-
-## Show table
-
-```{r}
-kbl.nodes <- kbl(nodes)
-```
-
 
 ## Export as LaTeX Table
 
 ```{r}
-save_kable(kbl(nodes, "latex"),
-           "latex/nodes.tex")
+save_kable(kbl(nodes.mutated, "latex", escape = FALSE), "latex/nodes.tex")
 ```
-
