@@ -1,0 +1,64 @@
+# Structured Literature Review for Universal and Lighweight Cloud-Edge Orchestration 
+
+## Required Libraries
+
+```{r warning=FALSE}
+if(!require(kableExtra)){
+    install.packages("kableExtra")
+    library(kableExtra)
+}
+if(!require(tidyverse)){
+    install.packages("tidyverse")
+    library(tidyverse)
+}
+```
+
+## Mapping of Values
+
+```{r}
+replaceValue <- function(letter) {
+  switch(letter,
+         y = "\\\\ding{51}",
+         x = "\\\\ding{55}",
+         "#" = "\\\\#",
+         "~" = "\\\\ding{109}",
+         "*" = "\\ding{82}"
+         )
+}
+```
+
+## Read the csv
+
+```{r}
+nodes <- read.csv2("csv/nodes.csv")
+```
+
+## Modify Values in Columns
+
+```{r}
+nodes.types <- c("C","F","E","G")
+nodes.resources.static <- c("CPU", "Mem", "Disk","Net")
+nodes.resources.dynamic <- c("Tx","Rx","Energy","Costs")
+nodes.resources <- c(nodes.resources.static, nodes.resources.dynamic)
+nodes.properties <- c(nodes.types, nodes.resources)
+```
+
+
+```{r warning=FALSE}
+nodes.mutated <- nodes %>% 
+  mutate_at(nodes.resources.static, funs(gsub('#', replaceValue("#"),. , fixed = FALSE))) %>% 
+  mutate_at(nodes.properties, funs(gsub('y', replaceValue("y"),. ,fixed=FALSE))) %>% 
+  mutate_at(nodes.resources.static, funs(gsub('~', replaceValue("~"),. , fixed = FALSE))) %>% 
+  mutate_at(nodes.properties, funs(gsub('x', replaceValue("x"),. ,fixed=FALSE))) %>% 
+  mutate_at(nodes.types, funs(gsub('*', replaceValue("*"),. ,fixed=TRUE)))
+```
+
+## Export as LaTeX Table
+
+```{r}
+nodes.mutated.kbl <- kbl(nodes.mutated, "latex", escape = FALSE, caption="Test", booktabs = TRUE) %>% 
+  kable_styling(latex_options="scale_down") %>%
+  footnote(., general=c("C: Cloud, F: Fog, E: Edge, G: Gateway, CPU: Central Processing Unit, Mem: Memory, Disk: Storage, BW: Bandwidth, Tx: Data transmitted, Rx: Data received"), general_title = "", footnote_as_chunk = TRUE, threeparttable=TRUE)
+
+save_kable(nodes.mutated.kbl, "latex/nodes.tex")
+```
