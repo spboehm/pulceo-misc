@@ -13,52 +13,69 @@ if(!require(tidyverse)){
 }
 ```
 
-## Mapping of Values
+## Functions
 
 ```{r}
-replaceValue <- function(letter) {
-  switch(letter,
-         y = "\\\\ding{51}",
-         x = "\\\\ding{55}",
+ReplaceSymbol <- function(symbol) {
+  switch(symbol,
+         "y" = "\\\\ding{51}",
+         "x" = "\\\\ding{55}",
          "#" = "\\\\#",
          "~" = "\\\\ding{109}",
          "*" = "\\ding{82}"
          )
 }
+
+ReplaceSymbolsInCols<- function(df) {
+  return (df %>% 
+  mutate_all(., funs(gsub('#', ReplaceSymbol("#"),. , fixed = FALSE))) %>% 
+  mutate_all(., funs(gsub('y', ReplaceSymbol("y"),. , fixed = FALSE))) %>% 
+  mutate_all(., funs(gsub('~', ReplaceSymbol("~"),. , fixed = FALSE))) %>% 
+  mutate_all(., funs(gsub('x', ReplaceSymbol("x"),. , fixed = FALSE))) %>% 
+  mutate_all(., funs(gsub('*', ReplaceSymbol("*"),. , fixed = TRUE))))
+}
 ```
 
-## Read the csv
+## Read CSVs
 
 ```{r}
-nodes <- read.csv2("csv/nodes.csv")
+sProps <- read.csv2("csv/nodes-static-properties.csv")
+dProps<- read.csv2("csv/nodes-dynamic-properties.csv")
 ```
 
-## Modify Values in Columns
-
-```{r}
-nodes.types <- c("C","F","E","G")
-nodes.resources.static <- c("CPU", "Mem", "Disk","Net")
-nodes.resources.dynamic <- c("Tx","Rx","Energy","Costs")
-nodes.resources <- c(nodes.resources.static, nodes.resources.dynamic)
-nodes.properties <- c(nodes.types, nodes.resources)
-```
-
+## Replace Symbols in Columns
 
 ```{r warning=FALSE}
-nodes.mutated <- nodes %>% 
-  mutate_at(nodes.resources.static, funs(gsub('#', replaceValue("#"),. , fixed = FALSE))) %>% 
-  mutate_at(nodes.properties, funs(gsub('y', replaceValue("y"),. ,fixed=FALSE))) %>% 
-  mutate_at(nodes.resources.static, funs(gsub('~', replaceValue("~"),. , fixed = FALSE))) %>% 
-  mutate_at(nodes.properties, funs(gsub('x', replaceValue("x"),. ,fixed=FALSE))) %>% 
-  mutate_at(nodes.types, funs(gsub('*', replaceValue("*"),. ,fixed=TRUE)))
+sPropsMutated <- ReplaceSymbolsInCols(sProps)
+dPropsMutated <- ReplaceSymbolsInCols(dProps)
 ```
 
-## Export as LaTeX Table
+## Create LaTeX Table
+
+### Dynamic Node Properties
 
 ```{r}
-nodes.mutated.kbl <- kbl(nodes.mutated, "latex", escape = FALSE, caption="Test", booktabs = TRUE) %>% 
-  kable_styling(latex_options="scale_down") %>%
-  footnote(., general=c("C: Cloud, F: Fog, E: Edge, G: Gateway, CPU: Central Processing Unit, Mem: Memory, Disk: Storage, BW: Bandwidth, Tx: Data transmitted, Rx: Data received"), general_title = "", footnote_as_chunk = TRUE, threeparttable=TRUE)
+kbl_fn_footnote_as_chunk = TRUE
+kbl_fn_threeparttable = TRUE
+kbl_fn_general_title = ""
 
-save_kable(nodes.mutated.kbl, "latex/nodes.tex")
+sPropsKblCaption <- "Obtained Static Node Properties"
+
+sPropsKbl <- kbl(sPropsMutated, "latex", escape = FALSE, caption = sPropsKblCaption, booktabs = TRUE) %>% 
+  kable_styling(latex_options = "scale_down") %>%
+  footnote(., general = c("C: Cloud, F: Fog, E: Edge, G: Gateway, CPU: Central Processing Unit, Mem: Memory, Disk: Storage, Net: Network"), general_title = kbl_fn_general_title, footnote_as_chunk = kbl_fn_footnote_as_chunk, threeparttable = kbl_fn_threeparttable)
+
+save_kable(sPropsKbl, "latex/nodes-static-properties.tex")
+```
+
+### Static Node Properties
+
+```{r}
+dPropsKblCaption <- "Obtained Dynamic Node Properties"
+
+dPropsKbl <- kbl(dPropsMutated, "latex", escape = FALSE, caption = dPropsKblCaption, booktabs = TRUE) %>% 
+  kable_styling(latex_options = "scale_down") %>%
+  footnote(., general = c("C: Cloud, F: Fog, E: Edge, G: Gateway, CPU: Central Processing Unit, Mem: Memory, Disk: Storage, Net: Network"), general_title = kbl_fn_general_title, footnote_as_chunk = kbl_fn_footnote_as_chunk, threeparttable = kbl_fn_threeparttable)
+
+save_kable(dPropsKbl, "latex/nodes-dynamic-properties.tex")
 ```
