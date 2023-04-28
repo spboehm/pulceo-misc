@@ -22,16 +22,16 @@ ReplaceSymbol <- function(symbol) {
          "x" = "\\\\ding{55}",
          "#" = "\\\\#",
          "~" = "\\\\ding{109}",
-         "*" = "\\ding{82}"
+         "*" = "\\ding{81}"
          )
 }
 
 ReplaceSymbolsInCols<- function(df) {
   return (df %>% 
   mutate_all(., funs(gsub('#', ReplaceSymbol("#"),. , fixed = FALSE))) %>% 
-  mutate_all(., funs(gsub('y', ReplaceSymbol("y"),. , fixed = FALSE))) %>% 
-  mutate_all(., funs(gsub('~', ReplaceSymbol("~"),. , fixed = FALSE))) %>% 
-  mutate_all(., funs(gsub('x', ReplaceSymbol("x"),. , fixed = FALSE))) %>% 
+  mutate_all(., funs(gsub('\\by\\b', ReplaceSymbol("y"),. , fixed = FALSE))) %>% 
+  mutate_all(., funs(gsub('\\b~\\b', ReplaceSymbol("~"),. , fixed = FALSE))) %>% 
+  mutate_all(., funs(gsub('\\bx\\b', ReplaceSymbol("x"),. , fixed = FALSE))) %>% 
   mutate_all(., funs(gsub('*', ReplaceSymbol("*"),. , fixed = TRUE))))
 }
 ```
