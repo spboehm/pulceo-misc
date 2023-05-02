@@ -1,0 +1,98 @@
+# Links
+
+## Required Libraries
+
+```{r warning=FALSE}
+if(!require(kableExtra)) {
+    install.packages("kableExtra")
+    library(kableExtra)
+}
+if(!require(tidyverse)) {
+    install.packages("tidyverse")
+    library(tidyverse)
+}
+if(!require(xtable)){
+    install.packages("xtable")
+    library(xtable)
+}
+```
+
+## Functions
+
+```{r}
+ReplaceSymbol <- function(symbol) {
+  switch(symbol,
+         "x" = "\\\\ding{108}",
+         "o" = "\\\\ding{109}",
+         "|" = "\\\\ding{120}",
+         )
+}
+
+ReplaceSymbolsInCols<- function(df) {
+  return (df %>%
+  mutate_all(., funs(gsub('\\bx\\b', ReplaceSymbol("x"),. , fixed = FALSE))) %>% 
+  mutate_all(., funs(gsub('\\bo\\b', ReplaceSymbol("o"),. , fixed = FALSE))) %>%  
+  mutate_all(., funs(gsub('\\b|\\b', ReplaceSymbol("|"),. , fixed = TRUE))))
+}
+
+
+ReplaceScriptsInCells <- function(chars) {
+  if (nchar(chars) == 1) {
+    chars <- paste(chars, "-----", sep = "")
+  }
+
+  print(chars)
+  # remove brackets
+  charsWithoutBrackets <- gsub('\\(|\\)', '', chars)
+  # remove whitespaces
+  charsWithoutWhitespaces <- gsub('\\s', '', charsWithoutBrackets)
+  charsAsVector <- as.vector(unlist(strsplit(charsWithoutWhitespaces,"")))
+  
+  # template textsuperscript
+  templateTextSuperScript <- "\\textsuperscript{2\\,3}"
+  templateMutatedStatic <- gsub('1', charsAsVector[2], templateTextSuperScript)
+  templateMutatedDynamic <- gsub('2', charsAsVector[3], templateMutatedStatic)
+  
+  # template textsubscript
+  templateTextSubscript <- "\\textsubscript{4\\,5\\,6}"
+  templateMutatedHops <-  gsub('4', charsAsVector[4], templateTextSubscript)
+  templateMutatedLatency <-  gsub('5', charsAsVector[5], templateMutatedHops)
+  tempalteMutatedBandwidth <- gsub('6', charsAsVector[6], templateMutatedLatency)
+  
+  return(paste(charsAsVector[1], templateMutatedDynamic, tempalteMutatedBandwidth, sep=""))
+}
+
+ReplaceScriptsInCols <- function(df)  {
+  return (df %>% mutate_at(., vars(-Author,-Year), ReplaceScriptsInCells))
+}
+```
+
+## Read CSVs
+
+```{r}
+lProps <- read.csv2("csv/links.csv")
+```
+
+## Replace Symbols in Columns
+
+```{r}
+lPropsMutated <- ReplaceScriptsInCols(lProps)
+```
+
+## Create LaTeX Table
+
+### Link Properties
+
+```{r}
+kbl_fn_footnote_as_chunk = TRUE
+kbl_fn_threeparttable = TRUE
+kbl_fn_general_title = ""
+
+lPropsKblCaption <- "Link Properties"
+
+lPropsKbl <- kbl(lPropsMutated, "latex", escape = FALSE, caption = lPropsKblCaption, booktabs = TRUE) %>% 
+  kable_styling(latex_options = "scale_down") %>%
+  footnote(., general = c(""), general_title = kbl_fn_general_title, footnote_as_chunk = kbl_fn_footnote_as_chunk, threeparttable = kbl_fn_threeparttable)
+
+save_kable(lPropsKbl, "latex/link-properties.tex")
+```
