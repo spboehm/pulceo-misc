@@ -24,16 +24,17 @@ Important symbols:
 - `D`: Means "dynamic", network-related metrics are used, required, or obtained in a dynamic way. Dynamic changes over time are considered.
 - `H`: Means "hops", the number of hops are used, required, or obtained. It is the number of hops a packet requires to travel from one endpoint to another endpoint.
 - `L`: Means "latency", it is either used, required, or obtained. It refers to the general network latency or network delay in IP networks, thus, the time for a packet to travel from one endpoint to another. We differentiate between the Round-trip time (RTT) and the End-to-end (E2E) latency.
+- `R`: Means "RTT". To be used as more specific value for latency.
+- `E`: Means "E2E" latency. To be used as more specific value for latency.
 - `B`: Means "bandwidth", it is either used, required, or obtained. It refers to the data transfer rate (i.e., capacity) of a network.
 
 Notations:
 
-- `x (SDHLB)`: If some of the criteria a supported.
+- `x (SDH(L|R|E)B)`: If some of the criteria a supported.
   - Make sure that at 5 characters are within the brackets, for example (S-H-B).
   - Whitespaces are removed automatically.
-  - Only `S,D,H,L,B` are supported.
+  - Only `S,D,H,L,R,E,B` are supported.
 - `n`: If nothing is used, supported, or obtained.
-
 
 ```{r}
 ReplaceSymbol <- function(symbol) {
@@ -47,6 +48,8 @@ ReplaceSymbol <- function(symbol) {
          "D" = "D",
          "H" = "H",
          "L" = "L",
+         "R" = "R",
+         "E" = "E",
          "B" = "B"
          )
 }
@@ -55,6 +58,10 @@ ReplaceSymbolsInCols <- function(col) {
   
   df <- lapply(col, function(chars) {
   
+    if (chars == "n") {
+      return (ReplaceSymbol("n"))
+    }
+    
     # add default if no subscripts are available
     if (nchar(chars) == 1) {
       chars <- paste(chars, "-----", sep = "")
