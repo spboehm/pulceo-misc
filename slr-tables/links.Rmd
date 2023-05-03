@@ -11,17 +11,13 @@ if(!require(tidyverse)) {
     install.packages("tidyverse")
     library(tidyverse)
 }
-if(!require(xtable)){
-    install.packages("xtable")
-    library(xtable)
-}
 ```
 
 ## Functions
 
 Important symbols:
 
-- `x`: Means "between all nodes", network-related metrics are obtained between all nodes of the particular layers. 
+- `x`: Means "between all nodes", network-related metrics are obtained between all nodes of the particular layers.
 - `o`: Means "between particular pairs of nodes", network-related metrics are obtained between particular pairs of nodes.
 - `|`: Means "between particular layers", network-related metrics are obtained between particular layers.
 - `S`: Means "static", network-related metrics are used, required, or obtained in a static. They do not change over time.
@@ -30,41 +26,50 @@ Important symbols:
 - `L`: Means "latency", it is either used, required, or obtained. It refers to the general network latency or network delay in IP networks, thus, the time for a packet to travel from one endpoint to another. We differentiate between the Round-trip time (RTT) and the End-to-end (E2E) latency.
 - `B`: Means "bandwidth", it is either used, required, or obtained. It refers to the data transfer rate (i.e., capacity) of a network.
 
+Notations:
+
+- `x (SDHLB)`: If some of the criteria a supported.
+  - Make sure that at 5 characters are within the brackets, for example (S-H-B).
+  - Whitespaces are removed automatically.
+  - Only `S,D,H,L,B` are supported.
+- `n`: If nothing is used, supported, or obtained.
+
+
 ```{r}
 ReplaceSymbol <- function(symbol) {
   switch(symbol,
          "x" = "\\ding{108}",
          "o" = "\\ding{110}",
          "|" = "\\ding{115}",
-         "n" = "\\ding{55}"
+         "n" = "\\ding{55}",
+         "-" = "-",
+         "S" = "S",
+         "D" = "D",
+         "H" = "H",
+         "L" = "L",
+         "B" = "B"
          )
 }
 
-ReplaceSymbolsInCols<- function(df) {
-  return (df %>%
-  mutate_all(., funs(gsub('\\bx\\b', ReplaceSymbol("x"),. , fixed = FALSE))) %>% 
-  mutate_all(., funs(gsub('\\bo\\b', ReplaceSymbol("o"),. , fixed = FALSE))) %>%  
-  mutate_all(., funs(gsub('\\b|\\b', ReplaceSymbol("|"),. , fixed = TRUE))))
-}
-
-
-ReplaceScriptsInCells <- function(chars) {
+ReplaceSymbolsInCols <- function(col) {
   
-  df <- lapply(chars, function(chars) {
+  df <- lapply(col, function(chars) {
   
-    # check no subsripts are available
+    # add default if no subscripts are available
     if (nchar(chars) == 1) {
       chars <- paste(chars, "-----", sep = "")
     }
+    
     # remove brackets
     charsWithoutBrackets <- gsub('\\(|\\)', '', chars)
+    
     # remove whitespaces
     charsWithoutWhitespaces <- gsub('\\s', '', charsWithoutBrackets)
     charsAsVector <- as.vector(unlist(strsplit(charsWithoutWhitespaces,"")))
     
     # template symbol
-    charsAsVector[1] <- ReplaceSymbol(charsAsVector[1])
-    
+    charsAsVector <- sapply(charsAsVector, ReplaceSymbol)
+
     # template textsuperscript, we do not need to escape ',' because of latex math mode
     templateTextSuperScript <- "^{2,3}"
     templateMutatedStatic <- gsub('2', charsAsVector[2], templateTextSuperScript)
@@ -83,7 +88,7 @@ ReplaceScriptsInCells <- function(chars) {
 }
 
 ReplaceScriptsInCols <- function(df)  {
-  return (df %>% mutate_at(., vars(-Author,-Year), ReplaceScriptsInCells))
+  return (df %>% mutate_at(., vars(-Author,-Year), ReplaceSymbolsInCols))
 }
 ```
 
