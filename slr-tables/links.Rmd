@@ -22,9 +22,9 @@ if(!require(xtable)){
 ```{r}
 ReplaceSymbol <- function(symbol) {
   switch(symbol,
-         "x" = "\\\\ding{108}",
-         "o" = "\\\\ding{109}",
-         "|" = "\\\\ding{120}",
+         "x" = "\\ding{108}",
+         "o" = "\\ding{110}",
+         "|" = "\\ding{115}",
          )
 }
 
@@ -37,29 +37,31 @@ ReplaceSymbolsInCols<- function(df) {
 
 
 ReplaceScriptsInCells <- function(chars) {
+  # check no subsripts are available
   if (nchar(chars) == 1) {
     chars <- paste(chars, "-----", sep = "")
   }
-
-  print(chars)
   # remove brackets
   charsWithoutBrackets <- gsub('\\(|\\)', '', chars)
   # remove whitespaces
   charsWithoutWhitespaces <- gsub('\\s', '', charsWithoutBrackets)
   charsAsVector <- as.vector(unlist(strsplit(charsWithoutWhitespaces,"")))
   
-  # template textsuperscript
-  templateTextSuperScript <- "\\textsuperscript{2\\,3}"
-  templateMutatedStatic <- gsub('1', charsAsVector[2], templateTextSuperScript)
-  templateMutatedDynamic <- gsub('2', charsAsVector[3], templateMutatedStatic)
+  # template symbol
+  charsAsVector[1] <- ReplaceSymbol(charsAsVector[1])
+  
+  # template textsuperscript, we do not need to escape ',' because of latex math mode
+  templateTextSuperScript <- "_{2,3}"
+  templateMutatedStatic <- gsub('2', charsAsVector[2], templateTextSuperScript)
+  templateMutatedDynamic <- gsub('3', charsAsVector[3], templateMutatedStatic)
   
   # template textsubscript
-  templateTextSubscript <- "\\textsubscript{4\\,5\\,6}"
+  templateTextSubscript <- "^{4,5,6}"
   templateMutatedHops <-  gsub('4', charsAsVector[4], templateTextSubscript)
   templateMutatedLatency <-  gsub('5', charsAsVector[5], templateMutatedHops)
   tempalteMutatedBandwidth <- gsub('6', charsAsVector[6], templateMutatedLatency)
   
-  return(paste(charsAsVector[1], templateMutatedDynamic, tempalteMutatedBandwidth, sep=""))
+  return(paste(charsAsVector[1], "$", templateMutatedDynamic, tempalteMutatedBandwidth, "$", sep=""))
 }
 
 ReplaceScriptsInCols <- function(df)  {
