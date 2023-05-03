@@ -15,6 +15,14 @@ if(!require(tidyverse)){
 
 ## Functions
 
+Important symbols:
+
+- `y`: Means "yes", in terms of used or required. 
+- `n`: Means "no", in terms of **not** used or **not** required.
+- `#`: Means that number of logical CPU cores is required.
+- `~`: Means not further specified. Is is used, when particular requirement are mentioned, but not further specified.
+- `*`: Means multiple occurrences. For example, it is used when multiple fog layers or edge layers are used.
+
 ```{r}
 ReplaceSymbol <- function(symbol) {
   switch(symbol,

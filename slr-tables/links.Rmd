@@ -19,6 +19,17 @@ if(!require(xtable)){
 
 ## Functions
 
+Important symbols:
+
+- `x`: Means "between all nodes", network-related metrics are obtained between all nodes of the particular layers. 
+- `o`: Means "between particular pairs of nodes", network-related metrics are obtained between particular pairs of nodes.
+- `|`: Means "between particular layers", network-related metrics are obtained between particular layers.
+- `S`: Means "static", network-related metrics are used, required, or obtained in a static. They do not change over time.
+- `D`: Means "dynamic", network-related metrics are used, required, or obtained in a dynamic way. Dynamic changes over time are considered.
+- `H`: Means "hops", the number of hops are used, required, or obtained. It is the number of hops a packet requires to travel from one endpoint to another endpoint.
+- `L`: Means "latency", it is either used, required, or obtained. It refers to the general network latency or network delay in IP networks, thus, the time for a packet to travel from one endpoint to another. We differentiate between the Round-trip time (RTT) and the End-to-end (E2E) latency.
+- `B`: Means "bandwidth", it is either used, required, or obtained. It refers to the data transfer rate (i.e., capacity) of a network.
+
 ```{r}
 ReplaceSymbol <- function(symbol) {
   switch(symbol,
@@ -59,9 +70,9 @@ ReplaceScriptsInCells <- function(chars) {
   templateTextSubscript <- "^{4,5,6}"
   templateMutatedHops <-  gsub('4', charsAsVector[4], templateTextSubscript)
   templateMutatedLatency <-  gsub('5', charsAsVector[5], templateMutatedHops)
-  tempalteMutatedBandwidth <- gsub('6', charsAsVector[6], templateMutatedLatency)
+  templateMutatedBandwidth <- gsub('6', charsAsVector[6], templateMutatedLatency)
   
-  return(paste(charsAsVector[1], "$", templateMutatedDynamic, tempalteMutatedBandwidth, "$", sep=""))
+  return(paste(charsAsVector[1], "$", templateMutatedDynamic, templateMutatedBandwidth, "$", sep=""))
 }
 
 ReplaceScriptsInCols <- function(df)  {
