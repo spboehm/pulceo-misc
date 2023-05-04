@@ -18,12 +18,7 @@ if(!require(tidyverse)){
 Important symbols:
 
 - `y`: Means "yes", in terms of used or required.
-- `x`: Means "no", in terms of **not** used or **not** required.
-- `#`: Means that number of logical CPU cores is required.
-- `~`: Means not further specified. Is is used, when particular requirement are mentioned, but not further specified.
-- `*`: Means multiple occurrences. For example, it is used when multiple fog layers or edge layers are used.
-
-Notation: If multiple criteria apply, separate them by using `,`.
+- `n`: Means "no", in terms of **not** used or **not** required.
 
 ```{r}
 ReplaceSymbol <- function(symbol) {
@@ -49,7 +44,10 @@ ReplaceSymbolsInCols<- function(df) {
 ## Read CSVs
 
 ```{r}
+# static node properties
 sProps <- read.csv2("csv/nodes-static-properties.csv")
+
+# dynamic node properties
 dProps<- read.csv2("csv/nodes-dynamic-properties.csv")
 ```
 

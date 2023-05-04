@@ -1,28 +1,28 @@
-ID;Author;Year;C;F;E;G;Roles;Location;Layer;Group;CPU;Mem;Disk;Net
-1;Yigitoglu et al.;2017;y;y;*;x;x;x;y;y;~;GB;~;x
-2;Brogi and Forti;2017;y;y;x;x;x;Physical;x;x;x;GB;x;x
-3;Brogi et al.;2017;y;y;x;x;x;x;x;x;#;GB;GB;x
-4;Skarlat et al.;2017;y;y;x;x;y;x;x;y;MIPS;MB;MB;x
-5;Souza et al.;2016;y;x;x;x;x;x;y;y;Slots;Slots;Slot;x
-6;Xia et al.;2018;y;x;*;y;x;x;x;y;Gflops;GB;GB;x
-7;Velasquez et al.;2017;y;y;x;x;x;x;x;x;x;x;x;x
-8;Amarasinghe et al.;2018;y;x;*;x;x;x;y;y;F,#,Th/#;MB/GB;x;x
-9;Benamer et al.;2018;y;y;x;y;x;x;x;y;MIPS;GB;~;x
-10;Lera et al.;2019;y;y;x;y;x;x;x;y;Slots;Slots;Slots;x
-11;Naas et al.;2018;y;*;x;x;y;x;x;y;x;x;GB/TB/PB;x
-12;Naas et al.;2017;y;*;x;x;y;x;x;y;x;x;GB/TB/PB;x
-13;Ouyang et al.;2017;x;y;x;x;x;x;x;x;F;x;x;x
-14;De Maio and Brandic;2018;y;x;*;x;x;GPS;x;y;#/MIPS/MIPS/#;GB;GB;x
-15;Gargees et al.;2016;y;y;x;x;x;x;x;y;F,#,##;GB;GB;x
-16;Hong et al.;2017;x;y;x;x;x;GPS;x;y;Milli;MB;MB;x
-17;Venticinque and Amato;2019;y;y;x;x;y;x;x;y;~;~;~;y
-18;Faticanti et al.;2019;y;y;x;x;x;x;x;y;MIPS;GB;GB;x
-19;Guerrero et al.;2019;y;y;x;y;y;x;x;x;Slots;Slots;Slots;y
-20;Faticanti et al.;2020;y;*;x;x;y;x;x;y;MIPS;GB;GB;x
-21;Faticanti et al. ;2020a;y;*;x;x;y;x;x;y;MIPS;GB;GB;x
-22;Armani et al.;2021;y;x;*;x;x;x;x;y;MIPS;GB;GB;x
-23;Alencar et al.;2022;y;y;x;x;x;x;x;x;#;GB;GB;y
-24;Fu et al.;2021;y;x;*;x;x;x;x;x;#;GB;x;y
-25;Lv et al.;2022;x;x;y;x;x;x;x;x;#;GB;GB;x
-26;Kaur et al.;2022;y;y;y;y;x;x;x;y;Slots;x;x;x
-27;Mehran et al.;2022;y;y;y;x;y;x;x;y;MIPS;GB;GB;x
+ID;Author;Year;Cloud;Fog;Edge;Gateway;Layer;Role;Location;Group;CPU_MIPS;CPU_Cores;CPU_Threads;CPU_GFlops;CPU_Frequency;CPU_Shares;CPU_Slots;Memory_Capacity;Memory_Slots;Disk_Capacity;Disk_Slots;Network_Capacity
+1;Yigitoglu et al.;2017;y;y;y;n;y;n;n;y;n;n;n;n;n;n;n;y;n;n;n;n
+2;Brogi and Forti;2017;y;y;n;n;n;n;y;n;n;n;n;n;n;n;n;y;n;n;n;n
+3;Brogi et al.;2017;y;y;n;n;n;n;n;n;n;y;n;n;n;n;n;y;n;y;n;n
+4;Skarlat et al.;2017;y;y;n;n;n;y;n;y;y;n;n;n;n;n;n;y;n;y;n;n
+5;Souza et al.;2016;y;y;n;n;y;n;n;y;n;n;n;n;n;n;y;n;y;n;y;n
+6;Xia et al.;2018;y;n;y;y;y;n;n;y;n;n;n;y;n;n;n;y;n;y;n;n
+7;Velasquez et al.;2017;y;y;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n;n
+8;Amarasinghe et al.;2018;y;n;y;n;y;n;n;y;n;y;y;n;y;n;n;y;n;n;n;n
+9;Benamer et al.;2018;y;y;n;y;n;n;n;y;y;n;n;n;n;n;n;y;n;n;n;n
+10;Lera et al.;2019;y;y;n;y;n;n;n;y;n;n;n;n;n;n;y;n;y;n;y;n
+11;Naas et al.;2018;y;y;n;n;y;y;n;y;n;n;n;n;n;n;n;n;n;y;n;n
+12;Naas et al.;2017;y;y;n;n;y;y;n;y;n;n;n;n;n;n;n;n;n;y;n;n
+13;Ouyang et al.;2017;n;y;n;n;n;n;n;n;n;n;n;n;y;n;n;n;n;n;n;n
+14;De Maio and Brandic;2018;y;n;y;n;y;n;y;y;y;y;n;n;n;n;n;y;n;y;n;n
+15;Gargees et al.;2016;y;y;n;n;n;n;n;y;n;y;n;n;y;n;n;y;n;y;n;n
+16;Hong et al.;2017;n;y;n;n;n;n;y;y;n;n;n;n;n;y;n;y;n;y;n;n
+17;Venticinque and Amato;2019;y;y;n;n;n;y;n;y;n;n;n;n;n;n;n;n;n;n;n;y
+18;Faticanti et al.;2019;y;y;n;n;n;n;n;y;y;n;n;n;n;n;n;y;n;y;n;n
+19;Guerrero et al.;2019;y;y;n;y;n;y;n;n;n;n;n;n;n;n;y;n;y;n;y;y
+20;Faticanti et al.;2020;y;y;n;n;y;y;n;y;y;n;n;n;n;n;n;y;n;y;n;n
+21;Faticanti et al. ;2020a;y;y;n;n;y;y;n;y;y;n;n;n;n;n;n;y;n;y;n;n
+22;Armani et al.;2021;y;n;y;n;y;n;n;y;y;n;n;n;n;n;n;y;n;y;n;n
+23;Alencar et al.;2022;y;y;n;n;n;n;n;n;n;y;n;n;n;n;n;y;n;y;n;y
+24;Fu et al.;2021;y;n;y;n;y;n;n;n;n;y;n;n;n;n;n;y;n;n;n;y
+25;Lv et al.;2022;n;n;y;n;n;n;n;n;n;y;n;n;n;n;n;y;n;y;n;n
+26;Kaur et al.;2022;y;y;y;y;n;n;n;y;n;n;n;n;n;n;y;n;n;n;n;n
+27;Mehran et al.;2022;y;y;y;n;n;y;n;y;y;n;n;n;n;n;n;y;n;y;n;n

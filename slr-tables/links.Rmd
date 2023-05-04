@@ -17,25 +17,6 @@ if(!require(tidyverse)) {
 
 Important symbols:
 
-- `x`: Means "between all nodes", network-related metrics are obtained between all nodes of the particular layers.
-- `o`: Means "between particular pairs of nodes", network-related metrics are obtained between particular pairs of nodes.
-- `|`: Means "between particular layers", network-related metrics are obtained between particular layers.
-- `S`: Means "static", network-related metrics are used, required, or obtained in a static. They do not change over time.
-- `D`: Means "dynamic", network-related metrics are used, required, or obtained in a dynamic way. Dynamic changes over time are considered.
-- `H`: Means "hops", the number of hops are used, required, or obtained. It is the number of hops a packet requires to travel from one endpoint to another endpoint.
-- `L`: Means "latency", it is either used, required, or obtained. It refers to the general network latency or network delay in IP networks, thus, the time for a packet to travel from one endpoint to another. We differentiate between the Round-trip time (RTT) and the End-to-end (E2E) latency.
-- `R`: Means "RTT". To be used as more specific value for latency.
-- `E`: Means "E2E" latency. To be used as more specific value for latency.
-- `B`: Means "bandwidth", it is either used, required, or obtained. It refers to the data transfer rate (i.e., capacity) of a network.
-
-Notations:
-
-- `x (SDH(L|R|E)B)`: If some of the criteria a supported.
-  - Make sure that at 5 characters are within the brackets, for example (S-H-B).
-  - Whitespaces are removed automatically.
-  - Only `S,D,H,L,R,E,B` are supported.
-- `n`: If nothing is used, supported, or obtained.
-
 ```{r}
 ReplaceSymbol <- function(symbol) {
   switch(symbol,
@@ -103,7 +84,7 @@ ReplaceScriptsInCols <- function(df)  {
 
 The data columns are following this pattern: `<Relation>_<Metric>`,  for example `CC_RTD`, which describes that the cloud layer uses, requires, or obtains the Round-trip delay (RTD).
 
-Characteristics are possible:
+Possible values:
 
 - `y`: Means "yes", network-related metrics are obtained.
 - `n`: Means "no", network-related metrics are not obtained.
@@ -132,10 +113,15 @@ Metrics:
 
 Additional columns:
 
-- `RTD_MEASURING`: Indicated how the RTD is obtained.
-  - `s`: Means "static", RTD is used, required, or obtained in a static. They do not change over time.
-  - `d`: Means "dynamic", RTD is used, required, or obtained in a dynamic way. Dynamic changes over time are considered.
+- `RTD_MEASURING_STATIC`: Indicated how the RTD is obtained.
+  - `y`: Means "static", RTD is used, required, or obtained in a static. They do not change over time.
   - `n`: Means "no" usage of RTD.
+- `RTD_MEASURING_DYNAMIC`: Indicated how the RTD is obtained.
+  - `y`: Means "static", RTD is used, required, or obtained in a static. They do not change over time.
+  - `n`: Means "no" usage of RTD. 
+  
+  
+  
 - `E2E_MEASURING`: Either `s` for "static" or `d` for "dynamic".
   - `s`: Means "static", E2E is used, required, or obtained in a static. They do not change over time.
   - `d`: Means "dynamic", E2E is used, required, or obtained in a dynamic way. Dynamic changes over time are considered.
