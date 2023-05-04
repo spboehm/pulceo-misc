@@ -1,28 +1,28 @@
-Author;Year;C;F;E;G;Roles;Location;Layer;Group;CPU;Mem;Disk;Net
-Yigitoglu et al.;2017;y;y;*;x;x;x;y;y;~;GB;~;x
-Brogi and Forti;2017;y;y;x;x;x;Physical;x;x;x;GB;x;x
-Brogi et al.;2017;y;y;x;x;x;x;x;x;#;GB;GB;x
-Skarlat et al.;2017;y;y;x;x;y;x;x;y;MIPS;MB;MB;x
-Souza et al.;2016;y;x;x;x;x;x;y;y;Slots;Slots;Slot;x
-Xia et al.;2018;y;x;*;y;x;x;x;y;Gflops;GB;GB;x
-Velasquez et al.;2017;y;y;x;x;x;x;x;x;x;x;x;x
-Amarasinghe et al.;2018;y;x;*;x;x;x;y;y;F,#,Th/#;MB/GB;x;x
-Benamer et al.;2018;y;y;x;y;x;x;x;y;MIPS;GB;~;x
-Lera et al.;2019;y;y;x;y;x;x;x;y;Slots;Slots;Slots;x
-Naas et al.;2018;y;*;x;x;y;x;x;y;x;x;GB/TB/PB;x
-Naas et al.;2017;y;*;x;x;y;x;x;y;x;x;GB/TB/PB;x
-Ouyang et al.;2017;x;y;x;x;x;x;x;x;F;x;x;x
-De Maio and Brandic;2018;y;x;*;x;x;GPS;x;y;#/MIPS/MIPS/#;GB;GB;x
-Gargees et al.;2016;y;y;x;x;x;x;x;y;F,#,##;GB;GB;x
-Hong et al.;2017;x;y;x;x;x;GPS;x;y;Milli;MB;MB;x
-Venticinque and Amato;2019;y;y;x;x;y;x;x;y;~;~;~;y
-Faticanti et al.;2019;y;y;x;x;x;x;x;y;MIPS;GB;GB;x
-Guerrero et al.;2019;y;y;x;y;y;x;x;x;Slots;Slots;Slots;y
-Faticanti et al.;2020;y;*;x;x;y;x;x;y;MIPS;GB;GB;x
-Faticanti et al. ;2020a;y;*;x;x;y;x;x;y;MIPS;GB;GB;x
-Armani et al.;2021;y;x;*;x;x;x;x;y;MIPS;GB;GB;x
-Alencar et al.;2022;y;y;x;x;x;x;x;x;#;GB;GB;y
-Fu et al.;2021;y;x;*;x;x;x;x;x;#;GB;x;y
-Lv et al.;2022;x;x;y;x;x;x;x;x;#;GB;GB;x
-Kaur et al.;2022;y;y;y;y;x;x;x;y;Slots;x;x;x
-Mehran et al.;2022;y;y;x;x;y;x;x;y;MIPS;GB;GB;x
+ID;Author;Year;C;F;E;G;Roles;Location;Layer;Group;CPU;Mem;Disk;Net
+1;Yigitoglu et al.;2017;y;y;*;x;x;x;y;y;~;GB;~;x
+2;Brogi and Forti;2017;y;y;x;x;x;Physical;x;x;x;GB;x;x
+3;Brogi et al.;2017;y;y;x;x;x;x;x;x;#;GB;GB;x
+4;Skarlat et al.;2017;y;y;x;x;y;x;x;y;MIPS;MB;MB;x
+5;Souza et al.;2016;y;x;x;x;x;x;y;y;Slots;Slots;Slot;x
+6;Xia et al.;2018;y;x;*;y;x;x;x;y;Gflops;GB;GB;x
+7;Velasquez et al.;2017;y;y;x;x;x;x;x;x;x;x;x;x
+8;Amarasinghe et al.;2018;y;x;*;x;x;x;y;y;F,#,Th/#;MB/GB;x;x
+9;Benamer et al.;2018;y;y;x;y;x;x;x;y;MIPS;GB;~;x
+10;Lera et al.;2019;y;y;x;y;x;x;x;y;Slots;Slots;Slots;x
+11;Naas et al.;2018;y;*;x;x;y;x;x;y;x;x;GB/TB/PB;x
+12;Naas et al.;2017;y;*;x;x;y;x;x;y;x;x;GB/TB/PB;x
+13;Ouyang et al.;2017;x;y;x;x;x;x;x;x;F;x;x;x
+14;De Maio and Brandic;2018;y;x;*;x;x;GPS;x;y;#/MIPS/MIPS/#;GB;GB;x
+15;Gargees et al.;2016;y;y;x;x;x;x;x;y;F,#,##;GB;GB;x
+16;Hong et al.;2017;x;y;x;x;x;GPS;x;y;Milli;MB;MB;x
+17;Venticinque and Amato;2019;y;y;x;x;y;x;x;y;~;~;~;y
+18;Faticanti et al.;2019;y;y;x;x;x;x;x;y;MIPS;GB;GB;x
+19;Guerrero et al.;2019;y;y;x;y;y;x;x;x;Slots;Slots;Slots;y
+20;Faticanti et al.;2020;y;*;x;x;y;x;x;y;MIPS;GB;GB;x
+21;Faticanti et al. ;2020a;y;*;x;x;y;x;x;y;MIPS;GB;GB;x
+22;Armani et al.;2021;y;x;*;x;x;x;x;y;MIPS;GB;GB;x
+23;Alencar et al.;2022;y;y;x;x;x;x;x;x;#;GB;GB;y
+24;Fu et al.;2021;y;x;*;x;x;x;x;x;#;GB;x;y
+25;Lv et al.;2022;x;x;y;x;x;x;x;x;#;GB;GB;x
+26;Kaur et al.;2022;y;y;y;y;x;x;x;y;Slots;x;x;x
+27;Mehran et al.;2022;y;y;y;x;y;x;x;y;MIPS;GB;GB;x

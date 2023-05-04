@@ -101,8 +101,59 @@ ReplaceScriptsInCols <- function(df)  {
 
 ## Read CSVs
 
+The data columns are following this pattern: `<Relation>_<Metric>`,  for example `CC_RTD`, which describes that the cloud layer uses, requires, or obtains the Round-trip delay (RTD).
+
+Characteristics are possible:
+
+- `y`: Means "yes", network-related metrics are obtained.
+- `n`: Means "no", network-related metrics are not obtained.
+
+Relations:
+
+- `CC`: Between cloud nodes
+- `CF`: Between cloud and fog nodes
+- `CE`: Between cloud and edge nodes
+- `CU`: Between cloud and end users
+- `FF`: Between fog nodes
+- `FE`: Between fog and edge nodes
+- `FU`: Between fog and end users
+- `EE`: Between edge nodes
+- `EU`: Between edge nodes and end users
+- `UU`: Between end users
+
+All relations can indicate both directions equivalently, for example, `CF` means cloud-to-fog and fog-to-cloud interactions. 
+
+### Delay Properties
+
+Metrics:
+
+- `RTD`: Round-trip delay
+- `E2E`: End-to-end delay
+
+Additional columns:
+
+- `RTD_MEASURING`: Indicated how the RTD is obtained.
+  - `s`: Means "static", RTD is used, required, or obtained in a static. They do not change over time.
+  - `d`: Means "dynamic", RTD is used, required, or obtained in a dynamic way. Dynamic changes over time are considered.
+  - `n`: Means "no" usage of RTD.
+- `E2E_MEASURING`: Either `s` for "static" or `d` for "dynamic".
+  - `s`: Means "static", E2E is used, required, or obtained in a static. They do not change over time.
+  - `d`: Means "dynamic", E2E is used, required, or obtained in a dynamic way. Dynamic changes over time are considered.
+  - `n`: Means "no" usage of RTD.
+
 ```{r}
-lProps <- read.csv2("csv/links.csv")
+# delay properties, split into two different files
+rtdProps <- read.csv2("csv/links-round-trip-delay-properties.csv")
+e2eProps <- read.csv2("csv/links-end-to-end-delay-properties.csv")
+
+# TODO: validate
+```
+
+```{r}
+# bandwidth properties
+
+
+# hop properties
 ```
 
 ## Replace Symbols in Columns
@@ -112,6 +163,12 @@ lPropsMutated <- ReplaceScriptsInCols(lProps)
 ```
 
 ## Create LaTeX Table
+
+### Latency
+
+### Bandwidth
+
+### Number of Hops
 
 ### Link Properties
 

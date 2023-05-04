@@ -1,28 +1,28 @@
-Author;Year;CPU;Mem;Disk;Tx;Rx;Energy;Costs;Workloads
-Yigitoglu et al.;2017;?;?;?;x;x;x;x;y
-Brogi and Forti;2017;?;?;?;x;x;x;x;y
-Brogi et al.;2017;?;?;?;x;x;x;x;y
-Skarlat et al.;2017;?;?;?;x;x;x;x;y
-Souza et al.;2016;?;?;?;x;x;x;x;y
-Xia et al.;2018;?;?;?;x;x;x;x;y
-Velasquez et al.;2017;?;?;?;x;x;x;x;y
-Amarasinghe et al.;2018;?;?;?;x;x;y;x;y
-Benamer et al.;2018;?;?;?;y;y;x;x;y
-Lera et al.;2019;?;?;?;x;x;x;x;y
-Naas et al.;2018;?;?;?;x;x;x;x;y
-Naas et al.;2017;?;?;?;x;x;x;x;y
-Ouyang et al.;2017;?;?;?;x;x;x;y;y
-De Maio and Brandic;2018;?;?;?;y;y;y;y;y
-Gargees et al.;2016;?;?;?;y;y;x;x;y
-Hong et al.;2017;?;?;?;y;y;x;x;y
-Venticinque and Amato;2019;?;?;?;x;x;x;x;y
-Faticanti et al.;2019;?;?;?;x;x;x;x;y
-Guerrero et al.;2019;?;?;?;y;y;x;x;y
-Faticanti et al.;2020;?;?;?;x;x;x;y;y
-Faticanti et al. ;2020a;?;?;?;x;x;x;x;y
-Armani et al.;2021;?;?;?;x;x;x;y;y
-Alencar et al.;2022;?;?;?;x;x;x;y;y
-Fu et al.;2021;?;?;?;y;y;x;y;y
-Lv et al.;2022;?;?;?;x;x;x;x;y
-Kaur et al.;2022;?;?;?;x;x;x;x;y
-Mehran et al.;2022;?;?;?;y;y;y;y;y
+ID;Author;Year;CPU;Mem;Disk;Tx;Rx;Energy;Costs;Workloads
+1;Yigitoglu et al.;2017;?;?;?;x;x;x;x;y
+2;Brogi and Forti;2017;?;?;?;x;x;x;x;y
+3;Brogi et al.;2017;?;?;?;x;x;x;x;y
+4;Skarlat et al.;2017;?;?;?;x;x;x;x;y
+5;Souza et al.;2016;?;?;?;x;x;x;x;y
+6;Xia et al.;2018;?;?;?;x;x;x;x;y
+7;Velasquez et al.;2017;?;?;?;x;x;x;x;y
+8;Amarasinghe et al.;2018;?;?;?;x;x;y;x;y
+9;Benamer et al.;2018;?;?;?;y;y;x;x;y
+10;Lera et al.;2019;?;?;?;x;x;x;x;y
+11;Naas et al.;2018;?;?;?;x;x;x;x;y
+12;Naas et al.;2017;?;?;?;x;x;x;x;y
+13;Ouyang et al.;2017;?;?;?;x;x;x;y;y
+14;De Maio and Brandic;2018;?;?;?;y;y;y;y;y
+15;Gargees et al.;2016;?;?;?;y;y;x;x;y
+16;Hong et al.;2017;?;?;?;y;y;x;x;y
+17;Venticinque and Amato;2019;?;?;?;x;x;x;x;y
+18;Faticanti et al.;2019;?;?;?;x;x;x;x;y
+19;Guerrero et al.;2019;?;?;?;y;y;x;x;y
+20;Faticanti et al.;2020;?;?;?;x;x;x;y;y
+21;Faticanti et al. ;2020a;?;?;?;x;x;x;x;y
+22;Armani et al.;2021;?;?;?;x;x;x;y;y
+23;Alencar et al.;2022;?;?;?;x;x;x;y;y
+24;Fu et al.;2021;?;?;?;y;y;x;y;y
+25;Lv et al.;2022;?;?;?;x;x;x;x;y
+26;Kaur et al.;2022;?;?;?;x;x;x;x;y
+27;Mehran et al.;2022;?;?;?;y;y;y;y;y
