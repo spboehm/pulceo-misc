@@ -1,0 +1,27 @@
+# Resources
+
+All resources with their required attributes are stored in CSV files.
+
+The first three columns of all CSV are the following:
+
+- `ID`: Identifies a particular paper, integer. 
+- `Author`: The author(s) of a particular paper, string.
+- `Year`: The year of the publication,  integer.
+
+All other columns follow the schema `Attribute` (Example: Location) or `Attribute_Specialization` (Example: Location_GPS).
+
+Only two characteristics attributes are possible:
+
+- `y`: Means "yes", in terms of **used** or **required**.
+- `n`: Means "no", in terms of **not used** or **not required**.
+
+```{r child=c('nodes.Rmd')}
+```
+
+The following resources are not covered so far:
+
+- Groups
+- Workloads
+- Paths
+- Requests
+- Users

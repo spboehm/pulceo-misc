@@ -1,4 +1,4 @@
-ID;Author;Year;CPU_Utilization;Memory_Utilization;Disk_Utilization;Tx;Rx;Energy;Costs;Workloads
+ID;Author;Year;CPU_Util;Memory_Util;Disk_Util;Network_Tx;Network_Rx;Energy;Costs;Workloads
 1;Yigitoglu et al.;2017;?;?;?;n;n;n;n;y
 2;Brogi and Forti;2017;?;?;?;n;n;n;n;y
 3;Brogi et al.;2017;?;?;?;n;n;n;n;y

@@ -1,89 +1,56 @@
-# Nodes
-
-## Required Libraries
-
-```{r warning=FALSE}
-if(!require(kableExtra)){
-    install.packages("kableExtra")
-    library(kableExtra)
-}
-if(!require(tidyverse)){
-    install.packages("tidyverse")
-    library(tidyverse)
-}
-```
-
-## Functions
-
-Important symbols:
-
-- `y`: Means "yes", in terms of used or required.
-- `n`: Means "no", in terms of **not** used or **not** required.
+## Nodes
 
 ```{r}
-ReplaceSymbol <- function(symbol) {
-  switch(symbol,
-         "y" = "\\\\ding{51}",
-         "x" = "\\\\ding{55}",
-         "#" = "\\\\#",
-         "~" = "\\\\ding{109}",
-         "*" = "\\ding{81}"
-         )
-}
-
-ReplaceSymbolsInCols<- function(df) {
-  return (df %>% 
-  mutate_all(., funs(gsub('#', ReplaceSymbol("#"),. , fixed = FALSE))) %>% 
-  mutate_all(., funs(gsub('\\by\\b', ReplaceSymbol("y"),. , fixed = FALSE))) %>% 
-  mutate_all(., funs(gsub('\\b~\\b', ReplaceSymbol("~"),. , fixed = FALSE))) %>% 
-  mutate_all(., funs(gsub('\\bx\\b', ReplaceSymbol("x"),. , fixed = FALSE))) %>% 
-  mutate_all(., funs(gsub('*', ReplaceSymbol("*"),. , fixed = TRUE))))
-}
-```
-
-## Read CSVs
-
-```{r}
-# static node properties
-sProps <- read.csv2("csv/nodes-static-properties.csv")
-
-# dynamic node properties
-dProps<- read.csv2("csv/nodes-dynamic-properties.csv")
-```
-
-## Replace Symbols in Columns
-
-```{r warning=FALSE}
-sPropsMutated <- ReplaceSymbolsInCols(sProps)
-dPropsMutated <- ReplaceSymbolsInCols(dProps)
-```
-
-## Create LaTeX Table
-
-### Dynamic Node Properties
-
-```{r}
-kbl_fn_footnote_as_chunk = TRUE
-kbl_fn_threeparttable = TRUE
-kbl_fn_general_title = ""
-
-sPropsKblCaption <- "Obtained Static Node Properties"
-
-sPropsKbl <- kbl(sPropsMutated, "latex", escape = FALSE, caption = sPropsKblCaption, booktabs = TRUE) %>% 
-  kable_styling(latex_options = "scale_down") %>%
-  footnote(., general = c("C: Cloud, F: Fog, E: Edge, G: Gateway, CPU: Central Processing Unit, Mem: Memory, Disk: Storage, Net: Network"), general_title = kbl_fn_general_title, footnote_as_chunk = kbl_fn_footnote_as_chunk, threeparttable = kbl_fn_threeparttable)
-
-save_kable(sPropsKbl, "latex/nodes-static-properties.tex")
+source("R/common.R")
+LoadPackage("tidyverse")
+LoadPackage("kableExtra")
 ```
 
 ### Static Node Properties
 
+Properties:
+
+- `Cloud`: If nodes of type cloud are required.
+- `Fog`: If nodes of type fog are required.
+- `Edge`: If nodes of type edge are required.
+- `Gateway`: If nodes of type gateway are required.
+- `Layer`: Specifies that nodes are assigned a layer number. This is required, for example, when layers are further horizontally partitioned. Example: There is a fog layer 1 and are fog layer 2.
+- `Role`: Specifies that nodes are assigned a particular role. Example: There are fog control nodes.
+- `Location_Place`: The location of a particular node is required. Example: A node is located in "Frankfurt, Germany".
+- `Location_GPS`: The GPS coordinates of a particular node are required. Example: The GPS coordinates are described with longitude and latitude.
+- `Group`: It is required to group nodes, for example, nodes in a particular region are grouped logically.
+- `CPU_MIPS`: The CPU capabilities are required in MIPS. Example: 1000 MIPS.
+- `CPU_Cores`: The CPU capabilities in number of cores are required. Example: 8 cores.
+- `CPU_Threads`: The CPU capabilities in number of threads are required. Example: 16 cores.
+- `CPU_GFlop`: The CPU capabilities in GFlop are required.
+- `CPU_Frequency`: The CPU capabilities in terms of frequency are required. Example: 2.0 GHz.
+- `CPU_Shares`: The CPU capabilities in shares are required. Example: 1000m.
+- `CPU_Slots`: The CPU capabilities in terms of slots are required. Example: 10 Slots are available. This value is normally calculated out of other values.
+- `Memory_Capacitiy`: The available memory is required in MB, GB, or TB. Example: 5 GB.
+- `Memory_Slots`: The memory resources in terms of slots are required. Example: 10 Slots are available. This value is normally calculated out of other values.
+- `Disk_Capacity`: The available disk space is required in MB, GB, or TB. Example: 500 GB.
+- `Disk_Slots`: The available disk space in terms of slots is required. Example: 10 Slots are available. This value is normally calculated out of other values.
+- `Network Capacity`: The available network resources are required. This is usually the available bandwidth provided by the network interfaces of a particular node. Example: 1000 Mbps download/upload.
+
 ```{r}
-dPropsKblCaption <- "Obtained Dynamic Node Properties"
+# static node properties
+sNodeProps <- read.csv2("csv/nodes-static-properties.csv")
+```
 
-dPropsKbl <- kbl(dPropsMutated, "latex", escape = FALSE, caption = dPropsKblCaption, booktabs = TRUE) %>% 
-  kable_styling(latex_options = "scale_down") %>%
-  footnote(., general = c("C: Cloud, F: Fog, E: Edge, G: Gateway, CPU: Central Processing Unit, Mem: Memory, Disk: Storage, Net: Network"), general_title = kbl_fn_general_title, footnote_as_chunk = kbl_fn_footnote_as_chunk, threeparttable = kbl_fn_threeparttable)
+### Dynamic Node Properties
 
-save_kable(dPropsKbl, "latex/nodes-dynamic-properties.tex")
+Properties:
+
+- `CPU_Util`: Represents the current CPU utilization. Example: 0.95.
+- `Memory_Util`: Represents the current memory utilization. Example: 0.40.
+- `Disk_Util`: Represents the current disk utilization in terms of storage. Example: 0.35. This is **not** I/O utilization.
+- `Network_Tx`: Amount of transmitted traffic via the network interface. Example: 1500 byte.
+- `Network_Rx`: Amount of received traffic via the network interfaces. Example: 1800 byte.
+- `Energy`: Consumed energy by the node. Example: 1500 J. Different values are possible based on custom calculation steps proposed by various authors.
+- `Costs`: Costs for running the node, usually expressed in $.
+- `Workloads`: List of allocated workloads on a particular node.
+
+```{r}
+# dynamic node properties
+dNodeProps<- read.csv2("csv/nodes-dynamic-properties.csv")
 ```
