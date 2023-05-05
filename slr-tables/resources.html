@@ -358,14 +358,17 @@ display: none;
 files.</p>
 <p>The first three columns of all CSV are the following:</p>
 <ul>
-<li><code>ID</code>: Identifies a particular paper, integer.</li>
-<li><code>Author</code>: The author(s) of a particular paper,
-string.</li>
-<li><code>Year</code>: The year of the publication, integer.</li>
+<li><code>ID</code>: Identifies a particular paper, type
+<code>Integer</code>.</li>
+<li><code>Author</code>: The author(s) of a particular paper, type
+<code>String</code>.</li>
+<li><code>Year</code>: The year of the publication, type
+<code>Integer</code>.</li>
 </ul>
-<p>All other columns follow the schema <code>Attribute</code> (Example:
-Location) or <code>Attribute_Specialization</code> (Example:
-Location_GPS).</p>
+<p>All other columns follow the pattern <code>&lt;Attribute&gt;</code>
+(Example: <code>Location</code>) or
+<code>&lt;Attribute&gt;_&lt;Specialization&gt;</code> (Example:
+<code>Location_GPS</code>).</p>
 <p>Only two characteristics attributes are possible:</p>
 <ul>
 <li><code>y</code>: Means “yes”, in terms of <strong>used</strong> or
@@ -375,29 +378,8 @@ Location_GPS).</p>
 </ul>
 <div id="nodes" class="section level2">
 <h2>Nodes</h2>
-<pre class="r"><code>source(&quot;R/common.R&quot;)
-LoadPackage(&quot;tidyverse&quot;)</code></pre>
-<pre><code>## Loading required package: tidyverse</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.2     ✔ readr     2.1.4
-## ✔ forcats   1.0.0     ✔ stringr   1.5.0
-## ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-## ✔ purrr     1.0.1     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>LoadPackage(&quot;kableExtra&quot;)</code></pre>
-<pre><code>## Loading required package: kableExtra
-## 
-## Attaching package: &#39;kableExtra&#39;
-## 
-## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     group_rows</code></pre>
-<div id="static-node-properties" class="section level3">
-<h3>Static Node Properties</h3>
+<div id="static-properties" class="section level3">
+<h3>Static Properties</h3>
 <p>Properties:</p>
 <ul>
 <li><code>Cloud</code>: If nodes of type cloud are required.</li>
@@ -447,11 +429,10 @@ required. This is usually the available bandwidth provided by the
 network interfaces of a particular node. Example: 1000 Mbps
 download/upload.</li>
 </ul>
-<pre class="r"><code># static node properties
-sProps &lt;- read.csv2(&quot;csv/nodes-static-properties.csv&quot;)</code></pre>
+<pre class="r"><code>nodesStaticProps &lt;- read.csv2(&quot;csv/nodes-static-properties.csv&quot;)</code></pre>
 </div>
-<div id="dynamic-node-properties" class="section level3">
-<h3>Dynamic Node Properties</h3>
+<div id="dynamic-properties" class="section level3">
+<h3>Dynamic Properties</h3>
 <p>Properties:</p>
 <ul>
 <li><code>CPU_Util</code>: Represents the current CPU utilization.
@@ -459,7 +440,7 @@ Example: 0.95.</li>
 <li><code>Memory_Util</code>: Represents the current memory utilization.
 Example: 0.40.</li>
 <li><code>Disk_Util</code>: Represents the current disk utilization in
-terms of storage. Example: 0.35. This is <strong>not</strong> I/O
+terms of used storage. Example: 0.35. This is <strong>not</strong> I/O
 utilization.</li>
 <li><code>Network_Tx</code>: Amount of transmitted traffic via the
 network interface. Example: 1500 byte.</li>
@@ -473,24 +454,110 @@ $.</li>
 <li><code>Workloads</code>: List of allocated workloads on a particular
 node.</li>
 </ul>
-<pre class="r"><code># dynamic node properties
-dProps&lt;- read.csv2(&quot;csv/nodes-dynamic-properties.csv&quot;)</code></pre>
+<pre class="r"><code>nodesDynamicProps&lt;- read.csv2(&quot;csv/nodes-dynamic-properties.csv&quot;)</code></pre>
 </div>
-<div id="create-latex-table" class="section level3">
-<h3>Create LaTeX Table</h3>
-<div id="dynamic-node-properties-1" class="section level4">
-<h4>Dynamic Node Properties</h4>
-<pre class="r"><code># kbl_fn_footnote_as_chunk = TRUE
-# kbl_fn_threeparttable = TRUE
-# kbl_fn_general_title = &quot;&quot;
-#
-# sPropsKblCaption &lt;- &quot;Obtained Static Node Properties&quot;
-#
-# sPropsKbl &lt;- kbl(sPropsMutated, &quot;latex&quot;, escape = FALSE, caption = sPropsKblCaption, booktabs = TRUE) %&gt;%
-#   kable_styling(latex_options = &quot;scale_down&quot;) %&gt;%
-#   footnote(., general = c(&quot;C: Cloud, F: Fog, E: Edge, G: Gateway, CPU: Central Processing Unit, Mem: Memory, Disk: Storage, Net: Network&quot;), general_title = kbl_fn_general_title, footnote_as_chunk = kbl_fn_footnote_as_chunk, threeparttable = kbl_fn_threeparttable)
-
-# save_kable(sPropsKbl, &quot;latex/nodes-static-properties.tex&quot;)</code></pre>
+</div>
+<div id="links" class="section level2">
+<h2>Links</h2>
+<div id="general-properties" class="section level3">
+<h3>General Properties</h3>
+<p>The data columns are following this pattern:
+<code>&lt;Relation&gt;_&lt;Metric&gt;</code>, for example
+<code>CC_RTD</code>, which describes that the cloud layer uses,
+requires, or obtains the Round-trip delay (RTD).</p>
+<p>Relations:</p>
+<ul>
+<li><code>CC</code>: Between cloud nodes</li>
+<li><code>CF</code>: Between cloud and fog nodes</li>
+<li><code>CE</code>: Between cloud and edge nodes</li>
+<li><code>CU</code>: Between cloud and end users</li>
+<li><code>FF</code>: Between fog nodes</li>
+<li><code>FE</code>: Between fog and edge nodes</li>
+<li><code>FU</code>: Between fog and end users</li>
+<li><code>EE</code>: Between edge nodes</li>
+<li><code>EU</code>: Between edge nodes and end users</li>
+<li><code>UU</code>: Between end users</li>
+</ul>
+<p>All relations can indicate both directions equivalently, for example,
+<code>CF</code> means cloud-to-fog and fog-to-cloud interactions.</p>
+<p>Metrics are listed below.</p>
+</div>
+<div id="round-trip-delay-properties" class="section level3">
+<h3>Round-trip delay Properties</h3>
+<p>Metrics:</p>
+<ul>
+<li><code>RTD</code>: Round-trip delay</li>
+</ul>
+<p>Additional columns:</p>
+<ul>
+<li><code>RTD_MEASURING_STATIC</code>: Indicates how the RTD is
+obtained.
+<ul>
+<li><code>y</code>: Means “yes”, RTD is used, required, or obtained in a
+static way. It does not change over time.</li>
+<li><code>n</code>: Means “no” usage of RTD.</li>
+</ul></li>
+<li><code>RTD_MEASURING_DYNAMIC</code>: Indicates how the RTD is
+obtained.
+<ul>
+<li><code>y</code>: Means “yes”, RTD is used, required, or obtained in a
+dynamic way. It does change over time.</li>
+<li><code>n</code>: Means “no” usage of RTD.</li>
+</ul></li>
+</ul>
+<pre class="r"><code>LinksRTDProps &lt;- read.csv2(&quot;csv/links-round-trip-delay-properties.csv&quot;)</code></pre>
+</div>
+<div id="end-to-end-delay-properties" class="section level3">
+<h3>End-to-end delay Properties</h3>
+<p>Metrics:</p>
+<ul>
+<li><code>E2E</code>: End-to-end delay</li>
+</ul>
+<p>Additional columns:</p>
+<ul>
+<li><code>E2E_MEASURING_STATIC</code>: Indicates how the E2E is
+obtained.
+<ul>
+<li><code>y</code>: Means “yes”, E2E is used, required, or obtained in a
+static way. It does not change over time.</li>
+<li><code>n</code>: Means “no” usage of E2E</li>
+</ul></li>
+<li><code>E2E_MEASURING_DYNAMIC</code>: Indicates how the E2E is
+obtained.
+<ul>
+<li><code>y</code>: Means “yes”, E2E is used, required, or obtained in a
+dynamic way. It does change over time.</li>
+<li><code>n</code>: Means “no” usage of E2E.</li>
+</ul></li>
+</ul>
+<pre class="r"><code>LinksE2EProps &lt;- read.csv2(&quot;csv/links-end-to-end-delay-properties.csv&quot;)</code></pre>
+</div>
+<div id="bandwidth-properties" class="section level3">
+<h3>Bandwidth Properties</h3>
+<p>Metrics:</p>
+<ul>
+<li><code>BW</code>: Bandwidth</li>
+</ul>
+<p>Additional columns:</p>
+<ul>
+<li><code>BW_MEASURING_STATIC</code>: Indicates how the BW is obtained.
+<ul>
+<li><code>y</code>: Means “static”, BW is used, required, or obtained in
+a static way. It does not change over time.</li>
+<li><code>n</code>: Means “no” usage of BW.</li>
+</ul></li>
+<li><code>BW_MEASURING_DYNAMIC</code>: Indicates how the BW is obtained.
+<ul>
+<li><code>y</code>: Means “dynamic”, BW is used, required, or obtained
+in a dynamic way. It does change over time.</li>
+<li><code>n</code>: Means “no” usage of BW.</li>
+</ul></li>
+</ul>
+<pre class="r"><code>LinksBWProps &lt;- read.csv2(&quot;csv/links-bandwidth-properties.csv&quot;)</code></pre>
+</div>
+<div id="hop-properties" class="section level3">
+<h3>Hop Properties</h3>
+<pre class="r"><code># hop properties</code></pre>
 <p>The following resources are not covered so far:</p>
 <ul>
 <li>Groups</li>
@@ -499,7 +566,6 @@ dProps&lt;- read.csv2(&quot;csv/nodes-dynamic-properties.csv&quot;)</code></pre>
 <li>Requests</li>
 <li>Users</li>
 </ul>
-</div>
 </div>
 </div>
 </div>

@@ -1,14 +1,19 @@
+
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
 # Resources
 
 All resources with their required attributes are stored in CSV files.
 
 The first three columns of all CSV are the following:
 
-- `ID`: Identifies a particular paper, integer. 
-- `Author`: The author(s) of a particular paper, string.
-- `Year`: The year of the publication,  integer.
+- `ID`: Identifies a particular paper, type `Integer`. 
+- `Author`: The author(s) of a particular paper, type `String`.
+- `Year`: The year of the publication, type `Integer`.
 
-All other columns follow the schema `Attribute` (Example: Location) or `Attribute_Specialization` (Example: Location_GPS).
+All other columns follow the pattern `<Attribute>` (Example: `Location`) or `<Attribute>_<Specialization>` (Example: `Location_GPS`).
 
 Only two characteristics attributes are possible:
 
@@ -16,6 +21,9 @@ Only two characteristics attributes are possible:
 - `n`: Means "no", in terms of **not used** or **not required**.
 
 ```{r child=c('nodes.Rmd')}
+```
+
+```{r child=c('links.Rmd')}
 ```
 
 The following resources are not covered so far:

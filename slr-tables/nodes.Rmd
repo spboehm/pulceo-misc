@@ -1,12 +1,13 @@
 ## Nodes
 
-```{r}
+```{r echo=FALSE}
 source("R/common.R")
+source("R/latex.R")
 LoadPackage("tidyverse")
 LoadPackage("kableExtra")
 ```
 
-### Static Node Properties
+### Static Properties
 
 Properties:
 
@@ -33,17 +34,16 @@ Properties:
 - `Network Capacity`: The available network resources are required. This is usually the available bandwidth provided by the network interfaces of a particular node. Example: 1000 Mbps download/upload.
 
 ```{r}
-# static node properties
-sNodeProps <- read.csv2("csv/nodes-static-properties.csv")
+nodesStaticProps <- read.csv2("csv/nodes-static-properties.csv")
 ```
 
-### Dynamic Node Properties
+### Dynamic Properties
 
 Properties:
 
 - `CPU_Util`: Represents the current CPU utilization. Example: 0.95.
 - `Memory_Util`: Represents the current memory utilization. Example: 0.40.
-- `Disk_Util`: Represents the current disk utilization in terms of storage. Example: 0.35. This is **not** I/O utilization.
+- `Disk_Util`: Represents the current disk utilization in terms of used storage. Example: 0.35. This is **not** I/O utilization.
 - `Network_Tx`: Amount of transmitted traffic via the network interface. Example: 1500 byte.
 - `Network_Rx`: Amount of received traffic via the network interfaces. Example: 1800 byte.
 - `Energy`: Consumed energy by the node. Example: 1500 J. Different values are possible based on custom calculation steps proposed by various authors.
@@ -51,6 +51,5 @@ Properties:
 - `Workloads`: List of allocated workloads on a particular node.
 
 ```{r}
-# dynamic node properties
-dNodeProps<- read.csv2("csv/nodes-dynamic-properties.csv")
+nodesDynamicProps<- read.csv2("csv/nodes-dynamic-properties.csv")
 ```

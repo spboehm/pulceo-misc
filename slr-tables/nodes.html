@@ -354,8 +354,6 @@ display: none;
 
 <div id="nodes" class="section level2">
 <h2>Nodes</h2>
-<pre class="r"><code>source(&quot;R/common.R&quot;)
-LoadPackage(&quot;tidyverse&quot;)</code></pre>
 <pre><code>## Loading required package: tidyverse</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.2     ✔ readr     2.1.4
@@ -366,11 +364,12 @@ LoadPackage(&quot;tidyverse&quot;)</code></pre>
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>LoadPackage(&quot;kableExtra&quot;)</code></pre>
-<pre><code>## Loading required package: kableExtra
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+## Loading required package: kableExtra
+## 
 ## 
 ## Attaching package: &#39;kableExtra&#39;
+## 
 ## 
 ## The following object is masked from &#39;package:dplyr&#39;:
 ## 
@@ -426,8 +425,7 @@ required. This is usually the available bandwidth provided by the
 network interfaces of a particular node. Example: 1000 Mbps
 download/upload.</li>
 </ul>
-<pre class="r"><code># static node properties
-sNodeProps &lt;- read.csv2(&quot;csv/nodes-static-properties.csv&quot;)</code></pre>
+<pre class="r"><code>nodesStaticProps &lt;- read.csv2(&quot;csv/nodes-static-properties.csv&quot;)</code></pre>
 </div>
 <div id="dynamic-node-properties" class="section level3">
 <h3>Dynamic Node Properties</h3>
@@ -438,7 +436,7 @@ Example: 0.95.</li>
 <li><code>Memory_Util</code>: Represents the current memory utilization.
 Example: 0.40.</li>
 <li><code>Disk_Util</code>: Represents the current disk utilization in
-terms of storage. Example: 0.35. This is <strong>not</strong> I/O
+terms of used storage. Example: 0.35. This is <strong>not</strong> I/O
 utilization.</li>
 <li><code>Network_Tx</code>: Amount of transmitted traffic via the
 network interface. Example: 1500 byte.</li>
@@ -452,25 +450,7 @@ $.</li>
 <li><code>Workloads</code>: List of allocated workloads on a particular
 node.</li>
 </ul>
-<pre class="r"><code># dynamic node properties
-dNodeProps&lt;- read.csv2(&quot;csv/nodes-dynamic-properties.csv&quot;)</code></pre>
-</div>
-<div id="create-latex-table" class="section level3">
-<h3>Create LaTeX Table</h3>
-<div id="dynamic-node-properties-1" class="section level4">
-<h4>Dynamic Node Properties</h4>
-<pre class="r"><code># kbl_fn_footnote_as_chunk = TRUE
-# kbl_fn_threeparttable = TRUE
-# kbl_fn_general_title = &quot;&quot;
-#
-# sPropsKblCaption &lt;- &quot;Obtained Static Node Properties&quot;
-#
-# sPropsKbl &lt;- kbl(sPropsMutated, &quot;latex&quot;, escape = FALSE, caption = sPropsKblCaption, booktabs = TRUE) %&gt;%
-#   kable_styling(latex_options = &quot;scale_down&quot;) %&gt;%
-#   footnote(., general = c(&quot;C: Cloud, F: Fog, E: Edge, G: Gateway, CPU: Central Processing Unit, Mem: Memory, Disk: Storage, Net: Network&quot;), general_title = kbl_fn_general_title, footnote_as_chunk = kbl_fn_footnote_as_chunk, threeparttable = kbl_fn_threeparttable)
-
-# save_kable(sPropsKbl, &quot;latex/nodes-static-properties.tex&quot;)</code></pre>
-</div>
+<pre class="r"><code>nodesDynamicProps&lt;- read.csv2(&quot;csv/nodes-dynamic-properties.csv&quot;)</code></pre>
 </div>
 </div>
 

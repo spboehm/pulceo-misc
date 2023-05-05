@@ -1,93 +1,15 @@
-# Links
+## Links
 
-## Required Libraries
-
-```{r warning=FALSE}
-if(!require(kableExtra)) {
-    install.packages("kableExtra")
-    library(kableExtra)
-}
-if(!require(tidyverse)) {
-    install.packages("tidyverse")
-    library(tidyverse)
-}
+```{r echo=FALSE}
+source("R/common.R")
+source("R/latex.R")
+LoadPackage("tidyverse")
+LoadPackage("kableExtra")
 ```
 
-## Functions
-
-Important symbols:
-
-```{r}
-ReplaceSymbol <- function(symbol) {
-  switch(symbol,
-         "x" = "\\ding{108}",
-         "o" = "\\ding{110}",
-         "|" = "\\ding{115}",
-         "n" = "\\ding{55}",
-         "-" = "-",
-         "S" = "S",
-         "D" = "D",
-         "H" = "H",
-         "L" = "L",
-         "R" = "R",
-         "E" = "E",
-         "B" = "B"
-         )
-}
-
-ReplaceSymbolsInCols <- function(col) {
-  
-  df <- lapply(col, function(chars) {
-  
-    if (chars == "n") {
-      return (ReplaceSymbol("n"))
-    }
-    
-    # add default if no subscripts are available
-    if (nchar(chars) == 1) {
-      chars <- paste(chars, "-----", sep = "")
-    }
-    
-    # remove brackets
-    charsWithoutBrackets <- gsub('\\(|\\)', '', chars)
-    
-    # remove whitespaces
-    charsWithoutWhitespaces <- gsub('\\s', '', charsWithoutBrackets)
-    charsAsVector <- as.vector(unlist(strsplit(charsWithoutWhitespaces,"")))
-    
-    # template symbol
-    charsAsVector <- sapply(charsAsVector, ReplaceSymbol)
-
-    # template textsuperscript, we do not need to escape ',' because of latex math mode
-    templateTextSuperScript <- "^{2,3}"
-    templateMutatedStatic <- gsub('2', charsAsVector[2], templateTextSuperScript)
-    templateMutatedDynamic <- gsub('3', charsAsVector[3], templateMutatedStatic)
-    
-    # template textsubscript
-    templateTextSubscript <- "_{4,5,6}"
-    templateMutatedHops <-  gsub('4', charsAsVector[4], templateTextSubscript)
-    templateMutatedLatency <-  gsub('5', charsAsVector[5], templateMutatedHops)
-    templateMutatedBandwidth <- gsub('6', charsAsVector[6], templateMutatedLatency)
-    
-    return(paste(charsAsVector[1], "$", templateMutatedDynamic, templateMutatedBandwidth, "$", sep=""))
-  
-  })
-  return (df)
-}
-
-ReplaceScriptsInCols <- function(df)  {
-  return (df %>% mutate_at(., vars(-Author,-Year), ReplaceSymbolsInCols))
-}
-```
-
-## Read CSVs
+### General Properties
 
 The data columns are following this pattern: `<Relation>_<Metric>`,  for example `CC_RTD`, which describes that the cloud layer uses, requires, or obtains the Round-trip delay (RTD).
-
-Possible values:
-
-- `y`: Means "yes", network-related metrics are obtained.
-- `n`: Means "no", network-related metrics are not obtained.
 
 Relations:
 
@@ -104,70 +26,68 @@ Relations:
 
 All relations can indicate both directions equivalently, for example, `CF` means cloud-to-fog and fog-to-cloud interactions. 
 
-### Delay Properties
+Metrics are listed below.
+
+### Round-trip delay Properties
 
 Metrics:
 
 - `RTD`: Round-trip delay
+
+Additional columns:
+
+- `RTD_MEASURING_STATIC`: Indicates how the RTD is obtained.
+  - `y`: Means "yes", RTD is used, required, or obtained in a static way. It does not change over time.
+  - `n`: Means "no" usage of RTD.
+- `RTD_MEASURING_DYNAMIC`: Indicates how the RTD is obtained.
+  - `y`: Means "yes", RTD is used, required, or obtained in a dynamic way. It does change over time.
+  - `n`: Means "no" usage of RTD. 
+
+```{r}
+LinksRTDProps <- read.csv2("csv/links-round-trip-delay-properties.csv")
+```
+
+### End-to-end delay Properties
+
+Metrics:
+
 - `E2E`: End-to-end delay
 
 Additional columns:
 
-- `RTD_MEASURING_STATIC`: Indicated how the RTD is obtained.
-  - `y`: Means "static", RTD is used, required, or obtained in a static. They do not change over time.
-  - `n`: Means "no" usage of RTD.
-- `RTD_MEASURING_DYNAMIC`: Indicated how the RTD is obtained.
-  - `y`: Means "static", RTD is used, required, or obtained in a static. They do not change over time.
-  - `n`: Means "no" usage of RTD. 
-  
-  
-  
-- `E2E_MEASURING`: Either `s` for "static" or `d` for "dynamic".
-  - `s`: Means "static", E2E is used, required, or obtained in a static. They do not change over time.
-  - `d`: Means "dynamic", E2E is used, required, or obtained in a dynamic way. Dynamic changes over time are considered.
-  - `n`: Means "no" usage of RTD.
+- `E2E_MEASURING_STATIC`: Indicates how the E2E is obtained.
+  - `y`: Means "yes", E2E is used, required, or obtained in a static way. It does not change over time.
+  - `n`: Means "no" usage of E2E
+- `E2E_MEASURING_DYNAMIC`: Indicates how the E2E is obtained.
+  - `y`: Means "yes", E2E is used, required, or obtained in a dynamic way. It does change over time.
+  - `n`: Means "no" usage of E2E. 
 
 ```{r}
-# delay properties, split into two different files
-rtdProps <- read.csv2("csv/links-round-trip-delay-properties.csv")
-e2eProps <- read.csv2("csv/links-end-to-end-delay-properties.csv")
-
-# TODO: validate
+LinksE2EProps <- read.csv2("csv/links-end-to-end-delay-properties.csv")
 ```
 
+### Bandwidth Properties
+
+Metrics:
+
+- `BW`: Bandwidth
+
+Additional columns:
+
+- `BW_MEASURING_STATIC`: Indicates how the BW is obtained.
+  - `y`: Means "static", BW is used, required, or obtained in a static way. It does not change over time.
+  - `n`: Means "no" usage of BW.
+- `BW_MEASURING_DYNAMIC`: Indicates how the BW is obtained.
+  - `y`: Means "dynamic", BW is used, required, or obtained in a dynamic way. It does change over time.
+  - `n`: Means "no" usage of BW. 
+
 ```{r}
-# bandwidth properties
+LinksBWProps <- read.csv2("csv/links-bandwidth-properties.csv")
+```
 
+### Hop Properties
 
+```{r}
 # hop properties
-```
 
-## Replace Symbols in Columns
-
-```{r}
-lPropsMutated <- ReplaceScriptsInCols(lProps)
-```
-
-## Create LaTeX Table
-
-### Latency
-
-### Bandwidth
-
-### Number of Hops
-
-### Link Properties
-
-```{r}
-kbl_fn_footnote_as_chunk = TRUE
-kbl_fn_threeparttable = TRUE
-kbl_fn_general_title = ""
-
-lPropsKblCaption <- "Link Properties"
-
-lPropsKbl <- kbl(lPropsMutated, "latex", escape = FALSE, caption = lPropsKblCaption, booktabs = TRUE) %>% 
-  kable_styling(latex_options = "scale_down") %>%
-  footnote(., general = c(""), general_title = kbl_fn_general_title, footnote_as_chunk = kbl_fn_footnote_as_chunk, threeparttable = kbl_fn_threeparttable)
-
-save_kable(lPropsKbl, "latex/link-properties.tex")
 ```
