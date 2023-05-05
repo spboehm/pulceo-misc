@@ -5,7 +5,7 @@ ReplaceSymbol <- function(symbol) {
   )
 }
 
-createLaTeXTable <- function(dataframe) {
+CreateLaTeXTable <- function(dataframe) {
   # kbl_fn_footnote_as_chunk = TRUE
   # kbl_fn_threeparttable = TRUE
   # kbl_fn_general_title = ""
