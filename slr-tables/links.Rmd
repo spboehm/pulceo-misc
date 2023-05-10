@@ -44,7 +44,7 @@ Additional columns:
   - `n`: Means "no" usage of RTD. 
 
 ```{r}
-LinksRTDProps <- read.csv2("csv/links-round-trip-delay-properties.csv")
+linksRTDProps <- read.csv2("csv/links-round-trip-delay-properties.csv")
 ```
 
 ### End-to-end delay Properties
@@ -63,7 +63,7 @@ Additional columns:
   - `n`: Means "no" usage of E2E. 
 
 ```{r}
-LinksE2EProps <- read.csv2("csv/links-end-to-end-delay-properties.csv")
+linksE2EProps <- read.csv2("csv/links-end-to-end-delay-properties.csv")
 ```
 
 ### Bandwidth Properties
@@ -82,7 +82,7 @@ Additional columns:
   - `n`: Means "no" usage of BW. 
 
 ```{r}
-LinksBWProps <- read.csv2("csv/links-bandwidth-properties.csv")
+linksBWProps <- read.csv2("csv/links-bandwidth-properties.csv")
 ```
 
 ### Hop Properties
