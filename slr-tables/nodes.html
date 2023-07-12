@@ -373,9 +373,12 @@ display: none;
 ## 
 ## The following object is masked from &#39;package:dplyr&#39;:
 ## 
-##     group_rows</code></pre>
-<div id="static-node-properties" class="section level3">
-<h3>Static Node Properties</h3>
+##     group_rows
+## 
+## 
+## Loading required package: ggpubr</code></pre>
+<div id="static-properties" class="section level3">
+<h3>Static Properties</h3>
 <p>Properties:</p>
 <ul>
 <li><code>Cloud</code>: If nodes of type cloud are required.</li>
@@ -410,7 +413,7 @@ required. Example: 1000m.</li>
 <li><code>CPU_Slots</code>: The CPU capabilities in terms of slots are
 required. Example: 10 Slots are available. This value is normally
 calculated out of other values.</li>
-<li><code>Memory_Capacitiy</code>: The available memory is required in
+<li><code>Memory_Capacity</code>: The available memory is required in
 MB, GB, or TB. Example: 5 GB.</li>
 <li><code>Memory_Slots</code>: The memory resources in terms of slots
 are required. Example: 10 Slots are available. This value is normally
@@ -420,15 +423,15 @@ MB, GB, or TB. Example: 500 GB.</li>
 <li><code>Disk_Slots</code>: The available disk space in terms of slots
 is required. Example: 10 Slots are available. This value is normally
 calculated out of other values.</li>
-<li><code>Network Capacity</code>: The available network resources are
+<li><code>Network_Capacity</code>: The available network resources are
 required. This is usually the available bandwidth provided by the
 network interfaces of a particular node. Example: 1000 Mbps
 download/upload.</li>
 </ul>
 <pre class="r"><code>nodesStaticProps &lt;- read.csv2(&quot;csv/nodes-static-properties.csv&quot;)</code></pre>
 </div>
-<div id="dynamic-node-properties" class="section level3">
-<h3>Dynamic Node Properties</h3>
+<div id="dynamic-properties" class="section level3">
+<h3>Dynamic Properties</h3>
 <p>Properties:</p>
 <ul>
 <li><code>CPU_Util</code>: Represents the current CPU utilization.

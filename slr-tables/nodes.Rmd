@@ -5,6 +5,8 @@ source("R/common.R")
 source("R/latex.R")
 LoadPackage("tidyverse")
 LoadPackage("kableExtra")
+LoadPackage("ggpubr")
+LoadPackage("ggplot2")
 ```
 
 ### Static Properties
@@ -27,11 +29,11 @@ Properties:
 - `CPU_Frequency`: The CPU capabilities in terms of frequency are required. Example: 2.0 GHz.
 - `CPU_Shares`: The CPU capabilities in shares are required. Example: 1000m.
 - `CPU_Slots`: The CPU capabilities in terms of slots are required. Example: 10 Slots are available. This value is normally calculated out of other values.
-- `Memory_Capacitiy`: The available memory is required in MB, GB, or TB. Example: 5 GB.
+- `Memory_Capacity`: The available memory is required in MB, GB, or TB. Example: 5 GB.
 - `Memory_Slots`: The memory resources in terms of slots are required. Example: 10 Slots are available. This value is normally calculated out of other values.
 - `Disk_Capacity`: The available disk space is required in MB, GB, or TB. Example: 500 GB.
 - `Disk_Slots`: The available disk space in terms of slots is required. Example: 10 Slots are available. This value is normally calculated out of other values.
-- `Network Capacity`: The available network resources are required. This is usually the available bandwidth provided by the network interfaces of a particular node. Example: 1000 Mbps download/upload.
+- `Network_Capacity`: The available network resources are required. This is usually the available bandwidth provided by the network interfaces of a particular node. Example: 1000 Mbps download/upload.
 
 ```{r}
 nodesStaticProps <- read.csv2("csv/nodes-static-properties.csv")

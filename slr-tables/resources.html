@@ -414,7 +414,7 @@ required. Example: 1000m.</li>
 <li><code>CPU_Slots</code>: The CPU capabilities in terms of slots are
 required. Example: 10 Slots are available. This value is normally
 calculated out of other values.</li>
-<li><code>Memory_Capacitiy</code>: The available memory is required in
+<li><code>Memory_Capacity</code>: The available memory is required in
 MB, GB, or TB. Example: 5 GB.</li>
 <li><code>Memory_Slots</code>: The memory resources in terms of slots
 are required. Example: 10 Slots are available. This value is normally
@@ -424,7 +424,7 @@ MB, GB, or TB. Example: 500 GB.</li>
 <li><code>Disk_Slots</code>: The available disk space in terms of slots
 is required. Example: 10 Slots are available. This value is normally
 calculated out of other values.</li>
-<li><code>Network Capacity</code>: The available network resources are
+<li><code>Network_Capacity</code>: The available network resources are
 required. This is usually the available bandwidth provided by the
 network interfaces of a particular node. Example: 1000 Mbps
 download/upload.</li>
@@ -505,7 +505,7 @@ dynamic way. It does change over time.</li>
 <li><code>n</code>: Means “no” usage of RTD.</li>
 </ul></li>
 </ul>
-<pre class="r"><code>LinksRTDProps &lt;- read.csv2(&quot;csv/links-round-trip-delay-properties.csv&quot;)</code></pre>
+<pre class="r"><code>linksRTDProps &lt;- read.csv2(&quot;csv/links-round-trip-delay-properties.csv&quot;)</code></pre>
 </div>
 <div id="end-to-end-delay-properties" class="section level3">
 <h3>End-to-end delay Properties</h3>
@@ -530,7 +530,7 @@ dynamic way. It does change over time.</li>
 <li><code>n</code>: Means “no” usage of E2E.</li>
 </ul></li>
 </ul>
-<pre class="r"><code>LinksE2EProps &lt;- read.csv2(&quot;csv/links-end-to-end-delay-properties.csv&quot;)</code></pre>
+<pre class="r"><code>linksE2EProps &lt;- read.csv2(&quot;csv/links-end-to-end-delay-properties.csv&quot;)</code></pre>
 </div>
 <div id="bandwidth-properties" class="section level3">
 <h3>Bandwidth Properties</h3>
@@ -553,7 +553,7 @@ in a dynamic way. It does change over time.</li>
 <li><code>n</code>: Means “no” usage of BW.</li>
 </ul></li>
 </ul>
-<pre class="r"><code>LinksBWProps &lt;- read.csv2(&quot;csv/links-bandwidth-properties.csv&quot;)</code></pre>
+<pre class="r"><code>linksBWProps &lt;- read.csv2(&quot;csv/links-bandwidth-properties.csv&quot;)</code></pre>
 </div>
 <div id="hop-properties" class="section level3">
 <h3>Hop Properties</h3>
