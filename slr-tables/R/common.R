@@ -3,7 +3,7 @@
 LoadPackage <- function(package) {
   if(!require(package, character.only = TRUE)){
     install.packages(package)
-    library(package)
+    library(package, character.only = TRUE)
   }
 }
 
