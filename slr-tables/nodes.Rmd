@@ -1,8 +1,9 @@
 ## Nodes
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 source("R/common.R")
 source("R/latex.R")
+source("R/kable.R")
 LoadPackage("tidyverse")
 LoadPackage("kableExtra")
 LoadPackage("ggpubr")
@@ -37,6 +38,10 @@ Properties:
 
 ```{r}
 nodesStaticProps <- read.csv2("csv/nodes-static-properties.csv")
+```
+
+```{r echo=FALSE}
+CreateScrollableTable(nodesStaticProps)
 ```
 
 ### Dynamic Properties

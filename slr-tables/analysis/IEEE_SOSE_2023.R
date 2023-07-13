@@ -1,5 +1,5 @@
-library(markdown)
-rmarkdown::render("nodes.Rmd")
+#library(markdown)
+#rmarkdown::render("nodes.Rmd")
 
 PlotDistribution <- function(distribution, title) {
   return (ggplot(distribution, aes(x=Property, y=Count)) + geom_bar(stat='identity', fill="#00457d") + ggtitle(title) + theme(axis.text.x = element_text(angle = 45, vjust = 0.5), axis.text = element_text(size = 12)))
@@ -35,6 +35,6 @@ otherResources$Property <- gsub("_", "\n", otherResources$Property)
 otherResourcesPlot <- PlotDistribution(otherResources, "(Other) Resources-related Properties")
 
 # Arrange
-arrangedPlot <- ggarrange(typePlot, topologyPlot, CPUPlot, otherResourcesPlot)
+(arrangedPlot <- ggarrange(typePlot, topologyPlot, CPUPlot, otherResourcesPlot))
 
 

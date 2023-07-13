@@ -1,0 +1,55 @@
+## References
+
+[1] E. Yigitoglu, M. Mohamed, L. Liu, and H. Ludwig, “Foggy: A Framework for Continuous Automated IoT Application Deployment in Fog Computing,” in 2017 IEEE International Conference on AI & Mobile Services (AIMS), Honolulu, HI, USA: IEEE, Jun. 2017, pp. 38–45. doi: 10.1109/AIMS.2017.14.
+
+[2] A. Brogi and S. Forti, “QoS-Aware Deployment of IoT Applications Through the Fog,” IEEE Internet Things J., vol. 4, no. 5, pp. 1185–1192, Oct. 2017, doi: 10.1109/JIOT.2017.2701408.
+
+[3] A. Brogi, S. Forti, and A. Ibrahim, “How to Best Deploy Your Fog Applications, Probably,” in 2017 IEEE 1st International Conference on Fog and Edge Computing (ICFEC), Madrid, Spain: IEEE, May 2017, pp. 105–114. doi: 10.1109/ICFEC.2017.8.
+
+[4] O. Skarlat, M. Nardelli, S. Schulte, and S. Dustdar, “Towards QoS-Aware Fog Service Placement,” in 2017 IEEE 1st International Conference on Fog and Edge Computing (ICFEC), Madrid, Spain: IEEE, May 2017, pp. 89–96. doi: 10.1109/ICFEC.2017.12.
+
+[5] V. B. C. Souza, W. Ramirez, X. Masip-Bruin, E. Marin-Tordera, G. Ren, and G. Tashakor, “Handling service allocation in combined Fog-cloud scenarios,” in 2016 IEEE International Conference on Communications (ICC), Kuala Lumpur, Malaysia: IEEE, May 2016, pp. 1–5. doi: 10.1109/ICC.2016.7511465.
+
+[6] Y. Xia, X. Etchevers, L. Letondeur, T. Coupaye, and F. Desprez, “Combining hardware nodes and software components ordering-based heuristics for optimizing the placement of distributed IoT applications in the fog,” in Proceedings of the 33rd Annual ACM Symposium on Applied Computing, Pau France: ACM, Apr. 2018, pp. 751–760. doi: 10.1145/3167132.3167215.
+
+[7] K. Velasquez, D. P. Abreu, M. Curado, and E. Monteiro, “Service placement for latency reduction in the internet of things,” Ann. Telecommun., vol. 72, no. 1–2, pp. 105–115, Feb. 2017, doi: 10.1007/s12243-016-0524-9.
+
+[8] G. Amarasinghe, M. D. de Assuncao, A. Harwood, and S. Karunasekera, “A Data Stream Processing Optimisation Framework for Edge Computing Applications,” in 2018 IEEE 21st International Symposium on Real-Time Distributed Computing (ISORC), Singapore: IEEE, May 2018, pp. 91–98. doi: 10.1109/ISORC.2018.00020.
+
+[9] A. R. Benamer, H. Teyeb, and N. Ben Hadj-Alouane, “Latency-Aware Placement Heuristic in Fog Computing Environment,” in On the Move to Meaningful Internet Systems. OTM 2018 Conferences, H. Panetto, C. Debruyne, H. A. Proper, C. A. Ardagna, D. Roman, and R. Meersman, Eds., in Lecture Notes in Computer Science, vol. 11230. Cham: Springer International Publishing, 2018, pp. 241–257. doi: 10.1007/978-3-030-02671-4_14.
+
+[10] I. Lera, C. Guerrero, and C. Juiz, “Availability-Aware Service Placement Policy in Fog Computing Based on Graph Partitions,” IEEE Internet Things J., vol. 6, no. 2, pp. 3641–3651, Apr. 2019, doi: 10.1109/JIOT.2018.2889511.
+
+[11] M. I. Naas, L. Lemarchand, J. Boukhobza, and P. Raipin, “A graph partitioning-based heuristic for runtime IoT data placement strategies in a fog infrastructure,” in Proceedings of the 33rd Annual ACM Symposium on Applied Computing, Pau France: ACM, Apr. 2018, pp. 767–774. doi: 10.1145/3167132.3167217.
+
+[12] M. I. Naas, P. R. Parvedy, J. Boukhobza, and L. Lemarchand, “iFogStor: An IoT Data Placement Strategy for Fog Infrastructure,” in 2017 IEEE 1st International Conference on Fog and Edge Computing (ICFEC), Madrid: IEEE, May 2017, pp. 97–104. doi: 10.1109/ICFEC.2017.15.
+
+[13] T. Ouyang, Z. Zhou, and X. Chen, “Follow Me at the Edge: Mobility-Aware Dynamic Service Placement for Mobile Edge Computing,” IEEE J. Select. Areas Commun., vol. 36, no. 10, pp. 2333–2345, Oct. 2018, doi: 10.1109/JSAC.2018.2869954.
+
+[14] V. De Maio and I. Brandic, “First Hop Mobile Offloading of DAG Computations,” in 2018 18th IEEE/ACM International Symposium on Cluster, Cloud and Grid Computing (CCGRID), Washington, DC, USA: IEEE, May 2018, pp. 83–92. doi: 10.1109/CCGRID.2018.00023.
+
+[15] R. Gargees et al., “Incident-Supporting Visual Cloud Computing Utilizing Software-Defined Networking,” IEEE Trans. Circuits Syst. Video Technol., vol. 27, no. 1, pp. 182–197, Jan. 2017, doi: 10.1109/TCSVT.2016.2564898.
+
+[16] H.-J. Hong, P.-H. Tsai, A.-C. Cheng, M. Y. S. Uddin, N. Venkatasubramanian, and C.-H. Hsu, “Supporting Internet-of-Things Analytics in a Fog Computing Platform,” in 2017 IEEE International Conference on Cloud Computing Technology and Science (CloudCom), Hong Kong: IEEE, Dec. 2017, pp. 138–145. doi: 10.1109/CloudCom.2017.45.
+
+[17] S. Venticinque and A. Amato, “A methodology for deployment of IoT application in fog,” J Ambient Intell Human Comput, vol. 10, no. 5, pp. 1955–1976, May 2019, doi: 10.1007/s12652-018-0785-4.
+
+[18] F. Faticanti, F. De Pellegrini, D. Siracusa, D. Santoro, and S. Cretti, “Cutting Throughput with the Edge: App-Aware Placement in Fog Computing,” in 2019 6th IEEE International Conference on Cyber Security and Cloud Computing (CSCloud)/ 2019 5th IEEE International Conference on Edge Computing and Scalable Cloud (EdgeCom), Paris, France: IEEE, Jun. 2019, pp. 196–203. doi: 10.1109/CSCloud/EdgeCom.2019.00026.
+
+[19] C. Guerrero, I. Lera, and C. Juiz, “Evaluation and efficiency comparison of evolutionary algorithms for service placement optimization in fog architectures,” Future Generation Computer Systems, vol. 97, pp. 131–144, Aug. 2019, doi: 10.1016/j.future.2019.02.056.
+
+[20] F. Faticanti, M. Savi, F. D. Pellegrini, P. Kochovski, V. Stankovski, and D. Siracusa, “Deployment of Application Microservices in Multi-Domain Federated Fog Environments,” in 2020 International Conference on Omni-layer Intelligent Systems (COINS), Barcelona, Spain: IEEE, Aug. 2020, pp. 1–6. doi: 10.1109/COINS49042.2020.9191379.
+
+[21] F. Faticanti, F. De Pellegrini, D. Siracusa, D. Santoro, and S. Cretti, “Throughput-Aware Partitioning and Placement of Applications in Fog Computing,” IEEE Trans. Netw. Serv. Manage., vol. 17, no. 4, pp. 2436–2450, Dec. 2020, doi: 10.1109/TNSM.2020.3023011.
+
+[22] V. Armani, F. Faticanti, S. Cretti, S. Kum, and D. Siracusa, “A Cost-Effective Workload Allocation Strategy for Cloud-Native Edge Services,” 2021, doi: 10.48550/ARXIV.2110.12788.
+
+[23] D. Alencar, C. Both, R. Antunes, H. Oliveira, E. Cerqueira, and D. Rosario, “Dynamic Microservice Allocation for Virtual Reality Distribution With QoE Support,” IEEE Trans. Netw. Serv. Manage., vol. 19, no. 1, pp. 729–740, Mar. 2022, doi: 10.1109/TNSM.2021.3076922.
+
+[24] K. Fu et al., “QoS-Aware and Resource Efficient Microservice Deployment in Cloud-Edge Continuum,” in 2021 IEEE International Parallel and Distributed Processing Symposium (IPDPS), Portland, OR, USA: IEEE, May 2021, pp. 932–941. doi: 10.1109/IPDPS49936.2021.00102.
+
+[25] W. Lv et al., “Microservice Deployment in Edge Computing Based on Deep Q Learning,” IEEE Trans. Parallel Distrib. Syst., pp. 1–1, 2022, doi: 10.1109/TPDS.2022.3150311.
+
+[26] K. Kaur, F. Guillemin, V. Q. Rodriguez, and F. Sailhan, “Latency and network aware placement for cloud-native 5G/6G services,” in 2022 IEEE 19th Annual Consumer Communications & Networking Conference (CCNC), Las Vegas, NV, USA: IEEE, Jan. 2022, pp. 114–119. doi: 10.1109/CCNC49033.2022.9700582.
+
+[27] N. Mehran, D. Kimovski, and R. Prodan, “MAPO: A Multi-Objective Model for IoT Application Placement in a Fog Environment,” in Proceedings of the 9th International Conference on the Internet of Things, Bilbao Spain: ACM, Oct. 2019, pp. 1–8. doi: 10.1145/3365871.3365892.
