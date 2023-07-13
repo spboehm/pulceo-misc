@@ -2,7 +2,11 @@
 #rmarkdown::render("nodes.Rmd")
 
 PlotDistribution <- function(distribution, title) {
-  return (ggplot(distribution, aes(x=Property, y=Count)) + geom_bar(stat='identity', fill="#00457d") + ggtitle(title) + theme(axis.text.x = element_text(angle = 45, vjust = 0.5), axis.text = element_text(size = 12)))
+  return (ggplot(distribution, aes(x=Property, y=Count, label = Count)) + 
+            geom_bar(stat='identity', fill="#00457d") + 
+            ggtitle(title) + 
+            geom_text(size = 4, color="white", position = position_stack(vjust = 0.5)) +
+            theme(axis.text.x = element_text(angle = 45, vjust = 0.5), axis.text = element_text(size = 12)))
 }
 
 occurences <- as.data.frame(sapply(nodesStaticProps, function (x) {ifelse(x=="y", 1, 0)}))
