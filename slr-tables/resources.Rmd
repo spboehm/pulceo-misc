@@ -45,3 +45,6 @@ The following resources are not covered so far:
 - Paths
 - Requests
 - Users
+
+```{r child=c('references.Rmd')}
+```
