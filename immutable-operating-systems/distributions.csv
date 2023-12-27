@@ -1,0 +1,29 @@
+Vendor;Distribution;Graphical user interface;Minimal Server ISO;Free access;Immutable;ISO;K3s;K8s;Metal;Cloud;FDE;Comment;Comment 1;Comment 2
+Fedora;Silverblue;GNOME;y;y;y;y;n;n;;;;;;
+Fedora;Kinoite;KDE Plasma;y;y;y;y;n;n;;;;;;
+Fedora;Sericea;Sway;y;y;y;y;n;n;;;;;;
+Fedora;Onyx;Budgie;y;y;y;y;n;n;;;;;;
+Fedora;CoreOS;None;y;y;y;y;n;n;y;y;y;;;
+openSUSE;Aeon;GNOME;y;y;y;y;n;n;;;;;;
+openSUSE;Kalpa;KDE Plasma;y;y;y;y;n;n;;;;;;
+openSUSE;MicroOS;None;y;y;y;y;y;?;y;y;y;;;
+NixOS contributors;NixOS;GNOME;y;y;y;y;;;;;;Also used as package manager.;;
+NixOS contributors;NixOS;KDE Plasma;y;y;y;y;;;;;;Also used as package manager.;;
+NixOS contributors;NixOS;None;y;y;y;y;y;y;;;p;Also used as package manager.;Full Disk Encryption might not work with TPM.;
+;Guix;Various;n, but minimal installation;y;y;y;n;n;;;;Also used as package manager.;;
+Endless OS Foundation LLC;EndlessOS;GNOME;n;y;y;y;;;;;;;;
+Google;ChromeOS (Flex);Google Chrome;n;n;y;?;;;;;;;;
+Google;ChromiumOS;Google Chrome;n;y;y;?;;;;;;;;
+rlxOS;rlxOS GNU/Linux;Xfce4;n;y;y;y;;;;;;;;
+carbonOS;carbonOS;GNOME;n;y;y;y;;;;;;;;
+;AshOS/AstOS;Various, None;n, but minimal installation;y;y;n;;;;;;Wrapper around any distribution.;Meta distribution.;
+VanillaOS;Kinetic;GNOME;n;y;y;y;;;;;;Based on Ubuntu 22.10.;;
+Nitrux Latinoamericana S.C.;Nitrux;KDE Plasma;n;y;y;y;;;;;;;;
+;blendOS;Various;n;y;y;y;;;;;;;;
+;Kairos;None;y;y;y;y;y;;;;;Wrapper around any distribution.;Meta distribution.;
+;Universal Blue;Various, None;y;y;y;y;n;n;;;;Based on Fedora (Silverblue).;;
+AWS;BottlerocketOS;None;y;y;y;p;n;p;y;y;n;Prepared Images for K8s.;Intended to be connected to an already available control plane.;ISO via command line tool.
+Flatcar Project Contributors;Flatcar Container Linux;None;y;y;y;y;n;y;y;y;n;;;
+Sidero Labs;Talos Linux;None;y;y;y;y;n;y;y;y;y;;;
+SUSE Rancher;Elemental;None;y;y;y;p;y;y;y;?;n;Previous K3OS.;K8s only with RKE2.;ISO via command line tool.
+Ubuntu;CoreOS;None;y;y;y;y;n;n;y;y;y;Only snaps with MicroK8s.;;
