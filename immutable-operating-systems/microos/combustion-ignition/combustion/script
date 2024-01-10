@@ -33,7 +33,7 @@ EOF
     [ipv4]
     method=manual
     dns=192.168.125.1
-    address1=192.168.125.2/24,192.168.125.1
+    address1=192.168.125.10/24,192.168.125.1
 EOF
 }
 
@@ -60,10 +60,13 @@ echo 'root:$6$sJ7HRQHeyKIilmc6$uM729dc/w11EMwf2Ywf0Shp9O9cHpZ2h.MPUatITZrgQ53HTv
 mkdir -pm700 /root/.ssh/
 echo 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO6ThrVoB8yod4TFlffB2W117yjzILpwX/Jv/HkSwJE868aNvxPCtWwICHLTWV3wgqtkWcLXF1wLsoLq60hhNPg= sebastian.boehm@d162046.dhcp.netz-service.uni-bamberg.de' >> /root/.ssh/authorized_keys
 systemctl enable sshd.service
-# Install vim-small
-zypper --non-interactive install vim-small
 
 ### --- END SYSTEM CONFIGURATION --- ###
+
+### --- START K3S INSTALLATION --- ###
+
+### --- END K3S INSTALLATION --- ###
+
 
 # Leave a marker
 echo "Configured with combustion" > /etc/issue.d/combustion
