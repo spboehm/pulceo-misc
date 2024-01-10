@@ -3,7 +3,13 @@
 set -euxo pipefail
 
 ### --- START VARIABLES --- ###
+# SYSTEM
 NODE_HOSTNAME="pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1"
+
+# KEEPALIVED
+USE_KEEPALIVED=1
+KEEPALIVED_FLOATING_IP="192.168.125.2"
+
 ### --- END VARIABLES --- ###
 
 ### --- START NETWORK CONFIGURATION --- ###
