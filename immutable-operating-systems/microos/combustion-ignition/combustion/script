@@ -68,6 +68,10 @@ systemctl enable sshd.service
 
 ### --- END SYSTEM CONFIGURATION --- ###
 
+### --- START KEEPALIVED CONFIGURATION --- ###
+
+### --- END KEEPALIVED CONFIGURATION --- ###
+
 ### --- START K3S INSTALLATION --- ###
 
 ### --- END K3S INSTALLATION --- ###
