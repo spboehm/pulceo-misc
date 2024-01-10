@@ -7,9 +7,8 @@ set -euxo pipefail
 NODE_HOSTNAME="pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1"
 
 # KEEPALIVED
-USE_KEEPALIVED=1
-KEEPALIVED_FLOATING_IP="192.168.125.2"
-
+USE_CLUSTER_LOAD_BALANCER_WITH_KEEPALIVED=1 # do not use in cloud environments
+CLUSTER_LOAD_BALANCER_IP="192.168.125.2" # replace with floating IP or IP address of cloud load balancer
 ### --- END VARIABLES --- ###
 
 ### --- START NETWORK CONFIGURATION --- ###
