@@ -1,2 +1,4 @@
 #!/bin/bash
-mkisofs -full-iso9660-filenames -o /tmp/combustion.iso -V combustion combustion-ignition
+TMP_PATH="/tmp/ios-microos"
+mkdir -p -m 0777 $TMP_PATH
+mkisofs -full-iso9660-filenames -o $TMP_PATH/combustion.iso -V combustion combustion-ignition

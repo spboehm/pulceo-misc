@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 ### --- START VARIABLES --- ###
-NODE_HOSTNAME=pulceo-microos-node-1-1
+NODE_HOSTNAME="pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1"
 ### --- END VARIABLES --- ###
 
 ### --- START NETWORK CONFIGURATION --- ###

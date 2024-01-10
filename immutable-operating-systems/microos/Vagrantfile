@@ -1,13 +1,13 @@
 Vagrant.configure(2) do |config| 
-  config.vm.define "pulceo-microos-node-1-1" do |m|
+  config.vm.define "pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1" do |m|
     m.vm.synced_folder ".", "/vagrant", disabled: 'true'
     m.vm.box = "opensuse/MicroOS.x86_64"
     m.vm.box_version = "16.0.0.20231226"
-    m.vm.hostname = "pulceo-microos-node-1-1"
+    m.vm.hostname = "pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1"
     config.vm.provider "libvirt" do |libvirt|
       libvirt.memory = 2048
       libvirt.cpus = 2
-      libvirt.storage :file, :device => :cdrom, :path => "/tmp/combustion.iso"
+      libvirt.storage :file, :device => :cdrom, :path => "/tmp/ios-microos/combustion.iso"
       libvirt.tpm_model = "tpm-crb"
       libvirt.tpm_type = "emulator"
       libvirt.tpm_version = "2.0"
