@@ -1,14 +1,69 @@
 #!/bin/bash
-# combustion: network
+# combustion: network prepare
+set -euxo pipefail
+
+### --- START VARIABLES --- ###
+NODE_HOSTNAME=pulceo-microos-node-1-1
+### --- END VARIABLES --- ###
+
+### --- START NETWORK CONFIGURATION --- ###
+
+nm_config() {
+    umask 077 # Required for NM config
+    mkdir -p /etc/NetworkManager/system-connections/
+    
+    cat >/etc/NetworkManager/system-connections/dynamic.nmconnection <<-EOF
+    [connection]
+    id=dynamic
+    type=ethernet
+    interface-name=ens5
+    autoconnect=true
+
+    [ipv4]
+    method=auto
+EOF
+
+    cat >/etc/NetworkManager/system-connections/static.nmconnection <<-EOF
+    [connection]
+    id=static
+    type=ethernet
+    interface-name=ens6
+    autoconnect=true
+
+    [ipv4]
+    method=manual
+    dns=192.168.125.1
+    address1=192.168.125.2/24,192.168.125.1
+EOF
+}
+
+if [ "${1-}" = "--prepare" ]; then
+    nm_config # Configure NM in the initrd
+    exit 0
+fi
+
 # Redirect output to the console
 exec > >(exec tee -a /dev/tty0) 2>&1
+nm_config # Configure NM in the system
+curl example.com
+
+### --- END NETWORK CONFIGURATION --- ###
+
+### --- START SYSTEM CONFIGURATION --- ###
+
+## Set hostname
+echo $NODE_HOSTNAME > /etc/hostname
+
 # Set a password for root, generate the hash with "openssl passwd -6"
 echo 'root:$6$sJ7HRQHeyKIilmc6$uM729dc/w11EMwf2Ywf0Shp9O9cHpZ2h.MPUatITZrgQ53HTvk8iRW5i8LKvIZoNSvDGYgORUjUo6MXVd1dZ11' | chpasswd -e
 # Add a public ssh key and enable sshd
 mkdir -pm700 /root/.ssh/
-echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIoQyWzINPVvv37RLxb/QKO94XCOUo2bIC91XwAXCfoAgy165XNjPSgOLe74MCC/A0rIRt1hBfK18ynDhPSnqYSGXTo74ReEoS8WQ7gGR0e/h27ozuELpOWO8TVotBIuIhmS1Bepnk14TXjpCM/yq4DD8eg9kEz/eq5yjdwTUSMnLg+RERQzLxkWp41LKJ2itKjHh6vy+HDJDOzsSojdd6GeWfOwQkQMtL2Y0S1YEvrbT+rRHmsjZf4j+bxZnw/XpGJkPHZGs9AFwiLX00Q2b0ECuDSBtWaVNbJ0bU8rkimUGo6RHEE7EEtgNpqX0PFt0/Zwn2PFi2UHf5nSD2JESh' >> /root/.ssh/authorized_keys
+echo 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO6ThrVoB8yod4TFlffB2W117yjzILpwX/Jv/HkSwJE868aNvxPCtWwICHLTWV3wgqtkWcLXF1wLsoLq60hhNPg= sebastian.boehm@d162046.dhcp.netz-service.uni-bamberg.de' >> /root/.ssh/authorized_keys
 systemctl enable sshd.service
 # Install vim-small
 zypper --non-interactive install vim-small
+
+### --- END SYSTEM CONFIGURATION --- ###
+
 # Leave a marker
 echo "Configured with combustion" > /etc/issue.d/combustion

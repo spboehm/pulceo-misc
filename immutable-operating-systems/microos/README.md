@@ -4,6 +4,7 @@
 
 * KVM with libvirt
 * Vagrant
+* [OPTIONAL] Add the normal user to `qemu` and `libvirt` group
 
 ## How to proceed
 
@@ -12,5 +13,5 @@
 
 ## TODOs
 
--[ ] Add UEFI configuration with Secure Boot
--[ ] Add TPM configuration
+- [ ] Add UEFI configuration with Secure Boot
+- [ ] Add TPM configuration
