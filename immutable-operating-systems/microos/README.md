@@ -18,3 +18,5 @@
 - [ ] Revise SELINUX settings for haproxy_t in `immutable-operating-systems/microos/combustion-ignition/combustion/script`
 - [ ] Refactor to one invocation of `zypper install [PKGs]` to reduce deployment time
 - [ ] Provide pre-built image: [MicroOS Images](https://build.opensuse.org/package/show/openSUSE:Factory/openSUSE-MicroOS)
+- [ ] Remove `wget`, `curl`, and `nano` before adding the production network
+- [ ] Bump K3S version to 

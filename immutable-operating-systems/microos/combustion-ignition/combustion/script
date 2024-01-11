@@ -3,12 +3,17 @@
 set -euxo pipefail
 
 ### --- START VARIABLES --- ###
-# SYSTEM
+## SYSTEM
 NODE_HOSTNAME="pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1"
 
-# KEEPALIVED
+## KEEPALIVED
 USE_CLUSTER_LOAD_BALANCER_WITH_KEEPALIVED=1 # do not use in cloud environments
 CLUSTER_LOAD_BALANCER_IP="192.168.125.2" # replace with floating IP or IP address of cloud load balancer
+
+## K3S
+K3S_TOKEN=$(cat k3s_token)
+INSTALL_K3S_UPSTREAM=true  ## Set to false if you want to use the openSUSE rpm, also add the package name to USER_REQUIRED_PACKAGES
+INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644 --node-ip=192.168.125.10'
 ### --- END VARIABLES --- ###
 
 ### --- START NETWORK CONFIGURATION --- ###
@@ -66,14 +71,43 @@ echo 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO
 systemctl enable sshd.service
 
 # Required for SELINUX, installs semanage
-zypper --non-interactive install policycoreutils-python-utils
+# TODO: remove for production
+zypper --non-interactive install policycoreutils-python-utils wget curl nano
 ### --- END SYSTEM CONFIGURATION --- ###
 
 ## TODO: REMOVE - include installation of nginx
-./nginx.sh
+# ./nginx.sh
 
 ## include installation of  haproxy
-./haproxy.sh
+# ./haproxy.sh
+
+### --- START K3S INSTALLATION --- ###
+if $INSTALL_K3S_UPSTREAM; then
+    ## Download and install the latest k3s installer
+    curl -L --output k3s_installer.sh https://get.k3s.io && install -m755 k3s_installer.sh /usr/bin/
+    ## Create a systemd unit that installs k3s if not installed yet
+    cat <<- EOF > /etc/systemd/system/install-rancher-k3s.service
+    [Unit]
+    Description=Run K3s installer
+    Wants=network-online.target
+    After=network.target network-online.target
+    ConditionPathExists=/usr/bin/k3s_installer.sh
+    ConditionPathExists=!/usr/local/bin/k3s
+    [Service]
+    Type=forking
+    TimeoutStartSec=120
+    Environment="INSTALL_K3S_EXEC=$INSTALL_K3S_EXEC"
+    ExecStart=/usr/bin/k3s_installer.sh
+    RemainAfterExit=yes
+    KillMode=process
+    [Install]
+    WantedBy=multi-user.target
+EOF
+fi
+
+systemctl enable install-rancher-k3s.service
+
+### --- END K3S INSTALLATION --- ###
 
 ### --- START KEEPALIVED CONFIGURATION --- ###
 # zypper --non-interactive install keepalived

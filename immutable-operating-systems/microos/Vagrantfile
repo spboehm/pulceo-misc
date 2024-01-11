@@ -1,7 +1,7 @@
 Vagrant.configure(2) do |config| 
   config.vm.define "pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1" do |m|
     m.vm.synced_folder ".", "/vagrant", disabled: 'true'
-    m.vm.box = "opensuse/MicroOS.x86_64"
+    m.vm.box = "opensuse/MicroOS-ContainerHost.x86_64"
     m.vm.box_version = "16.0.0.20240109"
     m.vm.hostname = "pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1"
     config.vm.provider "libvirt" do |libvirt|
