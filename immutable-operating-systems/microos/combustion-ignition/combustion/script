@@ -98,6 +98,7 @@ if $INSTALL_K3S_UPSTREAM; then
     TimeoutStartSec=120
     Environment="INSTALL_K3S_EXEC=$INSTALL_K3S_EXEC"
     ExecStart=/usr/bin/k3s_installer.sh
+    ExecStartPost=/usr/sbin/reboot
     RemainAfterExit=yes
     KillMode=process
     [Install]
