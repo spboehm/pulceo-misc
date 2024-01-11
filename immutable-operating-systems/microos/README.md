@@ -13,5 +13,7 @@
 
 ## TODOs
 
--[ ] Add UEFI configuration with Secure Boot
--[ ] Add TPM configuration
+- [ ] Add UEFI configuration with Secure Boot
+- [ ] Add TPM configuration
+- [ ] Revise SELINUX settings for haproxy_t in `immutable-operating-systems/microos/combustion-ignition/combustion/script`
+- [ ] Refactor to one invocation of `zypper install [PKGs]` to reduce deployment time

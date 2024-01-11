@@ -50,13 +50,12 @@ fi
 # Redirect output to the console
 exec > >(exec tee -a /dev/tty0) 2>&1
 nm_config # Configure NM in the system
-curl example.com
 
 ### --- END NETWORK CONFIGURATION --- ###
 
 ### --- START SYSTEM CONFIGURATION --- ###
 
-## Set hostname
+# Set hostname
 echo $NODE_HOSTNAME > /etc/hostname
 
 # Set a password for root, generate the hash with "openssl passwd -6"
@@ -66,10 +65,72 @@ mkdir -pm700 /root/.ssh/
 echo 'ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO6ThrVoB8yod4TFlffB2W117yjzILpwX/Jv/HkSwJE868aNvxPCtWwICHLTWV3wgqtkWcLXF1wLsoLq60hhNPg= sebastian.boehm@d162046.dhcp.netz-service.uni-bamberg.de' >> /root/.ssh/authorized_keys
 systemctl enable sshd.service
 
+# Required for SELINUX, installs semanage
+zypper --non-interactive install policycoreutils-python-utils
+
+
 ### --- END SYSTEM CONFIGURATION --- ###
 
-### --- START KEEPALIVED CONFIGURATION --- ###
+### --- EXAMPLE: START NGINX --- ###
+zypper --non-interactive install nginx
+systemctl enable nginx
+### --- EXAMPLE: END NGINX --- ###
 
+### --- START HAPROXY CONFIGURATION --- ###
+zypper --non-interactive install haproxy
+    
+    cat >/etc/haproxy/haproxy.cfg <<-EOF
+    defaults
+        timeout connect 10s
+        timeout client 30s
+        timeout server 30s
+
+    frontend k3s-frontend
+        bind *:6443
+        mode tcp
+        option tcplog
+        default_backend k3s-backend
+
+    backend k3s-backend
+        mode tcp
+        option tcp-check
+        balance roundrobin
+        default-server inter 10s downinter 5s
+        server server-1 192.168.125.10:80 check
+EOF
+
+## set permissive mode for haproxy
+semanage permissive -a haproxy_t
+systemctl enable haproxy
+### --- END HAPROXY CONFIGURATION --- ###
+
+### --- START KEEPALIVED CONFIGURATION --- ###
+# zypper --non-interactive install keepalived
+
+#     cat >/etc/keepalived/keepalived.conf <<-EOF
+#     vrrp_script chk_haproxy {
+#         script 'killall -0 haproxy' # faster than pidof
+#         interval 2
+#     }
+
+#     vrrp_instance haproxy-vip {
+#         interface ens6
+#         state MASTER # MASTER on lb-1, BACKUP on lb-2
+#         priority 200 # 200 on lb-1, 100 on lb-2
+
+#         virtual_router_id 51
+
+#         virtual_ipaddress {
+#             192.168.125.2/24
+#         }
+
+#         track_script {
+#             chk_haproxy
+#         }
+#     }
+# EOF
+# systemctl enable keepalived
+# systemctl start keepalived
 ### --- END KEEPALIVED CONFIGURATION --- ###
 
 ### --- START K3S INSTALLATION --- ###
