@@ -10,10 +10,6 @@ NODE_HOSTNAME="pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1"
 USE_CLUSTER_LOAD_BALANCER_WITH_KEEPALIVED=1 # do not use in cloud environments
 CLUSTER_LOAD_BALANCER_IP="192.168.125.2" # replace with floating IP or IP address of cloud load balancer
 
-## K3S
-K3S_TOKEN=$(cat k3s_token)
-INSTALL_K3S_UPSTREAM=true  ## Set to false if you want to use the openSUSE rpm, also add the package name to USER_REQUIRED_PACKAGES
-INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644 --node-ip=192.168.125.10'
 ### --- END VARIABLES --- ###
 
 ### --- START NETWORK CONFIGURATION --- ###
@@ -82,6 +78,10 @@ zypper --non-interactive install policycoreutils-python-utils wget curl nano
 # ./haproxy.sh
 
 ### --- START K3S INSTALLATION --- ###
+## K3S
+cat k3s_token >> /root/k3s_token
+INSTALL_K3S_UPSTREAM=true  ## Set to false if you want to use the openSUSE rpm, also add the package name to USER_REQUIRED_PACKAGES
+INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644 --node-ip=192.168.125.10 --token-file=/root/k3s_token'
 if $INSTALL_K3S_UPSTREAM; then
     ## Download and install the latest k3s installer
     curl -L --output k3s_installer.sh https://get.k3s.io && install -m755 k3s_installer.sh /usr/bin/
@@ -107,7 +107,6 @@ EOF
 fi
 
 systemctl enable install-rancher-k3s.service
-
 ### --- END K3S INSTALLATION --- ###
 
 ### --- START KEEPALIVED CONFIGURATION --- ###
