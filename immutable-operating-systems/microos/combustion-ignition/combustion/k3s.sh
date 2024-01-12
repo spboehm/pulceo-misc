@@ -1,8 +1,8 @@
 ### --- START K3S INSTALLATION --- ###
 ## K3S
+source server.env
 cat k3s_token >> /root/k3s_token
 INSTALL_K3S_UPSTREAM=true  ## Set to false if you want to use the openSUSE rpm, also add the package name to USER_REQUIRED_PACKAGES
-INSTALL_K3S_EXEC='server --cluster-init --write-kubeconfig-mode=644 --node-ip=192.168.125.10 --token-file=/root/k3s_token'
 if $INSTALL_K3S_UPSTREAM; then
     ## Download and install the latest k3s installer
     curl -L --output k3s_installer.sh https://get.k3s.io && install -m755 k3s_installer.sh /usr/bin/

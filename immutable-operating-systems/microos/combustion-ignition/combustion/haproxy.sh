@@ -1,4 +1,5 @@
 #!/bin/bash
+source server.env
 ### --- START HAPROXY CONFIGURATION --- ###
 zypper --non-interactive install haproxy
     

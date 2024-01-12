@@ -5,7 +5,7 @@ Vagrant.configure(2) do |config|
     a.vm.box_version = "16.0.0.20240109"
     a.vm.hostname = "pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-0"
     a.vm.provider "libvirt" do |libvirt|
-      libvirt.memory = 1024
+      libvirt.memory = 2048
       libvirt.cpus = 1
       libvirt.storage :file, :device => :cdrom, :path => "/tmp/ios-microos/combustion-0.iso"
       libvirt.tpm_model = "tpm-crb"
@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
     b.vm.box_version = "16.0.0.20240109"
     b.vm.hostname = "pulceo-microos-node-632611c1-0306-4d9b-b8cf-94dd16eb0a87-1"
     b.vm.provider "libvirt" do |libvirt|
-      libvirt.memory = 1024
+      libvirt.memory = 2048
       libvirt.cpus = 1
       libvirt.storage :file, :device => :cdrom, :path => "/tmp/ios-microos/combustion-1.iso"
       libvirt.tpm_model = "tpm-crb"

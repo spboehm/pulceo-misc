@@ -80,7 +80,7 @@ zypper --non-interactive install policycoreutils-python-utils wget curl nano
 
 ## include k3s-server-1.sh
 ## TODO: comment
-#./k3s.sh
+./k3s.sh
 
 ### --- START KEEPALIVED CONFIGURATION --- ###
 # zypper --non-interactive install keepalived
