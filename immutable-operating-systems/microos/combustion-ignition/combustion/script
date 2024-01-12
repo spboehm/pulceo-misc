@@ -1,6 +1,7 @@
 #!/bin/bash
 # combustion: network prepare
 set -euxo pipefail
+set -o allexport
 source server.env
 
 ### --- START VARIABLES --- ###
