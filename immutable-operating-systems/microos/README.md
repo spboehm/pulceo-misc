@@ -19,6 +19,6 @@
 - [ ] Refactor to one invocation of `zypper install [PKGs]` to reduce deployment time
 - [ ] Provide pre-built image: [MicroOS Images](https://build.opensuse.org/package/show/openSUSE:Factory/openSUSE-MicroOS)
 - [ ] Remove `wget`, `curl`, and `nano` before adding the production network
-- [ ] Bump K3S version to v1.29
+- [ ] Bump K3S version to `v1.29`
 - [ ] Check variable export in `script`, introduce concise `env`-files
 - [ ] Introduce further variables in folder `var` for all `env`-files
