@@ -22,12 +22,12 @@ NODES_RAW=fromJSON(file=paste("raw", SUBFOLDER, "NODES.json", sep = "/"))
 ```
 
 ```{r}
-node_mapping <- Reduce(rbind, lapply(NODES, function (x) {
+node_mapping <- Reduce(rbind, lapply(NODES_RAW, function (x) {
   return(c(x$hostname, x$node$name))
 }))
 
 node_mapping <- as.data.frame(node_mapping)
-names(node_mapping) <- c("hostname", "nodeName")
+names(node_mapping) <- c("sourceHost", "nodeName")
 ```
 
 
@@ -41,7 +41,7 @@ TransfromNodeMetricsMetadata <- function (df) {
   df$metricType <- as.factor(df$metricType)
   df$sourceHost <- as.factor(df$sourceHost)
   df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")
-  df <- df %>% mutate(name = if_else(sourceHost == as.character(node_mapping[node_mapping == as.character(sourceHost),][1]), as.character(node_mapping[node_mapping == as.character(sourceHost),][2]), NA))
+  df <- merge(df, node_mapping, by = "sourceHost")
   return(df)
 }
 
@@ -51,7 +51,7 @@ filterResourceUtilForNode <- function(df, field, resourceType, resource) {
 
 CreateSummary <- function(df) {
   return(df %>% 
-    group_by(sourceHost) %>% 
+    group_by(nodeName) %>% 
     summarize(min = min(X_value),
               avg = mean(X_value),
               max = max(X_value),
@@ -59,15 +59,10 @@ CreateSummary <- function(df) {
 }
 ```
 
-
-
 ## CPU utilization
 
 ```{r}
 CPU_UTIL <- TransfromNodeMetricsMetadata(CPU_UTIL_RAW)
-CPU_UTIL$name <- CPU_UTIL$sourceHost
-
-
 ```
 
 
@@ -75,18 +70,11 @@ CPU_UTIL$name <- CPU_UTIL$sourceHost
 CreateSummary(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"))
 ```
 
-
-
-
 ```{r}
 cpu_plot_node <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), aes(x=timestamp, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost))
 cpu_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "pulceo-node-agent"), aes(x=timestamp, y=X_value, group=resourceName)) + geom_line() + facet_grid(vars(resourceName))
 cpu_plot_pod_traefik <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "traefik"), aes(x=timestamp, y=X_value, group=resourceName)) + geom_line() + facet_grid(vars(resourceName))
 ```
-
-
-
-
 
 ## Memory Utilization
 
