@@ -1,0 +1,67 @@
+[
+  {
+    "uuid": "22a00038-d5f0-4a43-b603-42f6e6ed5de4",
+    "nodeUUID": "1e67a931-9799-45f0-8088-13563a3351a9",
+    "nodeName": "fog1",
+    "storageCapacity": {
+      "size": 26.2,
+      "slots": 0
+    },
+    "storageAllocatable": {
+      "size": 0.0,
+      "slots": 0
+    }
+  },
+  {
+    "uuid": "36813139-0494-413f-b136-78b816ce2069",
+    "nodeUUID": "07137e80-40a8-450e-ba6a-33335e876c2b",
+    "nodeName": "fog2",
+    "storageCapacity": {
+      "size": 26.2,
+      "slots": 0
+    },
+    "storageAllocatable": {
+      "size": 0.0,
+      "slots": 0
+    }
+  },
+  {
+    "uuid": "a72eee24-1483-4851-bb6a-8a83f8d5eaeb",
+    "nodeUUID": "2b45099c-b32c-4989-952e-3f3549b80342",
+    "nodeName": "fog3",
+    "storageCapacity": {
+      "size": 26.2,
+      "slots": 0
+    },
+    "storageAllocatable": {
+      "size": 0.0,
+      "slots": 0
+    }
+  },
+  {
+    "uuid": "93ef1d3d-6a14-4ed7-89dc-b5e514071588",
+    "nodeUUID": "d6772b50-bd75-4aeb-bc37-2afbec995972",
+    "nodeName": "cloud1",
+    "storageCapacity": {
+      "size": 28.9,
+      "slots": 0
+    },
+    "storageAllocatable": {
+      "size": 0.0,
+      "slots": 0
+    }
+  },
+  {
+    "uuid": "0e746f97-0c3f-45a1-8140-cdda1073fab4",
+    "nodeUUID": "a921b525-d2b9-4789-8274-d06b1e3a5b88",
+    "nodeName": "cloud2",
+    "storageCapacity": {
+      "size": 28.9,
+      "slots": 0
+    },
+    "storageAllocatable": {
+      "size": 0.0,
+      "slots": 0
+    }
+  }
+]

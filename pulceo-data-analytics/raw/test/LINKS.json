@@ -1,0 +1,58 @@
+[
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "6945a661-d52b-487c-a13b-48374976eb1c",
+    "remoteNodeLinkUUID": "9591adba-da41-4a0f-abaf-86d6f5a260f0",
+    "name": "fog1-fog3",
+    "srcNodeUUID": "1e67a931-9799-45f0-8088-13563a3351a9",
+    "destNodeUUID": "2b45099c-b32c-4989-952e-3f3549b80342"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "24251e8a-7104-4e02-bd16-b752b9b66db4",
+    "remoteNodeLinkUUID": "69748d58-31be-48e2-aca8-972c7149aff3",
+    "name": "fog1-fog2",
+    "srcNodeUUID": "1e67a931-9799-45f0-8088-13563a3351a9",
+    "destNodeUUID": "07137e80-40a8-450e-ba6a-33335e876c2b"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "28e6c3e9-7e7c-4be1-be64-683cad9f85f0",
+    "remoteNodeLinkUUID": "3b910a8a-3d0e-4262-8a4d-7244dee1f0c3",
+    "name": "fog3-fog2",
+    "srcNodeUUID": "2b45099c-b32c-4989-952e-3f3549b80342",
+    "destNodeUUID": "07137e80-40a8-450e-ba6a-33335e876c2b"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "ed14d582-7199-41a4-94fa-32507db80310",
+    "remoteNodeLinkUUID": "a802e845-2087-4dcc-a15c-4adf5e030480",
+    "name": "fog1-cloud1",
+    "srcNodeUUID": "1e67a931-9799-45f0-8088-13563a3351a9",
+    "destNodeUUID": "d6772b50-bd75-4aeb-bc37-2afbec995972"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "13510f66-1b15-4d8b-9e66-bab122e74989",
+    "remoteNodeLinkUUID": "fb5a1ca8-6873-406c-96f2-1626f0265958",
+    "name": "fog1-cloud2",
+    "srcNodeUUID": "1e67a931-9799-45f0-8088-13563a3351a9",
+    "destNodeUUID": "a921b525-d2b9-4789-8274-d06b1e3a5b88"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "04d2809f-528d-4de8-a655-583403c2b11f",
+    "remoteNodeLinkUUID": "e073d38e-6f4e-4522-9bd5-2b2677867d2a",
+    "name": "cloud1-fog1",
+    "srcNodeUUID": "d6772b50-bd75-4aeb-bc37-2afbec995972",
+    "destNodeUUID": "1e67a931-9799-45f0-8088-13563a3351a9"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "969f46dc-46d3-4e17-83ca-ab308006eddf",
+    "remoteNodeLinkUUID": "ad1b1cb5-f79e-4f51-b199-a1977297c2bc",
+    "name": "cloud1-fog2",
+    "srcNodeUUID": "d6772b50-bd75-4aeb-bc37-2afbec995972",
+    "destNodeUUID": "07137e80-40a8-450e-ba6a-33335e876c2b"
+  }
+]

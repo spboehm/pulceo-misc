@@ -1,0 +1,172 @@
+[
+  {
+    "applicationUUID": "eb8de490-435c-4d6c-8da5-7bb556ddb5ef",
+    "remoteApplicationUUID": "24bf3ce3-8988-4e70-839e-7aa7de03003f",
+    "nodeId": "1e67a931-9799-45f0-8088-13563a3351a9",
+    "endpoint": "",
+    "name": "fog1-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "519f216c-2692-44d1-8e68-3b7d7256ba74",
+    "remoteApplicationUUID": "0025f196-6946-4dc9-b4d1-9758778d25a6",
+    "nodeId": "1e67a931-9799-45f0-8088-13563a3351a9",
+    "endpoint": "",
+    "name": "fog1-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "0729ace1-f298-4d73-a65c-ab5b228af901",
+    "remoteApplicationUUID": "2388ddbc-9a85-4db5-a78f-52459e69a453",
+    "nodeId": "07137e80-40a8-450e-ba6a-33335e876c2b",
+    "endpoint": "",
+    "name": "fog2-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "9d6e95f6-a018-42e7-8b7f-3eb9e59ba729",
+    "remoteApplicationUUID": "b1d9e392-c9f7-4ac9-829c-d5f93fe6d427",
+    "nodeId": "07137e80-40a8-450e-ba6a-33335e876c2b",
+    "endpoint": "",
+    "name": "fog2-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "9d86ca94-0aa6-4596-8c99-842b902844e9",
+    "remoteApplicationUUID": "c409d109-8cbf-49e1-ae89-e1a4f2b54e6a",
+    "nodeId": "2b45099c-b32c-4989-952e-3f3549b80342",
+    "endpoint": "",
+    "name": "fog3-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "fa875ea8-7137-4552-a9e6-7b5241fee780",
+    "remoteApplicationUUID": "d454b607-9e2c-4653-a050-01a303b67a40",
+    "nodeId": "2b45099c-b32c-4989-952e-3f3549b80342",
+    "endpoint": "",
+    "name": "fog3-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "9bbc3b20-fdfe-4d52-87e4-71645e418465",
+    "remoteApplicationUUID": "2a361619-d29d-4936-b039-9355e151ab38",
+    "nodeId": "d6772b50-bd75-4aeb-bc37-2afbec995972",
+    "endpoint": "",
+    "name": "cloud1-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "df86431f-cef7-412c-ba23-03e37576ea79",
+    "remoteApplicationUUID": "185e9247-29af-4c05-91df-9597445b3695",
+    "nodeId": "d6772b50-bd75-4aeb-bc37-2afbec995972",
+    "endpoint": "",
+    "name": "cloud1-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "900b6cb0-3213-4ce4-bdf4-452841607170",
+    "remoteApplicationUUID": "b1bb7640-2ee6-4167-a363-ead4602e3d90",
+    "nodeId": "a921b525-d2b9-4789-8274-d06b1e3a5b88",
+    "endpoint": "",
+    "name": "cloud2-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "9504675a-24e0-4b2e-8f86-e210700dbfed",
+    "remoteApplicationUUID": "214ac61e-e294-4d16-9d83-f4050e89f87e",
+    "nodeId": "a921b525-d2b9-4789-8274-d06b1e3a5b88",
+    "endpoint": "",
+    "name": "cloud2-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "bb7f1320-e925-4264-8919-030184aab90e",
+    "remoteApplicationUUID": "e0b4ca92-86b4-4912-8033-919b8e90f35c",
+    "nodeId": "1e67a931-9799-45f0-8088-13563a3351a9",
+    "endpoint": "http://h5138.pi.uni-bamberg.de:80",
+    "name": "fog1-app-nginx",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "54c2b3ea-2131-4f5b-988d-4d29dcb09bcf",
+        "name": "fog1-app-nginx-component-nginx",
+        "endpoint": "http://h5138.pi.uni-bamberg.de:80",
+        "image": "nginx",
+        "port": 80,
+        "protocol": "HTTP",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "15fc67ef-58b7-43f9-80c9-d2e65bdcbcec",
+    "remoteApplicationUUID": "07d0e0a8-efdd-45a1-8969-cfc529ffaf6b",
+    "nodeId": "07137e80-40a8-450e-ba6a-33335e876c2b",
+    "endpoint": "http://h5136.pi.uni-bamberg.de:80",
+    "name": "fog2-app-nginx",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "08086f5b-005c-4554-a343-ec400f13411d",
+        "name": "fog2-app-nginx-component-nginx",
+        "endpoint": "http://h5136.pi.uni-bamberg.de:80",
+        "image": "nginx",
+        "port": 80,
+        "protocol": "HTTP",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "89847e93-04c8-4e7b-b770-33dd35d26e8d",
+    "remoteApplicationUUID": "fa26ff60-a472-4466-87a9-6eb6c838511a",
+    "nodeId": "2b45099c-b32c-4989-952e-3f3549b80342",
+    "endpoint": "http://h5137.pi.uni-bamberg.de:80",
+    "name": "fog3-app-nginx",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "66617a62-2255-41eb-a8e3-ad3e9b9fe8f6",
+        "name": "fog3-app-nginx-component-nginx",
+        "endpoint": "http://h5137.pi.uni-bamberg.de:80",
+        "image": "nginx",
+        "port": 80,
+        "protocol": "HTTP",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "138af6a6-4cde-4225-80f3-922eed406f8c",
+    "remoteApplicationUUID": "c9459b80-5f05-42f0-abc4-89626b0535ae",
+    "nodeId": "d6772b50-bd75-4aeb-bc37-2afbec995972",
+    "endpoint": "http://pulceo-node-bb11799167.northeurope.cloudapp.azure.com:80",
+    "name": "cloud1-app-nginx",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "58a7028b-4c39-4f6f-94a7-34368032ccbf",
+        "name": "cloud1-app-nginx-component-nginx",
+        "endpoint": "http://pulceo-node-bb11799167.northeurope.cloudapp.azure.com:80",
+        "image": "nginx",
+        "port": 80,
+        "protocol": "HTTP",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "dc12079f-5bf5-4a34-b984-3269eda3f425",
+    "remoteApplicationUUID": "f2192ef9-f75e-434c-848f-70742e5c1396",
+    "nodeId": "a921b525-d2b9-4789-8274-d06b1e3a5b88",
+    "endpoint": "http://pulceo-node-4421802444.eastus.cloudapp.azure.com:80",
+    "name": "cloud2-app-nginx",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "f7ce025b-2ab0-4e44-bea0-700851c0b2da",
+        "name": "cloud2-app-nginx-component-nginx",
+        "endpoint": "http://pulceo-node-4421802444.eastus.cloudapp.azure.com:80",
+        "image": "nginx",
+        "port": 80,
+        "protocol": "HTTP",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  }
+]
