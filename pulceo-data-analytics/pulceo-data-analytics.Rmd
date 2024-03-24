@@ -163,7 +163,7 @@ SaveLatexTable(COMBINED_NET_UTIL_TABLE, "Transmitted (Tx) and Received (Rx) Data
 ```{r}
 STORAGE_UTIL <- TransfromNodeMetricsMetadata(STORAGE_UTIL_RAW)
 STORAGE_UTIL_SUMMARY <- CreateSummary(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "NODE", "pna-k8s-node"), "Node")
-SaveLatexTable(STORAGE_UTIL_SUMMARY, "Storage in Percent", "tx-rx-of-nodes", "storage_util_nodes_summary.tex")
+SaveLatexTable(STORAGE_UTIL_SUMMARY, "Storage in Percent", "storage-utilization-of-nodes", "storage_util_nodes_summary.tex")
 ```
 
 ```{r}
@@ -209,7 +209,7 @@ ICMP_RTT_SUMMARY_TABLE <- ICMP_RTT_SUMMARY %>%
   rowwise %>% 
   pivot_wider(names_from = nodeNameDest, values_from = rtt, names_sort = TRUE)
 
-SaveLatexTable(ICMP_RTT_SUMMARY_TABLE, "Round-trip time between node", "rtt-of-nodes", "rtt_nodes_summary.tex")
+SaveLatexTable(ICMP_RTT_SUMMARY_TABLE, "Round-trip time between nodes", "rtt-of-nodes", "rtt_nodes_summary.tex")
 
 icmp_rtt_plot <- ggplot(filterICMPRTT(ICMP_RTT, "rttAvg"), aes(x=endTime, y=X_value, group=nodeName)) + geom_line() + facet_grid(vars(nodeName), vars(nodeNameDest))
 ```
