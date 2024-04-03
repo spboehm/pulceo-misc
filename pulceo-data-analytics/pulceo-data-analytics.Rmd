@@ -77,7 +77,7 @@ CreateSummaryForNetUtil <- function(df, resource) {
 
 # latex generation
 SaveLatexTable <- function(summary, caption, label, filename) {
-  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = FALSE, linesep="", vline="", label = label)
+  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label) %>% kable_styling(latex_options = c("hold_position"), full_width = TRUE)
   save_kable(latex_table, paste("latex", SUBFOLDER, filename, sep = "/"))
 }
 
@@ -426,7 +426,7 @@ ICMP_RTT_SUMMARY <- ICMP_RTT_SUMMARY %>%
             max = round(max(X_value), 3),
             median = round(median(X_value), 3),
             std = round(sd(X_value), 3))
-names(ICMP_RTT_SUMMARY) <- c("Source Host", "Destination Host", "Min", "Mean", "Max", "Median", "SD")
+names(ICMP_RTT_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
 #ICMP_RTT_SUMMARY_TABLE <- ICMP_RTT_SUMMARY %>% 
 #  rowwise %>% 
 #  pivot_wider(names_from = nodeNameDest, values_from = rtt, names_sort = TRUE)
@@ -439,7 +439,7 @@ names(ICMP_RTT_SUMMARY) <- c("Source Host", "Destination Host", "Min", "Mean", "
 ```
 
 ```{r}
-SaveLatexTable(ICMP_RTT_SUMMARY, "Round-trip time between nodes", "rtt-of-nodes", "rtt_nodes_summary.tex")
+SaveLatexTable(ICMP_RTT_SUMMARY, "ICMP round-trip time between nodes.", "rtt-of-nodes", "rtt_nodes_summary.tex")
 
 icmp_rtt_plot <- ggplot(filterICMPRTT(ICMP_RTT, "rttAvg"), aes(x=endTime, y=X_value, group=nodeName)) + geom_line() + facet_grid(vars(nodeName), vars(nodeNameDest))
 ```
@@ -462,16 +462,15 @@ TCP_BW_SUMMARY <- filterBW(TCP_BW, "bitrate", "SENDER")
 
 # build upload df
 TCP_BW_SUMMARY <- TCP_BW_SUMMARY %>% 
-  mutate(protocol = "TCP") %>% 
-  group_by(nodeName, nodeNameDest, protocol) %>%
+  group_by(nodeName, nodeNameDest) %>%
   summarise(min = round(min(X_value), 3),
             avg = round(mean(X_value), 3),
             max = round(max(X_value), 3),
             median = round(median(X_value), 3),
             std = round(sd(X_value), 3))
 
-names(TCP_BW_SUMMARY) <- c("Source node", "Destination Node", "Protocol", "Min", "Mean", "Max", "Med", "SD")
-SaveLatexTable(TCP_BW_SUMMARY, "TCP bandwidth between nodes", "tcp-bw-between-nodes", "tcp_bw_nodes_summary.tex")
+names(TCP_BW_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
+SaveLatexTable(TCP_BW_SUMMARY, "TCP bandwidth between nodes.", "tcp-bw-between-nodes", "tcp_bw_nodes_summary.tex")
 ```
 
 ```{r eval=FALSE}
@@ -521,16 +520,16 @@ UDP_BW_PACKAGE_LOSS <- UDP_BW %>%
   
 UDP_BW_SUMMARY <- UDP_BW %>% 
   select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>% 
-  filter(X_field %in% c("bitrate", "jitter")) %>%
-  mutate(protocol = "UDP") %>% 
-  group_by(nodeName, nodeNameDest, protocol, X_field) %>%
+  filter(X_field %in% c("bitrate")) %>%
+  group_by(nodeName, nodeNameDest, X_field) %>%
   summarise(min = round(min(X_value), 3),
             avg = round(mean(X_value), 3),
             max = round(max(X_value), 3),
             median = round(median(X_value), 3),
-            std = round(sd(X_value), 3))
-names(UDP_BW_SUMMARY) <- c("Source node", "Destination Node", "Protocol", "Property", "Min", "Mean", "Max", "Med", "SD")
-SaveLatexTable(UDP_BW_SUMMARY, "UDP bandwidth between nodes", "udp-bw-between-nodes", "udp_bw_nodes_summary.tex")
+            std = round(sd(X_value), 3)) %>% 
+  select(c(-X_field))
+names(UDP_BW_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
+SaveLatexTable(UDP_BW_SUMMARY, "UDP bandwidth between nodes.", "udp-bw-between-nodes", "udp_bw_nodes_summary.tex")
 ```
 
 ```{r}
