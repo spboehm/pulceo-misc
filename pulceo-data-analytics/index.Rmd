@@ -1,0 +1,37 @@
+---
+title: "PULCEO Orchestration Reports" 
+knit: (function(input_file, encoding) {
+  metadata <- rmarkdown::yaml_front_matter(input_file);
+  out_dir <- with(metadata, "reports");
+  rmarkdown::render(input_file,
+  encoding=encoding,
+  output_file=file.path(dirname(input_file), out_dir, "index.html"))})
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r, include=FALSE}
+# set this option in the first code chunk in the document
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
+```
+
+## SummerSoC 2024 PROD-IDLE
+
+[Orchestration Report](summersoc2024-prod-idle)
+
+```{r echo=FALSE, results='asis'}
+e1 <- new.env()
+e1$params$subfolder <- "summersoc2024-prod-idle"
+knitr::knit_child('pulceo-data-analytics.Rmd', envir = e1, quiet = TRUE)
+```
+
+## SummerSoC 2024 PROD-LOAD
+
+[Orchestration Report](summersoc2024-prod-load)
+
+```{r echo=FALSE, results='asis'}
+e2 <- new.env()
+e2$params$subfolder <- "summersoc2024-prod-load"
+knitr::knit_child('pulceo-data-analytics.Rmd', envir = e2, quiet = TRUE)
+```
+
