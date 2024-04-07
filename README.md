@@ -2,7 +2,7 @@
 
 ## PULCEO Component Overview
 
-| # | Service  |  Repo  | OpenAPI Specification  | Container |
+| # | Service  |  Repository  | OpenAPI Specification  | Image |
 |---|---|---|---|---|
 | 1 | pulceo-resource-manager | [GitHub](https://github.com/spboehm/pulceo-resource-manager) | [OpenAPI Spec](https://spboehm.github.io/pulceo-resource-manager) | [GHCR](https://github.com/spboehm/pulceo-resource-manager/pkgs/container/pulceo-resource-manager) |
 | 2 | pulceo-monitoring-service | [GitHub](https://github.com/spboehm/pulceo-monitoring-service) | [OpenAPI Spec](https://spboehm.github.io/pulceo-monitoring-service) | [GHCR](https://github.com/spboehm/pulceo-monitoring-service/pkgs/container/pulceo-monitoring-service)  |
