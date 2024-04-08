@@ -1,5 +1,20 @@
 # pulceo-misc
 
+Quick access for the publication at SummerSoc 2024: **API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept**
+
+The experiment had to phases, therefore the raw data and the orchestration reports each contain `idle` and `load`.
+For `idle`, we did not apply workloads and load experiments to the platform and analyzed the `idle` behavior of all components.
+For `load`, we deployed a few instances of the [edge-iot-simulator](https://github.com/spboehm/edge-iot-simulator).
+
+- Semi-structured literature review for obtaining the data model: [PULCEO: Structured Literature Review Source Repository](https://spboehm.github.io/pulceo-misc/)
+- Documentation of RESTful API requests: [examples/api-usage/summersoc2024](https://github.com/spboehm/pulceo-misc/tree/main/examples/api-usage/summersoc2024)
+- Raw data:
+    - Idle: [pulceo-data-analytics/raw/summersoc2024-prod-idle](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-idle)
+    - Load: [pulceo-data-analytics/raw/summersoc2024-prod-load](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-load)
+- [PULCEO Orchestration reports](https://spboehm.github.io/pulceo-misc/reports/):
+    - Idle: [Orchestration Report Idle](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-idle/)
+    - Prod: [Orchestration Report Load](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/)
+
 ## PULCEO Component Overview
 
 | # | Service  |  Repository  | OpenAPI Specification  | Image |
@@ -11,5 +26,5 @@
 
 ## slr-tables
 
-This repository contains R source code and R markdown files to generate complex latex tables out of simple csv files.
+This folder contains R source code and R markdown files to generate complex latex tables out of simple csv files.
 It is used for the structured literature review to specify the supported metrics and features of pulceo-api.
