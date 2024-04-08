@@ -1,6 +1,8 @@
 # pulceo-misc
 
-Quick access for the publication at SummerSoc 2024: **API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept**
+## Quick Access SummerSoc 2024
+
+Publication: **API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept**
 
 The experiment had to phases, therefore the raw data and the orchestration reports each contain `idle` and `load`.
 For `idle`, we did not apply workloads and load experiments to the platform and analyzed the `idle` behavior of all components.
@@ -11,9 +13,9 @@ For `load`, we deployed a few instances of the [edge-iot-simulator](https://gith
 - Raw data:
     - Idle: [pulceo-data-analytics/raw/summersoc2024-prod-idle](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-idle)
     - Load: [pulceo-data-analytics/raw/summersoc2024-prod-load](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-load)
-- [PULCEO Orchestration reports](https://spboehm.github.io/pulceo-misc/reports/):
-    - Idle: [Orchestration Report Idle](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-idle/)
-    - Prod: [Orchestration Report Load](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/)
+- [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/):
+    - Idle: [Orchestration report Idle](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-idle/)
+    - Prod: [Orchestration report Load](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/)
 
 ## PULCEO Component Overview
 
