@@ -1,0 +1,66 @@
+[
+  {
+    "applicationUUID": "07799934-de70-44fd-a9ff-0048bfb5229a",
+    "remoteApplicationUUID": "10105e2b-0843-4c09-bdb4-287932261fcf",
+    "nodeId": "a8c03fd4-7969-46aa-991d-9bbe04faebe3",
+    "endpoint": "",
+    "name": "fog3-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "189b1521-cebf-4b3b-92a9-8dd6e3601a96",
+    "remoteApplicationUUID": "a3a4f458-6df8-430b-8261-e4bd4001d3f1",
+    "nodeId": "a8c03fd4-7969-46aa-991d-9bbe04faebe3",
+    "endpoint": "",
+    "name": "fog3-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "ea62c0fe-fb7f-4606-8966-45a5bbbf81f9",
+    "remoteApplicationUUID": "fe03d1c6-6a63-4b1d-b83c-527fe8bab128",
+    "nodeId": "823eebe2-81ba-4d38-a2ca-0b78a1d2153d",
+    "endpoint": "",
+    "name": "cloud1-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "337a71f8-6680-4581-9e71-5c1ad6ae0ea9",
+    "remoteApplicationUUID": "7b3be6dc-98e8-4436-87ed-2974b018c70d",
+    "nodeId": "823eebe2-81ba-4d38-a2ca-0b78a1d2153d",
+    "endpoint": "",
+    "name": "cloud1-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "ebd52510-a954-40b9-9e72-ac53e94ceb46",
+    "remoteApplicationUUID": "1bc66348-58e1-4d65-bff3-804ff50acd18",
+    "nodeId": "61f701aa-dc4b-4e55-8871-606f01a44a79",
+    "endpoint": "",
+    "name": "fog2-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "31b296a8-6ca2-4db1-9ae4-506027b84162",
+    "remoteApplicationUUID": "89699d0c-4f36-48e4-8ccd-b6f842287851",
+    "nodeId": "61f701aa-dc4b-4e55-8871-606f01a44a79",
+    "endpoint": "",
+    "name": "fog2-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "3dcdc802-de3d-48a4-9c45-13f8fdc7fdec",
+    "remoteApplicationUUID": "9c50ba72-72ba-4209-8a71-24d253059db4",
+    "nodeId": "800b462f-cc08-4de2-a00d-15703710746f",
+    "endpoint": "",
+    "name": "fog1-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "5c15709f-5283-4088-be74-8caa61a6b6d9",
+    "remoteApplicationUUID": "b561bc8c-8d8b-4195-9146-f3128459a39d",
+    "nodeId": "800b462f-cc08-4de2-a00d-15703710746f",
+    "endpoint": "",
+    "name": "fog1-traefik",
+    "applicationComponents": []
+  }
+]

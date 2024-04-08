@@ -1,0 +1,78 @@
+[
+  {
+    "uuid": "a8c03fd4-7969-46aa-991d-9bbe04faebe3",
+    "providerName": "default",
+    "hostname": "h5138.pi.uni-bamberg.de",
+    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
+    "node": {
+      "name": "fog3",
+      "type": "FOG",
+      "layer": 2,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "61f701aa-dc4b-4e55-8871-606f01a44a79",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-69a9460614.germanywestcentral.cloudapp.azure.com",
+    "pnaUUID": "0f40dcd2-a7d0-4ce3-820e-f5fe48883d98",
+    "node": {
+      "name": "fog2",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Hessen",
+      "city": "Frankfurt",
+      "longitude": 8.682127,
+      "latitude": 50.110924,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "800b462f-cc08-4de2-a00d-15703710746f",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-96f9462404.francecentral.cloudapp.azure.com",
+    "pnaUUID": "5a552c12-f74c-489b-a771-c9578ac49c77",
+    "node": {
+      "name": "fog1",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "France",
+      "state": "Paris (chef-lieu)",
+      "city": "Paris",
+      "longitude": 2.373,
+      "latitude": 46.3772,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "823eebe2-81ba-4d38-a2ca-0b78a1d2153d",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-c9c9464326.eastus.cloudapp.azure.com",
+    "pnaUUID": "a58dddf4-c10c-498d-89d3-6da8c591f4c6",
+    "node": {
+      "name": "cloud1",
+      "type": "CLOUD",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "USA",
+      "state": "Virginia",
+      "city": "Boydton",
+      "longitude": -78.37465887756295,
+      "latitude": 37.3719,
+      "tags": []
+    }
+  }
+]

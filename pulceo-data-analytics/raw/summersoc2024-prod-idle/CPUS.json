@@ -1,0 +1,126 @@
+[
+  {
+    "uuid": "beab6632-f6bc-4010-b6c1-f42abdd78fff",
+    "nodeUUID": "a8c03fd4-7969-46aa-991d-9bbe04faebe3",
+    "nodeName": "fog3",
+    "cpuCapacity": {
+      "modelName": "Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz",
+      "cores": 2,
+      "threads": 2,
+      "bogoMIPS": 7200.11,
+      "minimalFrequency": 3600.058,
+      "averageFrequency": 3600.058,
+      "maximalFrequency": 3600.058,
+      "shares": 2000,
+      "slots": 0.0,
+      "mips": 7200.11,
+      "gflop": 0.0
+    },
+    "cpuAllocatable": {
+      "modelName": "Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz",
+      "cores": 2,
+      "threads": 2,
+      "bogoMIPS": 7200.11,
+      "minimalFrequency": 3600.058,
+      "averageFrequency": 3600.058,
+      "maximalFrequency": 3600.058,
+      "shares": 2000,
+      "slots": 0.0,
+      "mips": 7200.11,
+      "gflop": 0.0
+    }
+  },
+  {
+    "uuid": "1b405f07-0417-43e6-86b6-57cd35baf49a",
+    "nodeUUID": "61f701aa-dc4b-4e55-8871-606f01a44a79",
+    "nodeName": "fog2",
+    "cpuCapacity": {
+      "modelName": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+      "cores": 2,
+      "threads": 2,
+      "bogoMIPS": 5586.87,
+      "minimalFrequency": 2793.438,
+      "averageFrequency": 2793.438,
+      "maximalFrequency": 2793.438,
+      "shares": 2000,
+      "slots": 0.0,
+      "mips": 5586.87,
+      "gflop": 0.0
+    },
+    "cpuAllocatable": {
+      "modelName": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+      "cores": 2,
+      "threads": 2,
+      "bogoMIPS": 5586.87,
+      "minimalFrequency": 2793.438,
+      "averageFrequency": 2793.438,
+      "maximalFrequency": 2793.438,
+      "shares": 2000,
+      "slots": 0.0,
+      "mips": 5586.87,
+      "gflop": 0.0
+    }
+  },
+  {
+    "uuid": "98611149-5033-4d37-b514-5b40b088c2ca",
+    "nodeUUID": "800b462f-cc08-4de2-a00d-15703710746f",
+    "nodeName": "fog1",
+    "cpuCapacity": {
+      "modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
+      "cores": 2,
+      "threads": 2,
+      "bogoMIPS": 5187.81,
+      "minimalFrequency": 2593.906,
+      "averageFrequency": 2593.906,
+      "maximalFrequency": 2593.906,
+      "shares": 2000,
+      "slots": 0.0,
+      "mips": 5187.81,
+      "gflop": 0.0
+    },
+    "cpuAllocatable": {
+      "modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
+      "cores": 2,
+      "threads": 2,
+      "bogoMIPS": 5187.81,
+      "minimalFrequency": 2593.906,
+      "averageFrequency": 2593.906,
+      "maximalFrequency": 2593.906,
+      "shares": 2000,
+      "slots": 0.0,
+      "mips": 5187.81,
+      "gflop": 0.0
+    }
+  },
+  {
+    "uuid": "b0f42b6f-47e3-487c-9984-ddcfea5cca8d",
+    "nodeUUID": "823eebe2-81ba-4d38-a2ca-0b78a1d2153d",
+    "nodeName": "cloud1",
+    "cpuCapacity": {
+      "modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
+      "cores": 4,
+      "threads": 4,
+      "bogoMIPS": 5187.81,
+      "minimalFrequency": 2593.907,
+      "averageFrequency": 2593.907,
+      "maximalFrequency": 2593.907,
+      "shares": 4000,
+      "slots": 0.0,
+      "mips": 5187.81,
+      "gflop": 0.0
+    },
+    "cpuAllocatable": {
+      "modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
+      "cores": 4,
+      "threads": 4,
+      "bogoMIPS": 5187.81,
+      "minimalFrequency": 2593.907,
+      "averageFrequency": 2593.907,
+      "maximalFrequency": 2593.907,
+      "shares": 4000,
+      "slots": 0.0,
+      "mips": 5187.81,
+      "gflop": 0.0
+    }
+  }
+]

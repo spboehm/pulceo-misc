@@ -1,0 +1,530 @@
+[
+  {
+    "uuid": "345982e3-dfbb-48b2-afa6-362f41a89ce0",
+    "remoteMetricRequestUUID": "1aabfebb-3cc9-4888-b27d-93543bef6ffa",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "cpu-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "ca7ba56a-d2a9-4f48-91ec-db4120930d4c",
+    "remoteMetricRequestUUID": "fea42657-a3d9-4bff-9588-6509b039a813",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "cpu-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "fd8129e1-9aa0-4ccd-9835-7968ae62c4a9",
+    "remoteMetricRequestUUID": "bf0cb833-58a8-47b2-aa66-10669d0ad1c8",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "cpu-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "8e3ba364-3ade-4a35-a10e-cdea249befd0",
+    "remoteMetricRequestUUID": "48b3c174-095f-4a1b-b235-ebccbf679442",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "cpu-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "a7a6cee8-ad71-4a13-ac0f-292be7744b45",
+    "remoteMetricRequestUUID": "cac3869c-4eb5-48ef-a32e-0a99096f0aa7",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "mem-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "a4e98507-10c3-4575-ad09-fe3b94c78ac6",
+    "remoteMetricRequestUUID": "bb51cdd6-2643-416f-a8bf-3d630d938ce6",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "mem-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "29b44a08-8b7f-43a8-828a-051144740c0d",
+    "remoteMetricRequestUUID": "c3b63f2e-dd1e-4004-950f-4fab09a80827",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "mem-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "96436d96-1019-4734-861e-c9ae03fee268",
+    "remoteMetricRequestUUID": "b068718a-72c8-4c1f-9f48-ebaacdeec4b1",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "mem-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "e5b9bd9d-e1f8-472d-b689-d295f39de627",
+    "remoteMetricRequestUUID": "5371a16c-c08d-490e-9abe-6ec6e4cae8cc",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "storage-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "332025ba-b4b3-4076-934b-41b86947c7b7",
+    "remoteMetricRequestUUID": "66796912-d813-4e17-90ba-02a06a11dd05",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "storage-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "ac1b028d-4426-43b3-bad4-860df60e1775",
+    "remoteMetricRequestUUID": "bb605e9f-4350-4b01-9d54-2845d24d4872",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "storage-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "d032176f-b27e-41b1-9dd1-602dfc5c9e62",
+    "remoteMetricRequestUUID": "2a1be591-ffa7-488d-a1b3-5f2f5301efdd",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "storage-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "a31322d6-9fe1-46b1-bfab-37b9cd773cef",
+    "remoteMetricRequestUUID": "f4f7ee46-a529-4ff0-9968-9a7ae2f4f3d4",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "net-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "321b3dc5-1eda-4d25-a67f-c261ad03edef",
+    "remoteMetricRequestUUID": "97cc728a-0b67-43fc-a2b3-acb041b62508",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "net-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "b6c8cbdc-5e69-4e31-85b0-78a1c5d6bfd5",
+    "remoteMetricRequestUUID": "061ac33a-e2ee-4fd4-8f37-d4e06c0606ce",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "net-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "5485e11f-ccaf-4d35-b02e-a37a5792cc05",
+    "remoteMetricRequestUUID": "f95ab6ac-fdb5-4320-a426-dd8573661bad",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "net-util",
+    "recurrence": "60",
+    "enabled": true
+  },
+  {
+    "uuid": "669bd591-01c2-4483-b963-3b326e0870a5",
+    "remoteMetricRequestUUID": "fce39752-3a3a-446a-8f09-31343da31ee1",
+    "linkUUID": "42a39f04-fd06-449a-9a9a-11d468f0d734",
+    "type": "icmp-rtt",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "fae79b92-944b-4a8a-a5dd-e35be92ed7ab",
+    "remoteMetricRequestUUID": "a8c2d881-69d3-4c21-b1ef-e3f63d376e58",
+    "linkUUID": "1de2ecec-8dba-49c5-aade-036adcb70a73",
+    "type": "icmp-rtt",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "40f0351d-9a1c-46f6-b352-a545b5aa451a",
+    "remoteMetricRequestUUID": "3ad2d0aa-468a-4e0d-b9b2-9ad546714765",
+    "linkUUID": "96034274-7180-4b1a-9847-45840d9436e2",
+    "type": "icmp-rtt",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "2c4f83e7-bc5b-4adf-baf0-d5df3e11aef7",
+    "remoteMetricRequestUUID": "93b8647e-1aca-4414-9e4a-f7b656e4d94f",
+    "linkUUID": "6eaf733d-ef07-4ac4-be65-abe428fa47e2",
+    "type": "icmp-rtt",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "10180075-1b04-4502-b0d4-0225d0f7822e",
+    "remoteMetricRequestUUID": "b5643b52-653b-4df5-9f34-0df5e79b80c5",
+    "linkUUID": "122618f3-a31c-4470-82c4-efea7be0d635",
+    "type": "icmp-rtt",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "1295c031-07f5-4267-a5cb-2fb3607ab422",
+    "remoteMetricRequestUUID": "0663c7ac-0c96-43dc-88ed-5822d4d1cdde",
+    "linkUUID": "48b3b179-7a70-4d60-9025-dec747d0f047",
+    "type": "icmp-rtt",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "055984ac-87cf-4252-b87b-87bfb54a9161",
+    "remoteMetricRequestUUID": "8e5cef69-e0b8-4d40-b46f-057c559e7765",
+    "linkUUID": "42a39f04-fd06-449a-9a9a-11d468f0d734",
+    "type": "tcp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "046e1612-4332-42f3-a9ae-47b0f51880d9",
+    "remoteMetricRequestUUID": "4b0649c9-25df-48e7-9536-e16146e8478d",
+    "linkUUID": "1de2ecec-8dba-49c5-aade-036adcb70a73",
+    "type": "tcp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "be7876a6-4481-4aa3-b2e1-0b53a8d49452",
+    "remoteMetricRequestUUID": "435d5fb2-ad19-4a6a-81da-df7e60694fd1",
+    "linkUUID": "96034274-7180-4b1a-9847-45840d9436e2",
+    "type": "tcp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "8e62ac7b-8be2-4212-826e-c0b098e6e03f",
+    "remoteMetricRequestUUID": "1bf283c7-b90e-4d4b-a5ad-a6e641ad4175",
+    "linkUUID": "6eaf733d-ef07-4ac4-be65-abe428fa47e2",
+    "type": "tcp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "91fecf9f-b0d3-47b3-b395-4f5ce16c9e33",
+    "remoteMetricRequestUUID": "1e3abe54-9b50-4732-8c0e-ff7267de2846",
+    "linkUUID": "122618f3-a31c-4470-82c4-efea7be0d635",
+    "type": "tcp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "27f9db5c-2f5c-478f-8865-e110a5d9f70b",
+    "remoteMetricRequestUUID": "724f9249-deb6-4ab3-9598-40ad4ea246fd",
+    "linkUUID": "48b3b179-7a70-4d60-9025-dec747d0f047",
+    "type": "tcp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "32ba3fe1-f047-47ea-a0d3-7a500fc6ec82",
+    "remoteMetricRequestUUID": "0d592cd1-6bf4-4e9b-98e1-6e0d4669b1a2",
+    "linkUUID": "42a39f04-fd06-449a-9a9a-11d468f0d734",
+    "type": "udp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "c0573d98-7872-4dae-9453-1e5b69530587",
+    "remoteMetricRequestUUID": "0d32268f-4a58-41a4-8678-4e73d7a7e5cc",
+    "linkUUID": "1de2ecec-8dba-49c5-aade-036adcb70a73",
+    "type": "udp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "24ddc821-ff32-40ad-aca4-df9511e48ca1",
+    "remoteMetricRequestUUID": "1657e62f-ddb8-4c46-83d3-155c9ee98a37",
+    "linkUUID": "96034274-7180-4b1a-9847-45840d9436e2",
+    "type": "udp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "4ef923af-e380-4a7c-8c79-fafb37f9b6e1",
+    "remoteMetricRequestUUID": "3a944ef8-a900-4028-8fc0-40305ba93acb",
+    "linkUUID": "6eaf733d-ef07-4ac4-be65-abe428fa47e2",
+    "type": "udp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "90c30de5-7e6c-493c-a769-0903c352921f",
+    "remoteMetricRequestUUID": "6e43d52c-8ed0-4b9b-88bd-c5437d483175",
+    "linkUUID": "122618f3-a31c-4470-82c4-efea7be0d635",
+    "type": "udp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "434280d4-cd0b-4be7-a017-37c82e3a256b",
+    "remoteMetricRequestUUID": "0438cbf1-a7bd-435e-9a62-c7e2b3abfc14",
+    "linkUUID": "48b3b179-7a70-4d60-9025-dec747d0f047",
+    "type": "udp-bw",
+    "recurrence": "3600",
+    "enabled": true
+  },
+  {
+    "uuid": "9f53cd5e-3b3e-4d08-b1b0-d3189beb3651",
+    "remoteMetricRequestUUID": "2e0b5b18-adcb-45c0-9bbe-b4af9473503c",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "cpu-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "3645def4-a35a-44e2-931b-b9f484774e25",
+    "remoteMetricRequestUUID": "c56430e9-2085-4462-a5e5-c576c020ed91",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "cpu-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "d3732679-25d5-45fc-9e4e-8a9f492af14e",
+    "remoteMetricRequestUUID": "0612d2d3-6392-446f-ad40-ca6446083cdd",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "cpu-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "6b87d02b-d542-4ea7-9aed-b3db36260510",
+    "remoteMetricRequestUUID": "3aa091a4-018b-4a2f-91f1-0698fc5dacdc",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "cpu-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "cc14d67f-4ec8-46f3-83f1-6283001155ae",
+    "remoteMetricRequestUUID": "c0ebefa5-1a59-4bbf-94e0-e6653045dd22",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "cpu-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "f9ee45bd-c403-4422-af06-3053e57c7604",
+    "remoteMetricRequestUUID": "e57c70a9-ca5d-4169-9cdf-ecc55860713a",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "cpu-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "33b1d9e6-b613-43db-8d6b-2d3866d5a05e",
+    "remoteMetricRequestUUID": "d664f586-8d29-430e-9113-1a07a96377a8",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "cpu-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "68afb344-2d70-4f6a-89be-caf98ed42b18",
+    "remoteMetricRequestUUID": "6ba507ac-37aa-4b7a-8ea5-9a2e3240f359",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "cpu-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "ba5acbef-c7ba-45c1-8160-58f6a5554832",
+    "remoteMetricRequestUUID": "fe24e4db-f1f3-4322-b325-2969e4c67102",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "mem-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "95074ecc-7bec-425f-be36-f142c747433d",
+    "remoteMetricRequestUUID": "c25cd3b8-6d2c-4872-aea4-3a72361bfad5",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "mem-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "16154d25-9080-47ef-af5d-4fb72baf8312",
+    "remoteMetricRequestUUID": "8f9f376d-faa0-4041-b8e9-ee30d183ab5b",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "mem-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "bcf5f9ef-2185-4bc6-8fec-97112e91b1d4",
+    "remoteMetricRequestUUID": "70ab2444-7301-42ab-a96e-35e3be0c50d3",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "mem-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "5744de74-89df-4fed-a050-9c8bfc1a9a1e",
+    "remoteMetricRequestUUID": "ebecbd67-3b27-4cf4-bbe9-a4876140bf28",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "mem-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "26bade5e-92ca-4cc9-b354-25c949eb7632",
+    "remoteMetricRequestUUID": "c2fa6300-f4fb-4071-ad6e-26402fdd04f2",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "mem-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "874d2aa8-873b-45d0-804e-c6c0839843eb",
+    "remoteMetricRequestUUID": "02f9dbc7-28d1-4031-a84b-70f825ba5f89",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "mem-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "7096dca5-0372-4774-ab50-1473097a9800",
+    "remoteMetricRequestUUID": "12cf93d6-d01d-48e2-bb2e-c28890ea66fe",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "mem-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "068f7f51-b32d-480e-b4ea-b0b221de6d97",
+    "remoteMetricRequestUUID": "6105ec86-00cf-4496-abd5-beeab5c07467",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "storage-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "fab54b2c-9ce3-4939-8d3a-79a429d19360",
+    "remoteMetricRequestUUID": "59c2002e-dfd4-47df-81ed-e4c268bbcef0",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "storage-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "30066325-a84c-45cf-8170-6b3cf58fa9e3",
+    "remoteMetricRequestUUID": "4643149b-a92a-4cf9-a685-7abd0e2e34e1",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "storage-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "7d7964b3-1f9f-4067-ae0a-4ef6488d3f3e",
+    "remoteMetricRequestUUID": "400e9785-4350-4b8e-9177-b3026377bc3c",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "storage-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "bc9c96bb-7123-43f5-a0a5-320ee30391c0",
+    "remoteMetricRequestUUID": "cd80541b-e86d-4f7c-b93c-13a68c90eebd",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "storage-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "f670aa74-97c0-427a-a302-0b2da9565b5e",
+    "remoteMetricRequestUUID": "6737f3bc-6bda-4418-b102-e95471a09e6d",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "storage-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "25842e5e-57e7-41b3-a92d-3ddf774dce89",
+    "remoteMetricRequestUUID": "12813606-0d80-4929-a827-aae82cd7cb78",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "storage-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "aa68159c-7750-488f-b187-fdfeecf4bd18",
+    "remoteMetricRequestUUID": "503ac960-bc5b-4f1e-8cc0-68ba99707051",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "storage-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "9602a904-7e09-4093-b85b-6fd6ee093fc7",
+    "remoteMetricRequestUUID": "e1d0067a-ad2e-4d35-8fe7-a64ed4c0f5b7",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "net-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "87ff39d4-b6c3-41ef-ae27-75b69513c9cb",
+    "remoteMetricRequestUUID": "4d5a4f1a-b70a-4d50-814c-adda6bd66e56",
+    "linkUUID": "4023dee2-7d52-4140-a6c1-cf4baf836990",
+    "type": "net-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "e264166c-983c-4b5e-bbe4-677d3fc4197c",
+    "remoteMetricRequestUUID": "c1bed3ca-16a1-4205-bfcc-7d88839c6f54",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "net-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "2cc0352f-6cc3-4860-826d-df471a5d75e6",
+    "remoteMetricRequestUUID": "ed303d22-26c6-4916-afb1-b2c31aabd912",
+    "linkUUID": "61b57345-ff2d-43c8-b280-1b5ffb3d5783",
+    "type": "net-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "4db0b76d-e1b6-4ed1-930b-59da492f9bd7",
+    "remoteMetricRequestUUID": "a6ebe827-b92e-47ae-acff-8952f61987da",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "net-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "af760025-3284-4341-8143-2720eab432aa",
+    "remoteMetricRequestUUID": "8e1cd7ef-0825-4679-8f42-f81d042c4485",
+    "linkUUID": "79bcf3db-3f7a-4aba-ad5d-7703f3d7628a",
+    "type": "net-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "0ddae135-740b-426c-9ee0-348c33040a88",
+    "remoteMetricRequestUUID": "f223ebe5-672f-42ec-8b7e-fb2a8a579875",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "net-util",
+    "recurrence": "30",
+    "enabled": true
+  },
+  {
+    "uuid": "b488d19c-aed8-498a-98c4-e8f0d326f553",
+    "remoteMetricRequestUUID": "737dc7bd-3f13-4c84-b72a-1803019b8802",
+    "linkUUID": "30e2f86d-a38b-47d1-8b62-3ad1e5e20c7f",
+    "type": "net-util",
+    "recurrence": "30",
+    "enabled": true
+  }
+]
