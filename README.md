@@ -11,20 +11,21 @@ For `load`, we deployed a few instances of the [edge-iot-simulator](https://gith
 - Semi-structured literature review for obtaining the data model: [PULCEO: Structured Literature Review Source Repository](https://spboehm.github.io/pulceo-misc/)
 - Documentation of RESTful API requests: [examples/api-usage/summersoc2024](https://github.com/spboehm/pulceo-misc/tree/main/examples/api-usage/summersoc2024)
 - Raw data:
-    - Idle: [pulceo-data-analytics/raw/summersoc2024-prod-idle](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-idle)
-    - Load: [pulceo-data-analytics/raw/summersoc2024-prod-load](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-load)
+  - Idle: [pulceo-data-analytics/raw/summersoc2024-prod-idle](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-idle)
+  - Load: [pulceo-data-analytics/raw/summersoc2024-prod-load](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-load)
 - [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/):
-    - Idle: [Orchestration report Idle](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-idle/)
-    - Prod: [Orchestration report Load](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/)
+  - Idle: [Orchestration report Idle](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-idle/)
+  - Prod: [Orchestration report Load](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/)
+- For all experiments, version v1.0.0 (see below) has been used.
 
 ## PULCEO Component Overview
 
-| # | Service  |  Repository  | OpenAPI Specification  | Image |
-|---|---|---|---|---|
-| 1 | pulceo-resource-manager | [GitHub](https://github.com/spboehm/pulceo-resource-manager) | [OpenAPI Specification](https://spboehm.github.io/pulceo-resource-manager) | [GHCR](https://github.com/spboehm/pulceo-resource-manager/pkgs/container/pulceo-resource-manager) |
-| 2 | pulceo-monitoring-service | [GitHub](https://github.com/spboehm/pulceo-monitoring-service) | [OpenAPI Specification](https://spboehm.github.io/pulceo-monitoring-service) | [GHCR](https://github.com/spboehm/pulceo-monitoring-service/pkgs/container/pulceo-monitoring-service)  |
-| 3 | pulceo-service-manager | [GitHub](https://github.com/spboehm/pulceo-service-manager) | [OpenAPI Specification](https://spboehm.github.io/pulceo-service-manager) | [GHCR](https://github.com/spboehm/pulceo-service-manager/tree/main) |
-| 4 | pulceo-node-agent | [GitHub](https://github.com/spboehm/pulceo-node-agent) | [OpenAPI Specification](https://spboehm.github.io/pulceo-node-agent/) | [GHCR](https://github.com/spboehm/pulceo-node-agent/pkgs/container/pulceo-node-agent) |
+| #   | Service                   | Repository                                                     | OpenAPI Specification                                                        | Image                                                                                                 | Version |
+| --- | ------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------- |
+| 1   | pulceo-resource-manager   | [GitHub](https://github.com/spboehm/pulceo-resource-manager)   | [OpenAPI Specification](https://spboehm.github.io/pulceo-resource-manager)   | [GHCR](https://github.com/spboehm/pulceo-resource-manager/pkgs/container/pulceo-resource-manager)     | v1.0.0  |
+| 2   | pulceo-monitoring-service | [GitHub](https://github.com/spboehm/pulceo-monitoring-service) | [OpenAPI Specification](https://spboehm.github.io/pulceo-monitoring-service) | [GHCR](https://github.com/spboehm/pulceo-monitoring-service/pkgs/container/pulceo-monitoring-service) | v1.0.0  |
+| 3   | pulceo-service-manager    | [GitHub](https://github.com/spboehm/pulceo-service-manager)    | [OpenAPI Specification](https://spboehm.github.io/pulceo-service-manager)    | [GHCR](https://github.com/spboehm/pulceo-service-manager/tree/main)                                   | v1.0.0  |
+| 4   | pulceo-node-agent         | [GitHub](https://github.com/spboehm/pulceo-node-agent)         | [OpenAPI Specification](https://spboehm.github.io/pulceo-node-agent/)        | [GHCR](https://github.com/spboehm/pulceo-node-agent/pkgs/container/pulceo-node-agent)                 | v1.0.0  |
 
 ## slr-tables
 
