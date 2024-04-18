@@ -1,4 +1,4 @@
-## Nodes
+### Nodes
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 source("R/common.R")
@@ -10,7 +10,7 @@ LoadPackage("ggpubr")
 LoadPackage("ggplot2")
 ```
 
-### Static Properties
+#### Static Properties
 
 Properties:
 
@@ -44,7 +44,7 @@ nodesStaticProps <- read.csv2("csv/nodes-static-properties.csv")
 CreateScrollableTable(nodesStaticProps)
 ```
 
-### Dynamic Properties
+#### Dynamic Properties
 
 Properties:
 

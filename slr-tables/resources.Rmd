@@ -15,7 +15,12 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 <h1><span style="color:red"> +++ Attention +++ This is still work-in-progress and is thus subject to change +++</span></h1>
 
-# Resources
+## Related Works
+
+```{r child=c('related-works.Rmd')}
+```
+
+## Resources
 
 All resources with their required attributes are stored in CSV files.
 

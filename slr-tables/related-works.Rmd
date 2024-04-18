@@ -1,0 +1,23 @@
+## Related Works
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+source("R/common.R")
+source("R/latex.R")
+source("R/kable.R")
+LoadPackage("tidyverse")
+LoadPackage("kableExtra")
+LoadPackage("ggpubr")
+LoadPackage("ggplot2")
+```
+
+```{r}
+relatedWorks <- read.csv2("csv/related-works.csv")
+```
+
+```{r echo=FALSE}
+CreateScrollableTable(t(relatedWorks))
+```
+
+```{r echo=FALSE}
+SaveLatexTable(t(relatedWorks), "Comparision of existing solutions and PULCEO.", "comparison-of-existing-solutions-and-pulceo", "comparison_of_existing_solutions_and_pulceo.tex", "b", "table*")
+```

@@ -1,4 +1,4 @@
-## References
+### References
 
 [1] E. Yigitoglu, M. Mohamed, L. Liu, and H. Ludwig, “Foggy: A Framework for Continuous Automated IoT Application Deployment in Fog Computing,” in 2017 IEEE International Conference on AI & Mobile Services (AIMS), Honolulu, HI, USA: IEEE, Jun. 2017, pp. 38–45. doi: 10.1109/AIMS.2017.14.
 

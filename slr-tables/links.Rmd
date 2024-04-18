@@ -1,4 +1,4 @@
-## Links
+### Links
 
 ```{r echo=FALSE}
 source("R/common.R")
@@ -7,7 +7,7 @@ LoadPackage("tidyverse")
 LoadPackage("kableExtra")
 ```
 
-### General Properties
+#### General Properties
 
 The data columns are following this pattern: `<Relation>_<Metric>`,  for example `CC_RTD`, which describes that the cloud layer uses, requires, or obtains the Round-trip delay (RTD).
 
@@ -28,7 +28,7 @@ All relations can indicate both directions equivalently, for example, `CF` means
 
 Metrics are listed below.
 
-### Round-trip delay Properties
+#### Round-trip delay Properties
 
 Metrics:
 
@@ -47,7 +47,7 @@ Additional columns:
 linksRTDProps <- read.csv2("csv/links-round-trip-delay-properties.csv")
 ```
 
-### End-to-end delay Properties
+#### End-to-end delay Properties
 
 Metrics:
 
@@ -66,7 +66,7 @@ Additional columns:
 linksE2EProps <- read.csv2("csv/links-end-to-end-delay-properties.csv")
 ```
 
-### Bandwidth Properties
+#### Bandwidth Properties
 
 Metrics:
 
@@ -85,7 +85,7 @@ Additional columns:
 linksBWProps <- read.csv2("csv/links-bandwidth-properties.csv")
 ```
 
-### Hop Properties
+#### Hop Properties
 
 ```{r}
 # hop properties
