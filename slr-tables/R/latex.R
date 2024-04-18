@@ -18,3 +18,17 @@ CreateLaTeXTable <- function(dataframe) {
 
   # save_kable(sPropsKbl, "latex/nodes-static-properties.tex")
 }
+
+SaveLatexTable <- function(data, caption, label, filename, position = "t", table_env = 'table') {
+  latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3, table.env = table_env) %>% 
+    kable_styling(full_width = TRUE)
+  save_kable(latex_table, paste("latex", filename, sep = "/"))
+}
+
+SaveMultiColLatexTable <- function(summary, caption, label, filename, colnames, header, position = "t") {
+  latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, col.names=colnames, position = position, digits = 3) %>%
+    kable_styling(full_width = TRUE) %>% 
+    add_header_above(header)
+  
+  save_kable(latex_table, paste("latex", filename, sep = "/"))
+}
