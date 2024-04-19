@@ -13,25 +13,41 @@ output: html_document
 ```{r, include=FALSE}
 # set this option in the first code chunk in the document
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
+options(knitr.duplicate.label = 'allow')
+```
+
+## SOSE 2024 PROD
+
+[Orchestration Report](sose2024-prod)
+
+```{r echo=FALSE }
+subfolder2 <- "sose2024-prod"
+rmarkdown::render('pulceo-data-analytics.Rmd', 
+                  params = list(subfolder = subfolder2),
+                  output_dir = paste0("reports", "/", subfolder2),
+                  output_file = "index.html")
 ```
 
 ## SummerSoC 2024 PROD-IDLE
 
 [Orchestration Report](summersoc2024-prod-idle)
 
-```{r echo=FALSE, results='asis'}
-e1 <- new.env()
-e1$params$subfolder <- "summersoc2024-prod-idle"
-knitr::knit_child('pulceo-data-analytics.Rmd', envir = e1, quiet = TRUE)
+```{r echo=FALSE }
+subfolder0 <- "summersoc2024-prod-idle"
+rmarkdown::render('pulceo-data-analytics.Rmd', 
+                  params = list(subfolder = subfolder0),
+                  output_dir = paste0("reports", "/", subfolder0),
+                  output_file = "index.html")
 ```
 
 ## SummerSoC 2024 PROD-LOAD
 
 [Orchestration Report](summersoc2024-prod-load)
 
-```{r echo=FALSE, results='asis'}
-e2 <- new.env()
-e2$params$subfolder <- "summersoc2024-prod-load"
-knitr::knit_child('pulceo-data-analytics.Rmd', envir = e2, quiet = TRUE)
+```{r echo=FALSE }
+subfolder1 <- "summersoc2024-prod-load"
+rmarkdown::render('pulceo-data-analytics.Rmd', 
+                  params = list(subfolder = subfolder1),
+                  output_dir = paste0("reports", "/", subfolder1),
+                  output_file = "index.html")
 ```
-
