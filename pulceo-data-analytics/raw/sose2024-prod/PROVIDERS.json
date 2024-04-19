@@ -1,0 +1,12 @@
+[
+  {
+    "uuid": "609f17fb-3e11-456d-a3bf-39e005fdce49",
+    "providerName": "default",
+    "providerType": "ON_PREM"
+  },
+  {
+    "uuid": "40f686e7-39da-4a16-b7e0-73375432b4c2",
+    "providerName": "azure-provider",
+    "providerType": "AZURE"
+  }
+]

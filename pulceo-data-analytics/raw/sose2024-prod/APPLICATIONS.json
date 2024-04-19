@@ -1,0 +1,206 @@
+[
+  {
+    "applicationUUID": "9a607b77-a372-45a3-a3b8-62cdcdc2f98c",
+    "remoteApplicationUUID": "f0c93eb9-7e5a-4072-baa7-c9edad74a3f5",
+    "nodeId": "e6c27c8a-a337-49e1-8662-38c96bff3351",
+    "endpoint": "",
+    "name": "fog3-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "37a5e0a4-accd-4be4-a380-15d53b560635",
+    "remoteApplicationUUID": "7f40b178-6974-4fcb-96a1-dbd34eef8d8a",
+    "nodeId": "e6c27c8a-a337-49e1-8662-38c96bff3351",
+    "endpoint": "",
+    "name": "fog3-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "d37c7f5a-5ac4-48cf-8b25-03595a4b6bdd",
+    "remoteApplicationUUID": "cfab7620-7fe6-4cfb-9e39-a4d96f5f709b",
+    "nodeId": "22d5cc00-3264-4ad5-b85d-26c1bbb4cbf3",
+    "endpoint": "",
+    "name": "fog2-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "4c6b245f-19ab-473a-8edd-cb2df8d346fb",
+    "remoteApplicationUUID": "eda7c32c-7590-4914-9444-7f32938d62b8",
+    "nodeId": "22d5cc00-3264-4ad5-b85d-26c1bbb4cbf3",
+    "endpoint": "",
+    "name": "fog2-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "9885c61f-f5f3-4e6f-9691-77370dd8392e",
+    "remoteApplicationUUID": "84fee082-fa36-437b-95da-0b49036be05b",
+    "nodeId": "615ba998-3ecb-40f4-8a00-bdebf5894303",
+    "endpoint": "",
+    "name": "fog1-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "5226f581-7796-4a2b-ad78-00aaa9f4be17",
+    "remoteApplicationUUID": "3eefc27b-e92a-4cb3-be50-a722c058b4ca",
+    "nodeId": "615ba998-3ecb-40f4-8a00-bdebf5894303",
+    "endpoint": "",
+    "name": "fog1-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "6ebf86be-c4bd-479c-b2ea-1632619d8ad4",
+    "remoteApplicationUUID": "c6f595bf-9b12-4005-924b-09951f8e5ce4",
+    "nodeId": "c329ad3d-ab6c-41a9-aa8d-5705787a60d6",
+    "endpoint": "",
+    "name": "gateway1-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "4a4ff504-2bf4-43b8-aec1-15b16ede64bf",
+    "remoteApplicationUUID": "db36e9a9-1a86-4e14-8f1f-945d265b8895",
+    "nodeId": "c329ad3d-ab6c-41a9-aa8d-5705787a60d6",
+    "endpoint": "",
+    "name": "gateway1-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "4c953c3e-c310-4289-88e0-8daae0677bc4",
+    "remoteApplicationUUID": "a48192fa-87ff-410b-9e27-2c1f0d781006",
+    "nodeId": "98036c1c-1d51-4fcd-81ab-21fb40b14b3b",
+    "endpoint": "",
+    "name": "cloud1-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "848afe28-e022-4edb-aff1-97d45d8a3ca5",
+    "remoteApplicationUUID": "7c243589-6df1-422b-921f-63a84d7a524b",
+    "nodeId": "98036c1c-1d51-4fcd-81ab-21fb40b14b3b",
+    "endpoint": "",
+    "name": "cloud1-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "b76dde1d-6b88-4f70-8c75-3d63f2c6d8a0",
+    "remoteApplicationUUID": "9e59a7f7-ef21-4a72-aaf7-0def7a70012d",
+    "nodeId": "3f425fb8-c4e5-4eab-9d30-4552e94abdb3",
+    "endpoint": "",
+    "name": "cloud2-pulceo-node-agent",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "55eae164-a046-4d2f-be77-8617a85358fe",
+    "remoteApplicationUUID": "7bfa3a8c-2656-4489-94d4-1e28d5d25aba",
+    "nodeId": "3f425fb8-c4e5-4eab-9d30-4552e94abdb3",
+    "endpoint": "",
+    "name": "cloud2-traefik",
+    "applicationComponents": []
+  },
+  {
+    "applicationUUID": "c7727953-12ab-4652-b68c-2beb5b2b1868",
+    "remoteApplicationUUID": "bd446bd3-d284-4471-b3f3-ab5f6a377417",
+    "nodeId": "98036c1c-1d51-4fcd-81ab-21fb40b14b3b",
+    "endpoint": "https://pulceo-node-eae9342543.westeurope.cloudapp.azure.com:80",
+    "name": "cloud1-edge-iot-simulator",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "8b29d52b-44a9-4fdf-a7d9-3f33844d68d8",
+        "name": "cloud1-edge-iot-simulator-component-eis",
+        "endpoint": "https://pulceo-node-eae9342543.westeurope.cloudapp.azure.com:80",
+        "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
+        "port": 80,
+        "protocol": "HTTPS",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "29e89324-c0da-4481-8fd1-f29251f24de2",
+    "remoteApplicationUUID": "c31aa8ea-380f-45cb-b3e4-8364b2e666cd",
+    "nodeId": "3f425fb8-c4e5-4eab-9d30-4552e94abdb3",
+    "endpoint": "https://pulceo-node-6659339536.westus.cloudapp.azure.com:80",
+    "name": "cloud2-edge-iot-simulator",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "637e449f-ea6d-4886-ab45-319389b19a4d",
+        "name": "cloud2-edge-iot-simulator-component-eis",
+        "endpoint": "https://pulceo-node-6659339536.westus.cloudapp.azure.com:80",
+        "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
+        "port": 80,
+        "protocol": "HTTPS",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "bce5169c-a2e4-4ce4-a5db-0e5383e78d33",
+    "remoteApplicationUUID": "e0b113ae-13b8-4964-a9a8-c1dc2d03ab89",
+    "nodeId": "615ba998-3ecb-40f4-8a00-bdebf5894303",
+    "endpoint": "https://h5138.pi.uni-bamberg.de:80",
+    "name": "fog1-edge-iot-simulator",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "e3b05b2b-1a81-454a-83ee-cf750ce4e867",
+        "name": "fog1-edge-iot-simulator-component-eis",
+        "endpoint": "https://h5138.pi.uni-bamberg.de:80",
+        "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
+        "port": 80,
+        "protocol": "HTTPS",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "336a1f94-b877-46cb-9456-9d99e3fbeac9",
+    "remoteApplicationUUID": "999385fb-7115-4678-9001-fda684308685",
+    "nodeId": "22d5cc00-3264-4ad5-b85d-26c1bbb4cbf3",
+    "endpoint": "https://h5136.pi.uni-bamberg.de:80",
+    "name": "fog2-edge-iot-simulator",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "b243efa5-9272-4aba-91d2-64775d9e4a7f",
+        "name": "fog2-edge-iot-simulator-component-eis",
+        "endpoint": "https://h5136.pi.uni-bamberg.de:80",
+        "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
+        "port": 80,
+        "protocol": "HTTPS",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "d8a61189-350a-4982-8927-32facd8878a4",
+    "remoteApplicationUUID": "754a4432-a9e2-4a1d-bdf0-759f42e67b9c",
+    "nodeId": "e6c27c8a-a337-49e1-8662-38c96bff3351",
+    "endpoint": "https://h5137.pi.uni-bamberg.de:80",
+    "name": "fog3-edge-iot-simulator",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "f4f29216-c998-4ec4-b573-64f46626abca",
+        "name": "fog3-edge-iot-simulator-component-eis",
+        "endpoint": "https://h5137.pi.uni-bamberg.de:80",
+        "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
+        "port": 80,
+        "protocol": "HTTPS",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  },
+  {
+    "applicationUUID": "81c8c609-272e-4a97-b090-fb55e539a67b",
+    "remoteApplicationUUID": "a61e8799-576a-42b9-89ca-17c633c5945d",
+    "nodeId": "c329ad3d-ab6c-41a9-aa8d-5705787a60d6",
+    "endpoint": "https://h5135.pi.uni-bamberg.de:80",
+    "name": "gateway1-edge-iot-simulator",
+    "applicationComponents": [
+      {
+        "applicationComponentUUID": "068befa2-ed85-4944-b053-1fc7f0dbd482",
+        "name": "gateway1-edge-iot-simulator-component-eis",
+        "endpoint": "https://h5135.pi.uni-bamberg.de:80",
+        "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
+        "port": 80,
+        "protocol": "HTTPS",
+        "applicationComponentType": "PUBLIC"
+      }
+    ]
+  }
+]
