@@ -1,9 +1,9 @@
 Author;Year;Name;FOSS;Model;API;Creation;Cloud;Edge;Links;Orchestration ;Placement;Configurable;System;Latency;Bandwidth;Response Time;Evaluation;Documentation
-Kumara~\cite{kumaraSODALITERTOrchestrating2021};2021;SODALITE@RT;y;y;p;y;y;y;n;;y;p;y;n;n;n;;
-Orive~\cite{oriveQualityServiceAware2022};2022;ACOA;;y;p;;;;;;;;;;;;;
-Pournaropoulos~\cite{pournaropoulosFluidityProvidingFlexible2024};2024;Fluidity;;;;;;;;;;;;;;;;
-Marchese~\cite{marcheseSophosFrameworkApplication2023};2023;Sophos;;;;;;;;;;;;;;;;
-Korontanis~\cite{korontanisEdgeCloudMonLightweight2024};2024;EdgeCloudMon;;;;;;;;;;;;;;;;
-Koukis~\cite{koukisOpenSourceExperimentationFramework2024};2024;CODECO;y;;;;;;;;;;;;;;;
-Faticanti~\cite{faticantiCuttingThroughputEdge2019};2019;FogAtlas;y;y;p;n;n;y;y;p;y;n;y;n;n;n;n;n
+Kumara~\cite{kumaraSODALITERTOrchestrating2021};2021;SODALITE@RT;y;y;p;y;y;y;n;y;y;p;y;n;n;n;n;p
+Orive~\cite{oriveQualityServiceAware2022};2022;ACOA;n;y;p;n;y;y;y;p;y;n;y;y;n;n;n;y
+Pournaropoulos~\cite{pournaropoulosFluidityProvidingFlexible2024};2024;Fluidity;n;n;n;n;y;y;n;p;y;n;y;n;n;y;n;n
+Marchese~\cite{marcheseSophosFrameworkApplication2023};2023;Sophos;n;n;n;n;y;y;n;p;y;n;y;y;n;y;n;n
+Korontanis~\cite{korontanisEdgeCloudMonLightweight2024};2024;EdgeCloudMon;;;;;;;;;;;;;y;;n;
+Koukis~\cite{koukisOpenSourceExperimentationFramework2024};2024;CODECO;y;y;p;p;y;y;y;p;y;n;y;n;y;n;y;y
+Faticanti~\cite{faticantiCuttingThroughputEdge2019};2019;FogAtlas;y;y;p;n;y;y;y;p;y;n;y;n;n;n;n;n
 Our proposal;2024;PULCEO;y;y;y;y;y;y;y;y;y;y;y;y;y;y;y;y
