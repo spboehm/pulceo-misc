@@ -41,6 +41,11 @@ node_scale_fills_ext <- str_split(dtable['NODE_SCALES_EXT']$Value, pattern = ","
 start_timestamp <-dtable['START_TIMESTAMP']$Value
 end_timestamp <- dtable['END_TIMESTAMP']$Value
 nodes <- dtable['NODES']$Value
+
+# defaults
+ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable['ART_PLOT_WIDTH']$Value), 8, dtable['ART_PLOT_WIDTH']$Value))
+ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable['ART_PLOT_HEIGHT']$Value), 3, dtable['ART_PLOT_HEIGHT']$Value))
+ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable['ART_SHORT_NAMES']$Value), FALSE, dtable['ART_SHORT_NAMES']$Value))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
@@ -835,6 +840,12 @@ REQUESTS_SUMMARY <- REQUESTS %>%
   rename(source = sourceHost, destination = destHost) %>% 
   mutate(SourceDest = paste(source, destination, sep = " -\n"))
 
+if (ART_SHORT_NAMES) {
+  REQUESTS_SUMMARY$SourceDest <- gsub("-eis", "", REQUESTS_SUMMARY$SourceDest)
+  REQUESTS_SUMMARY$SourceDest <- gsub("gateway1", "gw1", REQUESTS_SUMMARY$SourceDest)
+}
+
+
 names(REQUESTS_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD", "SourceDest")
 CreateScrollableTable(REQUESTS_SUMMARY)
 SaveLatexTable(REQUESTS_SUMMARY[,1:7], "Round-trip times between applications", "rtt-between-applications", "requests_summary.tex")
@@ -850,5 +861,5 @@ SaveLatexTable(REQUESTS_SUMMARY[,1:7], "Round-trip times between applications", 
   ylim(0, max(REQUESTS_SUMMARY$Mean+REQUESTS_SUMMARY$SD) * 1.3) + 
   theme(legend.position = "none") + 
   scale_fill_manual(values=node_scale_fills_ext))
-SavePlot("application_response_time_plot.pdf", application_response_time_plot, 8, 3)
+SavePlot("application_response_time_plot.pdf", application_response_time_plot, ART_PLOT_WIDTH, ART_PLOT_HEIGHT)
 ```
