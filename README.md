@@ -9,7 +9,7 @@ Publication: **Towards an API-driven Approach for Universal and Lightweight Clou
 - Semi-structured literature review for obtaining the domain model: [PULCEO: Structured Literature Review Source Repository](https://spboehm.github.io/pulceo-misc/)
 - Documentation of RESTful API requests: [examples/api-usage/sose2024](https://github.com/spboehm/pulceo-misc/tree/main/examples/api-usage/sose2024)
 - Raw data: [pulceo-data-analytics/raw/sose2024-prod](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/sose2024-prod)
-- [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report SOSE2024](https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/)
+- [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report](https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/)
 - For all experiments, version v1.0.0 (see below) has been used.
 
 ## Quick Access SummerSoc 2024
