@@ -163,7 +163,7 @@ GenerateBarPlotPercentage <- function(summary, title, ylim_factor = 1.0, vjust =
   plot <- ggplot(summary, aes(x=Node, y=Mean, fill=Node)) + 
   geom_bar(stat="identity", width=0.75) +
   geom_errorbar(aes(x=Node, ymin=Mean-SD, ymax=Mean+SD), width=0.3, colour="blue") + 
-  geom_label(aes(label = Mean), vjust = vjust, fill="white") + 
+  geom_label(aes(label = format(round(Mean, digits=2), nsmall=2)), vjust = vjust, fill="white") + 
   ggtitle(title) + 
   ylab("Utilization (%)") +
   ylim(0, max(summary$Mean+summary$SD) * ylim_factor) + 
@@ -309,7 +309,7 @@ CPU_UTIL_PODS_PROCESSED <- CPU_UTIL_PODS %>%
 
 (cpu_util_pods_plot <- ggplot(CPU_UTIL_PODS_PROCESSED, aes(x=id, y=X_value, colour=application)) + 
   geom_line() + 
-  ggtitle("CPU utilization of applications") +
+  # ggtitle("CPU utilization of applications") +
   ylab("Utilization (%)") +
   xlab("Time") +
   labs(color='Applications') +
@@ -487,7 +487,7 @@ node_net_util <- CreateSummaryForNetUtil(COMBINED_NET_UTIL_NODES) %>%
 
 (net_util_plot_nodes <- ggplot(node_net_util, aes(x=Node, y=max, fill=Node)) + 
   geom_bar(position=position_dodge(0.8), stat="identity", width=0.75, aes(color=Traffic)) +
-  geom_text(aes(label = max, group=Traffic), position = position_dodge(0.8), angle = 90, vjust = 0.5, hjust=-0.2, size = 4, fill="white") + 
+  geom_text(aes(label = format(round(max,2), nsmall=2), group=Traffic), position = position_dodge(0.8), angle = 90, vjust = 0.5, hjust=-0.2, size = 4, fill="white") + 
   ggtitle("Traffic Received (Rx) and Transmitted (Tx)") +
   ylab("Traffic in GB") +
   xlab("Node") +
@@ -792,12 +792,14 @@ SaveMultiColLatexTable(COMBINED_UDP_JITTER_PACKAGE_LOSS, "Jitter (ms) and packag
 ### Combined ICMP, TCP and UDP Bandwidth
 
 ```{r include=TRUE, echo=FALSE}
+scale <- function (x, na.rm=FALSE) (format(round(x, digits = 2), nsmall = 2))
 ICMP_RTT_SUMMARY
 names(ICMP_RTT_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
 TCP_BW_SUMMARY
 UDP_BW_SUMMARY
 COMBINED_ICMP_TCP_UDP_SUMMARY <- full_join(ICMP_RTT_SUMMARY, TCP_BW_SUMMARY, by=c("Source", "Destination")) %>%
-                                             full_join(., UDP_BW_SUMMARY, by=c("Source", "Destination"))
+                                             full_join(., UDP_BW_SUMMARY, by=c("Source", "Destination")) %>% 
+  mutate_if(is.numeric, scale, na.rm = TRUE)
 names(COMBINED_ICMP_TCP_UDP_SUMMARY) <- c("Source", "Destination", rep(c("Min", "Mean", "Max", "Med", "SD"), 3))
 CreateScrollableTable(COMBINED_ICMP_TCP_UDP_SUMMARY)
 SaveMultiColLatexTable(COMBINED_ICMP_TCP_UDP_SUMMARY, "ICMP round-trip time (ms), TCP and UDP bandwidth (Mbps) between nodes.", "combined-icmp-tcp-udp-link-quality", "combined-icmp-tcp-udp-link-quality.tex", c("$v_1$", "$v_2$", rep(c("Min", "Mean", "Max", "Med", "SD"), 3)), c(" ", " ", "ICMP round-trip time (ms)" = 5, "TCP bandwidth (Mbps)" = 5, "UDP bandwidth (Mbps)" = 5), "t")
@@ -855,7 +857,7 @@ SaveLatexTable(REQUESTS_SUMMARY[,1:7], "Round-trip times between applications", 
 (application_response_time_plot <- ggplot(REQUESTS_SUMMARY, aes(x=SourceDest, y=Mean, fill=SourceDest)) + 
   geom_bar(stat="identity", width=0.75) +
   geom_errorbar(aes(x=SourceDest, ymin=Mean-SD, ymax=Mean+SD), width=0.3, colour="blue") + 
-  geom_label(aes(label = Mean), vjust = -1.5, fill="white") + 
+  geom_label(aes(label = format(round(Mean, digits = 2), nsmall=2)), vjust = -1.5, fill="white") + 
   ylab("Application Response Time (ms)") +
   xlab("Source Application  - Destination Application") +
   ylim(0, max(REQUESTS_SUMMARY$Mean+REQUESTS_SUMMARY$SD) * 1.3) + 
