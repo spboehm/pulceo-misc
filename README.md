@@ -1,4 +1,16 @@
+<img src="docs/assets/pulceo-logo-color.png" alt="pulceo-logo" width="25%" height="auto"/>
+
 # pulceo-misc
+
+## Quick Access SOSE 2024
+
+Publication: **Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration**
+
+- Semi-structured literature review for obtaining the domain model: [PULCEO: Structured Literature Review Source Repository](https://spboehm.github.io/pulceo-misc/)
+- Documentation of RESTful API requests: [examples/api-usage/sose2024](https://github.com/spboehm/pulceo-misc/tree/main/examples/api-usage/sose2024)
+- Raw data: [pulceo-data-analytics/raw/sose2024-prod](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/sose2024-prod)
+- [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report SOSE2024](https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/)
+- For all experiments, version v1.0.0 (see below) has been used.
 
 ## Quick Access SummerSoc 2024
 
@@ -8,7 +20,7 @@ The experiment had to phases, therefore the raw data and the orchestration repor
 For `idle`, we did not apply workloads and load experiments to the platform and analyzed the `idle` behavior of all components.
 For `load`, we deployed a few instances of the [edge-iot-simulator](https://github.com/spboehm/edge-iot-simulator).
 
-- Semi-structured literature review for obtaining the data model: [PULCEO: Structured Literature Review Source Repository](https://spboehm.github.io/pulceo-misc/)
+- Semi-structured literature review for obtaining the domain model: [PULCEO: Structured Literature Review Source Repository](https://spboehm.github.io/pulceo-misc/)
 - Documentation of RESTful API requests: [examples/api-usage/summersoc2024](https://github.com/spboehm/pulceo-misc/tree/main/examples/api-usage/summersoc2024)
 - Raw data:
   - Idle: [pulceo-data-analytics/raw/summersoc2024-prod-idle](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2024-prod-idle)
@@ -27,7 +39,11 @@ For `load`, we deployed a few instances of the [edge-iot-simulator](https://gith
 | 3   | pulceo-service-manager    | [GitHub](https://github.com/spboehm/pulceo-service-manager)    | [OpenAPI Specification](https://spboehm.github.io/pulceo-service-manager)    | [GHCR](https://github.com/spboehm/pulceo-service-manager/tree/main)                                   | v1.0.0  |
 | 4   | pulceo-node-agent         | [GitHub](https://github.com/spboehm/pulceo-node-agent)         | [OpenAPI Specification](https://spboehm.github.io/pulceo-node-agent/)        | [GHCR](https://github.com/spboehm/pulceo-node-agent/pkgs/container/pulceo-node-agent)                 | v1.0.0  |
 
-## slr-tables
+## Semi-structured Literature Review
 
-This folder contains R source code and R markdown files to generate complex latex tables out of simple csv files.
-It is used for the structured literature review to specify the supported metrics and features of pulceo-api.
+Folder `slr-tables` contains R source code and R markdown files to generate complex latex tables out of simple csv files.
+It is used for the structured literature review to specify the supported metrics and features of PULCEO.
+
+## Publications
+
+[1] S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47. doi: 10.1109/SOSE58276.2023.00011.
