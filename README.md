@@ -10,7 +10,11 @@ Publication: **Towards an API-driven Approach for Universal and Lightweight Clou
 - Documentation of RESTful API requests: [examples/api-usage/sose2024](https://github.com/spboehm/pulceo-misc/tree/main/examples/api-usage/sose2024)
 - Raw data: [pulceo-data-analytics/raw/sose2024-prod](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/sose2024-prod)
 - [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report](https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/)
-- For all experiments, version v1.0.0 (see below) has been used.
+- For all experiments, the following versions have been used:
+  - pulceo-resource-manager: **v1.1.0**
+  - pulceo-monitoring-service: **v1.1.0**
+  - pulceo-service-manager: v1.0.0
+  - pulceo-node-agent: v1.0.0
 
 ## Quick Access SummerSoc 2024
 
