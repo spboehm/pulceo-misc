@@ -38,7 +38,7 @@ For `load`, we deployed a few instances of the [edge-iot-simulator](https://gith
 
 ![PULCEO Domain Model](./docs/assets/domain-model-uml.svg)
 
-- Raw version: [PULCEO Domain Model (SVG)](https://raw.githubusercontent.com/spboehm/pulceo-misc/main/docs/assets/domain-model-uml.svg))
+- Raw version: [PULCEO Domain Model (SVG)](https://raw.githubusercontent.com/spboehm/pulceo-misc/main/docs/assets/domain-model-uml.svg)
 - PDF version: [PULCEO Domain Model (PDF)](https://github.com/spboehm/pulceo-misc/blob/main/docs/assets/domain-model-uml.pdf)
 
 ## PULCEO Component Overview
