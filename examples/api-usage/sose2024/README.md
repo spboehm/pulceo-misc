@@ -796,7 +796,7 @@ Response:
 
 #### Metric Requests
 
-##### Nodes
+##### Batch Metric Requests for Nodes
 
 Request:
 
@@ -918,7 +918,7 @@ Response:
 }
 ```
 
-##### Batch Metric Requests
+##### Batch Metric Requests for Links
 
 Request:
   
@@ -1011,7 +1011,7 @@ Response:
 }
 ```
 
-##### Non-Batch Metric Requests
+##### Non-Batch Metric Requests for Links
 
 Request:
 
@@ -2090,7 +2090,7 @@ Response:
 }
 ```
 
-##### Fog3
+##### Fog 3
 
 Request:
 
