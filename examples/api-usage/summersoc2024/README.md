@@ -1,4 +1,4 @@
-# SummerSoC 2024
+# SummerSOC 2024
 
 ## API Requests
 
