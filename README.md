@@ -34,6 +34,10 @@ For `load`, we deployed a few instances of the [edge-iot-simulator](https://gith
   - Prod: [Orchestration report Load](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/)
 - For all experiments, version v1.0.0 (see below) has been used.
 
+## PULCEO Domain Model (UML Diagram)
+
+![PULCEO Domain Model](./docs/assets/domain-model-uml.svg)
+
 ## PULCEO Component Overview
 
 | #   | Service                   | Repository                                                     | OpenAPI Specification                                                        | Image                                                                                                 | Initial Version | Current Version |
