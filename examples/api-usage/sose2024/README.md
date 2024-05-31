@@ -1223,6 +1223,88 @@ Response:
 }
 ```
 
+#### Resources
+
+Responses have been truncated for better readability. Just check the subsequent `GET /api/v1/nodes/{resourceId}/cpu` or `GET /api/v1/nodes/{resourceId}/memory` requests during application creation in the next section.
+
+Request:
+
+```bash
+curl --request GET \
+  --url http://localhost:8081/api/v1/resources/cpus \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' \
+  --header 'User-Agent: insomnia/2023.5.8' \
+```
+
+Response:
+
+```json
+[
+	{
+		"uuid": "c9fed4a2-35e5-455c-97e1-93218f4fa554",
+		"nodeUUID": "4e0f4b43-7d82-4ebd-8f75-29c18fe09a34",
+		"nodeName": "edge-0",
+		"cpuCapacity": {
+			"modelName": "12th Gen Intel(R) Core(TM) i7-1260P",
+			"cores": 12,
+			"threads": 24,
+			"bogoMIPS": 4993.0,
+			"minimalFrequency": 400.0,
+			"averageFrequency": 2550.0,
+			"maximalFrequency": 4700.0,
+			"shares": 24000,
+			"slots": 0.0,
+			"mips": 4993.0,
+			"gflop": 0.0
+		},
+		"cpuAllocatable": {
+			"modelName": "12th Gen Intel(R) Core(TM) i7-1260P",
+			"cores": 12,
+			"threads": 24,
+			"bogoMIPS": 4993.0,
+			"minimalFrequency": 400.0,
+			"averageFrequency": 2550.0,
+			"maximalFrequency": 4700.0,
+			"shares": 24000,
+			"slots": 0.0,
+			"mips": 4993.0,
+			"gflop": 0.0
+		}
+	},
+	...
+]
+```
+
+Request: `/resources/memory`
+
+```bash
+curl --request GET \
+  --url http://localhost:8081/api/v1/resources/memory \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic b0hRUGwxT0hNYnhGbGoyQ2tlQnBGblAxOmdHUHM3MGtRRWNsZVFMSmdZclFhVUExb0VpNktGZ296' \
+  --header 'User-Agent: insomnia/2023.5.8' \
+```
+
+```json
+[
+	{
+		"uuid": "7f3593b1-19c4-4302-b675-323bc186afd1",
+		"nodeUUID": "4e0f4b43-7d82-4ebd-8f75-29c18fe09a34",
+		"nodeName": "edge-0",
+		"memoryCapacity": {
+			"size": 15.322136,
+			"slots": 0
+		},
+		"memoryAllocatable": {
+			"size": 15.322136,
+			"slots": 0
+		}
+	},
+	...
+]
+```
+
 #### Applications
 
 ##### Cloud 1
