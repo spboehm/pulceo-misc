@@ -16,12 +16,12 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 options(knitr.duplicate.label = 'allow')
 ```
 
-## SOSE 2024 PROD
+## FMEC 2024 PROD
 
-[Orchestration Report](sose2024-prod)
+[Orchestration Report](fmec2024-prod)
 
 ```{r echo=FALSE }
-subfolder2 <- "sose2024-prod"
+subfolder2 <- "fmec2024-prod"
 rmarkdown::render('pulceo-data-analytics.Rmd', 
                   params = list(subfolder = subfolder2),
                   output_dir = paste0("reports", "/", subfolder2),

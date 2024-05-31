@@ -1,7 +1,7 @@
 ---
 title: "`r paste0('PULCEO Data Analytics:  ', params$subfolder)`" 
 params:
-  subfolder: "sose2024-prod"
+  subfolder: "fmec2024-prod"
 knit: (function(input_file, encoding) {
   metadata <- rmarkdown::yaml_front_matter(input_file);
   out_dir <- with(metadata, paste0("reports/", params$subfolder));
