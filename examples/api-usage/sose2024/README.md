@@ -37,7 +37,7 @@ Response:
 }
 ```
 
-#### Create Provider "azure-provider" (Microsoft Azure)
+#### Create Provider "azure-provider" (Microsoft Azure) (#1)
 
 Request:
 
@@ -66,11 +66,11 @@ Response:
 }
 ```
 
-#### Further cloud providers
+#### Further cloud providers (#1)
 
 tbd.
 
-#### Create Node "cloud1" (Microsoft Azure)
+#### Create Node "cloud1" (Microsoft Azure) (#2)
 
 Request:
 
@@ -125,7 +125,7 @@ Response:
 }
 ```
 
-#### Create Node "cloud2" (Microsoft Azure)
+#### Create Node "cloud2" (Microsoft Azure) (#2)
 
 Request
 
@@ -180,7 +180,7 @@ Response:
 }
 ```
 
-#### Create Node "fog1" (On-premises)
+#### Create Node "fog1" (On-premises) (#2)
 
 Request:
 
@@ -238,7 +238,7 @@ Response:
 }
 ```
 
-#### Create Node "fog2" (On-premises)
+#### Create Node "fog2" (On-premises) (#2)
 
 Request:
 
@@ -297,7 +297,7 @@ Response:
 }
 ```
 
-#### Create Node "fog3" (On-premises)
+#### Create Node "fog3" (On-premises) (#2)
 
 Request:
 
@@ -355,7 +355,7 @@ Response:
     }
 ```
 
-#### Create Links
+#### Create Links (#3)
 
 Request:
 
@@ -794,7 +794,7 @@ Response:
 }
 ```
 
-#### Metric Requests
+#### Metric Requests (#4)
 
 ##### Batch Metric Requests for Nodes
 
@@ -1098,7 +1098,7 @@ Response:
 }
 ```
 
-##### Metric Requests for Applications
+##### Metric Requests for Applications (#16)
 
 Request:
 
@@ -1223,7 +1223,9 @@ Response:
 }
 ```
 
-#### Resources
+#### Resources (#5-6)
+
+##### CPU (#5)
 
 Responses have been truncated for better readability. Just check the subsequent `GET /api/v1/nodes/{resourceId}/cpu` or `GET /api/v1/nodes/{resourceId}/memory` requests during application creation in the next section.
 
@@ -1276,6 +1278,8 @@ Response:
 ]
 ```
 
+##### CPU (#6)
+
 Request: `/resources/memory`
 
 ```bash
@@ -1305,9 +1309,9 @@ curl --request GET \
 ]
 ```
 
-#### Tags
+#### Tags (#7)
 
-Responses have been truncated for better readability. Just check the subsequent `GET /api/v1/nodes/{resourceId}/tags` requests in the next section.
+Responses have been truncated for better readability. Just check the first `POST /api/v1/nodes` requests in the former sections.
 
 Request:
 
@@ -1332,14 +1336,483 @@ Response:
 			"resourceType": "NODE",
 			"resourceUUID": "4e0f4b43-7d82-4ebd-8f75-29c18fe09a34",
 			"resourceId": "edge-0",
-			"url": "http://localhost:7878/api/v1/nodes/4e0f4b43-7d82-4ebd-8f75-29c18fe09a34"
+			"url": "http://localhost:8081/api/v1/nodes/4e0f4b43-7d82-4ebd-8f75-29c18fe09a34"
 		}
 	},
 	...
 ]
 ```
 
-#### Applications
+#### Link Metrics (#11)
+
+Request: 
+
+```bash
+curl --request GET \
+  --url http://localhost:8081/api/v1/metrics?type=link \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' \
+  --header 'User-Agent: insomnia/2023.5.8' \
+```
+
+Response:
+
+```json
+[
+	{
+		"metricUUID": "2135620d-d7df-4a2e-97a9-a74341c9253a",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5136.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:17:26.628383652Z",
+		"endTime": "2024-04-17T18:17:35.882284967Z",
+		"value": 169.165,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "6ffe62ea-3c2f-4270-af0b-62411368c0ce",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:17:27.090803992Z",
+		"endTime": "2024-04-17T18:17:36.127744490Z",
+		"value": 23.604,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "1b47bde4-f1b2-4e55-bf15-61ab02f62e28",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5138.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:27.932000723Z",
+		"endTime": "2024-04-17T18:17:37.280731955Z",
+		"value": 169.146,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "ccca696b-3002-45f6-a053-7ca78a7076c8",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:17:26.910408320Z",
+		"endTime": "2024-04-17T18:17:35.949943682Z",
+		"value": 22.055,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "622fb68d-5e3f-4e09-ac24-78e2824f7212",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:28.511937540Z",
+		"endTime": "2024-04-17T18:17:37.580451387Z",
+		"value": 21.945,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "2c18429a-8681-4cb3-97ad-f2c467f5cd5e",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:33:30.227151050Z",
+		"endTime": "2024-04-17T17:33:39.267866632Z",
+		"value": 0.991,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "20e56a17-ebaa-42dd-b6e3-dae4c8f09fdb",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:26.524913832Z",
+		"endTime": "2024-04-17T18:17:35.542005410Z",
+		"value": 1.096,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "3ee8565f-112e-4666-82af-204b5c237c25",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5136.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:17:26.718689767Z",
+		"endTime": "2024-04-17T18:17:35.757733862Z",
+		"value": 23.465,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "4a34a36e-18d9-4acf-b6cd-a8e8b7b3d116",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:17:26.815199214Z",
+		"endTime": "2024-04-17T18:17:36.001544708Z",
+		"value": 169.265,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "daa62025-6f77-49cb-b683-65e3ce591fac",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:28.665300381Z",
+		"endTime": "2024-04-17T18:17:37.721735016Z",
+		"value": 23.561,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "a71296e1-37a6-495e-b6db-e6f1b6ee3bbf",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:27.327069896Z",
+		"endTime": "2024-04-17T18:17:36.673838824Z",
+		"value": 169.09,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "866976d1-97d7-445f-948e-4a9fcda81963",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:26.411138453Z",
+		"endTime": "2024-04-17T18:17:35.429636023Z",
+		"value": 1.105,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "f9caebad-4722-46fa-86f2-448a1607068c",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5138.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:28.817040608Z",
+		"endTime": "2024-04-17T18:17:37.897000641Z",
+		"value": 23.647,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "cd6eb484-f19b-4527-8d8c-58f580805b19",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:17:27.001452937Z",
+		"endTime": "2024-04-17T18:17:36.183422042Z",
+		"value": 169.662,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "ab25202a-8517-476b-86ac-20555ccfdebf",
+		"metricType": "ICMP_RTT",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:27.631436115Z",
+		"endTime": "2024-04-17T18:17:37.415537018Z",
+		"value": 169.127,
+		"unit": "ms"
+	},
+	{
+		"metricUUID": "28c3d85b-558e-48a9-b7db-2c68f8ad2677",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T17:20:41.401860116Z",
+		"endTime": "2024-04-17T17:20:47.624196745Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "64f15524-69de-448b-84dc-ad2e8bebde94",
+		"metricType": "TCP_BW",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5138.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:22:42.732350998Z",
+		"endTime": "2024-04-17T17:22:49.247744578Z",
+		"value": 39.4,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "40a10636-9716-48dc-b391-2dd06135c0b3",
+		"metricType": "TCP_BW",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:22:12.337339439Z",
+		"endTime": "2024-04-17T17:22:18.699433245Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "d2e004f0-5548-43c7-9659-39267d5f6ab1",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:20:11.015278837Z",
+		"endTime": "2024-04-17T18:20:16.209843385Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "adf2c74c-2abe-4baa-b066-502a18a456f4",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5136.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:19:10.387035306Z",
+		"endTime": "2024-04-17T18:19:15.565002135Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "b115cddb-d52a-49e9-9992-5bfdb4b680e3",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:18:09.759959516Z",
+		"endTime": "2024-04-17T18:18:14.770129679Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "55dd8547-99a5-471f-a4e8-5a50be9185ad",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T18:17:39.566573176Z",
+		"endTime": "2024-04-17T18:17:44.577218417Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "c562aab8-c113-410f-bda0-171b6dc789de",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:19:40.775755865Z",
+		"endTime": "2024-04-17T18:19:46.966047438Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "2fb53054-7063-4af9-8e8b-96bbe3f9ec4e",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5136.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T18:18:40.151071334Z",
+		"endTime": "2024-04-17T18:18:46.340397686Z",
+		"value": 52.8,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "7f0898aa-42e4-4515-ad59-2636ddd30907",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:33:33.757683587Z",
+		"endTime": "2024-04-17T17:33:38.767770146Z",
+		"value": 100.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "a6107bf7-5635-4eb8-b6b0-10edbe41f27a",
+		"metricType": "TCP_BW",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T17:21:11.637383176Z",
+		"endTime": "2024-04-17T17:21:16.843112590Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "fa16ffaa-30dc-4db8-8df7-3b741cbb7cdb",
+		"metricType": "TCP_BW",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:23:13.402545811Z",
+		"endTime": "2024-04-17T17:23:18.602992520Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "8a0468af-1c4f-418c-a9d1-4463a85bf67c",
+		"metricType": "TCP_BW",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5138.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:24:13.938362823Z",
+		"endTime": "2024-04-17T17:24:19.137083724Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "396d5838-8114-4dde-9797-aa7ef1d2209c",
+		"metricType": "TCP_BW",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:23:43.693265851Z",
+		"endTime": "2024-04-17T17:23:48.883088326Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "1afed73c-849e-4fbf-b594-a613793b3306",
+		"metricType": "TCP_BW",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:21:41.941547579Z",
+		"endTime": "2024-04-17T17:21:48.302774140Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "3c658594-d46b-4ace-91da-a34327812812",
+		"metricType": "UDP_BW",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:31:12.028467304Z",
+		"endTime": "2024-04-17T17:31:17.192410842Z",
+		"value": 64.6,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "b9b57654-2d34-4304-9b26-423787f775b7",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:26:08.029246828Z",
+		"endTime": "2024-04-17T17:26:13.038853227Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "4e1057af-0709-4c1d-959c-24628cfc1cba",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5136.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T17:27:09.087073108Z",
+		"endTime": "2024-04-17T17:27:14.270593909Z",
+		"value": 64.6,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "5afdf93c-05f3-48d1-a02f-0df1c32b0f6c",
+		"metricType": "UDP_BW",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:31:42.261024337Z",
+		"endTime": "2024-04-17T17:31:47.446382060Z",
+		"value": 64.6,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "0425e557-da8e-40a1-8acf-60b8b4742a4f",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5136.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T17:26:38.780399872Z",
+		"endTime": "2024-04-17T17:26:44.834044275Z",
+		"value": 62.8,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "096cd926-a4ce-4f89-a1b3-c252a6e69b7c",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T17:28:09.708508024Z",
+		"endTime": "2024-04-17T17:28:14.934940093Z",
+		"value": 64.5,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "8ef7773f-82f4-4375-bd23-02ba7ca9753e",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:25:37.842490546Z",
+		"endTime": "2024-04-17T17:25:42.853947077Z",
+		"value": 65.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "a1440c72-120c-4b7e-9452-0521982ca98f",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:36:23.559081863Z",
+		"endTime": "2024-04-17T17:36:28.568869587Z",
+		"value": 100.0,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "4a489704-cdf7-48f3-b12d-f20f0d8f571e",
+		"metricType": "UDP_BW",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5138.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:30:41.386990951Z",
+		"endTime": "2024-04-17T17:30:47.582398032Z",
+		"value": 62.8,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "c8561afa-ca26-43ba-9b93-5a74994382aa",
+		"metricType": "UDP_BW",
+		"sourceNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"destinationNode": "h5138.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:32:12.492045337Z",
+		"endTime": "2024-04-17T17:32:17.664634470Z",
+		"value": 64.7,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "0713e156-e4ef-459b-8794-d7fa198712d0",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T17:28:40.080878900Z",
+		"endTime": "2024-04-17T17:28:46.149950726Z",
+		"value": 62.8,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "e1d63776-faf8-4652-9f2f-928d5514943a",
+		"metricType": "UDP_BW",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5136.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:29:40.627468230Z",
+		"endTime": "2024-04-17T17:29:46.823392927Z",
+		"value": 62.8,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "b74fcb38-9d67-4eda-a08d-a42dc04a196b",
+		"metricType": "UDP_BW",
+		"sourceNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"destinationNode": "h5137.pi.uni-bamberg.de",
+		"startTime": "2024-04-17T17:30:11.011686651Z",
+		"endTime": "2024-04-17T17:30:17.516469231Z",
+		"value": 62.8,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "71cd07b3-82d1-4b72-9584-880dad0a6e22",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5137.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+		"startTime": "2024-04-17T17:27:39.466408516Z",
+		"endTime": "2024-04-17T17:27:45.515647049Z",
+		"value": 62.8,
+		"unit": "Mbit/s"
+	},
+	{
+		"metricUUID": "98f2023d-49e1-41d8-9b96-09020ef7008b",
+		"metricType": "UDP_BW",
+		"sourceNode": "h5138.pi.uni-bamberg.de",
+		"destinationNode": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+		"startTime": "2024-04-17T17:29:10.312106109Z",
+		"endTime": "2024-04-17T17:29:15.511916263Z",
+		"value": 64.5,
+		"unit": "Mbit/s"
+	}
+]
+```
+
+#### Applications (#8-10 and #12-15)
 
 ##### Cloud 1
 
