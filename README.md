@@ -2,17 +2,17 @@
 
 # pulceo-misc
 
-## Quick Access SOSE 2024
+## Quick Access FMEC 2024
 
 Publication: **Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration**
 
 - Semi-structured literature review for obtaining the domain model: [PULCEO: Structured Literature Review Source Repository](https://spboehm.github.io/pulceo-misc/)
-- Documentation of RESTful API requests: [examples/api-usage/sose2024](https://github.com/spboehm/pulceo-misc/tree/main/examples/api-usage/sose2024)
-- Raw data: [pulceo-data-analytics/raw/sose2024-prod](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/sose2024-prod)
-- [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report](https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/)
+- Documentation of RESTful API requests: [examples/api-usage/fmec2024](https://github.com/spboehm/pulceo-misc/tree/main/examples/api-usage/fmec2024)
+- Raw data: [pulceo-data-analytics/raw/fmec2024-prod](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/fmec2024-prod)
+- [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report](https://spboehm.github.io/pulceo-misc/reports/fmec2024-prod/)
 - For all experiments, the following versions have been used:
-  - pulceo-resource-manager: **v1.1.0**
-  - pulceo-monitoring-service: **v1.1.0**
+  - pulceo-resource-manager: **v1.2.0**
+  - pulceo-monitoring-service: **v1.2.1**
   - pulceo-service-manager: v1.0.0
   - pulceo-node-agent: v1.0.0
 
