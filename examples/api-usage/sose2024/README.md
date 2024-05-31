@@ -1282,7 +1282,7 @@ Request: `/resources/memory`
 curl --request GET \
   --url http://localhost:8081/api/v1/resources/memory \
   --header 'Accept: application/json' \
-  --header 'Authorization: Basic b0hRUGwxT0hNYnhGbGoyQ2tlQnBGblAxOmdHUHM3MGtRRWNsZVFMSmdZclFhVUExb0VpNktGZ296' \
+  --header 'Authorization: Basic AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' \
   --header 'User-Agent: insomnia/2023.5.8' \
 ```
 
@@ -1299,6 +1299,40 @@ curl --request GET \
 		"memoryAllocatable": {
 			"size": 15.322136,
 			"slots": 0
+		}
+	},
+	...
+]
+```
+
+#### Tags
+
+Responses have been truncated for better readability. Just check the subsequent `GET /api/v1/nodes/{resourceId}/tags` requests in the next section.
+
+Request:
+
+```bash
+curl --request GET \
+  --url 'http://localhost:8081/api/v1/tags?type=node' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' \
+  --header 'User-Agent: insomnia/2023.5.8' \
+```
+
+Response:
+
+```json
+[
+	{
+		"tagId": "aaf6fc47-faa5-4b84-b089-2aa59430cd0f",
+		"tagType": "NODE",
+		"tagKey": "properties",
+		"tagValue": "Java, MySQL",
+		"parentResource": {
+			"resourceType": "NODE",
+			"resourceUUID": "4e0f4b43-7d82-4ebd-8f75-29c18fe09a34",
+			"resourceId": "edge-0",
+			"url": "http://localhost:7878/api/v1/nodes/4e0f4b43-7d82-4ebd-8f75-29c18fe09a34"
 		}
 	},
 	...
