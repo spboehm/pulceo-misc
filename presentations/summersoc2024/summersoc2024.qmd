@@ -1,0 +1,46 @@
+---
+title: "PULCEO* in Action"
+subtitle: "Towards API-driven Cloud-Edge Orchestration <br /> with PULCEO: A Proof of Concept"
+author: Sebastian Böhm and Guido Wirtz
+institute: University of Bamberg, Germany
+format: 
+  revealjs:
+    slide-number: true
+    footer: <https://spboehm.github.io/pulceo-misc/>
+    logo: images/dsg.png
+    css: custom.scss
+---
+
+## Cloud-Edge Continuum
+
+## Motivation (1)
+
+*"I'm a researcher and I have developed a sophisticated **service placement** strategy. I tested it in a **simulated environment** with iFogSim2 and it reduced the overall **resource utilization** by 30% and improved the **average response time** perceived by a couple of clients by 20% compared to the baseline".*
+
+So far so good.
+
+## Motivation (2) {.smaller}
+
+*"Now I want to test it in a real cloud-edge infrastructure. I want a tool that supports the lifecycle of **creating** the infrastructure, **operate** my applications, **monitors** devices and applications, and helps with **evaluation** and **documentation** for my scientific publication."*  
+Documentation is essential for reproducibility
+
+- Topology (type of *Nodes*, *Links* between nodes)
+- Condition of the network links (round-trip time and bandwidth)
+- Monitoring configuration (kind of metrics, sampling rate, etc.)
+- Resource allocation and service placement
+
+Any Recommendations?
+
+## Related Solutions
+
+## API-driven Orchestration
+
+## System Overview
+
+## Use Case
+
+![Topology](images/topology.png)
+
+## Evaluation
+
+## Conclusion
