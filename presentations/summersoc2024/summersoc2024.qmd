@@ -5,42 +5,281 @@ author: Sebastian Böhm and Guido Wirtz
 institute: University of Bamberg, Germany
 format: 
   revealjs:
+    smaller: true
     slide-number: true
     footer: <https://spboehm.github.io/pulceo-misc/>
     logo: images/dsg.png
     css: custom.scss
 ---
 
-## Cloud-Edge Continuum
+## Cloud-Edge Continuum {.smaller}
 
-## Motivation (1)
+## Motivation (1): Real-world experiments
+
+Why yet another Cloud-Edge Continuum Framework?
 
 *"I'm a researcher and I have developed a sophisticated **service placement** strategy. I tested it in a **simulated environment** with iFogSim2 and it reduced the overall **resource utilization** by 30% and improved the **average response time** perceived by a couple of clients by 20% compared to the baseline".*
 
+<br/>
+
 So far so good.
 
-## Motivation (2) {.smaller}
+<br/>
 
-*"Now I want to test it in a real cloud-edge infrastructure. I want a tool that supports the lifecycle of **creating** the infrastructure, **operate** my applications, **monitors** devices and applications, and helps with **evaluation** and **documentation** for my scientific publication."*  
-Documentation is essential for reproducibility
+But what about real-world experiments?
 
-- Topology (type of *Nodes*, *Links* between nodes)
-- Condition of the network links (round-trip time and bandwidth)
-- Monitoring configuration (kind of metrics, sampling rate, etc.)
-- Resource allocation and service placement
+## Motivation (2): Real-world experiments are time-consuming
 
-Any Recommendations?
+:::: {.columns}
+
+::: {.column width="55%"} 
+
+- Smolka and Mann (2022)^[S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
+] investigated 99 fog application placement algorithms
+- 19 out of 99 solutions (19%) used a small test-bed
+- No real-world deployment was observed
+:::
+
+::: {.column width="45%"}
+![](images/smolka-mann-2022.png)
+:::
+
+::::
+
+## Motivation (3) {.smaller}
+
+*"Now I want to test it in a real cloud-edge infrastructure. I want a tool that supports the lifecycle of **creating** the infrastructure, **operate** my applications, **monitors** devices and applications, and helps with **evaluation** and **documentation** for my scientific publication."*
+
+<br/>
+
+:::: {.columns}
+
+::: {.column width="80%"} 
+- **Creation of the Topology** 
+  - **Nodes:** Edge and fog devices, virtual machines
+  - **Links:** Relations between nodes for measuring round-trip time and bandwidth
+- **Monitoring:** Various kind of metrics, sampling rate, etc.
+- **Operation:** Resource allocation and service placement
+- **Evaluation:** Data export, large-scale data analytics, etc.
+- **Documentation:** Publishing of reports and results, raw data, etc.
+:::
+
+::: {.column width="20%"} 
+```{mermaid}
+flowchart TB
+   Creation --> Operation
+   Operation --> Monitoring
+   Monitoring --> Operation
+   Monitoring --> Evaluation
+   Evaluation --> Documentation
+   Documentation --> Creation
+```
+:::
+
+::::
+
+## PULCEO's Domain Model
+
+![](images/domain-model-uml.svg)
+
+## Case Study {.smaller}
+
+![Representational cloud-edge topology with node and links and request for service placement.](images/topology.drawio.svg)
+
+## Solution: API-driven Orchestration
+
+Full lifecycle management based on APIs
+
+# Creation
+
+## Providers {.smaller}
+
+Providers supply computational resources, e.g, Compute, Network, Storage, etc.
+
+<br/>
+
+Two types of providers:
+
+- On-premises providers (any virtual machine), built-in
+- Cloud providers (API availability), e.g., Microsoft Azure
+
+**Example**: Creation of Microsoft Azure as provider with a service principal
+
+```{.bash code-line-numbers="2,5-12"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/providers \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"providerName": "azure-provider",
+	"providerType": "AZURE",
+	"clientId": "00000000-00000000-00000000-00000000",
+	"clientSecret": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+	"tenantId": "00000000-00000000-00000000-00000000",
+	"subscriptionId": "00000000-00000000-00000000-00000000"
+  }'
+```
+
+## Nodes (fog1) {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- Provider: Microsoft Azure (Cloud)
+- Capabilities: 2 vCPU, 8 GB memory, 32 GB storage
+- Location: France, Paris
+
+```{.bash code-line-numbers="2,6-15"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/nodes \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"nodeType":"AZURE",
+	"providerName":"azure-provider",
+	"name":"fog1",
+	"type":"fog",
+	"cpu":"2",
+	"memory":"8",
+	"region":"francecentral",
+	"tags": []
+}'
+```
+:::
+
+::: {.column width="50%"}
+![](images/topology-nodes-fog1.svg)
+:::
+
+::::
+
+## Nodes (fog3) {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- Provider: Local data center (On-premises)
+- Capabilities: 2 vCPU, 2 GB memory, 27 GB storage
+- Location: Bamberg, Germany
+
+```{.bash code-line-numbers="2,6-19"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/nodes \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"nodeType":"ONPREM",
+	"type": "fog",
+	"name": "fog3",
+	"providerName":"default",
+	"hostname":"h5138.pi.uni-bamberg.de",
+	"pnaInitToken":"XXXXX",
+	"country": "Germany",
+	"state": "Bavaria",
+	"city": "Bamberg",
+	"latitude": 49.9036,
+	"longitude": 10.8700,
+	"tags": []
+}'
+```
+:::
+
+::: {.column width="50%"}
+![](images/topology-nodes-fog1-fog3.drawio.svg)
+:::
+
+::::
+
+## Links (fog3-fog1) {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- Link between fog3 and fog1
+- Represents a logical connection
+- Later used to obtain round-trip time and bandwidth between nodes 
+- <(,)>: <(*latency*, *bandwidth*), ...>
+
+```{.bash code-line-numbers="2,6-11"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/links \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "linkType": "NODE_LINK",
+    "name": "fog3-fog1",
+    "srcNodeId": "fog3",
+    "destNodeId": "fog1"
+}'
+```
+:::
+
+::: {.column width="50%"}
+![](images/topology-subgraph.drawio.svg)
+:::
+
+::::
+
+# Monitoring
+
+Example: Nodes and Links
+
+## Metric Requests { .smaller }
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- Collection of monitoring data
+  - CPU, memory, storage and network utilization for nodes and applications
+  - ICMP round-trip time, TCP & UDP bandwidth for links
+- Individual and batch (*) assignments
+- **Example:** Latency all for links, once per hour (recurrence 3600s = 1h)
+
+```{.bash code-line-numbers="2,6-11"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/metric-requests \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"type":"icmp-rtt",
+	"linkId":"*",
+	"recurrence":"3600"
+}'
+```
+:::
+
+::: {.column width="50%"}
+![](images/topology-nodes-fog1-fog3-latency-bw.drawio.svg)
+:::
+
+::::
+
+## Applications (Service Placement)
+
+## Requests
+
+# Evaluation
+
+## API Requests
+
+## Resource Utilization
+
+## Link Quality Metrics
+
+## Application Resource Utilization
+
+## Application Response Time
+
+# Documentation
+
+## Metric Exports
 
 ## Related Solutions
 
-## API-driven Orchestration
-
-## System Overview
-
-## Use Case
-
-![Topology](images/topology.png)
-
-## Evaluation
+## Discussion and Limitations
 
 ## Conclusion
