@@ -258,7 +258,45 @@ curl --request POST \
 
 ::::
 
-## Applications (Service Placement)
+# Service Placement
+
+## Workload {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- One instance of edge-iot-simulator (eis)^[https://github.com/spboehm/edge-iot-simulator] is placed on node fog1
+- Mimics a typical application in cloud-edge environments:
+  - Simulates a temperature sensor (sends temperature readings at regular intervals)
+  - Allows to perform HTTP requests to simulate a microservice application
+- Example resource assignments:
+  - 1 vCPU
+  - 1 GB memory
+:::
+
+::: {.column width="50%"}
+TODO
+:::
+
+::::
+
+## Resource Management
+
+:::: {.columns}
+
+::: {.column width="50%"}
+CPU
+:::
+
+::: {.column width="50%"}
+Memory
+:::
+
+::::
+
+## Applications (Service Placement) {.smaller}
+
+
 
 ## Requests
 
@@ -274,6 +312,11 @@ curl --request POST \
 
 ## Application Response Time
 
+ - Measured by devices
+ - Values have been submitted in a standardized JSON format via MQTT
+
+![](plots/application_response_time_plot.pdf)
+
 # Documentation
 
 ## Metric Exports
@@ -282,4 +325,23 @@ curl --request POST \
 
 ## Discussion and Limitations
 
+## Contributions
+
+- Holistic accomplishment of service placement experiments
+- Fully decoupled service orchestration with an HTTP API
+- Flexible resource management
+- Configurable monitoring with real-time latency and bandwidth
+- Support for high-level orchestration metrics, like application response time
+- Automatic orchestration reports
+- Blazingly fast metrics and event export 
+- Built for advanced cloud-edge orchestration algorithms, strategies, and policies
+- Strong scientific and industrial foundation
+  - Orchestration architecture based on a scientific meta-study 
+  - Feature Engineering based on scientific, peer-reviewed service placement publications
+  - Implementation following an industry standard (OpenFog RA) 
+
 ## Conclusion
+
+Conclusion:
+
+Future Work:
