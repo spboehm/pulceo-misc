@@ -55,22 +55,23 @@ But what about real-world experiments?
 :::: {.columns}
 
 ::: {.column width="80%"} 
-- **Creation of the Topology** 
+- **Creation of topology:** 
   - **Nodes:** Edge and fog devices, virtual machines
   - **Links:** Relations between nodes for measuring round-trip time and bandwidth
 - **Monitoring:** Various kind of metrics, sampling rate, etc.
 - **Operation:** Resource allocation and service placement
 - **Evaluation:** Data export, large-scale data analytics, etc.
 - **Documentation:** Publishing of reports and results, raw data, etc.
+- (Deletion: Tearing down of environments)
 :::
 
 ::: {.column width="20%"} 
 ```{mermaid}
 flowchart TB
-   Creation --> Operation
-   Operation --> Monitoring
+   Creation --> Monitoring
    Monitoring --> Operation
-   Monitoring --> Evaluation
+   Operation --> Monitoring
+   Operation --> Evaluation
    Evaluation --> Documentation
    Documentation --> Creation
 ```
@@ -384,6 +385,202 @@ Resource utilization under load (including deployed edge-iot-simulators)
 ![](plots/application_response_time_plot.svg)
 
 # Documentation
+
+## Orchestration Data
+
+:::: {.columns}
+
+::: {.column width="60%"}
+JSON export of all entities of the domain model: *Providers*, *Nodes*, *Links*, *Metric-Requests*, *Applica-tions*, *Resources*, *CPUs*, *Memory*, *Events*
+
+Example for nodes:
+
+```{.bash code-line-numbers="2,6-11"}
+curl --request GET \
+  --url http://localhost:8081/api/v1/nodes \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+```
+<br />
+<details>
+<summary>JSON output for nodes</summary>
+```{.json .code-overflow-wrap .code-overflow-scroll}
+[
+  {
+    "uuid": "e6c27c8a-a337-49e1-8662-38c96bff3351",
+    "providerName": "default",
+    "hostname": "h5137.pi.uni-bamberg.de",
+    "pnaUUID": "be6f0093-ebff-4494-8123-6ab50d3ae8e5",
+    "node": {
+      "name": "fog3",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "C++, Linux, Python"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "22d5cc00-3264-4ad5-b85d-26c1bbb4cbf3",
+    "providerName": "default",
+    "hostname": "h5136.pi.uni-bamberg.de",
+    "pnaUUID": "265916fb-2092-40ee-9528-b32f4ea911a1",
+    "node": {
+      "name": "fog2",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "MySQL, .NET, C++, Python"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "615ba998-3ecb-40f4-8a00-bdebf5894303",
+    "providerName": "default",
+    "hostname": "h5138.pi.uni-bamberg.de",
+    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
+    "node": {
+      "name": "fog1",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "C++, Linux, Python"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "3f425fb8-c4e5-4eab-9d30-4552e94abdb3",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+    "pnaUUID": "3b4af61f-8bb4-4118-9640-b530c6aec54e",
+    "node": {
+      "name": "cloud2",
+      "type": "CLOUD",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "USA",
+      "state": "California",
+      "city": "San Francisco",
+      "longitude": -119.852,
+      "latitude": 47.233,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "C++, Spark, MySQL, Linux, .NET, Python"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "98036c1c-1d51-4fcd-81ab-21fb40b14b3b",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+    "pnaUUID": "26c8c3d4-badc-4b7a-adb5-ec9d920784c3",
+    "node": {
+      "name": "cloud1",
+      "type": "CLOUD",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Netherlands",
+      "state": "Noord-Holland",
+      "city": "Schiphol",
+      "longitude": 4.9,
+      "latitude": 52.3667,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "Java, .NET, Ruby, MySQL"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "c329ad3d-ab6c-41a9-aa8d-5705787a60d6",
+    "providerName": "default",
+    "hostname": "h5135.pi.uni-bamberg.de",
+    "pnaUUID": "c4cbae94-dd35-4ba8-a374-0ceebddb7765",
+    "node": {
+      "name": "gateway1",
+      "type": "GATEWAY",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": []
+    }
+  }
+]
+```
+</details>
+:::
+
+::: {.column width="40%"}
+
+Reports for the two phases of the experiment:
+
+```{python}
+import qrcode
+import qrcode.image.svg
+
+img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-idle/', image_factory=qrcode.image.svg.SvgPathImage)
+img.save("images/qrcode-summersoc2024-prod-idle.svg")
+```
+
+![](images/qrcode-summersoc2024-prod-idle.svg)
+
+SummerSOC2024-prod-idle
+
+```{python}
+import qrcode
+import qrcode.image.svg
+
+img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/', image_factory=qrcode.image.svg.SvgPathImage)
+img.save("images/qrcode-summersoc2024-prod-load.svg")
+```
+
+![](images/qrcode-summersoc2024-prod-load.svg)
+
+SummerSOC2024-prod-load
+
+:::
+
+::::
 
 ## Metric Exports
 
