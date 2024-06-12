@@ -286,24 +286,114 @@ TODO
 :::: {.columns}
 
 ::: {.column width="50%"}
-CPU
+CPU resources of fog1
+```{.bash code-line-numbers="2"}
+curl --request GET \
+  --url http://localhost:8081/api/v1/nodes/fog1/cpu \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+```
+```{.json}
+{
+	"uuid": "8aeae447-a552-4ea2-86a3-2bd1f79d6117",
+	"nodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309",
+	"nodeName": "fog1",
+	"cpuCapacity": {
+		"modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
+		"cores": 2,
+		"threads": 2,
+		"bogoMIPS": 5187.81,
+		"minimalFrequency": 2593.906,
+		"averageFrequency": 2593.906,
+		"maximalFrequency": 2593.906,
+		"shares": 2000,
+		"slots": 0.0,
+		"mips": 5187.81,
+		"gflop": 0.0
+	},
+	"cpuAllocatable": {
+		"modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
+		"cores": 2,
+		"threads": 2,
+		"bogoMIPS": 5187.81,
+		"minimalFrequency": 2593.906,
+		"averageFrequency": 2593.906,
+		"maximalFrequency": 2593.906,
+		"shares": 2000,
+		"slots": 0.0,
+		"mips": 5187.81,
+		"gflop": 0.0
+	}
+}
+```
 :::
 
 ::: {.column width="50%"}
-Memory
+Memory resources of fog2
+```{.bash code-line-numbers="2"}
+curl --request GET \
+  --url http://localhost:8081/api/v1/nodes/fog1/memory \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+```
+
+
+```{.json}
+{
+	"uuid": "22665086-fced-4b9a-b493-f264a7afe37a",
+	"nodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309",
+	"nodeName": "fog1",
+	"memoryCapacity": {
+		"size": 7.753273,
+		"slots": 0
+	},
+	"memoryAllocatable": {
+		"size": 7.753273,
+		"slots": 0
+	}
+}
+```
 :::
 
 ::::
 
 ## Applications (Service Placement) {.smaller}
 
-
-
-## Requests
+```{.bash}
+curl --request POST \
+  --url http://localhost:8081/api/v1/applications \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"nodeId": "fog1",
+	"name": "edge-iot-simulator",
+	"applicationComponents": [
+		{
+			"name": "component-eis",
+			"image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
+			"port": 80,
+			"protocol": "HTTPS",
+			"applicationComponentType": "PUBLIC",
+			"environmentVariables": {
+				"MQTT_SERVER_NAME":"XXXXX.s1.eu.hivemq.cloud",
+				"MQTT_PORT":"8883",
+				"MQTT_TLS":"True",
+				"MQTT_USERNAME": "XXXXX",
+				"MQTT_PASSWORD": "XXXXX",
+				"MQTT_CLIENT_ID":"fog1-edge-iot-simulator",
+				"WEB_PORT": 80
+			}
+		}
+	]
+}'
+```
 
 # Evaluation
 
 ## API Requests
+
+![](./images/requests-table-2.png)
 
 ## Idle Resource Utilization by Nodes { .smaller }
 
@@ -583,6 +673,38 @@ SummerSOC2024-prod-load
 ::::
 
 ## Metric Exports
+
+Asynchronous data export via RESTful HTTP API
+
+```{.bash}
+curl --request POST \
+  --url http://localhost:8081/api/v1/metric-exports \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"metricType": "CPU_UTIL"
+}'
+```
+
+Check the current progress of the metric export request:
+
+```{.bash }
+curl --request GET \
+  --url http://localhost:7777/api/v1/metric-exports \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+```
+
+```{.json code-line-numbers="5-6"}
+{
+	"metricExportUUID": "34e46c91-82b8-48dd-aaea-3619459a10aa",
+	"metricType": "CPU_UTIL",
+	"numberOfRecords": 100,
+	"url": "http://localhost:8081/api/v1/metric-exports/34e46c91-82b8-48dd-aaea-3619459a10aa/blobs/CPU_UTIL-84dda748-d6c0-4c33-b593-5aca223598f3.csv",
+	"metricExportState": "PENDING" -> "COMPLETED"
+}
+```
 
 ## Related Solutions
 
