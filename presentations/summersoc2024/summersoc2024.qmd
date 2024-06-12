@@ -304,9 +304,9 @@ Memory
 
 ## API Requests
 
-## Idle resource utilization by nodes { .smaller }
+## Idle Resource Utilization by Nodes { .smaller }
 
-Idle resource utilization by nodes
+CPU and memory utilization by nodes
 
 :::: {.columns}
 
@@ -344,6 +344,37 @@ Idle resource utilization by nodes
 ## Application Resource Utilization
 
 Resource utilization under load (including deployed edge-iot-simulators)
+
+:::: {.columns}
+
+::: {.column width="75%"}
+![](plots/combined_cpu_mem_util_plot_pods_facet.svg)
+:::
+
+::: {.column width="25%"}
+- Peaks in CPU utilization caused regular bandwidth measurements with *iperf3*
+- Constant memory consumption over time
+- Deployed workload only caused minor load on all machines
+:::
+
+::::
+
+## Application Resource Utilization { .smaller }
+
+Resource utilization under load (including deployed edge-iot-simulators)
+
+:::: {.columns}
+
+::: {.column width="75%"}
+![](plots/combined_net_util_pods_facet.svg)
+:::
+
+::: {.column width="25%"}
+- Traffic mainly caused by regular bandwidth checks
+- System component and workload did not introduce large amounts of traffic
+:::
+
+::::
 
 ## Application Response Time
 
