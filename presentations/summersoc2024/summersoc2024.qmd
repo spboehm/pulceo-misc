@@ -56,9 +56,9 @@ But what about real-world experiments?
 
 ::: {.column width="80%"} 
 - **Creation of topology:** 
-  - **Nodes:** Edge and fog devices, virtual machines
+  - **Nodes:** Edge and fog devices, virtual machines, etc.
   - **Links:** Relations between nodes for measuring round-trip time and bandwidth
-- **Monitoring:** Various kind of metrics, sampling rate, etc.
+- **Monitoring:** Various kind of metrics (CPU, ...), sampling rate, etc.
 - **Operation:** Resource allocation and service placement
 - **Evaluation:** Data export, large-scale data analytics, etc.
 - **Documentation:** Publishing of reports and results, raw data, etc.
@@ -259,14 +259,16 @@ curl --request POST \
 
 ::::
 
-# Service Placement
+# Operation
+
+(Service Placement)
 
 ## Workload {.smaller}
 
 :::: {.columns}
 
 ::: {.column width="50%"}
-- One instance of edge-iot-simulator (eis)^[https://github.com/spboehm/edge-iot-simulator] is placed on node fog1
+- Example: One instance of edge-iot-simulator (eis)^[https://github.com/spboehm/edge-iot-simulator] is placed on node fog1
 - Mimics a typical application in cloud-edge environments:
   - Simulates a temperature sensor (sends temperature readings at regular intervals)
   - Allows to perform HTTP requests to simulate a microservice application
@@ -674,7 +676,7 @@ SummerSOC2024-prod-load
 
 ## Metric Exports
 
-Asynchronous data export via RESTful HTTP API
+&#9312; Asynchronous data export via RESTful HTTP API
 
 ```{.bash}
 curl --request POST \
@@ -687,7 +689,7 @@ curl --request POST \
 }'
 ```
 
-Check the current progress of the metric export request:
+&#9313; Check the current progress of the metric export request:
 
 ```{.bash }
 curl --request GET \
@@ -696,6 +698,7 @@ curl --request GET \
   --header 'Authorization: XXXXX' \
 ```
 
+&#9314; Finally download via the given `url`:
 ```{.json code-line-numbers="5-6"}
 {
 	"metricExportUUID": "34e46c91-82b8-48dd-aaea-3619459a10aa",
