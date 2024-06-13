@@ -11,8 +11,8 @@ Publication: **Towards an API-driven Approach for Universal and Lightweight Clou
 - Raw data: [pulceo-data-analytics/raw/sose2024-prod](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/sose2024-prod)
 - [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report](https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/)
 - For all experiments, the following versions have been used:
-  - pulceo-resource-manager: **v1.1.0**
-  - pulceo-monitoring-service: **v1.1.0**
+  - pulceo-resource-manager: **v1.2.0**
+  - pulceo-monitoring-service: **v1.2.1**
   - pulceo-service-manager: v1.0.0
   - pulceo-node-agent: v1.0.0
 
@@ -45,8 +45,8 @@ For `load`, we deployed a few instances of the [edge-iot-simulator](https://gith
 
 | #   | Service                   | Repository                                                     | OpenAPI Specification                                                        | Image                                                                                                 | Initial Version | Current Version |
 | --- | ------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------- | --------------- |
-| 1   | pulceo-resource-manager   | [GitHub](https://github.com/spboehm/pulceo-resource-manager)   | [OpenAPI Specification](https://spboehm.github.io/pulceo-resource-manager)   | [GHCR](https://github.com/spboehm/pulceo-resource-manager/pkgs/container/pulceo-resource-manager)     | v1.0.0          | v1.1.0          |
-| 2   | pulceo-monitoring-service | [GitHub](https://github.com/spboehm/pulceo-monitoring-service) | [OpenAPI Specification](https://spboehm.github.io/pulceo-monitoring-service) | [GHCR](https://github.com/spboehm/pulceo-monitoring-service/pkgs/container/pulceo-monitoring-service) | v1.0.0          | v1.1.0          |
+| 1   | pulceo-resource-manager   | [GitHub](https://github.com/spboehm/pulceo-resource-manager)   | [OpenAPI Specification](https://spboehm.github.io/pulceo-resource-manager)   | [GHCR](https://github.com/spboehm/pulceo-resource-manager/pkgs/container/pulceo-resource-manager)     | v1.0.0          | v1.2.0          |
+| 2   | pulceo-monitoring-service | [GitHub](https://github.com/spboehm/pulceo-monitoring-service) | [OpenAPI Specification](https://spboehm.github.io/pulceo-monitoring-service) | [GHCR](https://github.com/spboehm/pulceo-monitoring-service/pkgs/container/pulceo-monitoring-service) | v1.0.0          | v1.2.1          |
 | 3   | pulceo-service-manager    | [GitHub](https://github.com/spboehm/pulceo-service-manager)    | [OpenAPI Specification](https://spboehm.github.io/pulceo-service-manager)    | [GHCR](https://github.com/spboehm/pulceo-service-manager/tree/main)                                   | v1.0.0          | v1.0.0          |
 | 4   | pulceo-node-agent         | [GitHub](https://github.com/spboehm/pulceo-node-agent)         | [OpenAPI Specification](https://spboehm.github.io/pulceo-node-agent/)        | [GHCR](https://github.com/spboehm/pulceo-node-agent/pkgs/container/pulceo-node-agent)                 | v1.0.0          | v1.0.0          |
 
