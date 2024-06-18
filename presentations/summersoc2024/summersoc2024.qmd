@@ -14,7 +14,7 @@ format:
 
 ## Cloud-Edge Continuum {.smaller}
 
-## Motivation (1): Real-world experiments
+## Motivation (1): Real-world experiments {visibility="hidden"}
 
 Why yet another Cloud-Edge Continuum Framework?
 
@@ -28,7 +28,7 @@ So far so good.
 
 But what about real-world experiments?
 
-## Motivation (2): Real-world experiments are time-consuming
+## Motivation: Real-world experiments are time-consuming and the minority
 
 :::: {.columns}
 
@@ -46,7 +46,7 @@ But what about real-world experiments?
 
 ::::
 
-## Motivation (3) {.smaller}
+## Solution: Holistic Management {.smaller}
 
 *"Now I want to test it in a real cloud-edge infrastructure. I want a tool that supports the lifecycle of **creating** the infrastructure, **operate** my applications, **monitors** devices and applications, and helps with **evaluation** and **documentation** for my scientific publication."*
 
@@ -87,10 +87,6 @@ flowchart TB
 
 ![Representational cloud-edge topology with node and links and request for service placement.](images/topology.drawio.svg)
 
-## Solution: API-driven Orchestration
-
-Full lifecycle management based on APIs
-
 # Creation
 
 ## Providers {.smaller}
@@ -101,8 +97,8 @@ Providers supply computational resources, e.g, Compute, Network, Storage, etc.
 
 Two types of providers:
 
-- On-premises providers (any virtual machine), built-in
-- Cloud providers (API availability), e.g., Microsoft Azure
+- **On-premises** providers (any virtual machine), built-in
+- **Cloud** providers (API availability), e.g., Microsoft Azure
 
 **Example**: Creation of Microsoft Azure as provider with a service principal
 
