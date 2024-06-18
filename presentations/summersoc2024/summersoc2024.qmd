@@ -291,24 +291,13 @@ curl --request GET \
   --header 'Accept: application/json' \
   --header 'Authorization: XXXXX' \
 ```
+<br/>
 ```{.json}
 {
 	"uuid": "8aeae447-a552-4ea2-86a3-2bd1f79d6117",
 	"nodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309",
 	"nodeName": "fog1",
-	"cpuCapacity": {
-		"modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
-		"cores": 2,
-		"threads": 2,
-		"bogoMIPS": 5187.81,
-		"minimalFrequency": 2593.906,
-		"averageFrequency": 2593.906,
-		"maximalFrequency": 2593.906,
-		"shares": 2000,
-		"slots": 0.0,
-		"mips": 5187.81,
-		"gflop": 0.0
-	},
+	"cpuCapacity": {...},
 	"cpuAllocatable": {
 		"modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
 		"cores": 2,
@@ -334,8 +323,7 @@ curl --request GET \
   --header 'Accept: application/json' \
   --header 'Authorization: XXXXX' \
 ```
-
-
+<br />
 ```{.json}
 {
 	"uuid": "22665086-fced-4b9a-b493-f264a7afe37a",
@@ -723,9 +711,3 @@ curl --request GET \
   - Orchestration architecture based on a scientific meta-study 
   - Feature Engineering based on scientific, peer-reviewed service placement publications
   - Implementation following an industry standard (OpenFog RA) 
-
-## Conclusion
-
-Conclusion:
-
-Future Work:
