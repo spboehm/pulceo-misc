@@ -12,7 +12,32 @@ format:
     css: custom.scss
 ---
 
-## Cloud-Edge Continuum {.smaller}
+## Cloud-Edge Orchestration {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"} 
+Many solutions exist for **service placement**, **offloading**, **scaling** in cloud-edge orchestration
+
+However, there is limited
+
+- **Comparability**
+- **Reproducibility**
+- (General) **Applicability**
+
+because of **custom** an **proprietary** implementations and missing **real-world experiments** 
+:::
+
+::: {.column width="50%"} 
+![](images/problem-statement-visualization.png)
+Cloud-Edge Architectures are using similar **infrastructures**, **optimization goals**, and **application placement** operations  
+<br/>
+35% of 98 experiments used proprietarycomponents and test beds^[S. Smolka and Z. Á. Mann, “Evaluation of fog application
+placement algorithms: a survey,” Computing, vol. 104, no. 6, 2022]
+:::
+
+
+::::
 
 ## Motivation (1): Real-world experiments {visibility="hidden"}
 
