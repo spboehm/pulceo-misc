@@ -108,6 +108,24 @@ flowchart TB
 
 ![](images/domain-model-uml.svg)
 
+## PULCEO's Architecture
+
+- RESTful HTTP API exposed by API Gateway
+- Decoupled orchestration
+- Microservice architecture
+- Real-time data streaming via WebSockets
+
+![](images/pulceo-architecture.drawio.svg)
+
+## PULCEO Node Agent Architecture
+
+- RESTful HTTP API
+- Monitoring data transmitted via MQTT
+- Latency and Bandwidth measurement with *ping* and *iperf3*
+- Standalone Kubernetes clusters as container manager
+
+![](images/pna-architecture.drawio.svg)
+
 ## Case Study {.smaller}
 
 ![Representational cloud-edge topology with node and links and request for service placement.](images/topology.drawio.svg)
