@@ -17,7 +17,7 @@ format:
 :::: {.columns}
 
 ::: {.column width="50%"} 
-Many solutions exist for **service placement**, **offloading**, **scaling** in cloud-edge orchestration
+Many solutions exist for **service placement**, **offloading**, **scaling**
 
 However, there is limited
 
@@ -25,15 +25,15 @@ However, there is limited
 - **Reproducibility**
 - (General) **Applicability**
 
-because of **custom** an **proprietary** implementations and missing **real-world experiments** 
+because of **custom** and **proprietary** implementations and missing **real-world experiments**
 :::
 
 ::: {.column width="50%"} 
-![](images/problem-statement-visualization.png)
-Cloud-Edge Architectures are using similar **infrastructures**, **optimization goals**, and **application placement** operations  
-<br/>
-35% of 98 experiments used proprietarycomponents and test beds^[S. Smolka and Z. Á. Mann, “Evaluation of fog application
-placement algorithms: a survey,” Computing, vol. 104, no. 6, 2022]
+![Similar **infrastructures**, **optimization goals**, and **application placement** operations.
+](images/problem-statement-visualization.png)
+
+Simulations are prevalent: only 19 out of 99 solutions (19%) used a small test-bed
+^[S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.]
 :::
 
 
@@ -53,27 +53,9 @@ So far so good.
 
 But what about real-world experiments?
 
-## Motivation: Real-world experiments are time-consuming and the minority
-
-:::: {.columns}
-
-::: {.column width="55%"} 
-
-- Smolka and Mann (2022)^[S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
-] investigated 99 fog application placement algorithms
-- 19 out of 99 solutions (19%) used a small test-bed
-- No real-world deployment was observed
-:::
-
-::: {.column width="45%"}
-![](images/smolka-mann-2022.png)
-:::
-
-::::
-
 ## Solution: Holistic Management {.smaller}
 
-*"I want a tool that supports real-world experiments of **creating** the infrastructure, **operate** my applications, **monitors** devices and applications, and helps with **evaluation** and **documentation** for my scientific publication."*
+User story: *"I want a tool that supports real-world experiments of **creating** the infrastructure, **operate** my applications, **monitors** devices and applications, and helps with **evaluation** and **documentation** for my scientific publication."*
 
 <br/>
 
@@ -306,9 +288,9 @@ curl --request POST \
 
 :::: {.columns}
 
-::: {.column width="50%"}
-- Example: One instance of edge-iot-simulator (eis)^[https://github.com/spboehm/edge-iot-simulator] is placed on node fog1
-- Mimics a typical application in cloud-edge environments:
+::: {.column width="40%"}
+- Example: Placement of edge-iot-simulator (eis)^[https://github.com/spboehm/edge-iot-simulator] on node fog1
+- Mimics a typical application:
   - Simulates a temperature sensor (sends temperature readings at regular intervals)
   - Allows to perform HTTP requests to simulate a microservice application
 - Example resource assignments:
@@ -316,13 +298,13 @@ curl --request POST \
   - 1 GB memory (1000 MB)
 :::
 
-::: {.column width="50%"}
+::: {.column width="60%"}
 ![](images/topology-service-placement.svg)
 :::
 
 ::::
 
-## Resource Management (CPU)
+## Resource Management (Example CPU)
 
 :::: {.columns}
 
@@ -394,7 +376,7 @@ curl --request PATCH \
 
 ## Applications (Service Placement) {.smaller}
 
-```{.bash}
+```{.bash }
 curl --request POST \
   --url http://localhost:8081/api/v1/applications \
   --header 'Accept: application/json' \
@@ -428,7 +410,9 @@ curl --request POST \
 
 # Evaluation
 
-## API Requests
+## Overview API Requests
+
+41 requests have been performed tol holistically manage the cloud-edge environment
 
 ![](./images/requests-table-2.png)
 
@@ -487,7 +471,7 @@ Resource utilization under load (including deployed edge-iot-simulators)
 
 ::::
 
-## Application Resource Utilization { .smaller }
+## Application Resource Utilization { .smaller } {visibility="hidden"}
 
 Resource utilization under load (including deployed edge-iot-simulators)
 
@@ -728,7 +712,7 @@ curl --request POST \
 
 ```{.bash }
 curl --request GET \
-  --url http://localhost:7777/api/v1/metric-exports \
+  --url http://localhost:8081/api/v1/metric-exports \
   --header 'Accept: application/json' \
   --header 'Authorization: XXXXX' \
 ```
@@ -746,32 +730,52 @@ curl --request GET \
 
 ## Related Solutions
 
-- EU Projects (Horizon Research), like CODECO, FogAtlas, SODALITE@RT, ENACT, etc. 
-  - Latency and bandwidth measurement not fully implemented
-  - Scheduling for service placement often pre-implemented
-  - Focus on large-scale industry-grade projects, not scientific experiments
-  - Development partly not started or abandoned
+**EU Projects** (Horizon Research), like CODECO, FogAtlas, SODALITE@RT, ENACT, etc. 
 
-- Conceptual and prototypical research efforts (Sophos, Fluidity, ACOA, etc.)
-  - No holistic cloud-edge orchestration (see above)
-  - Lack of Documentation
+- Latency and bandwidth measurement not fully implemented
+- Scheduling for service placement often pre-implemented
+- Focus on large-scale industry-grade projects, not scientific experiments
 
-- Cloud and proprietary solutions
-  - Rather used for static device connection and workload placement
-  - No advanced cloud-edge orchestration possible
+**Conceptual** and **prototypical research efforts** (Sophos, Fluidity, ACOA, etc.)
 
-## Contributions
+- No holistic cloud-edge orchestration (see above)
+- Lack of Documentation
 
-- Fully documented RESTful HTTP API for universal orchestration
+**Cloud** and **proprietary** solutions
+
+- Rather used for static device connection and workload placement
+- No advanced cloud-edge orchestration possible
+
+## Contributions (OpenAPI specification)
+
+- Fully documented RESTful HTTP API for universal orchestration  
 - Decoupled cloud-edge orchestration and holistic cloud-edge orchestration
 
 - Strong scientific and industrial foundation
-  - Orchestration architecture based on a scientific meta-study 
-  - Feature Engineering based on scientific, peer-reviewed service placement publications
-  - Implementation following an industry standard (OpenFog RA) 
+  - Orchestration architecture based on a scientific meta-study^[]
+  - Feature Engineering based on scientific, peer-reviewed service placement publications^[]
+  - Implementation following an industry standard (OpenFog RA)^[] 
 
 - Automated Evaluation and Documentation
 
 **Limitations**: Only one representational architecture implemented with stable network conditions
 
 ## Contributions#2 {visibility="hidden"}
+
+## Motivation: Real-world experiments are time-consuming and the minority
+
+:::: {.columns}
+
+::: {.column width="55%"} 
+
+- Smolka and Mann (2022)^[S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
+] investigated 99 fog application placement algorithms
+- 19 out of 99 solutions (19%) used a small test-bed
+- No real-world (=large-scale) deployment was observed
+:::
+
+::: {.column width="45%"}
+![](images/smolka-mann-2022.png)
+:::
+
+::::
