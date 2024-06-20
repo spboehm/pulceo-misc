@@ -73,7 +73,7 @@ But what about real-world experiments?
 
 ## Solution: Holistic Management {.smaller}
 
-*"Now I want to test it in a real cloud-edge infrastructure. I want a tool that supports the lifecycle of **creating** the infrastructure, **operate** my applications, **monitors** devices and applications, and helps with **evaluation** and **documentation** for my scientific publication."*
+*"I want a tool that supports real-world experiments of **creating** the infrastructure, **operate** my applications, **monitors** devices and applications, and helps with **evaluation** and **documentation** for my scientific publication."*
 
 <br/>
 
@@ -312,22 +312,22 @@ curl --request POST \
   - Simulates a temperature sensor (sends temperature readings at regular intervals)
   - Allows to perform HTTP requests to simulate a microservice application
 - Example resource assignments:
-  - 1 vCPU
-  - 1 GB memory
+  - 1 vCPU (1000 shares)
+  - 1 GB memory (1000 MB)
 :::
 
 ::: {.column width="50%"}
-TODO
+![](images/topology-service-placement.svg)
 :::
 
 ::::
 
-## Resource Management
+## Resource Management (CPU)
 
 :::: {.columns}
 
 ::: {.column width="50%"}
-CPU resources of fog1
+Read CPU resources of fog1
 ```{.bash code-line-numbers="2"}
 curl --request GET \
   --url http://localhost:8081/api/v1/nodes/fog1/cpu \
@@ -359,26 +359,32 @@ curl --request GET \
 :::
 
 ::: {.column width="50%"}
-Memory resources of fog2
-```{.bash code-line-numbers="2"}
-curl --request GET \
-  --url http://localhost:8081/api/v1/nodes/fog1/memory \
-  --header 'Accept: application/json' \
-  --header 'Authorization: XXXXX' \
+Update CPU resources of fog1
+```{.bash code-line-numbers="2,5-8"}
+curl --request PATCH \
+  --url http://localhost:8081/api/v1/nodes/fog1/cpu/allocatable \
+  --data '{
+	"key": "shares",
+	"value": 1000
+}'
 ```
-<br />
-```{.json}
+<br/>
+```{.json code-line-numbers="11"}
 {
-	"uuid": "22665086-fced-4b9a-b493-f264a7afe37a",
+	"uuid": "8aeae447-a552-4ea2-86a3-2bd1f79d6117",
 	"nodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309",
 	"nodeName": "fog1",
-	"memoryCapacity": {
-		"size": 7.753273,
-		"slots": 0
-	},
-	"memoryAllocatable": {
-		"size": 7.753273,
-		"slots": 0
+	"cpuCapacity": {...},
+	"cpuAllocatable": {
+		"cores": 2,
+		"threads": 2,
+		"bogoMIPS": 5187.81,
+		"averageFrequency": 2593.906,
+		"shares": 1000,
+		"slots": 0.0,
+		"mips": 5187.81,
+		"gflop": 0.0,
+    ...
 	}
 }
 ```
@@ -417,6 +423,8 @@ curl --request POST \
 	]
 }'
 ```
+
+*If needed, issue further Metrics Requests to monitor the placed Applications.*
 
 # Evaluation
 
@@ -738,19 +746,32 @@ curl --request GET \
 
 ## Related Solutions
 
-## Discussion and Limitations
+- EU Projects (Horizon Research), like CODECO, FogAtlas, SODALITE@RT, ENACT, etc. 
+  - Latency and bandwidth measurement not fully implemented
+  - Scheduling for service placement often pre-implemented
+  - Focus on large-scale industry-grade projects, not scientific experiments
+  - Development partly not started or abandoned
+
+- Conceptual and prototypical research efforts (Sophos, Fluidity, ACOA, etc.)
+  - No holistic cloud-edge orchestration (see above)
+  - Lack of Documentation
+
+- Cloud and proprietary solutions
+  - Rather used for static device connection and workload placement
+  - No advanced cloud-edge orchestration possible
 
 ## Contributions
 
-- Holistic accomplishment of service placement experiments
-- Fully decoupled service orchestration with an HTTP API
-- Flexible resource management
-- Configurable monitoring with real-time latency and bandwidth
-- Support for high-level orchestration metrics, like application response time
-- Automatic orchestration reports
-- Blazingly fast metrics and event export 
-- Built for advanced cloud-edge orchestration algorithms, strategies, and policies
+- Fully documented RESTful HTTP API for universal orchestration
+- Decoupled cloud-edge orchestration and holistic cloud-edge orchestration
+
 - Strong scientific and industrial foundation
   - Orchestration architecture based on a scientific meta-study 
   - Feature Engineering based on scientific, peer-reviewed service placement publications
   - Implementation following an industry standard (OpenFog RA) 
+
+- Automated Evaluation and Documentation
+
+**Limitations**: Only one representational architecture implemented with stable network conditions
+
+## Contributions#2 {visibility="hidden"}
