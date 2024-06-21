@@ -220,7 +220,7 @@ curl --request POST \
 :::
 :::
 
-## Links (fog3-fog1) {.smaller}
+## Links (Example fog3-fog1) {.smaller}
 
 ::: columns
 ::: {.column width="50%"}
@@ -251,7 +251,7 @@ curl --request POST \
 
 # Monitoring
 
-Example: Nodes and Links
+Nodes ‧ Links
 
 ## Metric Requests {.smaller}
 
@@ -284,7 +284,7 @@ curl --request POST \
 
 # Operation
 
-(Service Placement)
+Workload ‧ Resource Management ‧ Service Placement
 
 ## Workload {.smaller}
 
@@ -382,12 +382,11 @@ curl --request PATCH \
 
 ## Applications (Service Placement) {.smaller}
 
-``` bash
+``` {.bash code-line-numbers="2,5-26"}
 curl --request POST \
   --url http://localhost:8081/api/v1/applications \
   --header 'Accept: application/json' \
-  --header 'Authorization: XXXX' \
-  --header 'Content-Type: application/json' \
+  --header 'Authorization: XXXXX' \
   --data '{
     "nodeId": "fog1",
     "name": "edge-iot-simulator",
@@ -397,7 +396,7 @@ curl --request POST \
             "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
             "port": 80,
             "protocol": "HTTPS",
-            "applicationComponentType": "PUBLIC",
+            "applicationComponentType": "PUBLIC",Resource utilization with 
             "environmentVariables": {
                 "MQTT_SERVER_NAME":"XXXXX.s1.eu.hivemq.cloud",
                 "MQTT_PORT":"8883",
@@ -412,63 +411,35 @@ curl --request POST \
 }'
 ```
 
-*If needed, issue further Metrics Requests to monitor the placed Applications.*
+Resource utilization with *If needed, further Metrics Requests to monitor the placed Applications can be issued.*
 
 # Evaluation
 
-## Overview API Requests
+API Requests ‧ Idle Resource Utilization ‧ Link Quality Metrics ‧ Application Resource Utilization ‧ Application Response Time
 
-41 requests have been performed tol holistically manage the cloud-edge environment
+## API Requets
+
+**41 requests** required to perform the entire orchestration workflow
 
 ![](./images/requests-table-2.png)
 
 ## Idle Resource Utilization by Nodes {.smaller}
 
-CPU and memory utilization by nodes
+Including **pulceo-node-agent,** fully configured **monitoring,** and **Kubernetes**
 
-::: columns
-::: {.column width="70%"}
-![](plots/combined_cpu_mem_util_plot.svg){width="100%"} ![](plots/combined_storage_net_util_plot.svg){width="100%"}
-:::
+![](plots/combined_cpu_mem_util_plot.svg) ![](plots/combined_storage_net_util_plot.svg)
 
-::: {.column width="30%"}
--   CPU utilization relatively low and stable at around 5%
--   Memory consumption primarily caused by OS, K8s, and container runtime
--   Storage almost constant over time because of no data is persistent
--   Traffic partially relatively high because of fully utilized link quality monitoring
-:::
-:::
+## Link Quality Metrics {.smaller}
 
-## Link Quality Metrics (excerpt) {.smaller}
+Using a high-performance and stable network (on-premises and cloud)
 
-::: columns
-::: {.column width="60%"}
 ![](images/link-quality-table.png)
-:::
-
-::: {.column width="40%"}
--   ICMP round-trip time deviating depending on the geographical distance
--   TCP and UDP bandwidth reached (almost) the target of 65 Mbit/s
--   Standard deviation depending geographical distance
--   Measurement under stable network conditions (DFN and cloud provider networks)
-:::
-:::
 
 ## Application Resource Utilization
 
-Resource utilization under load (including deployed edge-iot-simulators)
+With deployed instances edge-iot-simulators (eis)
 
-::: columns
-::: {.column width="75%"}
 ![](plots/combined_cpu_mem_util_plot_pods_facet.svg)
-:::
-
-::: {.column width="25%"}
--   Peaks in CPU utilization caused regular bandwidth measurements with *iperf3*
--   Constant memory consumption over time
--   Deployed workload only caused minor load on all machines
-:::
-:::
 
 ## Application Resource Utilization { .smaller } {visibility="hidden"}
 
@@ -722,6 +693,23 @@ Out of scope: **Cloud** and **commercial** solutions
 [^7]: S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47.
 
 **Limitations**: Only one representational architecture implemented with stable network conditions
+
+## Future Work
+
+::: columns
+::: {.column width="70%"}
+![S. Bohm and G. Wirtz, “Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration,” in 2024 IEEE International Conference on Service-Oriented System Engineering (SOSE), accepted, to be published.](images/sose2024.png)
+:::
+::: {.column width="30%"}
+Further tests with other service placement strategies, as done for **IEEE SOSE 2024**: Full real-world realization of *Qos-aware Deployment of IoT Application Through the Fog*, by *Brogi and Forti (2017)*
+
+Feature extensions
+
+Scalability tests
+:::
+:::
+
+
 
 ## Contributions#2 {visibility="hidden"}
 
