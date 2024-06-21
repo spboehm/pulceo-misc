@@ -17,7 +17,7 @@ format:
 :::: {.columns}
 
 ::: {.column width="50%"} 
-Many solutions exist for **service placement**, offloading, scaling
+Many solutions exist for **service placement**
 
 However, there is limited
 
@@ -37,7 +37,6 @@ because of
 Simulations are prevalent: only 19 out of 99 solutions used a small test-bed
 ^[S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.]
 :::
-
 
 ::::
 
