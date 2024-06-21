@@ -259,7 +259,7 @@ Nodes ‧ Links
 ::: {.column width="50%"}
 -   Collection of monitoring data
     -   CPU, memory, storage and network utilization for nodes and applications
-    -   ICMP round-trip time, TCP & UDP bandwidth for links
+    -   ICMP round-trip time, TCexperimentP & UDP bandwidth for links
 -   Individual and batch (\*) assignments
 -   **Example:** Latency all for links, once per hour (recurrence 3600s = 1h)
 
@@ -431,13 +431,13 @@ Including **pulceo-node-agent,** fully configured **monitoring,** and **Kubernet
 
 ## Link Quality Metrics {.smaller}
 
-Using a high-performance and stable network (on-premises and cloud)
+Using a high-performance and stable network for on-premises and cloud
 
 ![](images/link-quality-table.png)
 
 ## Application Resource Utilization
 
-With deployed instances edge-iot-simulators (eis)
+With deployed edge-iot-simulators (eis)
 
 ![](plots/combined_cpu_mem_util_plot_pods_facet.svg)
 
@@ -464,6 +464,8 @@ Resource utilization under load (including deployed edge-iot-simulators)
 ![](plots/application_response_time_plot.svg)
 
 # Documentation
+
+Orchestration Data
 
 ## Orchestration Data
 
@@ -634,7 +636,7 @@ curl --request GET \
 :::
 
 ::: {.column width="40%"}
-Reports for the two phases of the experiment:
+Reports for the two phases:
 
 ```{python}
 import qrcode
@@ -681,7 +683,7 @@ Out of scope: **Cloud** and **commercial** solutions
 
 -   Fully documented **RESTful HTTP API** for universal orchestration (OpenAPI specification)
 -   **Decoupled** and **holistic** cloud-edge orchestration with evaluation and documentation
--   Strong **scientific** and **industrial** foundation:
+-   Strong **scientific** and **industrial** foundation
     -   Platform architecture based on a scientific meta-study[^5]
     -   Feature engineering based on scientific, peer-reviewed service placement publications[^6]
     -   Implementation following an industry standard (OpenFog RA)[^7]
@@ -701,15 +703,17 @@ Out of scope: **Cloud** and **commercial** solutions
 ![S. Bohm and G. Wirtz, “Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration,” in 2024 IEEE International Conference on Service-Oriented System Engineering (SOSE), accepted, to be published.](images/sose2024.png)
 :::
 ::: {.column width="30%"}
-Further tests with other service placement strategies, as done for **IEEE SOSE 2024**: Full real-world realization of *Qos-aware Deployment of IoT Application Through the Fog*, by *Brogi and Forti (2017)*
+Further tests with **other service placement strategies**, as done for **IEEE SOSE 2024**: Full real-world realization of *Qos-aware Deployment of IoT Application Through the Fog*, by *Brogi and Forti (2017)*
+```{python}
+import qrcode
+import qrcode.image.svg
 
-Feature extensions
-
-Scalability tests
+img = qrcode.make('https://github.com/spboehm/pulceo-misc', image_factory=qrcode.image.svg.SvgPathImage)
+img.save("images/qrcode-pulceo-misc.svg")
+```
+![Source Code, Container Images, OpenAPI Specifications, and Documentation](images/qrcode-pulceo-misc.svg)
 :::
 :::
-
-
 
 ## Contributions#2 {visibility="hidden"}
 
