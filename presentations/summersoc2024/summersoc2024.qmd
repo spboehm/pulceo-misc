@@ -431,7 +431,7 @@ Including **pulceo-node-agent,** fully configured **monitoring,** and **Kubernet
 
 ## Link Quality Metrics {.smaller}
 
-Using a high-performance and stable network for on-premises and cloud
+Using a **high-performance** and **stable** network for on-premises and cloud
 
 ![](images/link-quality-table.png)
 
@@ -458,7 +458,7 @@ Resource utilization under load (including deployed edge-iot-simulators)
 
 ## Application Response Time
 
--   Measured by devices
+-   Measured by edge-iot-simulators (eis)
 -   Values have been submitted in a standardized JSON format via MQTT
 
 ![](plots/application_response_time_plot.svg)
@@ -694,7 +694,7 @@ Out of scope: **Cloud** and **commercial** solutions
 
 [^7]: S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47.
 
-**Limitations**: Only one representational architecture implemented with stable network conditions
+**Limitations**: Only one representational architecture implemented with stable network conditions has been reproduced yet
 
 ## Future Work
 
