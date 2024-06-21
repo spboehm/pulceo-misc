@@ -1,0 +1,163 @@
+[
+  {
+    "objectID": "summersoc2024.html#cloud-edge-orchestration",
+    "href": "summersoc2024.html#cloud-edge-orchestration",
+    "title": "PULCEO* in Action",
+    "section": "Cloud-Edge Orchestration",
+    "text": "Cloud-Edge Orchestration\n\n\nEdge computing: Placing of computational resources close to end-users\nMany solutions exist for service placement\nBut, limited\n\nReproducibility\n(General) Applicability\n\nbecause of\n\ncustom implementations\nmissing real-world experiments\n\n\n\n\n\nSimilar infrastructures, optimization goals, and application placement operations.\n\n\nSimulations are prevalent: only 19 out of 99 solutions used a small test-bed 1\n\n\n\n\n\nhttps://github.com/spboehm/pulceo-misc\n\nS. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022."
+  },
+  {
+    "objectID": "summersoc2024.html#solution-holistic-management",
+    "href": "summersoc2024.html#solution-holistic-management",
+    "title": "PULCEO* in Action",
+    "section": "Solution: Holistic Management",
+    "text": "Solution: Holistic Management\n\n\n\nCreation of topology:\n\nNodes: Edge and fog devices, virtual machines, etc.\nLinks: Relations between nodes for measuring round-trip time and bandwidth\n\nMonitoring: Various kind of metrics (CPU, …), sampling rate, etc.\nOperation: Resource allocation and service placement\nEvaluation: Data export, large-scale data analytics, etc.\nDocumentation: Publishing of reports and results, raw data, etc.\n(Deletion: Tearing down of environments)\n\n\n\n\n\n\n\nflowchart TB\n   Creation --&gt; Monitoring\n   Monitoring --&gt; Operation\n   Operation --&gt; Monitoring\n   Operation --&gt; Evaluation\n   Evaluation --&gt; Documentation\n   Documentation --&gt; Creation"
+  },
+  {
+    "objectID": "summersoc2024.html#pulceos-domain-model",
+    "href": "summersoc2024.html#pulceos-domain-model",
+    "title": "PULCEO* in Action",
+    "section": "PULCEO’s Domain Model",
+    "text": "PULCEO’s Domain Model\nExtracted from 27 peer-reviewed service placement solutions1\n\nhttps://spboehm.github.io/pulceo-misc/"
+  },
+  {
+    "objectID": "summersoc2024.html#pulceos-architecture",
+    "href": "summersoc2024.html#pulceos-architecture",
+    "title": "PULCEO* in Action",
+    "section": "PULCEO’s Architecture",
+    "text": "PULCEO’s Architecture\n\nDecoupled orchestration with RESTful HTTP API exposed by API Gateway\nMicroservice architecture aligned to a scientific meta-study1\nReal-time data streaming via WebSockets\n\n\nB. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221."
+  },
+  {
+    "objectID": "summersoc2024.html#pulceo-node-agent-architecture",
+    "href": "summersoc2024.html#pulceo-node-agent-architecture",
+    "title": "PULCEO* in Action",
+    "section": "PULCEO Node Agent Architecture",
+    "text": "PULCEO Node Agent Architecture\n\nRESTful HTTP API\nMonitoring data transmitted via MQTT\nLatency and Bandwidth measurement with ping and iperf3\nStandalone Kubernetes clusters as container manager"
+  },
+  {
+    "objectID": "summersoc2024.html#topology",
+    "href": "summersoc2024.html#topology",
+    "title": "PULCEO* in Action",
+    "section": "Topology",
+    "text": "Topology\n\nRepresentational cloud-edge topology with node and links and request for service placement."
+  },
+  {
+    "objectID": "summersoc2024.html#providers",
+    "href": "summersoc2024.html#providers",
+    "title": "PULCEO* in Action",
+    "section": "Providers",
+    "text": "Providers\nProviders supply computational resources, e.g, Compute, Network, Storage, etc.\n\nTwo types of providers:\n\nOn-premises providers (any virtual machine), built-in\nCloud providers (API availability), e.g., Microsoft Azure\n\nExample: Creation of Microsoft Azure as provider with a service principal\ncurl --request POST \\\n  --url http://localhost:8081/api/v1/providers \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"providerName\": \"azure-provider\",\n    \"providerType\": \"AZURE\",\n    \"clientId\": \"00000000-00000000-00000000-00000000\",\n    \"clientSecret\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n    \"tenantId\": \"00000000-00000000-00000000-00000000\",\n    \"subscriptionId\": \"00000000-00000000-00000000-00000000\"\n  }'"
+  },
+  {
+    "objectID": "summersoc2024.html#nodes-fog1",
+    "href": "summersoc2024.html#nodes-fog1",
+    "title": "PULCEO* in Action",
+    "section": "Nodes (fog1)",
+    "text": "Nodes (fog1)\n\n\n\nProvider: Microsoft Azure (Cloud)\nCapabilities: 2 vCPU, 8 GB memory, 32 GB storage\nLocation: France, Paris\n\ncurl --request POST \\\n  --url http://localhost:8081/api/v1/nodes \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXXX' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"nodeType\":\"AZURE\",\n    \"providerName\":\"azure-provider\",\n    \"name\":\"fog1\",\n    \"type\":\"fog\",\n    \"cpu\":\"2\",\n    \"memory\":\"8\",\n    \"region\":\"francecentral\",\n    \"tags\": []\n}'"
+  },
+  {
+    "objectID": "summersoc2024.html#nodes-fog3",
+    "href": "summersoc2024.html#nodes-fog3",
+    "title": "PULCEO* in Action",
+    "section": "Nodes (fog3)",
+    "text": "Nodes (fog3)\n\n\n\nProvider: Local data center (On-premises)\nCapabilities: 2 vCPU, 2 GB memory, 27 GB storage\nLocation: Bamberg, Germany\n\ncurl --request POST \\\n  --url http://localhost:8081/api/v1/nodes \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXXX' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"nodeType\":\"ONPREM\",\n    \"type\": \"fog\",\n    \"name\": \"fog3\",\n    \"providerName\":\"default\",\n    \"hostname\":\"h5138.pi.uni-bamberg.de\",\n    \"pnaInitToken\":\"XXXXX\",\n    \"country\": \"Germany\",\n    \"state\": \"Bavaria\",\n    \"city\": \"Bamberg\",\n    \"latitude\": 49.9036,\n    \"longitude\": 10.8700,\n    \"tags\": []\n}'"
+  },
+  {
+    "objectID": "summersoc2024.html#links-example-fog3-fog1",
+    "href": "summersoc2024.html#links-example-fog3-fog1",
+    "title": "PULCEO* in Action",
+    "section": "Links (Example fog3-fog1)",
+    "text": "Links (Example fog3-fog1)\n\n\n\nLink between fog3 and fog1\nRepresents a logical connection\nLater used to obtain round-trip time and bandwidth between nodes\n&lt;(,)&gt;: &lt;(latency, bandwidth), …&gt;\n\ncurl --request POST \\\n  --url http://localhost:8081/api/v1/links \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXXX' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"linkType\": \"NODE_LINK\",\n    \"name\": \"fog3-fog1\",\n    \"srcNodeId\": \"fog3\",\n    \"destNodeId\": \"fog1\"\n}'"
+  },
+  {
+    "objectID": "summersoc2024.html#metric-requests",
+    "href": "summersoc2024.html#metric-requests",
+    "title": "PULCEO* in Action",
+    "section": "Metric Requests",
+    "text": "Metric Requests\n\n\n\nCollection of monitoring data\n\nCPU, memory, storage and network utilization for nodes and applications\nICMP round-trip time, TCexperimentP & UDP bandwidth for links\n\nIndividual and batch (*) assignments\nExample: Latency all for links, once per hour (recurrence 3600s = 1h)\n\ncurl --request POST \\\n  --url http://localhost:8081/api/v1/metric-requests \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXX' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"type\":\"icmp-rtt\",\n    \"linkId\":\"*\",\n    \"recurrence\":\"3600\"\n}'"
+  },
+  {
+    "objectID": "summersoc2024.html#workload",
+    "href": "summersoc2024.html#workload",
+    "title": "PULCEO* in Action",
+    "section": "Workload",
+    "text": "Workload\n\n\n\nExample: Placement of edge-iot-simulator (eis)1 on node fog1\nMimics a typical application:\n\nSimulates a temperature sensor (sends temperature readings at regular intervals)\nAllows to perform HTTP requests to simulate a microservice application\n\nExample resource assignments:\n\n1 vCPU (1000 shares)\n1 GB memory (1000 MB)\n\n\n\n\n\n\nhttps://github.com/spboehm/edge-iot-simulator"
+  },
+  {
+    "objectID": "summersoc2024.html#resource-management-example-cpu",
+    "href": "summersoc2024.html#resource-management-example-cpu",
+    "title": "PULCEO* in Action",
+    "section": "Resource Management (Example CPU)",
+    "text": "Resource Management (Example CPU)\n\n\nRead CPU resources of fog1\ncurl --request GET \\\n  --url http://localhost:8081/api/v1/nodes/fog1/cpu \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXXX' \\\n\n{\n    \"uuid\": \"8aeae447-a552-4ea2-86a3-2bd1f79d6117\",\n    \"nodeUUID\": \"e1076174-380a-47e4-a468-b9fd1b0ea309\",\n    \"nodeName\": \"fog1\",\n    \"cpuCapacity\": {...},\n    \"cpuAllocatable\": {\n        \"modelName\": \"Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz\",\n        \"cores\": 2,\n        \"threads\": 2,\n        \"bogoMIPS\": 5187.81,\n        \"minimalFrequency\": 2593.906,\n        \"averageFrequency\": 2593.906,\n        \"maximalFrequency\": 2593.906,\n        \"shares\": 2000,\n        \"slots\": 0.0,\n        \"mips\": 5187.81,\n        \"gflop\": 0.0\n    }\n}\n\nUpdate CPU resources of fog1\ncurl --request PATCH \\\n  --url http://localhost:8081/api/v1/nodes/fog1/cpu/allocatable \\\n  --data '{\n    \"key\": \"shares\",\n    \"value\": 1000\n}'\n\n{\n    \"uuid\": \"8aeae447-a552-4ea2-86a3-2bd1f79d6117\",\n    \"nodeUUID\": \"e1076174-380a-47e4-a468-b9fd1b0ea309\",\n    \"nodeName\": \"fog1\",\n    \"cpuCapacity\": {...},\n    \"cpuAllocatable\": {\n        \"cores\": 2,\n        \"threads\": 2,\n        \"bogoMIPS\": 5187.81,\n        \"averageFrequency\": 2593.906,\n        \"shares\": 1000,\n        \"slots\": 0.0,\n        \"mips\": 5187.81,\n        \"gflop\": 0.0,\n    ...\n    }\n}"
+  },
+  {
+    "objectID": "summersoc2024.html#applications-service-placement",
+    "href": "summersoc2024.html#applications-service-placement",
+    "title": "PULCEO* in Action",
+    "section": "Applications (Service Placement)",
+    "text": "Applications (Service Placement)\ncurl --request POST \\\n  --url http://localhost:8081/api/v1/applications \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXXX' \\\n  --data '{\n    \"nodeId\": \"fog1\",\n    \"name\": \"edge-iot-simulator\",\n    \"applicationComponents\": [\n        {\n            \"name\": \"component-eis\",\n            \"image\": \"ghcr.io/spboehm/edge-iot-simulator:v1.1.0\",\n            \"port\": 80,\n            \"protocol\": \"HTTPS\",\n            \"applicationComponentType\": \"PUBLIC\",Resource utilization with \n            \"environmentVariables\": {\n                \"MQTT_SERVER_NAME\":\"XXXXX.s1.eu.hivemq.cloud\",\n                \"MQTT_PORT\":\"8883\",\n                \"MQTT_TLS\":\"True\",\n                \"MQTT_USERNAME\": \"XXXXX\",\n                \"MQTT_PASSWORD\": \"XXXXX\",\n                \"MQTT_CLIENT_ID\":\"fog1-edge-iot-simulator\",\n                \"WEB_PORT\": 80\n            }\n        }\n    ]\n}'\nResource utilization with If needed, further Metrics Requests to monitor the placed Applications can be issued."
+  },
+  {
+    "objectID": "summersoc2024.html#api-requets",
+    "href": "summersoc2024.html#api-requets",
+    "title": "PULCEO* in Action",
+    "section": "API Requets",
+    "text": "API Requets\n41 requests required to perform the entire orchestration workflow"
+  },
+  {
+    "objectID": "summersoc2024.html#idle-resource-utilization-by-nodes",
+    "href": "summersoc2024.html#idle-resource-utilization-by-nodes",
+    "title": "PULCEO* in Action",
+    "section": "Idle Resource Utilization by Nodes",
+    "text": "Idle Resource Utilization by Nodes\nIncluding pulceo-node-agent, fully configured monitoring, and Kubernetes"
+  },
+  {
+    "objectID": "summersoc2024.html#link-quality-metrics",
+    "href": "summersoc2024.html#link-quality-metrics",
+    "title": "PULCEO* in Action",
+    "section": "Link Quality Metrics",
+    "text": "Link Quality Metrics\nUsing a high-performance and stable network for on-premises and cloud"
+  },
+  {
+    "objectID": "summersoc2024.html#application-resource-utilization",
+    "href": "summersoc2024.html#application-resource-utilization",
+    "title": "PULCEO* in Action",
+    "section": "Application Resource Utilization",
+    "text": "Application Resource Utilization\nWith deployed edge-iot-simulators (eis)"
+  },
+  {
+    "objectID": "summersoc2024.html#application-response-time",
+    "href": "summersoc2024.html#application-response-time",
+    "title": "PULCEO* in Action",
+    "section": "Application Response Time",
+    "text": "Application Response Time\n\nMeasured by edge-iot-simulators (eis)\nValues have been submitted in a standardized JSON format via MQTT"
+  },
+  {
+    "objectID": "summersoc2024.html#orchestration-data",
+    "href": "summersoc2024.html#orchestration-data",
+    "title": "PULCEO* in Action",
+    "section": "Orchestration Data",
+    "text": "Orchestration Data\n\n\nJSON export of all entities of the domain model: Providers, Nodes, Links, Metric-Requests, Applica-tions, Resources, CPUs, Memory, Events\nExample for nodes:\ncurl --request GET \\\n  --url http://localhost:8081/api/v1/nodes \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXXX' \\\n\n\n\nJSON output for nodes\n\n[\n  {\n    \"uuid\": \"e6c27c8a-a337-49e1-8662-38c96bff3351\",\n    \"providerName\": \"default\",\n    \"hostname\": \"h5137.pi.uni-bamberg.de\",\n    \"pnaUUID\": \"be6f0093-ebff-4494-8123-6ab50d3ae8e5\",\n    \"node\": {\n      \"name\": \"fog3\",\n      \"type\": \"FOG\",\n      \"layer\": 1,\n      \"role\": \"WORKLOAD\",\n      \"group\": \"\",\n      \"country\": \"Germany\",\n      \"state\": \"Bavaria\",\n      \"city\": \"Bamberg\",\n      \"longitude\": 10.87,\n      \"latitude\": 49.9036,\n      \"tags\": [\n        {\n          \"key\": \"properties\",\n          \"value\": \"C++, Linux, Python\"\n        }\n      ]\n    }\n  },\n  {\n    \"uuid\": \"22d5cc00-3264-4ad5-b85d-26c1bbb4cbf3\",\n    \"providerName\": \"default\",\n    \"hostname\": \"h5136.pi.uni-bamberg.de\",\n    \"pnaUUID\": \"265916fb-2092-40ee-9528-b32f4ea911a1\",\n    \"node\": {\n      \"name\": \"fog2\",\n      \"type\": \"FOG\",\n      \"layer\": 1,\n      \"role\": \"WORKLOAD\",\n      \"group\": \"\",\n      \"country\": \"Germany\",\n      \"state\": \"Bavaria\",\n      \"city\": \"Bamberg\",\n      \"longitude\": 10.87,\n      \"latitude\": 49.9036,\n      \"tags\": [\n        {\n          \"key\": \"properties\",\n          \"value\": \"MySQL, .NET, C++, Python\"\n        }\n      ]\n    }\n  },\n  {\n    \"uuid\": \"615ba998-3ecb-40f4-8a00-bdebf5894303\",\n    \"providerName\": \"default\",\n    \"hostname\": \"h5138.pi.uni-bamberg.de\",\n    \"pnaUUID\": \"6dc8fca9-d1a6-4436-b1c9-122bbaa55235\",\n    \"node\": {\n      \"name\": \"fog1\",\n      \"type\": \"FOG\",\n      \"layer\": 1,\n      \"role\": \"WORKLOAD\",\n      \"group\": \"\",\n      \"country\": \"Germany\",\n      \"state\": \"Bavaria\",\n      \"city\": \"Bamberg\",\n      \"longitude\": 10.87,\n      \"latitude\": 49.9036,\n      \"tags\": [\n        {\n          \"key\": \"properties\",\n          \"value\": \"C++, Linux, Python\"\n        }\n      ]\n    }\n  },\n  {\n    \"uuid\": \"3f425fb8-c4e5-4eab-9d30-4552e94abdb3\",\n    \"providerName\": \"azure-provider\",\n    \"hostname\": \"pulceo-node-6659339536.westus.cloudapp.azure.com\",\n    \"pnaUUID\": \"3b4af61f-8bb4-4118-9640-b530c6aec54e\",\n    \"node\": {\n      \"name\": \"cloud2\",\n      \"type\": \"CLOUD\",\n      \"layer\": 1,\n      \"role\": \"WORKLOAD\",\n      \"group\": \"\",\n      \"country\": \"USA\",\n      \"state\": \"California\",\n      \"city\": \"San Francisco\",\n      \"longitude\": -119.852,\n      \"latitude\": 47.233,\n      \"tags\": [\n        {\n          \"key\": \"properties\",\n          \"value\": \"C++, Spark, MySQL, Linux, .NET, Python\"\n        }\n      ]\n    }\n  },\n  {\n    \"uuid\": \"98036c1c-1d51-4fcd-81ab-21fb40b14b3b\",\n    \"providerName\": \"azure-provider\",\n    \"hostname\": \"pulceo-node-eae9342543.westeurope.cloudapp.azure.com\",\n    \"pnaUUID\": \"26c8c3d4-badc-4b7a-adb5-ec9d920784c3\",\n    \"node\": {\n      \"name\": \"cloud1\",\n      \"type\": \"CLOUD\",\n      \"layer\": 1,\n      \"role\": \"WORKLOAD\",\n      \"group\": \"\",\n      \"country\": \"Netherlands\",\n      \"state\": \"Noord-Holland\",\n      \"city\": \"Schiphol\",\n      \"longitude\": 4.9,\n      \"latitude\": 52.3667,\n      \"tags\": [\n        {\n          \"key\": \"properties\",\n          \"value\": \"Java, .NET, Ruby, MySQL\"\n        }\n      ]\n    }\n  },\n  {\n    \"uuid\": \"c329ad3d-ab6c-41a9-aa8d-5705787a60d6\",\n    \"providerName\": \"default\",\n    \"hostname\": \"h5135.pi.uni-bamberg.de\",\n    \"pnaUUID\": \"c4cbae94-dd35-4ba8-a374-0ceebddb7765\",\n    \"node\": {\n      \"name\": \"gateway1\",\n      \"type\": \"GATEWAY\",\n      \"layer\": 1,\n      \"role\": \"WORKLOAD\",\n      \"group\": \"\",\n      \"country\": \"Germany\",\n      \"state\": \"Bavaria\",\n      \"city\": \"Bamberg\",\n      \"longitude\": 10.87,\n      \"latitude\": 49.9036,\n      \"tags\": []\n    }\n  }\n]\n\n\nReports for the two phases:\n\nSummerSOC2024-prod-idle\n\nSummerSOC2024-prod-load"
+  },
+  {
+    "objectID": "summersoc2024.html#related-solutions",
+    "href": "summersoc2024.html#related-solutions",
+    "title": "PULCEO* in Action",
+    "section": "Related Solutions",
+    "text": "Related Solutions\nEU Projects (Horizon Research), like CODECO, FogAtlas, SODALITE@RT, ENACT, etc.\n\nLatency and bandwidth measurement not fully implemented\nScheduling for service placement often pre-implemented\nFocus not on scientific experiments\n\nConceptual and prototypical research efforts (Sophos, Fluidity, ACOA, etc.)\n\nNo holistic cloud-edge orchestration (see above)\nLack of documentation\n\nOut of scope: Cloud and commercial solutions"
+  },
+  {
+    "objectID": "summersoc2024.html#contributions",
+    "href": "summersoc2024.html#contributions",
+    "title": "PULCEO* in Action",
+    "section": "Contributions",
+    "text": "Contributions\n\nFully documented RESTful HTTP API for universal orchestration (OpenAPI specification)\nDecoupled and holistic cloud-edge orchestration with evaluation and documentation\nStrong scientific and industrial foundation\n\nPlatform architecture based on a scientific meta-study1\nFeature engineering based on scientific, peer-reviewed service placement publications2\nImplementation following an industry standard (OpenFog RA)3\n\n\nLimitations: Only one representational architecture implemented with stable network conditions has been reproduced yet\nB. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.https://spboehm.github.io/pulceo-misc/S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47."
+  },
+  {
+    "objectID": "summersoc2024.html#future-work",
+    "href": "summersoc2024.html#future-work",
+    "title": "PULCEO* in Action",
+    "section": "Future Work",
+    "text": "Future Work\n\n\n\n\n\nS. Bohm and G. Wirtz, “Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration,” in 2024 IEEE International Conference on Service-Oriented System Engineering (SOSE), accepted, to be published.\n\n\n\nFurther tests with other service placement strategies, as done for IEEE SOSE 2024: Full real-world realization of Qos-aware Deployment of IoT Application Through the Fog, by Brogi and Forti (2017)\n\n\n\nSource Code, Container Images, OpenAPI Specifications, and Documentation"
+  }
+]
