@@ -16,10 +16,13 @@ format:
 
 :::: {.columns}
 
-::: {.column width="50%"} 
+::: {.column width="50%"}
+**Edge computing:** Placing of computational
+resources close to end-users
+
 Many solutions exist for **service placement**
 
-However, there is limited
+But, limited
 
 - **Reproducibility**
 - (General) **Applicability**
