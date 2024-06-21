@@ -7,7 +7,7 @@ format:
   revealjs:
     smaller: true
     slide-number: true
-    footer: <https://spboehm.github.io/pulceo-misc/>
+    footer: <https://github.com/spboehm/pulceo-misc>
     logo: images/dsg.png
     css: custom.scss
 ---
@@ -17,22 +17,24 @@ format:
 :::: {.columns}
 
 ::: {.column width="50%"} 
-Many solutions exist for **service placement**, **offloading**, **scaling**
+Many solutions exist for **service placement**, offloading, scaling
 
 However, there is limited
 
-- **Comparability**
 - **Reproducibility**
 - (General) **Applicability**
 
-because of **custom** and **proprietary** implementations and missing **real-world experiments**
+because of
+
+- **custom** implementations
+- missing **real-world experiments**
 :::
 
 ::: {.column width="50%"} 
 ![Similar **infrastructures**, **optimization goals**, and **application placement** operations.
 ](images/problem-statement-visualization.png)
 
-Simulations are prevalent: only 19 out of 99 solutions (19%) used a small test-bed
+Simulations are prevalent: only 19 out of 99 solutions used a small test-bed
 ^[S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.]
 :::
 
@@ -88,13 +90,14 @@ flowchart TB
 
 ## PULCEO's Domain Model
 
+Extracted from 27 peer-reviewed service placement solutions^[https://spboehm.github.io/pulceo-misc/]
+
 ![](images/domain-model-uml.svg)
 
 ## PULCEO's Architecture
 
-- RESTful HTTP API exposed by API Gateway
-- Decoupled orchestration
-- Microservice architecture
+- Decoupled orchestration with RESTful HTTP API exposed by API Gateway
+- Microservice architecture aligned to a scientific meta-study^[B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.]
 - Real-time data streaming via WebSockets
 
 ![](images/pulceo-architecture.drawio.svg)
@@ -693,7 +696,54 @@ SummerSOC2024-prod-load
 
 ::::
 
-## Metric Exports
+## Related Solutions
+
+**EU Projects** (Horizon Research), like CODECO, FogAtlas, SODALITE@RT, ENACT, etc. 
+
+- Latency and bandwidth measurement not fully implemented
+- Scheduling for service placement often pre-implemented
+- Focus not on scientific experiments
+
+**Conceptual** and **prototypical research efforts** (Sophos, Fluidity, ACOA, etc.)
+
+- No holistic cloud-edge orchestration (see above)
+- Lack of documentation
+
+Out of scope: **Cloud** and **commercial** solutions
+
+## Contributions
+
+- Fully documented **RESTful HTTP API** for universal orchestration (OpenAPI specification)
+- **Decoupled** and **holistic** cloud-edge orchestration with evaluation and documentation
+- Strong **scientific** and **industrial** foundation
+  - Orchestration architecture based on a scientific meta-study^[B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.]
+  - Feature Engineering based on scientific, peer-reviewed service placement publications^[https://spboehm.github.io/pulceo-misc/]
+  - Implementation following an industry standard (OpenFog RA)^[S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47.
+]
+
+**Limitations**: Only one representational architecture implemented with stable network conditions
+
+## Contributions#2 {visibility="hidden"}
+
+## Motivation: Real-world experiments are time-consuming and the minority {visibility="hidden"}
+
+:::: {.columns}
+
+::: {.column width="55%"} 
+
+- Smolka and Mann (2022)^[S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
+] investigated 99 fog application placement algorithms
+- 19 out of 99 solutions (19%) used a small test-bed
+- No real-world (=large-scale) deployment was observed
+:::
+
+::: {.column width="45%"}
+![](images/smolka-mann-2022.png)
+:::
+
+::::
+
+## Metric Exports {visibility="hidden"}
 
 &#9312; Asynchronous data export via RESTful HTTP API
 
@@ -727,55 +777,3 @@ curl --request GET \
 	"metricExportState": "PENDING" -> "COMPLETED"
 }
 ```
-
-## Related Solutions
-
-**EU Projects** (Horizon Research), like CODECO, FogAtlas, SODALITE@RT, ENACT, etc. 
-
-- Latency and bandwidth measurement not fully implemented
-- Scheduling for service placement often pre-implemented
-- Focus on large-scale industry-grade projects, not scientific experiments
-
-**Conceptual** and **prototypical research efforts** (Sophos, Fluidity, ACOA, etc.)
-
-- No holistic cloud-edge orchestration (see above)
-- Lack of Documentation
-
-**Cloud** and **proprietary** solutions
-
-- Rather used for static device connection and workload placement
-- No advanced cloud-edge orchestration possible
-
-## Contributions (OpenAPI specification)
-
-- Fully documented RESTful HTTP API for universal orchestration  
-- Decoupled cloud-edge orchestration and holistic cloud-edge orchestration
-
-- Strong scientific and industrial foundation
-  - Orchestration architecture based on a scientific meta-study^[]
-  - Feature Engineering based on scientific, peer-reviewed service placement publications^[]
-  - Implementation following an industry standard (OpenFog RA)^[] 
-
-- Automated Evaluation and Documentation
-
-**Limitations**: Only one representational architecture implemented with stable network conditions
-
-## Contributions#2 {visibility="hidden"}
-
-## Motivation: Real-world experiments are time-consuming and the minority
-
-:::: {.columns}
-
-::: {.column width="55%"} 
-
-- Smolka and Mann (2022)^[S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
-] investigated 99 fog application placement algorithms
-- 19 out of 99 solutions (19%) used a small test-bed
-- No real-world (=large-scale) deployment was observed
-:::
-
-::: {.column width="45%"}
-![](images/smolka-mann-2022.png)
-:::
-
-::::
