@@ -32,9 +32,9 @@ because of
 :::
 
 ::: {.column width="50%"}
-![Similar **infrastructures**, **optimization goals**, and **application placement** operations.](images/problem-statement-visualization.png)
+![Similar **infrastructures**, **optimization goals**, and **orchestration** operations.](images/problem-statement-visualization.png)
 
-Simulations are prevalent: only 19 out of 99 solutions used a small test-bed [^1]
+Simulations are prevalent: only 19 out of 99 solutions used a small test-bed[^1]
 :::
 :::
 
@@ -58,7 +58,7 @@ But what about real-world experiments?
 
 ::: columns
 ::: {.column width="80%"}
--   **Creation of topology:**
+-   **Creation of Topology:**
     -   **Nodes:** Edge and fog devices, virtual machines, etc.
     -   **Links:** Relations between nodes for measuring round-trip time and bandwidth
 -   **Monitoring:** Various kind of metrics (CPU, ...), sampling rate, etc.
@@ -89,7 +89,7 @@ Domain Model ‧ Architecture ‧ Node Agent
 
 ## PULCEO's Domain Model
 
-Extracted from 27 peer-reviewed service placement solutions[^2]
+Extracted from **27 peer-reviewed** service placement solutions[^2]
 
 [^2]: https://spboehm.github.io/pulceo-misc/
 
@@ -97,7 +97,7 @@ Extracted from 27 peer-reviewed service placement solutions[^2]
 
 ## PULCEO's Architecture
 
--   Decoupled orchestration with RESTful HTTP API exposed by API Gateway
+-   Decoupled orchestration with a RESTful HTTP API exposed by an API Gateway
 -   Microservice architecture aligned to a scientific meta-study[^3]
 -   Real-time data streaming via WebSockets
 
@@ -107,26 +107,26 @@ Extracted from 27 peer-reviewed service placement solutions[^2]
 
 ## PULCEO Node Agent Architecture
 
--   RESTful HTTP API
+-   RESTful HTTP API for instructions
 -   Monitoring data transmitted via MQTT
--   Latency and Bandwidth measurement with *ping* and *iperf3*
+-   Latency and bandwidth measurement with *ping* and *iperf3*
 -   Standalone Kubernetes clusters as container manager
 
 ![](images/pna-architecture.drawio.svg)
 
 # Case Study
 
-Topology ‧ Example for Orchestration workflow
+Topology ‧ Orchestration workflow
 
 ## Topology {.smaller}
 
-![Representational cloud-edge topology with node and links and request for service placement.](images/topology.drawio.svg)
+![Representational cloud-edge topology with *Nodes*, *Links* and requests for service placement.](images/topology.drawio.svg)
 
 # Creation
 
 ## Providers {.smaller}
 
-Providers supply computational resources, e.g, Compute, Network, Storage, etc.
+Providers supply computational resources, e.g., Compute, Network, Storage, etc.
 
 <br/>
 
@@ -259,7 +259,7 @@ Nodes ‧ Links
 ::: {.column width="50%"}
 -   Collection of monitoring data
     -   CPU, memory, storage and network utilization for nodes and applications
-    -   ICMP round-trip time, TCexperimentP & UDP bandwidth for links
+    -   ICMP round-trip time, TCP & UDP bandwidth for links
 -   Individual and batch (\*) assignments
 -   **Example:** Latency all for links, once per hour (recurrence 3600s = 1h)
 
@@ -290,7 +290,7 @@ Workload ‧ Resource Management ‧ Service Placement
 
 ::: columns
 ::: {.column width="40%"}
--   Example: Placement of edge-iot-simulator (eis)[^4] on node fog1
+-   Placement of edge-iot-simulator (eis)[^4] on node fog1
 -   Mimics a typical application:
     -   Simulates a temperature sensor (sends temperature readings at regular intervals)
     -   Allows to perform HTTP requests to simulate a microservice application
@@ -417,7 +417,7 @@ Resource utilization with *If needed, further Metrics Requests to monitor the pl
 
 API Requests ‧ Idle Resource Utilization ‧ Link Quality Metrics ‧ Application Resource Utilization ‧ Application Response Time
 
-## API Requets
+## API Requests
 
 **41 requests** required to perform the entire orchestration workflow
 
@@ -491,14 +491,14 @@ curl --request GET \
 ``` {.json .code-overflow-wrap .code-overflow-scroll}
 [
   {
-    "uuid": "e6c27c8a-a337-49e1-8662-38c96bff3351",
+    "uuid": "a8c03fd4-7969-46aa-991d-9bbe04faebe3",
     "providerName": "default",
-    "hostname": "h5137.pi.uni-bamberg.de",
-    "pnaUUID": "be6f0093-ebff-4494-8123-6ab50d3ae8e5",
+    "hostname": "h5138.pi.uni-bamberg.de",
+    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
     "node": {
       "name": "fog3",
       "type": "FOG",
-      "layer": 1,
+      "layer": 2,
       "role": "WORKLOAD",
       "group": "",
       "country": "Germany",
@@ -506,19 +506,14 @@ curl --request GET \
       "city": "Bamberg",
       "longitude": 10.87,
       "latitude": 49.9036,
-      "tags": [
-        {
-          "key": "properties",
-          "value": "C++, Linux, Python"
-        }
-      ]
+      "tags": []
     }
   },
   {
-    "uuid": "22d5cc00-3264-4ad5-b85d-26c1bbb4cbf3",
-    "providerName": "default",
-    "hostname": "h5136.pi.uni-bamberg.de",
-    "pnaUUID": "265916fb-2092-40ee-9528-b32f4ea911a1",
+    "uuid": "61f701aa-dc4b-4e55-8871-606f01a44a79",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-69a9460614.germanywestcentral.cloudapp.azure.com",
+    "pnaUUID": "0f40dcd2-a7d0-4ce3-820e-f5fe48883d98",
     "node": {
       "name": "fog2",
       "type": "FOG",
@@ -526,106 +521,48 @@ curl --request GET \
       "role": "WORKLOAD",
       "group": "",
       "country": "Germany",
-      "state": "Bavaria",
-      "city": "Bamberg",
-      "longitude": 10.87,
-      "latitude": 49.9036,
-      "tags": [
-        {
-          "key": "properties",
-          "value": "MySQL, .NET, C++, Python"
-        }
-      ]
+      "state": "Hessen",
+      "city": "Frankfurt",
+      "longitude": 8.682127,
+      "latitude": 50.110924,
+      "tags": []
     }
   },
   {
-    "uuid": "615ba998-3ecb-40f4-8a00-bdebf5894303",
-    "providerName": "default",
-    "hostname": "h5138.pi.uni-bamberg.de",
-    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
+    "uuid": "800b462f-cc08-4de2-a00d-15703710746f",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-96f9462404.francecentral.cloudapp.azure.com",
+    "pnaUUID": "5a552c12-f74c-489b-a771-c9578ac49c77",
     "node": {
       "name": "fog1",
       "type": "FOG",
       "layer": 1,
       "role": "WORKLOAD",
       "group": "",
-      "country": "Germany",
-      "state": "Bavaria",
-      "city": "Bamberg",
-      "longitude": 10.87,
-      "latitude": 49.9036,
-      "tags": [
-        {
-          "key": "properties",
-          "value": "C++, Linux, Python"
-        }
-      ]
+      "country": "France",
+      "state": "Paris (chef-lieu)",
+      "city": "Paris",
+      "longitude": 2.373,
+      "latitude": 46.3772,
+      "tags": []
     }
   },
   {
-    "uuid": "3f425fb8-c4e5-4eab-9d30-4552e94abdb3",
+    "uuid": "823eebe2-81ba-4d38-a2ca-0b78a1d2153d",
     "providerName": "azure-provider",
-    "hostname": "pulceo-node-6659339536.westus.cloudapp.azure.com",
-    "pnaUUID": "3b4af61f-8bb4-4118-9640-b530c6aec54e",
-    "node": {
-      "name": "cloud2",
-      "type": "CLOUD",
-      "layer": 1,
-      "role": "WORKLOAD",
-      "group": "",
-      "country": "USA",
-      "state": "California",
-      "city": "San Francisco",
-      "longitude": -119.852,
-      "latitude": 47.233,
-      "tags": [
-        {
-          "key": "properties",
-          "value": "C++, Spark, MySQL, Linux, .NET, Python"
-        }
-      ]
-    }
-  },
-  {
-    "uuid": "98036c1c-1d51-4fcd-81ab-21fb40b14b3b",
-    "providerName": "azure-provider",
-    "hostname": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
-    "pnaUUID": "26c8c3d4-badc-4b7a-adb5-ec9d920784c3",
+    "hostname": "pulceo-node-c9c9464326.eastus.cloudapp.azure.com",
+    "pnaUUID": "a58dddf4-c10c-498d-89d3-6da8c591f4c6",
     "node": {
       "name": "cloud1",
       "type": "CLOUD",
       "layer": 1,
       "role": "WORKLOAD",
       "group": "",
-      "country": "Netherlands",
-      "state": "Noord-Holland",
-      "city": "Schiphol",
-      "longitude": 4.9,
-      "latitude": 52.3667,
-      "tags": [
-        {
-          "key": "properties",
-          "value": "Java, .NET, Ruby, MySQL"
-        }
-      ]
-    }
-  },
-  {
-    "uuid": "c329ad3d-ab6c-41a9-aa8d-5705787a60d6",
-    "providerName": "default",
-    "hostname": "h5135.pi.uni-bamberg.de",
-    "pnaUUID": "c4cbae94-dd35-4ba8-a374-0ceebddb7765",
-    "node": {
-      "name": "gateway1",
-      "type": "GATEWAY",
-      "layer": 1,
-      "role": "WORKLOAD",
-      "group": "",
-      "country": "Germany",
-      "state": "Bavaria",
-      "city": "Bamberg",
-      "longitude": 10.87,
-      "latitude": 49.9036,
+      "country": "USA",
+      "state": "Virginia",
+      "city": "Boydton",
+      "longitude": -78.37465887756295,
+      "latitude": 37.3719,
       "tags": []
     }
   }
@@ -672,7 +609,7 @@ SummerSOC2024-prod-load
 -   Scheduling for service placement often pre-implemented
 -   Focus not on scientific experiments
 
-**Conceptual** and **prototypical research efforts** (Sophos, Fluidity, ACOA, etc.)
+**Conceptual** and **prototypical research efforts**, like Sophos, Fluidity, ACOA, etc.
 
 -   No holistic cloud-edge orchestration (see above)
 -   Lack of documentation
