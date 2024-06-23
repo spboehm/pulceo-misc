@@ -18,7 +18,7 @@ format:
 
 ::: columns
 ::: {.column width="50%"}
-**Edge computing:** Placing of computational resources close to end-users
+**Edge computing:** Placing of computational resources close to end-users.
 
 Many solutions exist for **service placement**
 
@@ -36,7 +36,7 @@ because of
 ::: {.column width="50%"}
 ![Similar **infrastructures**, **optimization goals**, and **orchestration** operations.](images/problem-statement-visualization.png)
 
-Simulations are prevalent: only 19 out of 99 solutions used a small test-bed[^1]
+Simulations are prevalent: only 19 out of 99 solutions used a small test-bed.[^1]
 :::
 :::
 
@@ -122,7 +122,7 @@ Topology ‧ Orchestration workflow
 
 ## Topology {.smaller}
 
-![Representational cloud-edge topology with *Nodes*, *Links* and requests for service placement.](images/topology.drawio.svg)
+![Representational cloud-edge topology with nodes, links, and requests for service placement.](images/topology.drawio.svg)
 
 # Creation
 
@@ -260,7 +260,7 @@ Nodes ‧ Links
 ::: columns
 ::: {.column width="50%"}
 -   Collection of monitoring data
-    -   CPU, memory, storage and network utilization for nodes and applications
+    -   CPU, memory, storage, and network utilization for nodes and applications
     -   ICMP round-trip time, TCP & UDP bandwidth for links
 -   Individual and batch (\*) assignments
 -   **Example:** Latency all for links, once per hour (recurrence 3600s = 1h)

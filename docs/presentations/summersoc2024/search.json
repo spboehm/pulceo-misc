@@ -4,7 +4,7 @@
     "href": "summersoc2024.html#cloud-edge-orchestration",
     "title": "PULCEO in Action",
     "section": "Cloud-Edge Orchestration",
-    "text": "Cloud-Edge Orchestration\n\n\nEdge computing: Placing of computational resources close to end-users\nMany solutions exist for service placement\nBut, limited\n\nReproducibility\n(General) Applicability\n\nbecause of\n\ncustom implementations\nmissing real-world experiments\n\n\n\n\n\nSimilar infrastructures, optimization goals, and orchestration operations.\n\n\nSimulations are prevalent: only 19 out of 99 solutions used a small test-bed1\n\n\n\n\n\nhttps://github.com/spboehm/pulceo-misc\n\nS. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022."
+    "text": "Cloud-Edge Orchestration\n\n\nEdge computing: Placing of computational resources close to end-users.\nMany solutions exist for service placement\nBut, limited\n\nReproducibility\n(General) Applicability\n\nbecause of\n\ncustom implementations\nmissing real-world experiments\n\n\n\n\n\nSimilar infrastructures, optimization goals, and orchestration operations.\n\n\nSimulations are prevalent: only 19 out of 99 solutions used a small test-bed.1\n\n\n\n\n\nhttps://github.com/spboehm/pulceo-misc\n\nS. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022."
   },
   {
     "objectID": "summersoc2024.html#solution-holistic-management",
@@ -39,7 +39,7 @@
     "href": "summersoc2024.html#topology",
     "title": "PULCEO in Action",
     "section": "Topology",
-    "text": "Topology\n\nRepresentational cloud-edge topology with Nodes, Links and requests for service placement."
+    "text": "Topology\n\nRepresentational cloud-edge topology with nodes, links, and requests for service placement."
   },
   {
     "objectID": "summersoc2024.html#providers",
@@ -74,7 +74,7 @@
     "href": "summersoc2024.html#metric-requests",
     "title": "PULCEO in Action",
     "section": "Metric Requests",
-    "text": "Metric Requests\n\n\n\nCollection of monitoring data\n\nCPU, memory, storage and network utilization for nodes and applications\nICMP round-trip time, TCP & UDP bandwidth for links\n\nIndividual and batch (*) assignments\nExample: Latency all for links, once per hour (recurrence 3600s = 1h)\n\ncurl --request POST \\\n  --url http://localhost:8081/api/v1/metric-requests \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXX' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"type\":\"icmp-rtt\",\n    \"linkId\":\"*\",\n    \"recurrence\":\"3600\"\n}'"
+    "text": "Metric Requests\n\n\n\nCollection of monitoring data\n\nCPU, memory, storage, and network utilization for nodes and applications\nICMP round-trip time, TCP & UDP bandwidth for links\n\nIndividual and batch (*) assignments\nExample: Latency all for links, once per hour (recurrence 3600s = 1h)\n\ncurl --request POST \\\n  --url http://localhost:8081/api/v1/metric-requests \\\n  --header 'Accept: application/json' \\\n  --header 'Authorization: XXXX' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n    \"type\":\"icmp-rtt\",\n    \"linkId\":\"*\",\n    \"recurrence\":\"3600\"\n}'"
   },
   {
     "objectID": "summersoc2024.html#workload",
