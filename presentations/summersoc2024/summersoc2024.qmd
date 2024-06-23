@@ -1,5 +1,5 @@
 ---
-title: "PULCEO* in Action"
+title: "PULCEO in Action"
 subtitle: "Towards API-driven Cloud-Edge Orchestration <br /> with PULCEO: A Proof of Concept"
 author: Sebastian Böhm and Guido Wirtz
 institute: University of Bamberg, Germany
@@ -10,6 +10,8 @@ format:
     footer: <https://github.com/spboehm/pulceo-misc>
     logo: images/dsg.png
     css: custom.scss
+    template-partials:
+      - title-slide.html
 ---
 
 ## Cloud-Edge Orchestration {.smaller}
