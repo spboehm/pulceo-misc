@@ -429,7 +429,8 @@ API Requests ‧ Idle Resource Utilization ‧ Link Quality Metrics ‧ Applicat
 
 Including **pulceo-node-agent,** fully configured **monitoring,** and **Kubernetes**
 
-![](plots/combined_cpu_mem_util_plot.svg) ![](plots/combined_storage_net_util_plot.svg)
+![](plots/combined_cpu_mem_util_plot.svg){width=65%}
+![](plots/combined_storage_net_util_plot.svg){width=65%}
 
 ## Link Quality Metrics {.smaller}
 
