@@ -20,6 +20,7 @@ Publication: **Towards an API-driven Approach for Universal and Lightweight Clou
 
 Publication: **API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept**  
 Presentation: 🪧 [API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept](https://spboehm.github.io/pulceo-misc/presentations/summersoc2024)
+Video: 📹 ["API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept",Sebastian Böhm, SummerSOC 2024](https://www.youtube.com/watch?v=XfjWggOLIBE) 
 
 The experiment had to phases, therefore the raw data and the orchestration reports each contain `idle` and `load`.
 For `idle`, we did not apply workloads and load experiments to the platform and analyzed the `idle` behavior of all components.
