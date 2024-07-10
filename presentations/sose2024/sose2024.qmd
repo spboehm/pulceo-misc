@@ -1,0 +1,729 @@
+---
+title: "PULCEO"
+subtitle: "Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration"
+author: Sebastian Böhm and Guido Wirtz
+institute: University of Bamberg, Germany
+format: 
+  revealjs:
+    smaller: true
+    slide-number: true
+    footer: <https://github.com/spboehm/pulceo-misc>
+    logo: images/dsg.png
+    css: custom.scss
+    template-partials:
+      - title-slide.html
+---
+
+## Cloud-Edge Orchestration {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+**Edge computing:** Placing of computational resources close to end-users.
+
+Many solutions exist for **service placement**
+
+But, limited
+
+-   **Reproducibility**
+-   (General) **Applicability**
+
+because of
+
+-   **custom** implementations
+-   missing **real-world experiments**
+:::
+
+::: {.column width="50%"}
+![Similar **infrastructures**, **optimization goals**, and **orchestration** operations.](images/problem-statement-visualization.png)
+
+Simulations are prevalent: only 19 out of 99 solutions used a small test-bed.[^1]
+:::
+:::::
+
+[^1]: S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
+
+## Motivation (1): Real-world experiments {visibility="hidden"}
+
+Why yet another Cloud-Edge Continuum Framework?
+
+*"I'm a researcher and I have developed a sophisticated **service placement** strategy. I tested it in a **simulated environment** with iFogSim2 and it reduced the overall **resource utilization** by 30% and improved the **average response time** perceived by a couple of clients by 20% compared to the baseline".*
+
+<br/>
+
+So far so good.
+
+<br/>
+
+But what about real-world experiments?
+
+## Solution: Holistic Management {.smaller}
+
+::::: columns
+::: {.column width="80%"}
+-   **Creation of Topology:**
+    -   **Nodes:** Edge and fog devices, virtual machines, etc.
+    -   **Links:** Relations between nodes for measuring round-trip time and bandwidth
+-   **Monitoring:** Various kind of metrics (CPU, ...), sampling rate, etc.
+-   **Operation:** Resource allocation and service placement
+-   **Evaluation:** Data export, large-scale data analytics, etc.
+-   **Documentation:** Publishing of reports and results, raw data, etc.
+-   (Deletion: Tearing down of environments)
+:::
+
+::: {.column width="20%"}
+```{mermaid}
+flowchart TB
+   Creation --> Monitoring
+   Monitoring --> Operation
+   Operation --> Monitoring
+   Operation --> Evaluation
+   Evaluation --> Documentation
+   Documentation --> Creation
+```
+:::
+:::::
+
+# PULCEO
+
+**P**latform for **U**niversal and **L**ightweight **C**loud-**E**dge **O**rchestration
+
+Domain Model ‧ Architecture ‧ Node Agent
+
+## PULCEO's Domain Model
+
+Extracted from **27 peer-reviewed** service placement solutions[^2]
+
+[^2]: https://spboehm.github.io/pulceo-misc/
+
+![](images/domain-model-uml.svg)
+
+# Reduced Example
+
+Topology ‧ Orchestration workflow
+
+## Topology {.smaller}
+
+![Representational cloud-edge topology with nodes, links, and requests for service placement.](images/topology.drawio.svg)
+
+# Creation
+
+## Providers {.smaller}
+
+Providers supply computational resources, e.g., Compute, Network, Storage, etc.
+
+<br/>
+
+Two types of providers:
+
+-   **On-premises** providers (any virtual machine), built-in
+-   **Cloud** providers (API availability), e.g., Microsoft Azure
+
+**Example**: Creation of Microsoft Azure as provider with a service principal
+
+``` {.bash code-line-numbers="2,5-12"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/providers \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "providerName": "azure-provider",
+    "providerType": "AZURE",
+    "clientId": "00000000-00000000-00000000-00000000",
+    "clientSecret": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "tenantId": "00000000-00000000-00000000-00000000",
+    "subscriptionId": "00000000-00000000-00000000-00000000"
+  }'
+```
+
+## Nodes (fog1) {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+-   Provider: Microsoft Azure (Cloud)
+-   Capabilities: 2 vCPU, 8 GB memory, 32 GB storage
+-   Location: France, Paris
+
+``` {.bash code-line-numbers="2,6-15"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/nodes \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "nodeType":"AZURE",
+    "providerName":"azure-provider",
+    "name":"fog1",
+    "type":"fog",
+    "cpu":"2",
+    "memory":"8",
+    "region":"francecentral",
+    "tags": []
+}'
+```
+:::
+
+::: {.column width="50%"}
+![](images/topology-nodes-fog1.svg)
+:::
+:::::
+
+## Nodes (fog3) {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+-   Provider: Local data center (On-premises)
+-   Capabilities: 2 vCPU, 2 GB memory, 27 GB storage
+-   Location: Bamberg, Germany
+
+``` {.bash code-line-numbers="2,6-19"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/nodes \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "nodeType":"ONPREM",
+    "type": "fog",
+    "name": "fog3",
+    "providerName":"default",
+    "hostname":"h5138.pi.uni-bamberg.de",
+    "pnaInitToken":"XXXXX",
+    "country": "Germany",
+    "state": "Bavaria",
+    "city": "Bamberg",
+    "latitude": 49.9036,
+    "longitude": 10.8700,
+    "tags": []
+}'
+```
+:::
+
+::: {.column width="50%"}
+![](images/topology-nodes-fog1-fog3.drawio.svg)
+:::
+:::::
+
+## Links (Example fog3-fog1) {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+-   Link between fog3 and fog1
+-   Represents a logical connection
+-   Later used to obtain round-trip time and bandwidth between nodes
+-   \<(,)\>: \<(*latency*, *bandwidth*), ...\>
+
+``` {.bash code-line-numbers="2,6-11"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/links \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "linkType": "NODE_LINK",
+    "name": "fog3-fog1",
+    "srcNodeId": "fog3",
+    "destNodeId": "fog1"
+}'
+```
+:::
+
+::: {.column width="50%"}
+![](images/topology-subgraph.drawio.svg)
+:::
+:::::
+
+# Monitoring
+
+Nodes ‧ Links
+
+## Metric Requests {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+-   Collection of monitoring data
+    -   CPU, memory, storage, and network utilization for nodes and applications
+    -   ICMP round-trip time, TCP & UDP bandwidth for links
+-   Individual and batch (\*) assignments
+-   **Example:** Latency all for links, once per hour (recurrence 3600s = 1h)
+
+``` {.bash code-line-numbers="2,6-11"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/metric-requests \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "type":"icmp-rtt",
+    "linkId":"*",
+    "recurrence":"3600"
+}'
+```
+:::
+
+::: {.column width="50%"}
+![](images/topology-nodes-fog1-fog3-latency-bw.drawio.svg)
+:::
+:::::
+
+# Operation
+
+Workload ‧ Resource Management ‧ Service Placement
+
+## Workload {.smaller}
+
+::::: columns
+::: {.column width="40%"}
+-   Placement of edge-iot-simulator (eis)[^4] on node fog1
+-   Mimics a typical application:
+    -   Simulates a temperature sensor (sends temperature readings at regular intervals)
+    -   Allows to perform HTTP requests to simulate a microservice application
+-   Example resource assignments:
+    -   1 vCPU (1000 shares)
+    -   1 GB memory (1000 MB)
+:::
+
+::: {.column width="60%"}
+![](images/topology-service-placement.svg)
+:::
+:::::
+
+[^4]: https://github.com/spboehm/edge-iot-simulator
+
+## Resource Management (Example CPU)
+
+::::: columns
+::: {.column width="50%"}
+Read CPU resources of fog1
+
+``` {.bash code-line-numbers="2"}
+curl --request GET \
+  --url http://localhost:8081/api/v1/nodes/fog1/cpu \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+```
+
+<br/>
+
+``` json
+{
+    "uuid": "8aeae447-a552-4ea2-86a3-2bd1f79d6117",
+    "nodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309",
+    "nodeName": "fog1",
+    "cpuCapacity": {...},
+    "cpuAllocatable": {
+        "modelName": "Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz",
+        "cores": 2,
+        "threads": 2,
+        "bogoMIPS": 5187.81,
+        "minimalFrequency": 2593.906,
+        "averageFrequency": 2593.906,
+        "maximalFrequency": 2593.906,
+        "shares": 2000,
+        "slots": 0.0,
+        "mips": 5187.81,
+        "gflop": 0.0
+    }
+}
+```
+:::
+
+::: {.column width="50%"}
+Update CPU resources of fog1
+
+``` {.bash code-line-numbers="2,5-8"}
+curl --request PATCH \
+  --url http://localhost:8081/api/v1/nodes/fog1/cpu/allocatable \
+  --data '{
+    "key": "shares",
+    "value": 1000
+}'
+```
+
+<br/>
+
+``` {.json code-line-numbers="11"}
+{
+    "uuid": "8aeae447-a552-4ea2-86a3-2bd1f79d6117",
+    "nodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309",
+    "nodeName": "fog1",
+    "cpuCapacity": {...},
+    "cpuAllocatable": {
+        "cores": 2,
+        "threads": 2,
+        "bogoMIPS": 5187.81,
+        "averageFrequency": 2593.906,
+        "shares": 1000,
+        "slots": 0.0,
+        "mips": 5187.81,
+        "gflop": 0.0,
+    ...
+    }
+}
+```
+:::
+:::::
+
+## Applications (Service Placement) {.smaller}
+
+``` {.bash code-line-numbers="2,5-26"}
+curl --request POST \
+  --url http://localhost:8081/api/v1/applications \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --data '{
+    "nodeId": "fog1",
+    "name": "edge-iot-simulator",
+    "applicationComponents": [
+        {
+            "name": "component-eis",
+            "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
+            "port": 80,
+            "protocol": "HTTPS",
+            "applicationComponentType": "PUBLIC",Resource utilization with 
+            "environmentVariables": {
+                "MQTT_SERVER_NAME":"XXXXX.s1.eu.hivemq.cloud",
+                "MQTT_PORT":"8883",
+                "MQTT_TLS":"True",
+                "MQTT_USERNAME": "XXXXX",
+                "MQTT_PASSWORD": "XXXXX",
+                "MQTT_CLIENT_ID":"fog1-edge-iot-simulator",
+                "WEB_PORT": 80
+            }
+        }
+    ]
+}'
+```
+
+Resource utilization with *If needed, further Metrics Requests to monitor the placed Applications can be issued.*
+
+# Real-world Use Case
+
+
+
+# Evaluation
+
+API Requests ‧ Idle Resource Utilization ‧ Link Quality Metrics ‧ Application Resource Utilization ‧ Application Response Time
+
+## API Requests
+
+Implementing 
+
+**69 requests** required to perform the entire orchestration workflow
+
+Completely decoupled orchestration proposed by Brogi and Forti 2017
+
+![](./images/requests-table-2.png)
+
+## Idle Resource Utilization by Nodes {.smaller}
+
+Including **pulceo-node-agent,** fully configured **monitoring,** and **Kubernetes**
+
+![](plots/combined_cpu_mem_util_plot.svg){width="65%"} ![](plots/combined_storage_net_util_plot.svg){width="65%"}
+
+## Link Quality Metrics {.smaller}
+
+Using a **high-performance** and **stable** network for on-premises and cloud
+
+![](images/link-quality-table.png)
+
+## Application Resource Utilization
+
+With deployed edge-iot-simulators (eis)
+
+![](plots/combined_cpu_mem_util_plot_pods_facet.svg)
+
+## Application Resource Utilization { .smaller } {visibility="hidden"}
+
+Resource utilization under load (including deployed edge-iot-simulators)
+
+::::: columns
+::: {.column width="75%"}
+![](plots/combined_net_util_pods_facet.svg)
+:::
+
+::: {.column width="25%"}
+-   Traffic mainly caused by regular bandwidth checks
+-   System component and workload did not introduce large amounts of traffic
+:::
+:::::
+
+## Application Response Time
+
+-   Measured by edge-iot-simulators (eis)
+-   Values have been submitted in a standardized JSON format via MQTT
+
+![](plots/application_response_time_plot.svg)
+
+# Documentation
+
+Orchestration Data
+
+## Orchestration Data
+
+::::: columns
+::: {.column width="60%"}
+JSON export of all entities of the domain model: *Providers*, *Nodes*, *Links*, *Metric-Requests*, *Applica-tions*, *Resources*, *CPUs*, *Memory*, *Events*
+
+Example for nodes:
+
+``` {.bash code-line-numbers="2,6-11"}
+curl --request GET \
+  --url http://localhost:8081/api/v1/nodes \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+```
+
+<br />
+
+<details>
+
+<summary>JSON output for nodes</summary>
+
+``` {.json .code-overflow-wrap .code-overflow-scroll}
+[
+  {
+    "uuid": "a8c03fd4-7969-46aa-991d-9bbe04faebe3",
+    "providerName": "default",
+    "hostname": "h5138.pi.uni-bamberg.de",
+    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
+    "node": {
+      "name": "fog3",
+      "type": "FOG",
+      "layer": 2,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "61f701aa-dc4b-4e55-8871-606f01a44a79",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-69a9460614.germanywestcentral.cloudapp.azure.com",
+    "pnaUUID": "0f40dcd2-a7d0-4ce3-820e-f5fe48883d98",
+    "node": {
+      "name": "fog2",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Hessen",
+      "city": "Frankfurt",
+      "longitude": 8.682127,
+      "latitude": 50.110924,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "800b462f-cc08-4de2-a00d-15703710746f",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-96f9462404.francecentral.cloudapp.azure.com",
+    "pnaUUID": "5a552c12-f74c-489b-a771-c9578ac49c77",
+    "node": {
+      "name": "fog1",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "France",
+      "state": "Paris (chef-lieu)",
+      "city": "Paris",
+      "longitude": 2.373,
+      "latitude": 46.3772,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "823eebe2-81ba-4d38-a2ca-0b78a1d2153d",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-c9c9464326.eastus.cloudapp.azure.com",
+    "pnaUUID": "a58dddf4-c10c-498d-89d3-6da8c591f4c6",
+    "node": {
+      "name": "cloud1",
+      "type": "CLOUD",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "USA",
+      "state": "Virginia",
+      "city": "Boydton",
+      "longitude": -78.37465887756295,
+      "latitude": 37.3719,
+      "tags": []
+    }
+  }
+]
+```
+
+</details>
+:::
+
+::: {.column width="40%"}
+Reports for the two phases:
+
+```{python}
+import qrcode
+import qrcode.image.svg
+
+img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-idle/', image_factory=qrcode.image.svg.SvgPathImage)
+img.save("images/qrcode-summersoc2024-prod-idle.svg")
+```
+
+![](images/qrcode-summersoc2024-prod-idle.svg)
+
+SummerSOC2024-prod-idle
+
+```{python}
+import qrcode
+import qrcode.image.svg
+
+img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/', image_factory=qrcode.image.svg.SvgPathImage)
+img.save("images/qrcode-summersoc2024-prod-load.svg")
+```
+
+![](images/qrcode-summersoc2024-prod-load.svg)
+
+SummerSOC2024-prod-load
+:::
+:::::
+
+## Related Solutions
+
+**EU Projects** (Horizon Research), like CODECO, FogAtlas, SODALITE\@RT, ENACT, etc.
+
+-   Latency and bandwidth measurement not fully implemented
+-   Scheduling for service placement often pre-implemented
+-   Focus not on scientific experiments
+
+**Conceptual** and **prototypical research efforts**, like Sophos, Fluidity, ACOA, etc.
+
+-   No holistic cloud-edge orchestration (see above)
+-   Lack of documentation
+
+Out of scope: **Cloud** and **commercial** solutions
+
+## Contributions
+
+-   Fully documented **RESTful HTTP API** for universal orchestration (OpenAPI specification)
+-   **Decoupled** and **holistic** cloud-edge orchestration with evaluation and documentation
+-   Strong **scientific** and **industrial** foundation
+    -   Platform architecture based on a scientific meta-study[^5]
+    -   Feature engineering based on scientific, peer-reviewed service placement publications[^6]
+    -   Implementation following an industry standard (OpenFog RA)[^7]
+
+[^5]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.
+
+[^6]: https://spboehm.github.io/pulceo-misc/
+
+[^7]: S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47.
+
+**Limitations**: Only one representational architecture implemented with stable network conditions has been reproduced yet
+
+## Further Resources
+
+::::: columns
+::: {.column width="50%"}
+<br/>
+
+**Platform-related**:
+
+- Source Code
+- Pre-built Container Images
+- OpenAPI Specifications
+- Documentation
+
+**Orchestration-specific**:
+
+- Orchestration reports
+- Example API requests
+:::
+
+::: {.column width="50%"}
+```{python}
+import qrcode
+import qrcode.image.svg
+
+img = qrcode.make('https://github.com/spboehm/pulceo-misc', image_factory=qrcode.image.svg.SvgPathImage)
+img.save("images/qrcode-pulceo-misc.svg")
+```
+![](images/qrcode-pulceo-misc.svg){width="100%"}
+:::
+:::::
+
+## Contributions#2 {visibility="hidden"}
+
+## Motivation: Real-world experiments are time-consuming and the minority {visibility="hidden"}
+
+::::: columns
+::: {.column width="55%"}
+-   Smolka and Mann (2022)[^8] investigated 99 fog application placement algorithms
+-   19 out of 99 solutions (19%) used a small test-bed
+-   No real-world (=large-scale) deployment was observed
+:::
+
+::: {.column width="45%"}
+![](images/smolka-mann-2022.png)
+:::
+:::::
+
+[^8]: S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
+
+## Metric Exports {visibility="hidden"}
+
+① Asynchronous data export via RESTful HTTP API
+
+``` bash
+curl --request POST \
+  --url http://localhost:8081/api/v1/metric-exports \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "metricType": "CPU_UTIL"
+}'
+```
+
+② Check the current progress of the metric export request:
+
+``` bash
+curl --request GET \
+  --url http://localhost:8081/api/v1/metric-exports \
+  --header 'Accept: application/json' \
+  --header 'Authorization: XXXXX' \
+```
+
+③ Finally download via the given `url`:
+
+``` {.json code-line-numbers="5-6"}
+{
+    "metricExportUUID": "34e46c91-82b8-48dd-aaea-3619459a10aa",
+    "metricType": "CPU_UTIL",
+    "numberOfRecords": 100,
+    "url": "http://localhost:8081/api/v1/metric-exports/34e46c91-82b8-48dd-aaea-3619459a10aa/blobs/CPU_UTIL-84dda748-d6c0-4c33-b593-5aca223598f3.csv",
+    "metricExportState": "PENDING" -> "COMPLETED"
+}
+```
+
+## PULCEO's Architecture {visibility="hidden"}
+
+-   Decoupled orchestration with a RESTful HTTP API exposed by an API Gateway
+-   Microservice architecture aligned to a scientific meta-study[^3]
+-   Real-time data streaming via WebSockets
+
+[^3]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.
+
+![](images/pulceo-architecture.drawio.svg)
+
+## PULCEO Node Agent Architecture {visibility="hidden"}
+
+-   RESTful HTTP API for instructions
+-   Monitoring data transmitted via MQTT
+-   Latency and bandwidth measurement with *ping* and *iperf3*
+-   Standalone Kubernetes clusters as container manager
+
+![](images/pna-architecture.drawio.svg)
