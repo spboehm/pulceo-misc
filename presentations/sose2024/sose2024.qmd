@@ -406,11 +406,11 @@ API Requests ‧ Idle Resource Utilization ‧ Link Quality Metrics ‧ Applicat
 
 ## API Requests
 
-Implementing 
+Implementing service placement strategy by **Brogi and Forti 2017**^[A. Brogi and S. Forti, “QoS-Aware Deployment of IoT Applications Through the Fog,” IEEE Internet Things J., vol. 4, no. 5, pp. 1185–1192, Oct. 2017, doi: 10.1109/JIOT.2017.2701408.]
 
 **69 requests** required to perform the entire orchestration workflow
 
-Completely decoupled orchestration proposed by Brogi and Forti 2017
+**Decoupled orchestration** with support for algorithmic steps
 
 ![](./images/requests-table-2.png)
 
@@ -564,31 +564,19 @@ curl --request GET \
 :::
 
 ::: {.column width="40%"}
-Reports for the two phases:
+Reports:
 
 ```{python}
 import qrcode
 import qrcode.image.svg
 
-img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-idle/', image_factory=qrcode.image.svg.SvgPathImage)
-img.save("images/qrcode-summersoc2024-prod-idle.svg")
+img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/', image_factory=qrcode.image.svg.SvgPathImage)
+img.save("images/qrcode-sose2024-prod.svg")
 ```
 
-![](images/qrcode-summersoc2024-prod-idle.svg)
+![](images/qrcode-sose2024-prod.svg)
 
 SummerSOC2024-prod-idle
-
-```{python}
-import qrcode
-import qrcode.image.svg
-
-img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/', image_factory=qrcode.image.svg.SvgPathImage)
-img.save("images/qrcode-summersoc2024-prod-load.svg")
-```
-
-![](images/qrcode-summersoc2024-prod-load.svg)
-
-SummerSOC2024-prod-load
 :::
 :::::
 
