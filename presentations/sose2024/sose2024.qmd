@@ -344,7 +344,7 @@ curl --request POST \
             "image": "ghcr.io/spboehm/edge-iot-simulator:v1.1.0",
             "port": 80,
             "protocol": "HTTPS",
-            "applicationComponentType": "PUBLIC",Resource utilization with 
+            "applicationComponentType": "PUBLIC",
             "environmentVariables": {
                 "MQTT_SERVER_NAME":"XXXXX.s1.eu.hivemq.cloud",
                 "MQTT_PORT":"8883",
