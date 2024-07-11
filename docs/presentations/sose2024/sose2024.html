@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.52">
 
   <meta name="author" content="Sebastian Böhm and Guido Wirtz">
-  <title>PULCEO</title>
+  <title>PULCEO IN ACTION</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -386,9 +386,6 @@
       margin-right: 0; 
     }
   </style>
-  <script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-  <script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-  <link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -396,7 +393,7 @@
 
 <section id="title-slide" class="center">
   <img src="images/logo-no-background.svg" width="250px" height="250px">  
-  <h1 class="title">PULCEO</h1>
+  <h1 class="title">PULCEO IN ACTION</h1>
       <p class="subtitle">Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration</p>
         <p class="author">Sebastian Böhm and Guido Wirtz</p>
         <p class="institute">University of Bamberg, Germany</p>
@@ -434,54 +431,11 @@
 </div>
 </div><aside><ol class="aside-footnotes"><li id="fn1"><p>S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol.&nbsp;104, no. 6, pp.&nbsp;1397–1423, Jun.&nbsp;2022.</p></li></ol></aside></section>
 
-<section id="solution-holistic-management" class="slide level2 smaller">
-<h2>Solution: Holistic Management</h2>
-<div class="columns">
-<div class="column" style="width:80%;">
-<ul>
-<li><strong>Creation of Topology:</strong>
-<ul>
-<li><strong>Nodes:</strong> Edge and fog devices, virtual machines, etc.</li>
-<li><strong>Links:</strong> Relations between nodes for measuring round-trip time and bandwidth</li>
-</ul></li>
-<li><strong>Monitoring:</strong> Various kind of metrics (CPU, …), sampling rate, etc.</li>
-<li><strong>Operation:</strong> Resource allocation and service placement</li>
-<li><strong>Evaluation:</strong> Data export, large-scale data analytics, etc.</li>
-<li><strong>Documentation:</strong> Publishing of reports and results, raw data, etc.</li>
-<li>(Deletion: Tearing down of environments)</li>
-</ul>
-</div><div class="column" style="width:20%;">
-<div class="cell" data-reveal="true" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TB
-   Creation --&gt; Monitoring
-   Monitoring --&gt; Operation
-   Operation --&gt; Monitoring
-   Operation --&gt; Evaluation
-   Evaluation --&gt; Documentation
-   Documentation --&gt; Creation
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section>
-<section id="pulceo" class="title-slide slide level1 center">
-<h1>PULCEO</h1>
-<p><strong>P</strong>latform for <strong>U</strong>niversal and <strong>L</strong>ightweight <strong>C</strong>loud-<strong>E</strong>dge <strong>O</strong>rchestration</p>
-<p>Domain Model ‧ Architecture ‧ Node Agent</p>
-</section>
-<section id="pulceos-domain-model" class="slide level2">
-<h2>PULCEO’s Domain Model</h2>
-<p>Extracted from <strong>27 peer-reviewed</strong> service placement solutions<sup>1</sup></p>
-<p><img data-src="images/domain-model-uml.svg"></p>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>https://spboehm.github.io/pulceo-misc/</p></li></ol></aside></section></section>
+<section id="holistic-management" class="slide level2 smaller">
+<h2>Holistic Management</h2>
+<p><strong>P</strong>latform for <strong>U</strong>niversal and <strong>L</strong>ightweight <strong>C</strong>loud-<strong>E</strong>dge <strong>O</strong>rchestration (PULCEO)</p>
+
+<img data-src="images/holistic-management.drawio.svg" class="r-stretch"></section>
 <section>
 <section id="reduced-example" class="title-slide slide level1 center">
 <h1>Reduced Example</h1>
@@ -661,7 +615,7 @@
 </div><div class="column" style="width:60%;">
 <p><img data-src="images/topology-service-placement.svg"></p>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>https://github.com/spboehm/edge-iot-simulator</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>https://github.com/spboehm/edge-iot-simulator</p></li></ol></aside></section>
 <section id="resource-management-example-cpu" class="slide level2">
 <h2>Resource Management (Example CPU)</h2>
 <div class="columns">
@@ -748,12 +702,31 @@
 <span id="cb10-25"><a></a><span class="st">    ]</span></span>
 <span id="cb10-26"><a></a><span class="st">}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Resource utilization with <em>If needed, further Metrics Requests to monitor the placed Applications can be issued.</em></p>
-</section></section>
-<section id="real-world-use-case" class="title-slide slide level1 center">
-<h1>Real-world Use Case</h1>
-
 </section>
-
+<section id="use-case" class="slide level2">
+<h2>Use Case</h2>
+<p>Reproducing the service placement strategy by <strong>Brogi and Forti 2017</strong><sup>1</sup></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/brogi-topology-higher-res.png" style="width:100.0%"></p>
+<figcaption>Proposed Cloud-Edge Orchestration Topology.</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Service placement (Greedy)</li>
+<li>Input:
+<ul>
+<li>Services with requirements (hardware resources, latency and bandwidth)</li>
+<li>Node and link capabilities</li>
+</ul></li>
+<li>Operations: <code>PREPROCESS</code>, <code>CHECKHARDWARE</code>, <code>CHECKLINKS</code>, <code>DEPLOY</code>, <code>UNDEPLOY</code></li>
+<li>Output: Service placement decisions</li>
+</ul>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>A. Brogi and S. Forti, “QoS-Aware Deployment of IoT Applications Through the Fog,” IEEE Internet Things J., vol.&nbsp;4, no. 5, pp.&nbsp;1185–1192, Oct.&nbsp;2017, doi: 10.1109/JIOT.2017.2701408.</p></li></ol></aside></section></section>
 <section>
 <section id="evaluation" class="title-slide slide level1 center">
 <h1>Evaluation</h1>
@@ -761,11 +734,10 @@
 </section>
 <section id="api-requests" class="slide level2">
 <h2>API Requests</h2>
-<p>Implementing service placement strategy by <strong>Brogi and Forti 2017</strong><sup>1</sup></p>
 <p><strong>69 requests</strong> required to perform the entire orchestration workflow</p>
 <p><strong>Decoupled orchestration</strong> with support for algorithmic steps</p>
-<p><img data-src="./images/requests-table-2.png"></p>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>A. Brogi and S. Forti, “QoS-Aware Deployment of IoT Applications Through the Fog,” IEEE Internet Things J., vol.&nbsp;4, no. 5, pp.&nbsp;1185–1192, Oct.&nbsp;2017, doi: 10.1109/JIOT.2017.2701408.</p></li></ol></aside></section>
+
+<img data-src="./images/requests-table-2.png" class="r-stretch"></section>
 <section id="idle-resource-utilization-by-nodes" class="slide level2 smaller">
 <h2>Idle Resource Utilization by Nodes</h2>
 <p>Including <strong>pulceo-node-agent,</strong> fully configured <strong>monitoring,</strong> and <strong>Kubernetes</strong></p>
@@ -812,14 +784,14 @@ JSON output for nodes
 </summary>
 <div class="sourceCode" id="cb12"><pre class="sourceCode numberSource json code-overflow-wrap code-overflow-scroll number-lines code-with-copy"><code class="sourceCode json"><span id="cb12-1"><a></a><span class="ot">[</span></span>
 <span id="cb12-2"><a></a>  <span class="fu">{</span></span>
-<span id="cb12-3"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"a8c03fd4-7969-46aa-991d-9bbe04faebe3"</span><span class="fu">,</span></span>
+<span id="cb12-3"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"e6c27c8a-a337-49e1-8662-38c96bff3351"</span><span class="fu">,</span></span>
 <span id="cb12-4"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"default"</span><span class="fu">,</span></span>
-<span id="cb12-5"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"h5138.pi.uni-bamberg.de"</span><span class="fu">,</span></span>
-<span id="cb12-6"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"6dc8fca9-d1a6-4436-b1c9-122bbaa55235"</span><span class="fu">,</span></span>
+<span id="cb12-5"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"h5137.pi.uni-bamberg.de"</span><span class="fu">,</span></span>
+<span id="cb12-6"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"be6f0093-ebff-4494-8123-6ab50d3ae8e5"</span><span class="fu">,</span></span>
 <span id="cb12-7"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
 <span id="cb12-8"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"fog3"</span><span class="fu">,</span></span>
 <span id="cb12-9"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"FOG"</span><span class="fu">,</span></span>
-<span id="cb12-10"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></span>
+<span id="cb12-10"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
 <span id="cb12-11"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
 <span id="cb12-12"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
 <span id="cb12-13"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"Germany"</span><span class="fu">,</span></span>
@@ -827,72 +799,133 @@ JSON output for nodes
 <span id="cb12-15"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Bamberg"</span><span class="fu">,</span></span>
 <span id="cb12-16"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">10.87</span><span class="fu">,</span></span>
 <span id="cb12-17"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">49.9036</span><span class="fu">,</span></span>
-<span id="cb12-18"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[]</span></span>
-<span id="cb12-19"><a></a>    <span class="fu">}</span></span>
-<span id="cb12-20"><a></a>  <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb12-21"><a></a>  <span class="fu">{</span></span>
-<span id="cb12-22"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"61f701aa-dc4b-4e55-8871-606f01a44a79"</span><span class="fu">,</span></span>
-<span id="cb12-23"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"azure-provider"</span><span class="fu">,</span></span>
-<span id="cb12-24"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"pulceo-node-69a9460614.germanywestcentral.cloudapp.azure.com"</span><span class="fu">,</span></span>
-<span id="cb12-25"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"0f40dcd2-a7d0-4ce3-820e-f5fe48883d98"</span><span class="fu">,</span></span>
-<span id="cb12-26"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb12-27"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"fog2"</span><span class="fu">,</span></span>
-<span id="cb12-28"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"FOG"</span><span class="fu">,</span></span>
-<span id="cb12-29"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb12-30"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
-<span id="cb12-31"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb12-32"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"Germany"</span><span class="fu">,</span></span>
-<span id="cb12-33"><a></a>      <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"Hessen"</span><span class="fu">,</span></span>
-<span id="cb12-34"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Frankfurt"</span><span class="fu">,</span></span>
-<span id="cb12-35"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">8.682127</span><span class="fu">,</span></span>
-<span id="cb12-36"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">50.110924</span><span class="fu">,</span></span>
-<span id="cb12-37"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[]</span></span>
-<span id="cb12-38"><a></a>    <span class="fu">}</span></span>
-<span id="cb12-39"><a></a>  <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb12-40"><a></a>  <span class="fu">{</span></span>
-<span id="cb12-41"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"800b462f-cc08-4de2-a00d-15703710746f"</span><span class="fu">,</span></span>
-<span id="cb12-42"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"azure-provider"</span><span class="fu">,</span></span>
-<span id="cb12-43"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"pulceo-node-96f9462404.francecentral.cloudapp.azure.com"</span><span class="fu">,</span></span>
-<span id="cb12-44"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"5a552c12-f74c-489b-a771-c9578ac49c77"</span><span class="fu">,</span></span>
-<span id="cb12-45"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb12-46"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"fog1"</span><span class="fu">,</span></span>
-<span id="cb12-47"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"FOG"</span><span class="fu">,</span></span>
-<span id="cb12-48"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb12-49"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
-<span id="cb12-50"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb12-51"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"France"</span><span class="fu">,</span></span>
-<span id="cb12-52"><a></a>      <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"Paris (chef-lieu)"</span><span class="fu">,</span></span>
-<span id="cb12-53"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Paris"</span><span class="fu">,</span></span>
-<span id="cb12-54"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">2.373</span><span class="fu">,</span></span>
-<span id="cb12-55"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">46.3772</span><span class="fu">,</span></span>
-<span id="cb12-56"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[]</span></span>
-<span id="cb12-57"><a></a>    <span class="fu">}</span></span>
-<span id="cb12-58"><a></a>  <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb12-59"><a></a>  <span class="fu">{</span></span>
-<span id="cb12-60"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"823eebe2-81ba-4d38-a2ca-0b78a1d2153d"</span><span class="fu">,</span></span>
-<span id="cb12-61"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"azure-provider"</span><span class="fu">,</span></span>
-<span id="cb12-62"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"pulceo-node-c9c9464326.eastus.cloudapp.azure.com"</span><span class="fu">,</span></span>
-<span id="cb12-63"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"a58dddf4-c10c-498d-89d3-6da8c591f4c6"</span><span class="fu">,</span></span>
-<span id="cb12-64"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb12-65"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"cloud1"</span><span class="fu">,</span></span>
-<span id="cb12-66"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"CLOUD"</span><span class="fu">,</span></span>
-<span id="cb12-67"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb12-68"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
-<span id="cb12-69"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
-<span id="cb12-70"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"USA"</span><span class="fu">,</span></span>
-<span id="cb12-71"><a></a>      <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"Virginia"</span><span class="fu">,</span></span>
-<span id="cb12-72"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Boydton"</span><span class="fu">,</span></span>
-<span id="cb12-73"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">-78.37465887756295</span><span class="fu">,</span></span>
-<span id="cb12-74"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">37.3719</span><span class="fu">,</span></span>
-<span id="cb12-75"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[]</span></span>
-<span id="cb12-76"><a></a>    <span class="fu">}</span></span>
-<span id="cb12-77"><a></a>  <span class="fu">}</span></span>
-<span id="cb12-78"><a></a><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-18"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-19"><a></a>        <span class="fu">{</span></span>
+<span id="cb12-20"><a></a>          <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"properties"</span><span class="fu">,</span></span>
+<span id="cb12-21"><a></a>          <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"C++, Linux, Python"</span></span>
+<span id="cb12-22"><a></a>        <span class="fu">}</span></span>
+<span id="cb12-23"><a></a>      <span class="ot">]</span></span>
+<span id="cb12-24"><a></a>    <span class="fu">}</span></span>
+<span id="cb12-25"><a></a>  <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb12-26"><a></a>  <span class="fu">{</span></span>
+<span id="cb12-27"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"22d5cc00-3264-4ad5-b85d-26c1bbb4cbf3"</span><span class="fu">,</span></span>
+<span id="cb12-28"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"default"</span><span class="fu">,</span></span>
+<span id="cb12-29"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"h5136.pi.uni-bamberg.de"</span><span class="fu">,</span></span>
+<span id="cb12-30"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"265916fb-2092-40ee-9528-b32f4ea911a1"</span><span class="fu">,</span></span>
+<span id="cb12-31"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-32"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"fog2"</span><span class="fu">,</span></span>
+<span id="cb12-33"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"FOG"</span><span class="fu">,</span></span>
+<span id="cb12-34"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb12-35"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
+<span id="cb12-36"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb12-37"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"Germany"</span><span class="fu">,</span></span>
+<span id="cb12-38"><a></a>      <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"Bavaria"</span><span class="fu">,</span></span>
+<span id="cb12-39"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Bamberg"</span><span class="fu">,</span></span>
+<span id="cb12-40"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">10.87</span><span class="fu">,</span></span>
+<span id="cb12-41"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">49.9036</span><span class="fu">,</span></span>
+<span id="cb12-42"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-43"><a></a>        <span class="fu">{</span></span>
+<span id="cb12-44"><a></a>          <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"properties"</span><span class="fu">,</span></span>
+<span id="cb12-45"><a></a>          <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"MySQL, .NET, C++, Python"</span></span>
+<span id="cb12-46"><a></a>        <span class="fu">}</span></span>
+<span id="cb12-47"><a></a>      <span class="ot">]</span></span>
+<span id="cb12-48"><a></a>    <span class="fu">}</span></span>
+<span id="cb12-49"><a></a>  <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb12-50"><a></a>  <span class="fu">{</span></span>
+<span id="cb12-51"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"615ba998-3ecb-40f4-8a00-bdebf5894303"</span><span class="fu">,</span></span>
+<span id="cb12-52"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"default"</span><span class="fu">,</span></span>
+<span id="cb12-53"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"h5138.pi.uni-bamberg.de"</span><span class="fu">,</span></span>
+<span id="cb12-54"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"6dc8fca9-d1a6-4436-b1c9-122bbaa55235"</span><span class="fu">,</span></span>
+<span id="cb12-55"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-56"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"fog1"</span><span class="fu">,</span></span>
+<span id="cb12-57"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"FOG"</span><span class="fu">,</span></span>
+<span id="cb12-58"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb12-59"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
+<span id="cb12-60"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb12-61"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"Germany"</span><span class="fu">,</span></span>
+<span id="cb12-62"><a></a>      <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"Bavaria"</span><span class="fu">,</span></span>
+<span id="cb12-63"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Bamberg"</span><span class="fu">,</span></span>
+<span id="cb12-64"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">10.87</span><span class="fu">,</span></span>
+<span id="cb12-65"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">49.9036</span><span class="fu">,</span></span>
+<span id="cb12-66"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-67"><a></a>        <span class="fu">{</span></span>
+<span id="cb12-68"><a></a>          <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"properties"</span><span class="fu">,</span></span>
+<span id="cb12-69"><a></a>          <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"C++, Linux, Python"</span></span>
+<span id="cb12-70"><a></a>        <span class="fu">}</span></span>
+<span id="cb12-71"><a></a>      <span class="ot">]</span></span>
+<span id="cb12-72"><a></a>    <span class="fu">}</span></span>
+<span id="cb12-73"><a></a>  <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb12-74"><a></a>  <span class="fu">{</span></span>
+<span id="cb12-75"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"3f425fb8-c4e5-4eab-9d30-4552e94abdb3"</span><span class="fu">,</span></span>
+<span id="cb12-76"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"azure-provider"</span><span class="fu">,</span></span>
+<span id="cb12-77"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"pulceo-node-6659339536.westus.cloudapp.azure.com"</span><span class="fu">,</span></span>
+<span id="cb12-78"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"3b4af61f-8bb4-4118-9640-b530c6aec54e"</span><span class="fu">,</span></span>
+<span id="cb12-79"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-80"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"cloud2"</span><span class="fu">,</span></span>
+<span id="cb12-81"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"CLOUD"</span><span class="fu">,</span></span>
+<span id="cb12-82"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb12-83"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
+<span id="cb12-84"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb12-85"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"USA"</span><span class="fu">,</span></span>
+<span id="cb12-86"><a></a>      <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"California"</span><span class="fu">,</span></span>
+<span id="cb12-87"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"San Francisco"</span><span class="fu">,</span></span>
+<span id="cb12-88"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">-119.852</span><span class="fu">,</span></span>
+<span id="cb12-89"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">47.233</span><span class="fu">,</span></span>
+<span id="cb12-90"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-91"><a></a>        <span class="fu">{</span></span>
+<span id="cb12-92"><a></a>          <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"properties"</span><span class="fu">,</span></span>
+<span id="cb12-93"><a></a>          <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"C++, Spark, MySQL, Linux, .NET, Python"</span></span>
+<span id="cb12-94"><a></a>        <span class="fu">}</span></span>
+<span id="cb12-95"><a></a>      <span class="ot">]</span></span>
+<span id="cb12-96"><a></a>    <span class="fu">}</span></span>
+<span id="cb12-97"><a></a>  <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb12-98"><a></a>  <span class="fu">{</span></span>
+<span id="cb12-99"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"98036c1c-1d51-4fcd-81ab-21fb40b14b3b"</span><span class="fu">,</span></span>
+<span id="cb12-100"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"azure-provider"</span><span class="fu">,</span></span>
+<span id="cb12-101"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"pulceo-node-eae9342543.westeurope.cloudapp.azure.com"</span><span class="fu">,</span></span>
+<span id="cb12-102"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"26c8c3d4-badc-4b7a-adb5-ec9d920784c3"</span><span class="fu">,</span></span>
+<span id="cb12-103"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-104"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"cloud1"</span><span class="fu">,</span></span>
+<span id="cb12-105"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"CLOUD"</span><span class="fu">,</span></span>
+<span id="cb12-106"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb12-107"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
+<span id="cb12-108"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb12-109"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"Netherlands"</span><span class="fu">,</span></span>
+<span id="cb12-110"><a></a>      <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"Noord-Holland"</span><span class="fu">,</span></span>
+<span id="cb12-111"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Schiphol"</span><span class="fu">,</span></span>
+<span id="cb12-112"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">4.9</span><span class="fu">,</span></span>
+<span id="cb12-113"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">52.3667</span><span class="fu">,</span></span>
+<span id="cb12-114"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb12-115"><a></a>        <span class="fu">{</span></span>
+<span id="cb12-116"><a></a>          <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"properties"</span><span class="fu">,</span></span>
+<span id="cb12-117"><a></a>          <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"Java, .NET, Ruby, MySQL"</span></span>
+<span id="cb12-118"><a></a>        <span class="fu">}</span></span>
+<span id="cb12-119"><a></a>      <span class="ot">]</span></span>
+<span id="cb12-120"><a></a>    <span class="fu">}</span></span>
+<span id="cb12-121"><a></a>  <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb12-122"><a></a>  <span class="fu">{</span></span>
+<span id="cb12-123"><a></a>    <span class="dt">"uuid"</span><span class="fu">:</span> <span class="st">"c329ad3d-ab6c-41a9-aa8d-5705787a60d6"</span><span class="fu">,</span></span>
+<span id="cb12-124"><a></a>    <span class="dt">"providerName"</span><span class="fu">:</span> <span class="st">"default"</span><span class="fu">,</span></span>
+<span id="cb12-125"><a></a>    <span class="dt">"hostname"</span><span class="fu">:</span> <span class="st">"h5135.pi.uni-bamberg.de"</span><span class="fu">,</span></span>
+<span id="cb12-126"><a></a>    <span class="dt">"pnaUUID"</span><span class="fu">:</span> <span class="st">"c4cbae94-dd35-4ba8-a374-0ceebddb7765"</span><span class="fu">,</span></span>
+<span id="cb12-127"><a></a>    <span class="dt">"node"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb12-128"><a></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"gateway1"</span><span class="fu">,</span></span>
+<span id="cb12-129"><a></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"GATEWAY"</span><span class="fu">,</span></span>
+<span id="cb12-130"><a></a>      <span class="dt">"layer"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb12-131"><a></a>      <span class="dt">"role"</span><span class="fu">:</span> <span class="st">"WORKLOAD"</span><span class="fu">,</span></span>
+<span id="cb12-132"><a></a>      <span class="dt">"group"</span><span class="fu">:</span> <span class="st">""</span><span class="fu">,</span></span>
+<span id="cb12-133"><a></a>      <span class="dt">"country"</span><span class="fu">:</span> <span class="st">"Germany"</span><span class="fu">,</span></span>
+<span id="cb12-134"><a></a>      <span class="dt">"state"</span><span class="fu">:</span> <span class="st">"Bavaria"</span><span class="fu">,</span></span>
+<span id="cb12-135"><a></a>      <span class="dt">"city"</span><span class="fu">:</span> <span class="st">"Bamberg"</span><span class="fu">,</span></span>
+<span id="cb12-136"><a></a>      <span class="dt">"longitude"</span><span class="fu">:</span> <span class="fl">10.87</span><span class="fu">,</span></span>
+<span id="cb12-137"><a></a>      <span class="dt">"latitude"</span><span class="fu">:</span> <span class="fl">49.9036</span><span class="fu">,</span></span>
+<span id="cb12-138"><a></a>      <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb12-139"><a></a>    <span class="fu">}</span></span>
+<span id="cb12-140"><a></a>  <span class="fu">}</span></span>
+<span id="cb12-141"><a></a><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div><div class="column" style="width:40%;">
-<p>Reports:</p>
-<p><img data-src="images/qrcode-sose2024-prod.svg"></p>
-<p>SummerSOC2024-prod-idle</p>
+<p><img data-src="images/qrcode-sose2024-prod.svg" style="width:100.0%"> SOSE2024-prod</p>
 </div></div>
 </section>
 <section id="related-solutions" class="slide level2">
@@ -913,7 +946,7 @@ JSON output for nodes
 <section id="contributions" class="slide level2">
 <h2>Contributions</h2>
 <ul>
-<li>Fully documented <strong>RESTful HTTP API</strong> for universal orchestration (OpenAPI specification)</li>
+<li>Fully documented <strong>RESTful HTTP API</strong> for universal orchestration</li>
 <li><strong>Decoupled</strong> and <strong>holistic</strong> cloud-edge orchestration with evaluation and documentation</li>
 <li>Strong <strong>scientific</strong> and <strong>industrial</strong> foundation
 <ul>
@@ -922,8 +955,8 @@ JSON output for nodes
 <li>Implementation following an industry standard (OpenFog RA)<sup>3</sup></li>
 </ul></li>
 </ul>
-<p><strong>Limitations</strong>: Only one representational architecture implemented with stable network conditions has been reproduced yet</p>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol.&nbsp;55, no. 2, pp.&nbsp;1–34, Feb.&nbsp;2023, doi: 10.1145/3486221.</p></li><li id="fn6"><p>https://spboehm.github.io/pulceo-misc/</p></li><li id="fn7"><p>S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul.&nbsp;2023, pp.&nbsp;37–47.</p></li></ol></aside></section>
+<p><strong>Limitations</strong>: Only a few solutions with stable network conditions have been reproduced</p>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol.&nbsp;55, no. 2, pp.&nbsp;1–34, Feb.&nbsp;2023, doi: 10.1145/3486221.</p></li><li id="fn5"><p>https://spboehm.github.io/pulceo-misc/</p></li><li id="fn6"><p>S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul.&nbsp;2023, pp.&nbsp;37–47.</p></li></ol></aside></section>
 <section id="further-resources" class="slide level2">
 <h2>Further Resources</h2>
 <div class="columns">
@@ -945,6 +978,7 @@ JSON output for nodes
 <p><img data-src="images/qrcode-pulceo-misc.svg" style="width:100.0%"></p>
 </div></div>
 </section>
+
 
 
 

@@ -1,5 +1,5 @@
 ---
-title: "PULCEO"
+title: "PULCEO IN ACTION"
 subtitle: "Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration"
 author: Sebastian Böhm and Guido Wirtz
 institute: University of Bamberg, Germany
@@ -56,46 +56,11 @@ So far so good.
 
 But what about real-world experiments?
 
-## Solution: Holistic Management {.smaller}
+## Holistic Management {.smaller}
 
-::::: columns
-::: {.column width="80%"}
--   **Creation of Topology:**
-    -   **Nodes:** Edge and fog devices, virtual machines, etc.
-    -   **Links:** Relations between nodes for measuring round-trip time and bandwidth
--   **Monitoring:** Various kind of metrics (CPU, ...), sampling rate, etc.
--   **Operation:** Resource allocation and service placement
--   **Evaluation:** Data export, large-scale data analytics, etc.
--   **Documentation:** Publishing of reports and results, raw data, etc.
--   (Deletion: Tearing down of environments)
-:::
+**P**latform for **U**niversal and **L**ightweight **C**loud-**E**dge **O**rchestration (PULCEO)
 
-::: {.column width="20%"}
-```{mermaid}
-flowchart TB
-   Creation --> Monitoring
-   Monitoring --> Operation
-   Operation --> Monitoring
-   Operation --> Evaluation
-   Evaluation --> Documentation
-   Documentation --> Creation
-```
-:::
-:::::
-
-# PULCEO
-
-**P**latform for **U**niversal and **L**ightweight **C**loud-**E**dge **O**rchestration
-
-Domain Model ‧ Architecture ‧ Node Agent
-
-## PULCEO's Domain Model
-
-Extracted from **27 peer-reviewed** service placement solutions[^2]
-
-[^2]: https://spboehm.github.io/pulceo-misc/
-
-![](images/domain-model-uml.svg)
+![](images/holistic-management.drawio.svg)
 
 # Reduced Example
 
@@ -273,7 +238,7 @@ Workload ‧ Resource Management ‧ Service Placement
 
 ::::: columns
 ::: {.column width="40%"}
--   Placement of edge-iot-simulator (eis)[^4] on node fog1
+-   Placement of edge-iot-simulator (eis)[^2] on node fog1
 -   Mimics a typical application:
     -   Simulates a temperature sensor (sends temperature readings at regular intervals)
     -   Allows to perform HTTP requests to simulate a microservice application
@@ -287,7 +252,7 @@ Workload ‧ Resource Management ‧ Service Placement
 :::
 :::::
 
-[^4]: https://github.com/spboehm/edge-iot-simulator
+[^2]: https://github.com/spboehm/edge-iot-simulator
 
 ## Resource Management (Example CPU)
 
@@ -396,17 +361,33 @@ curl --request POST \
 
 Resource utilization with *If needed, further Metrics Requests to monitor the placed Applications can be issued.*
 
-# Real-world Use Case
+## Use Case
 
+Reproducing the service placement strategy by **Brogi and Forti 2017**[^3]
 
+[^3]: A. Brogi and S. Forti, “QoS-Aware Deployment of IoT Applications Through the Fog,” IEEE Internet Things J., vol. 4, no. 5, pp. 1185–1192, Oct. 2017, doi: 10.1109/JIOT.2017.2701408.
+
+::::: columns
+::: {.column width="50%"}
+![Proposed Cloud-Edge Orchestration Topology.](images/brogi-topology-higher-res.png){ width="100%"}
+:::
+
+::: {.column width="50%"}
+- Service placement (Greedy)
+- Input: 
+  - Services with requirements (hardware resources, latency and bandwidth)
+  - Node and link capabilities
+- Operations: `PREPROCESS`, `CHECKHARDWARE`, `CHECKLINKS`, `DEPLOY`, `UNDEPLOY`
+- Output: Service placement decisions
+:::
+
+:::::
 
 # Evaluation
 
 API Requests ‧ Idle Resource Utilization ‧ Link Quality Metrics ‧ Application Resource Utilization ‧ Application Response Time
 
 ## API Requests
-
-Implementing service placement strategy by **Brogi and Forti 2017**^[A. Brogi and S. Forti, “QoS-Aware Deployment of IoT Applications Through the Fog,” IEEE Internet Things J., vol. 4, no. 5, pp. 1185–1192, Oct. 2017, doi: 10.1109/JIOT.2017.2701408.]
 
 **69 requests** required to perform the entire orchestration workflow
 
@@ -482,14 +463,14 @@ curl --request GET \
 ``` {.json .code-overflow-wrap .code-overflow-scroll}
 [
   {
-    "uuid": "a8c03fd4-7969-46aa-991d-9bbe04faebe3",
+    "uuid": "e6c27c8a-a337-49e1-8662-38c96bff3351",
     "providerName": "default",
-    "hostname": "h5138.pi.uni-bamberg.de",
-    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
+    "hostname": "h5137.pi.uni-bamberg.de",
+    "pnaUUID": "be6f0093-ebff-4494-8123-6ab50d3ae8e5",
     "node": {
       "name": "fog3",
       "type": "FOG",
-      "layer": 2,
+      "layer": 1,
       "role": "WORKLOAD",
       "group": "",
       "country": "Germany",
@@ -497,14 +478,19 @@ curl --request GET \
       "city": "Bamberg",
       "longitude": 10.87,
       "latitude": 49.9036,
-      "tags": []
+      "tags": [
+        {
+          "key": "properties",
+          "value": "C++, Linux, Python"
+        }
+      ]
     }
   },
   {
-    "uuid": "61f701aa-dc4b-4e55-8871-606f01a44a79",
-    "providerName": "azure-provider",
-    "hostname": "pulceo-node-69a9460614.germanywestcentral.cloudapp.azure.com",
-    "pnaUUID": "0f40dcd2-a7d0-4ce3-820e-f5fe48883d98",
+    "uuid": "22d5cc00-3264-4ad5-b85d-26c1bbb4cbf3",
+    "providerName": "default",
+    "hostname": "h5136.pi.uni-bamberg.de",
+    "pnaUUID": "265916fb-2092-40ee-9528-b32f4ea911a1",
     "node": {
       "name": "fog2",
       "type": "FOG",
@@ -512,48 +498,106 @@ curl --request GET \
       "role": "WORKLOAD",
       "group": "",
       "country": "Germany",
-      "state": "Hessen",
-      "city": "Frankfurt",
-      "longitude": 8.682127,
-      "latitude": 50.110924,
-      "tags": []
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "MySQL, .NET, C++, Python"
+        }
+      ]
     }
   },
   {
-    "uuid": "800b462f-cc08-4de2-a00d-15703710746f",
-    "providerName": "azure-provider",
-    "hostname": "pulceo-node-96f9462404.francecentral.cloudapp.azure.com",
-    "pnaUUID": "5a552c12-f74c-489b-a771-c9578ac49c77",
+    "uuid": "615ba998-3ecb-40f4-8a00-bdebf5894303",
+    "providerName": "default",
+    "hostname": "h5138.pi.uni-bamberg.de",
+    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
     "node": {
       "name": "fog1",
       "type": "FOG",
       "layer": 1,
       "role": "WORKLOAD",
       "group": "",
-      "country": "France",
-      "state": "Paris (chef-lieu)",
-      "city": "Paris",
-      "longitude": 2.373,
-      "latitude": 46.3772,
-      "tags": []
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "C++, Linux, Python"
+        }
+      ]
     }
   },
   {
-    "uuid": "823eebe2-81ba-4d38-a2ca-0b78a1d2153d",
+    "uuid": "3f425fb8-c4e5-4eab-9d30-4552e94abdb3",
     "providerName": "azure-provider",
-    "hostname": "pulceo-node-c9c9464326.eastus.cloudapp.azure.com",
-    "pnaUUID": "a58dddf4-c10c-498d-89d3-6da8c591f4c6",
+    "hostname": "pulceo-node-6659339536.westus.cloudapp.azure.com",
+    "pnaUUID": "3b4af61f-8bb4-4118-9640-b530c6aec54e",
+    "node": {
+      "name": "cloud2",
+      "type": "CLOUD",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "USA",
+      "state": "California",
+      "city": "San Francisco",
+      "longitude": -119.852,
+      "latitude": 47.233,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "C++, Spark, MySQL, Linux, .NET, Python"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "98036c1c-1d51-4fcd-81ab-21fb40b14b3b",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-eae9342543.westeurope.cloudapp.azure.com",
+    "pnaUUID": "26c8c3d4-badc-4b7a-adb5-ec9d920784c3",
     "node": {
       "name": "cloud1",
       "type": "CLOUD",
       "layer": 1,
       "role": "WORKLOAD",
       "group": "",
-      "country": "USA",
-      "state": "Virginia",
-      "city": "Boydton",
-      "longitude": -78.37465887756295,
-      "latitude": 37.3719,
+      "country": "Netherlands",
+      "state": "Noord-Holland",
+      "city": "Schiphol",
+      "longitude": 4.9,
+      "latitude": 52.3667,
+      "tags": [
+        {
+          "key": "properties",
+          "value": "Java, .NET, Ruby, MySQL"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "c329ad3d-ab6c-41a9-aa8d-5705787a60d6",
+    "providerName": "default",
+    "hostname": "h5135.pi.uni-bamberg.de",
+    "pnaUUID": "c4cbae94-dd35-4ba8-a374-0ceebddb7765",
+    "node": {
+      "name": "gateway1",
+      "type": "GATEWAY",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
       "tags": []
     }
   }
@@ -564,8 +608,6 @@ curl --request GET \
 :::
 
 ::: {.column width="40%"}
-Reports:
-
 ```{python}
 import qrcode
 import qrcode.image.svg
@@ -574,9 +616,7 @@ img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/'
 img.save("images/qrcode-sose2024-prod.svg")
 ```
 
-![](images/qrcode-sose2024-prod.svg)
-
-SummerSOC2024-prod-idle
+![](images/qrcode-sose2024-prod.svg){width="100%"} SOSE2024-prod
 :::
 :::::
 
@@ -597,20 +637,20 @@ Out of scope: **Cloud** and **commercial** solutions
 
 ## Contributions
 
--   Fully documented **RESTful HTTP API** for universal orchestration (OpenAPI specification)
+-   Fully documented **RESTful HTTP API** for universal orchestration
 -   **Decoupled** and **holistic** cloud-edge orchestration with evaluation and documentation
 -   Strong **scientific** and **industrial** foundation
-    -   Platform architecture based on a scientific meta-study[^5]
-    -   Feature engineering based on scientific, peer-reviewed service placement publications[^6]
-    -   Implementation following an industry standard (OpenFog RA)[^7]
+    -   Platform architecture based on a scientific meta-study[^4]
+    -   Feature engineering based on scientific, peer-reviewed service placement publications[^5]
+    -   Implementation following an industry standard (OpenFog RA)[^6]
 
-[^5]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.
+[^4]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.
 
-[^6]: https://spboehm.github.io/pulceo-misc/
+[^5]: https://spboehm.github.io/pulceo-misc/
 
-[^7]: S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47.
+[^6]: S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47.
 
-**Limitations**: Only one representational architecture implemented with stable network conditions has been reproduced yet
+**Limitations**: Only a few solutions with stable network conditions have been reproduced
 
 ## Further Resources
 
@@ -620,15 +660,15 @@ Out of scope: **Cloud** and **commercial** solutions
 
 **Platform-related**:
 
-- Source Code
-- Pre-built Container Images
-- OpenAPI Specifications
-- Documentation
+-   Source Code
+-   Pre-built Container Images
+-   OpenAPI Specifications
+-   Documentation
 
 **Orchestration-specific**:
 
-- Orchestration reports
-- Example API requests
+-   Orchestration reports
+-   Example API requests
 :::
 
 ::: {.column width="50%"}
@@ -639,6 +679,7 @@ import qrcode.image.svg
 img = qrcode.make('https://github.com/spboehm/pulceo-misc', image_factory=qrcode.image.svg.SvgPathImage)
 img.save("images/qrcode-pulceo-misc.svg")
 ```
+
 ![](images/qrcode-pulceo-misc.svg){width="100%"}
 :::
 :::::
@@ -649,7 +690,7 @@ img.save("images/qrcode-pulceo-misc.svg")
 
 ::::: columns
 ::: {.column width="55%"}
--   Smolka and Mann (2022)[^8] investigated 99 fog application placement algorithms
+-   Smolka and Mann (2022)[^7] investigated 99 fog application placement algorithms
 -   19 out of 99 solutions (19%) used a small test-bed
 -   No real-world (=large-scale) deployment was observed
 :::
@@ -659,7 +700,7 @@ img.save("images/qrcode-pulceo-misc.svg")
 :::
 :::::
 
-[^8]: S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
+[^7]: S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
 
 ## Metric Exports {visibility="hidden"}
 
@@ -697,13 +738,21 @@ curl --request GET \
 }
 ```
 
+## PULCEO's Domain Model {visibility="hidden"}
+
+Extracted from **27 peer-reviewed** service placement solutions[^8]
+
+[^8]: https://spboehm.github.io/pulceo-misc/
+
+![](images/domain-model-uml.svg)
+
 ## PULCEO's Architecture {visibility="hidden"}
 
 -   Decoupled orchestration with a RESTful HTTP API exposed by an API Gateway
--   Microservice architecture aligned to a scientific meta-study[^3]
+-   Microservice architecture aligned to a scientific meta-study[^9]
 -   Real-time data streaming via WebSockets
 
-[^3]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.
+[^9]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.
 
 ![](images/pulceo-architecture.drawio.svg)
 
