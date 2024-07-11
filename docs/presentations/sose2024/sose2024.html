@@ -424,12 +424,7 @@
 </div>
 <p>Simulations are prevalent: only 19 out of 99 solutions used a small test-bed.<sup>1</sup></p>
 </div></div>
-<div class="quarto-auto-generated-content">
-<p><img src="images/dsg.png" class="slide-logo"></p>
-<div class="footer footer-default">
-<p><a href="https://github.com/spboehm/pulceo-misc" class="uri">https://github.com/spboehm/pulceo-misc</a></p>
-</div>
-</div><aside><ol class="aside-footnotes"><li id="fn1"><p>S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol.&nbsp;104, no. 6, pp.&nbsp;1397–1423, Jun.&nbsp;2022.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol.&nbsp;104, no. 6, pp.&nbsp;1397–1423, Jun.&nbsp;2022.</p></li></ol></aside></section>
 
 <section id="holistic-management" class="slide level2 smaller">
 <h2>Holistic Management</h2>
@@ -701,7 +696,7 @@
 <span id="cb10-24"><a></a><span class="st">        }</span></span>
 <span id="cb10-25"><a></a><span class="st">    ]</span></span>
 <span id="cb10-26"><a></a><span class="st">}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Resource utilization with <em>If needed, further Metrics Requests to monitor the placed Applications can be issued.</em></p>
+<p><em>If needed, further Metric Requests to monitor the placed Applications can be issued.</em></p>
 </section>
 <section id="use-case" class="slide level2">
 <h2>Use Case</h2>
@@ -925,7 +920,7 @@ JSON output for nodes
 <span id="cb12-141"><a></a><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div><div class="column" style="width:40%;">
-<p><img data-src="images/qrcode-sose2024-prod.svg" style="width:100.0%"> SOSE2024-prod</p>
+<p><img data-src="images/qrcode-sose2024-prod.svg" style="width:100.0%"> Report for SOSE2024-prod</p>
 </div></div>
 </section>
 <section id="related-solutions" class="slide level2">
@@ -956,7 +951,7 @@ JSON output for nodes
 </ul></li>
 </ul>
 <p><strong>Limitations</strong>: Only a few solutions with stable network conditions have been reproduced</p>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol.&nbsp;55, no. 2, pp.&nbsp;1–34, Feb.&nbsp;2023, doi: 10.1145/3486221.</p></li><li id="fn5"><p>https://spboehm.github.io/pulceo-misc/</p></li><li id="fn6"><p>S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul.&nbsp;2023, pp.&nbsp;37–47.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol.&nbsp;55, no. 2, pp.&nbsp;1–34, Feb.&nbsp;2022, doi: 10.1145/3486221.</p></li><li id="fn5"><p>https://spboehm.github.io/pulceo-misc/</p></li><li id="fn6"><p>S. Böhm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul.&nbsp;2023, pp.&nbsp;37–47.</p></li></ol></aside></section>
 <section id="further-resources" class="slide level2">
 <h2>Further Resources</h2>
 <div class="columns">
@@ -977,13 +972,94 @@ JSON output for nodes
 </div><div class="column" style="width:50%;">
 <p><img data-src="images/qrcode-pulceo-misc.svg" style="width:100.0%"></p>
 </div></div>
+</section></section>
+<section>
+<section id="additional-slides" class="title-slide slide level1 center" data-visibility="uncounted">
+<h1>Additional Slides</h1>
+
 </section>
+<section id="motivation-real-world-experiments-are-time-consuming-and-the-minority" class="slide level2" data-visibility="uncounted">
+<h2>Motivation: Real-world experiments are time-consuming and the minority</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li>Smolka and Mann (2022)<sup>1</sup> investigated 99 fog application placement algorithms</li>
+<li>19 out of 99 solutions (19%) used a small test-bed</li>
+<li>No real-world (=large-scale) deployment was observed</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<p><img data-src="images/smolka-mann-2022.png"></p>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn7"><p>S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol.&nbsp;104, no. 6, pp.&nbsp;1397–1423, Jun.&nbsp;2022.</p></li></ol></aside></section>
+<section id="generic-orchestration-architecture" class="slide level2">
+<h2>Generic Orchestration Architecture</h2>
+<p>Meta-survey published by Costa et al.&nbsp;2022<sup>1</sup></p>
+<p>Based on 50 analyzed fog orchestration systems</p>
+<p>Systematic literature review</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Proposed Mapping</p>
+<p><img data-src="images/generic-orchestration-architecture-table.png"></p>
+</div><div class="column" style="width:50%;">
+<p>Architecture proposed by <img data-src="images/costa-orchestration-architecuture.png"></p>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn8"><p>B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol.&nbsp;55, no. 2, pp.&nbsp;1–34, Feb.&nbsp;2022, doi: 10.1145/3486221.</p></li></ol></aside></section>
+<section id="pulceos-domain-model" class="slide level2" data-visibility="uncounted">
+<h2>PULCEO’s Domain Model</h2>
+<p>Extracted from <strong>27 peer-reviewed</strong> service placement solutions<sup>1</sup></p>
+<p><img data-src="images/domain-model-uml.svg"></p>
+<aside><ol class="aside-footnotes"><li id="fn9"><p>https://spboehm.github.io/pulceo-misc/</p></li></ol></aside></section>
+<section id="pulceos-architecture" class="slide level2" data-visibility="uncounted">
+<h2>PULCEO’s Architecture</h2>
+<ul>
+<li>Decoupled orchestration with a RESTful HTTP API exposed by an API Gateway</li>
+<li>Microservice architecture aligned to a scientific meta-study<sup>1</sup></li>
+<li>Real-time data streaming via WebSockets</li>
+</ul>
+<p><img data-src="images/pulceo-architecture.drawio.svg"></p>
+<aside><ol class="aside-footnotes"><li id="fn10"><p>B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol.&nbsp;55, no. 2, pp.&nbsp;1–34, Feb.&nbsp;2022, doi: 10.1145/3486221.</p></li></ol></aside></section>
+<section id="pulceo-node-agent-architecture" class="slide level2" data-visibility="uncounted">
+<h2>PULCEO Node Agent Architecture</h2>
+<ul>
+<li>RESTful HTTP API for instructions</li>
+<li>Monitoring data transmitted via MQTT</li>
+<li>Latency and bandwidth measurement with <em>ping</em> and <em>iperf3</em></li>
+<li>Standalone Kubernetes clusters as container manager</li>
+</ul>
 
+<img data-src="images/pna-architecture.drawio.svg" class="r-stretch"></section>
+<section id="metric-exports" class="slide level2" data-visibility="uncouted">
+<h2>Metric Exports</h2>
+<p>① Asynchronous data export via RESTful HTTP API</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="ex">curl</span> <span class="at">--request</span> POST <span class="dt">\</span></span>
+<span id="cb13-2"><a></a>  <span class="at">--url</span> http://localhost:8081/api/v1/metric-exports <span class="dt">\</span></span>
+<span id="cb13-3"><a></a>  <span class="at">--header</span> <span class="st">'Accept: application/json'</span> <span class="dt">\</span></span>
+<span id="cb13-4"><a></a>  <span class="at">--header</span> <span class="st">'Authorization: XXXXX'</span> <span class="dt">\</span></span>
+<span id="cb13-5"><a></a>  <span class="at">--header</span> <span class="st">'Content-Type: application/json'</span> <span class="dt">\</span></span>
+<span id="cb13-6"><a></a>  <span class="at">--data</span> <span class="st">'{</span></span>
+<span id="cb13-7"><a></a><span class="st">    "metricType": "CPU_UTIL"</span></span>
+<span id="cb13-8"><a></a><span class="st">}'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>② Check the current progress of the metric export request:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="ex">curl</span> <span class="at">--request</span> GET <span class="dt">\</span></span>
+<span id="cb14-2"><a></a>  <span class="at">--url</span> http://localhost:8081/api/v1/metric-exports <span class="dt">\</span></span>
+<span id="cb14-3"><a></a>  <span class="at">--header</span> <span class="st">'Accept: application/json'</span> <span class="dt">\</span></span>
+<span id="cb14-4"><a></a>  <span class="at">--header</span> <span class="st">'Authorization: XXXXX'</span> <span class="dt">\</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>③ Finally download via the given <code>url</code>:</p>
+<div class="sourceCode" id="cb15" data-code-line-numbers="5-6"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb15-1"><a></a><span class="fu">{</span></span>
+<span id="cb15-2"><a></a>    <span class="dt">"metricExportUUID"</span><span class="fu">:</span> <span class="st">"34e46c91-82b8-48dd-aaea-3619459a10aa"</span><span class="fu">,</span></span>
+<span id="cb15-3"><a></a>    <span class="dt">"metricType"</span><span class="fu">:</span> <span class="st">"CPU_UTIL"</span><span class="fu">,</span></span>
+<span id="cb15-4"><a></a>    <span class="dt">"numberOfRecords"</span><span class="fu">:</span> <span class="dv">100</span><span class="fu">,</span></span>
+<span id="cb15-5"><a></a>    <span class="dt">"url"</span><span class="fu">:</span> <span class="st">"http://localhost:8081/api/v1/metric-exports/34e46c91-82b8-48dd-aaea-3619459a10aa/blobs/CPU_UTIL-84dda748-d6c0-4c33-b593-5aca223598f3.csv"</span><span class="fu">,</span></span>
+<span id="cb15-6"><a></a>    <span class="dt">"metricExportState"</span><span class="fu">:</span> <span class="st">"PENDING"</span> <span class="er">-&gt;</span> <span class="st">"COMPLETED"</span></span>
+<span id="cb15-7"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-
-
-
-</section>
+<div class="quarto-auto-generated-content">
+<p><img src="images/dsg.png" class="slide-logo"></p>
+<div class="footer footer-default">
+<p><a href="https://github.com/spboehm/pulceo-misc" class="uri">https://github.com/spboehm/pulceo-misc</a></p>
+</div>
+</div>
+</section></section>
 
     </div>
   </div>

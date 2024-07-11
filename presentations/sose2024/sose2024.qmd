@@ -359,7 +359,7 @@ curl --request POST \
 }'
 ```
 
-Resource utilization with *If needed, further Metrics Requests to monitor the placed Applications can be issued.*
+*If needed, further Metric Requests to monitor the placed Applications can be issued.*
 
 ## Use Case
 
@@ -616,7 +616,8 @@ img = qrcode.make('https://spboehm.github.io/pulceo-misc/reports/sose2024-prod/'
 img.save("images/qrcode-sose2024-prod.svg")
 ```
 
-![](images/qrcode-sose2024-prod.svg){width="100%"} SOSE2024-prod
+![](images/qrcode-sose2024-prod.svg){width="100%"} 
+Report for SOSE2024-prod
 :::
 :::::
 
@@ -644,11 +645,11 @@ Out of scope: **Cloud** and **commercial** solutions
     -   Feature engineering based on scientific, peer-reviewed service placement publications[^5]
     -   Implementation following an industry standard (OpenFog RA)[^6]
 
-[^4]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.
+[^4]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2022, doi: 10.1145/3486221.
 
 [^5]: https://spboehm.github.io/pulceo-misc/
 
-[^6]: S. Bohm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47.
+[^6]: S. Böhm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, Jul. 2023, pp. 37–47.
 
 **Limitations**: Only a few solutions with stable network conditions have been reproduced
 
@@ -684,9 +685,9 @@ img.save("images/qrcode-pulceo-misc.svg")
 :::
 :::::
 
-## Contributions#2 {visibility="hidden"}
+# Additional Slides {visibility="uncounted"}
 
-## Motivation: Real-world experiments are time-consuming and the minority {visibility="hidden"}
+## Motivation: Real-world experiments are time-consuming and the minority {visibility="uncounted"}
 
 ::::: columns
 ::: {.column width="55%"}
@@ -702,7 +703,55 @@ img.save("images/qrcode-pulceo-misc.svg")
 
 [^7]: S. Smolka and Z. Á. Mann, “Evaluation of fog application placement algorithms: a survey,” Computing, vol. 104, no. 6, pp. 1397–1423, Jun. 2022.
 
-## Metric Exports {visibility="hidden"}
+## Generic Orchestration Architecture
+
+Meta-survey published by Costa et al. 2022^[B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2022, doi: 10.1145/3486221.]
+
+Based on 50 analyzed fog orchestration systems
+
+Systematic literature review
+
+::::: columns
+::: {.column width="50%"}
+Proposed Mapping
+
+![](images/generic-orchestration-architecture-table.png)
+:::
+
+::: {.column width="50%"}
+Architecture proposed by 
+![](images/costa-orchestration-architecuture.png)
+:::
+:::::
+
+## PULCEO's Domain Model {visibility="uncounted"}
+
+Extracted from **27 peer-reviewed** service placement solutions[^8]
+
+[^8]: https://spboehm.github.io/pulceo-misc/
+
+![](images/domain-model-uml.svg)
+
+## PULCEO's Architecture {visibility="uncounted"}
+
+-   Decoupled orchestration with a RESTful HTTP API exposed by an API Gateway
+-   Microservice architecture aligned to a scientific meta-study[^9]
+-   Real-time data streaming via WebSockets
+
+[^9]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2022, doi: 10.1145/3486221.
+
+![](images/pulceo-architecture.drawio.svg)
+
+## PULCEO Node Agent Architecture {visibility="uncounted"}
+
+-   RESTful HTTP API for instructions
+-   Monitoring data transmitted via MQTT
+-   Latency and bandwidth measurement with *ping* and *iperf3*
+-   Standalone Kubernetes clusters as container manager
+
+![](images/pna-architecture.drawio.svg)
+
+## Metric Exports {visibility="uncouted"}
 
 ① Asynchronous data export via RESTful HTTP API
 
@@ -737,30 +786,3 @@ curl --request GET \
     "metricExportState": "PENDING" -> "COMPLETED"
 }
 ```
-
-## PULCEO's Domain Model {visibility="hidden"}
-
-Extracted from **27 peer-reviewed** service placement solutions[^8]
-
-[^8]: https://spboehm.github.io/pulceo-misc/
-
-![](images/domain-model-uml.svg)
-
-## PULCEO's Architecture {visibility="hidden"}
-
--   Decoupled orchestration with a RESTful HTTP API exposed by an API Gateway
--   Microservice architecture aligned to a scientific meta-study[^9]
--   Real-time data streaming via WebSockets
-
-[^9]: B. Costa, J. Bachiega, L. R. de Carvalho, and A. P. F. Araujo, “Orchestration in Fog Computing: A Comprehensive Survey,” ACM Comput. Surv., vol. 55, no. 2, pp. 1–34, Feb. 2023, doi: 10.1145/3486221.
-
-![](images/pulceo-architecture.drawio.svg)
-
-## PULCEO Node Agent Architecture {visibility="hidden"}
-
--   RESTful HTTP API for instructions
--   Monitoring data transmitted via MQTT
--   Latency and bandwidth measurement with *ping* and *iperf3*
--   Standalone Kubernetes clusters as container manager
-
-![](images/pna-architecture.drawio.svg)
