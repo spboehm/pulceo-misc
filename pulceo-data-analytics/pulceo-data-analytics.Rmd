@@ -1,7 +1,7 @@
 ---
 title: "`r paste0('PULCEO Data Analytics:  ', params$subfolder)`" 
 params:
-  subfolder: "summersoc2024-prod-idle"
+  subfolder: "summersoc2024-prod-load"
 knit: (function(input_file, encoding) {
   metadata <- rmarkdown::yaml_front_matter(input_file);
   out_dir <- with(metadata, paste0("reports/", params$subfolder));
@@ -161,7 +161,7 @@ dir.create(paste("plots", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings 
 ```{r}
 # plots
 theme_set(theme_minimal())
-theme_update(plot.margin = margin(0,5.5,0,5.5,"pt"))
+theme_update(plot.margin = margin(0.75,5.5,0,5.5,"pt"))
 GenerateBarPlotPercentage <- function(summary, title, ylim_factor = 1.0, vjust = 0.0) {
   plot <- ggplot(summary, aes(x=Node, y=Mean, fill=Node)) + 
   geom_bar(stat="identity", width=0.75) +
