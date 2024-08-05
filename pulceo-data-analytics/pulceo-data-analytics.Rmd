@@ -124,12 +124,12 @@ CreateSummaryForNetUtil <- function(df, resource) {
 
 # latex generation
 SaveLatexTable <- function(summary, caption, label, filename, position = "t") {
-  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3) %>% kable_styling(full_width = TRUE)
+  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 2) %>% kable_styling(full_width = TRUE)
   save_kable(latex_table, paste("latex", SUBFOLDER, filename, sep = "/"))
 }
 
 SaveMultiColLatexTable <- function(summary, caption, label, filename, colnames, header, position = "t") {
-  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, col.names=colnames, position = position, digits = 3) %>%
+  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, col.names=colnames, position = position, digits = 2) %>%
     kable_styling(full_width = TRUE) %>% 
     add_header_above(header)
   
@@ -150,6 +150,8 @@ names(node_mapping) <- c("sourceHost", "nodeName")
 
 node_mapping_dest <- node_mapping
 names(node_mapping_dest) <- c("destinationHost", "nodeNameDest")
+
+scale <- function (x, na.rm=FALSE) (format(round(x, digits = 2), nsmall = 2))
 ```
 
 ```{r}
@@ -159,6 +161,7 @@ dir.create(paste("plots", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings 
 ```{r}
 # plots
 theme_set(theme_minimal())
+theme_update(plot.margin = margin(0,5.5,0,5.5,"pt"))
 GenerateBarPlotPercentage <- function(summary, title, ylim_factor = 1.0, vjust = 0.0) {
   plot <- ggplot(summary, aes(x=Node, y=Mean, fill=Node)) + 
   geom_bar(stat="identity", width=0.75) +
@@ -602,7 +605,8 @@ ICMP_RTT_SUMMARY <- ICMP_RTT_SUMMARY %>%
             avg = round(mean(X_value), 3),
             max = round(max(X_value), 3),
             median = round(median(X_value), 3),
-            sd = round(sd(X_value), 3), .groups = "drop")
+            sd = round(sd(X_value), 3), .groups = "drop") %>% 
+  mutate_if(is.numeric, scale, na.rm = TRUE)
 names(ICMP_RTT_SUMMARY) <- c("$v_1$", "$v_2$", "Min", "Mean", "Max", "Med", "SD")
 CreateScrollableTable(ICMP_RTT_SUMMARY)
 #ICMP_RTT_SUMMARY_TABLE <- ICMP_RTT_SUMMARY %>% 
@@ -773,7 +777,7 @@ udp_bw_plot <- ggplot(filterBW(UDP_BW, "bitrate", "SENDER"), aes(x=endTime, y=X_
 #### TCP and UDP bandwidth
 
 ```{r include=TRUE, echo=FALSE}
-COMBINED_TCP_UDP_SUMMARY <- full_join(TCP_BW_SUMMARY, UDP_BW_SUMMARY, by=c("Source", "Destination"))
+COMBINED_TCP_UDP_SUMMARY <- full_join(TCP_BW_SUMMARY, UDP_BW_SUMMARY, by=c("Source", "Destination")) %>%  mutate_if(is.numeric, scale, na.rm = TRUE)
 names(COMBINED_TCP_UDP_SUMMARY) <- c("Source", "Destination", "Min (TCP)" , "Mean (TCP)", "Max (TCP)", "Med (TCP)", "SD (TCP)", "Min (UDP)" , "Mean (UDP)", "Max (UDP)", "Med (UDP)", "SD (UDP)")
 CreateScrollableTable(COMBINED_TCP_UDP_SUMMARY)
 SaveMultiColLatexTable(COMBINED_TCP_UDP_SUMMARY, "TCP and UDP bandwidth (ms) between nodes.", "tcp-udp-bandwidth-measured-on-links", "tcp_udp_bw_nodes_summary.tex", c("$v_1$", "$v_2$", names(TCP_BW_SUMMARY)[3:length(TCP_BW_SUMMARY)], names(UDP_BW_SUMMARY)[3:length(UDP_BW_SUMMARY)]), c(" ", " ", "TCP" = 5, "UDP" = 5))
@@ -792,7 +796,6 @@ SaveMultiColLatexTable(COMBINED_UDP_JITTER_PACKAGE_LOSS, "Jitter (ms) and packag
 ### Combined ICMP, TCP and UDP Bandwidth
 
 ```{r include=TRUE, echo=FALSE}
-scale <- function (x, na.rm=FALSE) (format(round(x, digits = 2), nsmall = 2))
 ICMP_RTT_SUMMARY
 names(ICMP_RTT_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
 TCP_BW_SUMMARY
