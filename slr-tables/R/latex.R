@@ -19,9 +19,8 @@ CreateLaTeXTable <- function(dataframe) {
   # save_kable(sPropsKbl, "latex/nodes-static-properties.tex")
 }
 
-SaveLatexTable <- function(data, caption, label, filename, position = "t", table_env = 'table') {
-  latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3, table.env = table_env) %>% 
-    kable_styling(full_width = TRUE)
+SaveLatexTable <- function(data, caption, label, filename, position = "tb", table_env = 'table') {
+  latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3, table.env = table_env) %>% kable_styling(latex_options="scale_down")
   save_kable(latex_table, paste("latex", filename, sep = "/"))
 }
 

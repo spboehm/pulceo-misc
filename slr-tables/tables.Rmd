@@ -1,0 +1,30 @@
+---
+title: "Tables for PULCEO: A Platform for Universal and Lightweight Cloud-Edge Orchestration"
+knit: (function(input_file, encoding) {
+  out_dir <- '../docs/tables';
+  rmarkdown::render(input_file,
+  encoding=encoding,
+  output_file=file.path(dirname(input_file), out_dir, "index.html"))})
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+source("R/common.R")
+source("R/latex.R")
+source("R/kable.R")
+LoadPackage("tidyverse")
+LoadPackage("kableExtra")
+LoadPackage("ggpubr")
+LoadPackage("ggplot2")
+```
+
+## Introduction
+
+### PULCEO Component Overview
+
+```{r}
+pulceo_components <- read.csv2("csv/pulceo-component-overview.csv")
+colnames(pulceo_components) <- c("No.", "Abbreviation", "Service", "Version", "Repository (GitHub)")
+SaveLatexTable(pulceo_components, "PULCEO Component Overview.", "pulceo-component-overview", "pulceo-component-overview.tex")
+```

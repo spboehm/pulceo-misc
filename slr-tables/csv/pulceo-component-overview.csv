@@ -1,0 +1,5 @@
+number;abbreviation;service;version;repository
+1;PRM;PULCEO Resource Manager;1.2.0;pulceo-resource-manager
+2;PMS;PULCEO Monitoring Service;1.2.1;pulceo-monitoring-service
+3;PSM;PULCEO Service Manager;1.0.0;pulceo-service-manager
+4;PNA;PULCEO Node Agent;1.0.0;pulceo-node-agent
