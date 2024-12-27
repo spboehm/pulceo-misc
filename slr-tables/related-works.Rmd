@@ -19,5 +19,5 @@ CreateScrollableTable(t(relatedWorks))
 ```
 
 ```{r echo=FALSE}
-SaveLatexTable(t(relatedWorks), "Comparision of existing solutions and PULCEO.", "comparison-of-existing-solutions-and-pulceo", "comparison_of_existing_solutions_and_pulceo.tex", "b", "table*")
+SaveLatexTable(t(relatedWorks), "Comparision of existing solutions and PULCEO.", "comparison-of-existing-solutions-and-pulceo", "comparison-of-existing-solutions-and-pulceo.tex", "tb", "table*")
 ```

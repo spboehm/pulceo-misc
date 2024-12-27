@@ -1,10 +1,11 @@
-\begin{table*}[b]
+\begin{table*}[tb]
 
 \caption{\label{tab:comparison-of-existing-solutions-and-pulceo}Comparision of existing solutions and PULCEO.}
 \centering
-\begin{tabu} to \linewidth {>{\raggedright}X>{\raggedright}X>{\raggedright}X>{\raggedright}X>{\raggedright}X>{\raggedright}X>{\raggedright}X>{\raggedright}X>{\raggedright}X}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\begin{tabular}[t]{lllllllll}
 \toprule
-Author & Kumara~\cite{kumaraSODALITERTOrchestrating2021} & Orive~\cite{oriveQualityServiceAware2022} & Pournaropoulos~\cite{pournaropoulosFluidityProvidingFlexible2024} & Marchese~\cite{marcheseSophosFrameworkApplication2023} & Korontanis~\cite{korontanisEdgeCloudMonLightweight2024} & Koukis~\cite{koukisOpenSourceExperimentationFramework2024} & Faticanti~\cite{faticantiCuttingThroughputEdge2019} & Our proposal\\
+Author & Kumara~\cite{kumaraSODALITERTOrchestratingApplications2021} & Orive~\cite{oriveQualityServiceAware2022} & Pournaropoulos~\cite{pournaropoulosFluidityProvidingFlexible2024} & Marchese~\cite{marcheseSophosFrameworkApplication2023} & Korontanis~\cite{korontanisEdgeCloudMonLightweight2024} & Koukis~\cite{koukisOpenSourceExperimentationFramework2024} & Faticanti~\cite{faticantiCuttingThroughputEdge2019} & Our proposal\\
 Year & 2021 & 2022 & 2024 & 2023 & 2024 & 2024 & 2019 & 2024\\
 Name & SODALITE@RT & ACOA & Fluidity & Sophos & EdgeCloudMon & CODECO & FogAtlas & PULCEO\\
 FOSS & y & n & n & n &  & y & y & y\\
@@ -24,5 +25,5 @@ Response.Time & n & n & y & y &  & n & n & y\\
 Evaluation & n & n & n & n & n & y & n & y\\
 Documentation & p & y & n & n &  & y & n & y\\
 \bottomrule
-\end{tabu}
+\end{tabular}}
 \end{table*}
