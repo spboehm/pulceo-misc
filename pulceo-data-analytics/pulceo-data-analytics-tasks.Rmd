@@ -1,0 +1,20 @@
+---
+title: "PULCEO Data Analytics  - Tasks" 
+---
+
+```{r, include=FALSE}
+# set this option in the first code chunk in the document
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
+```
+
+```{r warning=FALSE, echo=FALSE}
+library(tidyverse)
+library(rjson)
+library(kableExtra)
+library(gridExtra)
+library(ggpubr)
+library(data.table)
+library(jsonlite)
+library(rjson)
+```
+
