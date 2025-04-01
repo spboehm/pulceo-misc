@@ -108,7 +108,6 @@ def read_allocatable_cpu_by_node_id(node_id):
         return None
 
 def read_allocatable_memory_by_node_id(node_id):
-    # /api/v1/nodes/{node_id}/memory/allocatable
     url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{node_id}/memory"
     response = requests.get(url)
     if response.status_code == 200:
@@ -158,14 +157,14 @@ def update_allocatable_memory(node_id, key, value):
     pass
 
 # wrapper function for read and update
-def release_cpu(node_id, key, value):
+def release_cpu_on_node(node_id, key, value):
     current_allocatable_cpu = read_allocatable_cpu_by_node_id(node_id)
     update_allocatable_cpu(node_id, key, current_allocatable_cpu['cpuAllocatable'][key] + value)
-    pass
 
 # wrapper function for read and update
-def release_memory(node_id, key, value):
-    pass
+def release_memory_on_node(node_id, key, value):
+    current_allocatable_memory = read_allocatable_memory_by_node_id(node_id)
+    update_allocatable_memory(node_id, key, current_allocatable_memory['memoryAllocatable'][key] + value)
 
 def schedule_task(task_id, node_id, status, application_id, application_component_id):
     # TODO: put request
@@ -199,16 +198,17 @@ mqttc.connect("localhost", 1883, 60)
 #mqttc.loop_forever()
 
 if __name__ == "__main__":
-    print("=== Example hot to use the Python SDK ===")
-    print(read_nodes())
-    print(read_allocatable_cpu())
-    print(read_allocatable_memory())
-    print(read_node_by_id("edge-0"))
-    print(update_allocatable_cpu("edge-0", "shares", 8000))
-    print(read_allocatable_cpu())
-    print(update_allocatable_memory("edge-0", "size", 8192))
-    print(read_allocatable_memory())
-    print(read_allocatable_cpu_by_node_id("edge-0"))
-    print(read_allocatable_memory_by_node_id("edge-0"))
-    release_cpu("edge-0", "shares", 6000)
+    # print("=== Example hot to use the Python SDK ===")
+    # print(read_nodes())
+    # print(read_allocatable_cpu())
+    # print(read_allocatable_memory())
+    # print(read_node_by_id("edge-0"))
+    # print(update_allocatable_cpu("edge-0", "shares", 8000))
+    # print(read_allocatable_cpu())
+    # print(update_allocatable_memory("edge-0", "size", 8192))
+    # print(read_allocatable_memory())
+    # print(read_allocatable_cpu_by_node_id("edge-0"))
+    # print(read_allocatable_memory_by_node_id("edge-0"))
+    # release_cpu_on_node("edge-0", "shares", 6000)
+    # release_memory_on_node("edge-0", "size",  10.5)
     pass
