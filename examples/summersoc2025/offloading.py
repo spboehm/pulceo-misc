@@ -68,8 +68,6 @@ def handle_completed_task(task):
     # TODO: memory
 
 ### === PULCEO SDK FUNCTIONS === ###
-
-
 def read_nodes():
     url = f"{scheme}://{host}:{prm_port}/api/v1/nodes"
     response = requests.get(url)
