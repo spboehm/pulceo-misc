@@ -14,7 +14,7 @@ sudo apt-get update
 sudo apt-get install helm
 ```
 
-## Install Influxdata
+## Install Influxdata (skip, if pulceo has been bootstrapped)
 
 ```bash
 helm repo add influxdata https://helm.influxdata.com/
