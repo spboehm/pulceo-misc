@@ -44,8 +44,6 @@ def handle_new_task(payload):
     pass
 
 def read_nodes():
-    # TODO: get request nodes
-    # /api/v1/nodes
     url = f"{scheme}://{host}:{prm_port}/api/v1/nodes"
     response = requests.get(url)
     if response.status_code == 200:
@@ -55,8 +53,6 @@ def read_nodes():
         return None
 
 def read_node_by_id(node_id):
-    # TODO: read node by id
-    # /api/v1/nodes/{id}
     url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{node_id}"
     response = requests.get(url)
     if response.status_code == 200:
@@ -67,8 +63,6 @@ def read_node_by_id(node_id):
     pass
 
 def read_allocatable_cpu():
-    # TODO: read allocatable cpu
-    # /api/v1/resources/cpus
     url = f"{scheme}://{host}:{prm_port}/api/v1/resources/cpus"
     response = requests.get(url)
     if response.status_code == 200:
@@ -78,8 +72,6 @@ def read_allocatable_cpu():
         return None
 
 def read_allocatable_memory():
-    # TODO: read allocatable memory
-    # /api/v1/resources/memory
     url = f"{scheme}://{host}:{prm_port}/api/v1/resources/memory"
     response = requests.get(url)
     if response.status_code == 200:
@@ -89,10 +81,8 @@ def read_allocatable_memory():
         return None
     pass
 
-def update_allocatable_cpu(nodeId, key, value):
-    # TODO: update allocatable cpu
-    # /api/v1/nodes/{nodeId}/cpu/allocatable
-    url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{nodeId}/cpu/allocatable"
+def update_allocatable_cpu(node_id, key, value):
+    url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{node_id}/cpu/allocatable"
     payload = {"key": key,
                "value": value}
     headers = {'Content-Type': 'application/json'}
@@ -101,23 +91,31 @@ def update_allocatable_cpu(nodeId, key, value):
     if response.status_code == 200:
         return response.json()
     else:
-        print(f"Failed to update allocatable CPU for node {nodeId}: {response.status_code}, {response.text}")
+        print(f"Failed to update allocatable CPU for node {node_id}: {response.status_code}, {response.text}")
         return None
     # TODO: validation
     pass
 
-def update_allocatable_memory(nodeId, key, value):
-    # TODO: update allocatable memory
-    # /api/v1/nodes/{nodeId}/memory/allocatable
+def update_allocatable_memory(node_id, key, value):
+    url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{node_id}/memory/allocatable"
+    payload = {"key": key,
+               "value": value}
+    headers = {'Content-Type': 'application/json'}
 
+    response = requests.patch(url, data=json.dumps(payload), headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to update allocatable memory for node {node_id}: {response.status_code}, {response.text}")
+        return None
     # TODO: validation
     pass
 
-def schedule_task(taskId):
+def schedule_task(task_id):
     # TODO: put request
     pass
 
-def handle_completed_task():
+def handle_completed_task(msg):
     # TODO: put request
     pass
 
@@ -134,10 +132,11 @@ mqttc.connect("localhost", 1883, 60)
 # mqttc.loop_forever()
 
 if __name__ == "__main__":
-    print("test")
     print(read_nodes())
     print(read_allocatable_cpu())
     print(read_allocatable_memory())
     print(read_node_by_id("edge-0"))
     print(update_allocatable_cpu("edge-0", "shares", 8000))
     print(read_allocatable_cpu())
+    print(update_allocatable_memory("edge-0", "size", 8192))
+    print(read_allocatable_memory())
