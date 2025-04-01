@@ -15,6 +15,9 @@ def on_connect(client, userdata, flags, reason_code, properties):
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     client.subscribe("tasks/new")
+    client.subscribe("tasks/running") # TOOD: do we need this?s
+    client.subscribe("tasks/scheduled")
+    client.subscribe("tasks/offloaded")
     client.subscribe("tasks/completed")
 
 # The callback for when a PUBLISH message is received from the server.
@@ -23,6 +26,8 @@ def on_message(client, userdata, msg):
 
     if (msg.topic == "tasks/new"):
         handle_new_task(msg.payload)
+    elif (msg.topic == "tasks/completed"):
+        handle_completed_task(msg.payload)
     else:
         print(f"Unknown message received on topic {msg.topic}: {msg.payload}")
 
@@ -34,10 +39,18 @@ def handle_new_task(payload):
         
         # TODO: find eligible node
         # TODO: read allocatable cpu resources
+        allocatable_cpu_resources = read_allocatable_cpu()
         # TODO: read allocatable memory resources
         # TODO: this is the result
-        print(str(read_nodes()))
         elected_node = "edge-0"
+
+        task_id = task['taskUUID']
+        node_id = allocatable_cpu_resources[0]['nodeUUID']
+        status = "SCHEDULED"
+        application_id = ""
+        application_component_id = ""
+
+        schedule_task(task_id, node_id, status, application_id, application_component_id)
         
     except json.JSONDecodeError as e:
         print(f"Failed to decode task payload: {e}")
@@ -111,13 +124,31 @@ def update_allocatable_memory(node_id, key, value):
     # TODO: validation
     pass
 
-def schedule_task(task_id):
+def schedule_task(task_id, node_id, status, application_id, application_component_id):
     # TODO: put request
-    pass
+    url = f"{scheme}://{host}:{psm_port}/api/v1/tasks/{task_id}/scheduling"
+    payload = {
+        "nodeId": node_id,
+        "status": status,
+        "applicationId": application_id,
+        "applicationComponentId": application_component_id
+    }
+    headers = {'Content-Type': 'application/json'}
 
-def handle_completed_task(msg):
-    # TODO: put request
-    pass
+    response = requests.put(url, data=json.dumps(payload), headers=headers)
+    if response.status_code == 200:
+        print(f"Task {task_id} successfully scheduled on node {node_id}.")
+        return response.json()
+    else:
+        print(f"Failed to schedule task {task_id}: {response.status_code}, {response.text}")
+        return None
+
+def handle_completed_task(payload):
+    task = json.loads(payload.decode('utf-8'))
+    print(f"Received completed task: {task}")
+    
+    # TODO: on completed release resources
+
 
 mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 mqttc.on_connect = on_connect
@@ -129,15 +160,15 @@ mqttc.connect("localhost", 1883, 60)
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
-# mqttc.loop_forever()
 
 if __name__ == "__main__":
-    print("=== Example hot to use the Python SDK ===")
-    print(read_nodes())
-    print(read_allocatable_cpu())
-    print(read_allocatable_memory())
-    print(read_node_by_id("edge-0"))
-    print(update_allocatable_cpu("edge-0", "shares", 8000))
-    print(read_allocatable_cpu())
-    print(update_allocatable_memory("edge-0", "size", 8192))
-    print(read_allocatable_memory())
+    mqttc.loop_forever()
+    # print("=== Example hot to use the Python SDK ===")
+    # print(read_nodes())
+    # print(read_allocatable_cpu())
+    # print(read_allocatable_memory())
+    # print(read_node_by_id("edge-0"))
+    # print(update_allocatable_cpu("edge-0", "shares", 8000))
+    # print(read_allocatable_cpu())
+    # print(update_allocatable_memory("edge-0", "size", 8192))
+    # print(read_allocatable_memory())
