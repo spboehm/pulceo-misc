@@ -56,9 +56,10 @@ def read_nodes():
 
 def read_node_by_id(id):
     # TODO: read node by id
+    
     pass
 
-def read_allocatable_cpus():
+def read_allocatable_cpu():
     # TODO: read allocatable cpu
     # /api/v1/resources/cpus
     url = f"{scheme}://{host}:{prm_port}/api/v1/resources/cpus"
@@ -72,6 +73,13 @@ def read_allocatable_cpus():
 def read_allocatable_memory():
     # TODO: read allocatable memory
     # /api/v1/resources/memory
+    url = f"{scheme}://{host}:{prm_port}/api/v1/resources/memory"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to fetch allocatable memory: {response.status_code}, {response.text}")
+        return None
     pass
 
 def update_allocatable_cpu(nodeId):
@@ -105,3 +113,5 @@ mqttc.connect("localhost", 1883, 60)
 if __name__ == "__main__":
     print("test")
     print(read_nodes())
+    print(read_allocatable_cpu())
+    print(read_allocatable_memory())
