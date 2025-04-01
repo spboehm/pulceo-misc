@@ -17,6 +17,7 @@ def on_connect(client, userdata, flags, reason_code, properties):
     client.subscribe("tasks/scheduled")
     client.subscribe("tasks/offloaded")
     client.subscribe("tasks/completed")
+    # TODO: add failed
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
@@ -35,6 +36,8 @@ def on_message(client, userdata, msg):
 # USER OVERRIDES
 def handle_new_task(task):
     try:
+        # TODO: cloud-only
+        # TODO: edge-only
         # TODO: find eligible node
         # TODO: read allocatable cpu resources
         allocatable_cpu_resources = read_allocatable_cpu()
@@ -47,8 +50,8 @@ def handle_new_task(task):
         task_id = task['taskUUID']
         node_id = allocatable_cpu_resources[0]['nodeUUID']
         status = "SCHEDULED"
-        application_id = ""
-        application_component_id = ""
+        application_id = "" # TODO: replace dummy
+        application_component_id = "" # TODO: replace dummy
 
         schedule_task(task_id, node_id, status, application_id, application_component_id)
         
