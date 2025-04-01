@@ -54,9 +54,16 @@ def read_nodes():
         print(f"Failed to fetch nodes: {response.status_code}, {response.text}")
         return None
 
-def read_node_by_id(id):
+def read_node_by_id(node_id):
     # TODO: read node by id
-    
+    # /api/v1/nodes/{id}
+    url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{node_id}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to fetch node with ID {node_id}: {response.status_code}, {response.text}")
+        return None
     pass
 
 def read_allocatable_cpu():
@@ -82,12 +89,28 @@ def read_allocatable_memory():
         return None
     pass
 
-def update_allocatable_cpu(nodeId):
+def update_allocatable_cpu(nodeId, key, value):
     # TODO: update allocatable cpu
+    # /api/v1/nodes/{nodeId}/cpu/allocatable
+    url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{nodeId}/cpu/allocatable"
+    payload = {"key": key,
+               "value": value}
+    headers = {'Content-Type': 'application/json'}
+
+    response = requests.patch(url, data=json.dumps(payload), headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to update allocatable CPU for node {nodeId}: {response.status_code}, {response.text}")
+        return None
+    # TODO: validation
     pass
 
-def update_allocatable_memory(nodeId):
+def update_allocatable_memory(nodeId, key, value):
     # TODO: update allocatable memory
+    # /api/v1/nodes/{nodeId}/memory/allocatable
+
+    # TODO: validation
     pass
 
 def schedule_task(taskId):
@@ -115,3 +138,6 @@ if __name__ == "__main__":
     print(read_nodes())
     print(read_allocatable_cpu())
     print(read_allocatable_memory())
+    print(read_node_by_id("edge-0"))
+    print(update_allocatable_cpu("edge-0", "shares", 8000))
+    print(read_allocatable_cpu())
