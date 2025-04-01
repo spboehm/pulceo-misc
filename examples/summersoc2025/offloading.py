@@ -132,6 +132,7 @@ mqttc.connect("localhost", 1883, 60)
 # mqttc.loop_forever()
 
 if __name__ == "__main__":
+    print("=== Example hot to use the Python SDK ===")
     print(read_nodes())
     print(read_allocatable_cpu())
     print(read_allocatable_memory())
