@@ -24,23 +24,25 @@ def on_connect(client, userdata, flags, reason_code, properties):
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
+    received_task = json.loads(received_task.decode('utf-8'))
+    print(f"Received new task: {received_task}")
+    
     if (msg.topic == "tasks/new"):
-        handle_new_task(msg.payload)
+        handle_new_task(received_task)
     elif (msg.topic == "tasks/completed"):
-        handle_completed_task(msg.payload)
+        handle_completed_task(received_task)
     else:
         print(f"Unknown message received on topic {msg.topic}: {msg.payload}")
 
-def handle_new_task(payload):
+# USER OVERRIDES
+def handle_new_task(task):
     try:
-        task = json.loads(payload.decode('utf-8'))
-        print(f"Received new task: {task}")
-        # Process the task_data as needed
-        
         # TODO: find eligible node
         # TODO: read allocatable cpu resources
         allocatable_cpu_resources = read_allocatable_cpu()
         # TODO: read allocatable memory resources
+        allocatable_mem_resources = read_allocatable_memory()
+
         # TODO: this is the result
         elected_node = "edge-0"
 
@@ -55,6 +57,18 @@ def handle_new_task(payload):
     except json.JSONDecodeError as e:
         print(f"Failed to decode task payload: {e}")
     pass
+
+# USER OVERRIDES
+def handle_completed_task(task):
+    task = json.loads(task.decode('utf-8'))
+    print(f"Received completed task: {task}")
+    
+    # TODO: on completed release resources
+    # TODO: cpu
+    # TODO: memory
+
+### === PULCEO SDK FUNCTIONS === ###
+
 
 def read_nodes():
     url = f"{scheme}://{host}:{prm_port}/api/v1/nodes"
@@ -82,6 +96,25 @@ def read_allocatable_cpu():
         return response.json()
     else:
         print(f"Failed to fetch allocatable CPUs: {response.status_code}, {response.text}")
+        return None
+
+def read_allocatable_cpu_by_node_id(node_id):
+    url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{node_id}/cpu"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to fetch allocatable CPU for node {node_id}: {response.status_code}, {response.text}")
+        return None
+
+def read_allocatable_memory_by_node_id(node_id):
+    # /api/v1/nodes/{node_id}/memory/allocatable
+    url = f"{scheme}://{host}:{prm_port}/api/v1/nodes/{node_id}/memory"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to fetch allocatable memory for node {node_id}: {response.status_code}, {response.text}")
         return None
 
 def read_allocatable_memory():
@@ -124,6 +157,16 @@ def update_allocatable_memory(node_id, key, value):
     # TODO: validation
     pass
 
+# wrapper function for read and update
+def release_cpu(node_id, key, value):
+    current_allocatable_cpu = read_allocatable_cpu_by_node_id(node_id)
+    update_allocatable_cpu(node_id, key, current_allocatable_cpu['cpuAllocatable'][key] + value)
+    pass
+
+# wrapper function for read and update
+def release_memory(node_id, key, value):
+    pass
+
 def schedule_task(task_id, node_id, status, application_id, application_component_id):
     # TODO: put request
     url = f"{scheme}://{host}:{psm_port}/api/v1/tasks/{task_id}/scheduling"
@@ -143,13 +186,6 @@ def schedule_task(task_id, node_id, status, application_id, application_componen
         print(f"Failed to schedule task {task_id}: {response.status_code}, {response.text}")
         return None
 
-def handle_completed_task(payload):
-    task = json.loads(payload.decode('utf-8'))
-    print(f"Received completed task: {task}")
-    
-    # TODO: on completed release resources
-
-
 mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 mqttc.on_connect = on_connect
 mqttc.on_message = on_message
@@ -160,15 +196,19 @@ mqttc.connect("localhost", 1883, 60)
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
+#mqttc.loop_forever()
 
 if __name__ == "__main__":
-    mqttc.loop_forever()
-    # print("=== Example hot to use the Python SDK ===")
-    # print(read_nodes())
-    # print(read_allocatable_cpu())
-    # print(read_allocatable_memory())
-    # print(read_node_by_id("edge-0"))
-    # print(update_allocatable_cpu("edge-0", "shares", 8000))
-    # print(read_allocatable_cpu())
-    # print(update_allocatable_memory("edge-0", "size", 8192))
-    # print(read_allocatable_memory())
+    print("=== Example hot to use the Python SDK ===")
+    print(read_nodes())
+    print(read_allocatable_cpu())
+    print(read_allocatable_memory())
+    print(read_node_by_id("edge-0"))
+    print(update_allocatable_cpu("edge-0", "shares", 8000))
+    print(read_allocatable_cpu())
+    print(update_allocatable_memory("edge-0", "size", 8192))
+    print(read_allocatable_memory())
+    print(read_allocatable_cpu_by_node_id("edge-0"))
+    print(read_allocatable_memory_by_node_id("edge-0"))
+    release_cpu("edge-0", "shares", 6000)
+    pass
