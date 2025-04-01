@@ -1,13 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import paho.mqtt.client as mqtt
 import requests
 import json
 import dotenv
+from config import scheme, host, psm_port, prm_port
 
-scheme = "http"
-host = "localhost"
-psm_port = "7979"
-prm_port = "7878"
-# TODO: pms_port
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, reason_code, properties):
@@ -196,17 +194,17 @@ mqttc.connect("localhost", 1883, 60)
 #mqttc.loop_forever()
 
 if __name__ == "__main__":
-    # print("=== Example hot to use the Python SDK ===")
-    # print(read_nodes())
-    # print(read_allocatable_cpu())
-    # print(read_allocatable_memory())
-    # print(read_node_by_id("edge-0"))
-    # print(update_allocatable_cpu("edge-0", "shares", 8000))
-    # print(read_allocatable_cpu())
-    # print(update_allocatable_memory("edge-0", "size", 8192))
-    # print(read_allocatable_memory())
-    # print(read_allocatable_cpu_by_node_id("edge-0"))
-    # print(read_allocatable_memory_by_node_id("edge-0"))
-    # release_cpu_on_node("edge-0", "shares", 6000)
-    # release_memory_on_node("edge-0", "size",  10.5)
+    print("=== Example hot to use the Python SDK ===")
+    print(read_nodes())
+    print(read_allocatable_cpu())
+    print(read_allocatable_memory())
+    print(read_node_by_id("edge-0"))
+    print(update_allocatable_cpu("edge-0", "shares", 8000))
+    print(read_allocatable_cpu())
+    print(update_allocatable_memory("edge-0", "size", 8192))
+    print(read_allocatable_memory())
+    print(read_allocatable_cpu_by_node_id("edge-0"))
+    print(read_allocatable_memory_by_node_id("edge-0"))
+    release_cpu_on_node("edge-0", "shares", 6000)
+    release_memory_on_node("edge-0", "size",  10.5)
     pass
