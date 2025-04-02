@@ -23,7 +23,7 @@ def on_connect(client, userdata, flags, reason_code, properties):
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
-    received_task = json.loads(received_task.decode('utf-8'))
+    received_task = json.loads(msg.payload.decode('utf-8'))
     print(f"Received new task: {received_task}")
     
     if (msg.topic == "tasks/new"):
@@ -61,7 +61,6 @@ def handle_new_task(task):
 
 # USER OVERRIDES
 def handle_completed_task(task):
-    task = json.loads(task.decode('utf-8'))
     print(f"Received completed task: {task}")
     
     # TODO: on completed release resources
@@ -194,20 +193,20 @@ mqttc.connect("localhost", 1883, 60)
 # handles reconnecting.
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
-#mqttc.loop_forever()
+mqttc.loop_forever()
 
 if __name__ == "__main__":
-    print("=== Example hot to use the Python SDK ===")
-    print(read_nodes())
-    print(read_allocatable_cpu())
-    print(read_allocatable_memory())
-    print(read_node_by_id("edge-0"))
-    print(update_allocatable_cpu("edge-0", "shares", 8000))
-    print(read_allocatable_cpu())
-    print(update_allocatable_memory("edge-0", "size", 8192))
-    print(read_allocatable_memory())
-    print(read_allocatable_cpu_by_node_id("edge-0"))
-    print(read_allocatable_memory_by_node_id("edge-0"))
-    release_cpu_on_node("edge-0", "shares", 6000)
-    release_memory_on_node("edge-0", "size",  10.5)
+    # print("=== Example hot to use the Python SDK ===")
+    # print(read_nodes())
+    # print(read_allocatable_cpu())
+    # print(read_allocatable_memory())
+    # print(read_node_by_id("edge-0"))
+    # print(update_allocatable_cpu("edge-0", "shares", 8000))
+    # print(read_allocatable_cpu())
+    # print(update_allocatable_memory("edge-0", "size", 8192))
+    # print(read_allocatable_memory())
+    # print(read_allocatable_cpu_by_node_id("edge-0"))
+    # print(read_allocatable_memory_by_node_id("edge-0"))
+    # release_cpu_on_node("edge-0", "shares", 6000)
+    # release_memory_on_node("edge-0", "size",  10.5)
     pass
