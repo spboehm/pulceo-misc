@@ -64,7 +64,9 @@ def handle_completed_task(task):
     print(f"Received completed task: {task}")
     
     # TODO: on completed release resources
+    
     # TODO: cpu
+    
     # TODO: memory
 
 ### === PULCEO SDK FUNCTIONS === ###

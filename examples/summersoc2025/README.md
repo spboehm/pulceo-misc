@@ -1,6 +1,16 @@
-# Task offloading example
+# Task Offloading Example
 
-## Setup
+## Setup Offloading
 
-- 
-- Create a vitual envrironmen`python3 -m venv venv`
+- Create a virtual environment `python3 -m venv venv`
+- Activate with `source venv/bin/activate`
+
+## Setup Task Generator
+
+- `python3 task_generator.py`
+
+## Setup Task Emitter
+
+- `python3 task_emitter.py`
+
+
