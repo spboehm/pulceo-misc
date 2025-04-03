@@ -6,7 +6,6 @@ import json
 import dotenv
 from config import scheme, host, psm_port, prm_port
 
-
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, reason_code, properties):
     print(f"Connected with result code {reason_code}")

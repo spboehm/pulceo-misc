@@ -5,6 +5,8 @@ import requests
 import json
 import time
 from config import host, psm_port
+import uuid
+import os
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, reason_code, properties):
@@ -19,6 +21,20 @@ def on_message(client, userdata, msg):
     print(f"Received new task: {received_task}")
     timestamp_res = getTimeStamp()
     history[received_task['globalTaskUUID']]['timestamp_res'] = timestamp_res
+    
+    time_diff_ms = (timestamp_res - history[received_task['globalTaskUUID']]['timestamp_req']) / 1_000_000
+    print(f"Time difference in ms: {time_diff_ms}")
+
+    # TODO: send via mwtt
+    requests_topic = "dt/pulceo/requests"
+    task_metric = TaskMetric(
+        task_uuid=received_task['globalTaskUUID'],
+        resource="response_time",
+        value=time_diff_ms,
+        unit="ms"
+    )
+
+    mqttc.publish(requests_topic, task_metric.to_json())
 
 def read_generated_tasks(file_path):
     try:
@@ -58,7 +74,8 @@ class TaskMetric():
         self.timestamp = getTimeStamp()
         self.requestType = "task_rtt"
         self.sourceHost = os.getenv('MQTT_CLIENT_ID')
-        self.taskUUID = task_uuid
+        # TODO: rename
+        self.destinationHost = task_uuid
         self.resource = resource
         self.value = value
         self.unit = unit
@@ -94,15 +111,14 @@ if __name__ == "__main__":
         print(f"Processing task: {task}")
         # Simulate waiting for a response and updating the history
         # In a real scenario, this would be updated in the on_message callback
-        task_uuid = create_task(json.dumps(task))
-        time.sleep(0.1)
-        # Sleep for 0.1 seconds to achieve 10 executions per second
         timestamp_req = getTimeStamp()
+        task_uuid = create_task(json.dumps(task))
         history[task_uuid] = {
             "task_uuid": task_uuid,
             "timestamp_req": timestamp_req
-            }
-        break
+        }
+        # Sleep for 0.1 seconds to achieve 10 executions per second
+        time.sleep(0.1)
 
     while(True):
         time.sleep(5)
