@@ -59,6 +59,50 @@ TransformTasks <- function(df) {
 tasks <- TransformTasks(tasks)
 ```
 
+```{r}
+requests <- read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 3)
+```
+
+```{r}
+# Calculate the average response time
+CalculateAverageResponseTime <- function(df) {
+    # Ensure the dataframe is not empty and contains valid response times
+    if (nrow(df) == 0 || !("X_value" %in% colnames(df))) {
+        return(NA) # Handle empty dataframe or missing column
+    }
+
+    # Remove rows with NA in the X_value column
+    df <- df %>%
+        filter(!is.na(X_value))
+
+    # Calculate the average response time
+    avg_response_time <- mean(df$X_value, na.rm = TRUE)
+
+    return(avg_response_time)
+}
+
+# Apply the function to the REQUESTS dataframe
+average_response_time <- CalculateAverageResponseTime(requests)
+
+# Print the average response time
+print(paste("Average Response Time (ms):", round(average_response_time, 3)))
+```
+
+```{r}
+# Create a boxplot for X_value in requests
+average_response_time_boxplot <- ggplot(requests, aes(x = "", y = X_value)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(
+        title = "Boxplot of Response Times (X_value)",
+        x = "",
+        y = "Response Time (ms)"
+    ) +
+    theme_minimal()
+
+# Print the boxplot
+print(average_response_time_boxplot)
+```
+W
 ## Metrics
 
 ```{r}
@@ -199,6 +243,9 @@ grid.arrange(
 ```
 
 ### Average Response Time
+
+
+
 
 
 ### Throughput (Task requests/s)
