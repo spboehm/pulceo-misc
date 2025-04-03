@@ -121,6 +121,36 @@ processing_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "RUNNI
 completion_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "COMPLETED")
 ```
 
+```{r}
+# Calculate the overall makespan time
+CalculateOverallMakespan <- function(df) {
+    # Ensure the dataframe has valid timestamps
+    if (nrow(df) == 0) {
+        return(NA) # Handle empty dataframe
+    }
+
+    # Remove rows with NA in the time column
+    df <- df %>%
+        filter(!is.na(time))
+
+    # Check again if the dataframe is empty after filtering
+    if (nrow(df) == 0) {
+        return(NA) # Handle case where all rows had NA
+    }
+
+    # Calculate the overall makespan time
+    overall_makespan <- as.numeric(difftime(max(df$time), min(df$time), units = "secs"))
+
+    return(overall_makespan)
+}
+
+# Apply the function to completion_time_df
+overall_makespan <- CalculateOverallMakespan(completion_time_df)
+
+# Print the overall makespan
+print(paste("Overall Makespan Time (seconds):", overall_makespan))
+```
+
 ### Overview
 
 ```{r}
@@ -210,4 +240,46 @@ print(paste("Throughput (requests per second):", throughput))
 ```
 
 ### Task Arrival Rate
+
+```{r}
+library(dplyr)
+
+# Calculate task arrival rate
+CalculateTaskArrivalRate <- function(df) {
+    # Filter tasks with newStatus = "NEW"
+    new_tasks <- df %>%
+        filter(newStatus == "NEW")
+
+    # Ensure there are valid timestamps
+    if (nrow(new_tasks) == 0) {
+        return(0) # Handle case where no new tasks exist
+    }
+
+    # Remove rows with NA in the modifiedOn column
+    new_tasks <- new_tasks %>%
+        filter(!is.na(modifiedOn))
+
+    # Check again if the dataframe is empty after filtering
+    if (nrow(new_tasks) == 0) {
+        return(0) # Handle case where all rows had NA
+    }
+
+    # Calculate the total time span (in seconds)
+    total_time_span <- as.numeric(difftime(max(new_tasks$modifiedOn), min(new_tasks$modifiedOn), units = "secs"))
+
+    # Calculate the number of new tasks
+    total_new_tasks <- nrow(new_tasks)
+
+    # Calculate task arrival rate (tasks per second)
+    arrival_rate <- total_new_tasks / total_time_span
+
+    return(arrival_rate)
+}
+
+# Apply the function to the tasks dataframe
+arrival_rate <- CalculateTaskArrivalRate(tasks)
+
+# Print the task arrival rate
+print(paste("Task Arrival Rate (tasks per second):", arrival_rate))
+```
 
