@@ -1,5 +1,11 @@
 ---
-title: "PULCEO Data Analytics  - Tasks" 
+title: "PULCEO Data Analytics  - Task Scheduling/Offloading" 
+# author:
+#   - name: "Author Name"
+#     affiliation: "Your Institution"
+#     email: "your.email@example.com"
+# date: "`r Sys.Date()`"
+# output: rticles::lncs_article
 ---
 
 ```{r, include=FALSE}
@@ -9,6 +15,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 
 ```{r warning=FALSE, echo=FALSE}
 library(tidyverse)
+library(stringi)
 library(rjson)
 library(kableExtra)
 library(gridExtra)
@@ -16,5 +23,154 @@ library(ggpubr)
 library(data.table)
 library(jsonlite)
 library(rjson)
+library(lubridate) # TODO: *remove*
+library(rticles)
+library(tinytex)
 ```
+
+```{r include=TRUE, echo=FALSE}
+SUBFOLDER <- "task-test"
+```
+
+```{r}
+# TODO: Merge with events
+tasks <- read.csv(paste("raw", SUBFOLDER, "TASKS-100-N.csv", sep = "/"), skip = 3)
+
+# format
+TransformTasks <- function(df) {
+    df <- df %>%
+        select(
+            modifiedBy, modifiedById, modifiedOn, newStatus, previousStatus,
+            taskSchedulingUUID, taskUUID, timestamp
+        )
+
+    # Transform all columns except 'timestamp' to factors
+    df <- df %>%
+        mutate(across(-c(timestamp, modifiedOn), as.factor)) %>%
+        mutate(
+            timestamp = ymd_hms(timestamp, tz = "UTC"),
+            modifiedOn = ymd_hms(modifiedOn, tz = "UTC")
+        )
+
+    return(df)
+}
+
+# Apply the transformation
+tasks <- TransformTasks(tasks)
+```
+
+## Metrics
+
+```{r}
+CalculateTaskSchedulingMetric <- function(df, start_status, end_status) {
+    df %>%
+        filter(newStatus %in% c(start_status, end_status)) %>% # Filter relevant statuses
+        group_by(taskUUID) %>% # Group by taskUUID
+        arrange(modifiedOn) %>% # Ensure chronological order
+        summarize(
+            time = as.numeric(
+                difftime(
+                    modifiedOn[newStatus == end_status][1],
+                    modifiedOn[newStatus == start_status][1],
+                    units = "secs"
+                )
+            )
+        ) %>%
+        ungroup() # Remove grouping
+}
+```
+
+```{r}
+CreateBoxplot <- function(df, title) {
+    ggplot(df, aes(y = time)) +
+        geom_boxplot(fill = "skyblue", color = "darkblue") +
+        labs(
+            title = title,
+            y = "Time (s)",
+            x = ""
+        ) +
+        theme_minimal()
+}
+```
+
+### Task Waiting Time
+
+```{r include=TRUE, echo=FALSE}
+waiting_time_total_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "RUNNING")
+
+waiting_time_on_psm_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "SCHEDULED")
+
+waiting_time_on_pna_df <- CalculateTaskSchedulingMetric(tasks, start_status = "OFFLOADED", end_status = "RUNNING")
+```
+
+### Task Scheduling/Offloading Time
+
+```{r include=TRUE, echo=FALSE}
+scheduling_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "SCHEDULED", end_status = "OFFLOADED")
+```
+
+### Task Processing Time
+
+```{r include=TRUE, echo=FALSE}
+processing_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "RUNNING", end_status = "COMPLETED")
+```
+
+### Task Completion Time (Makespan)
+
+```{r include=TRUE, echo=FALSE}
+completion_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "COMPLETED")
+```
+
+```{r}
+# Create individual boxplots
+boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Waiting Time (Total)", y = "Time (s)", x = "") +
+    theme_minimal()
+
+boxplot_waiting_psm <- ggplot(waiting_time_on_psm_df, aes(y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Waiting Time (PSM)", y = "Time (s)", x = "") +
+    theme_minimal()
+
+boxplot_waiting_pna <- ggplot(waiting_time_on_pna_df, aes(y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Waiting Time (PNA)", y = "Time (s)", x = "") +
+    theme_minimal()
+
+boxplot_scheduling <- ggplot(scheduling_time_df, aes(y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Offloading Time", y = "Time (s)", x = "") +
+    theme_minimal()
+
+boxplot_processing <- ggplot(processing_time_df, aes(y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Processing Time", y = "Time (s)", x = "") +
+    theme_minimal()
+
+boxplot_completion <- ggplot(completion_time_df, aes(y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Completion Time (Makespan)", y = "Time (s)", x = "") +
+    theme_minimal()
+
+# Arrange all boxplots in a grid
+grid.arrange(
+    boxplot_waiting_psm,
+    boxplot_waiting_pna,
+    boxplot_waiting_total,
+    boxplot_scheduling,
+    boxplot_processing,
+    boxplot_completion,
+    nrow = 2,
+    ncol = 3
+)
+```
+
+### Average Response Time
+
+
+### Throughput (Task requests/s)
+
+
+### Task Arrival Rate
 
