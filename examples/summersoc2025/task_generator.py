@@ -18,7 +18,7 @@ def save_generated_tasks(num_tasks, tasks):
 
     print(f"Tasks saved to {filename}")
 
-if __name__ == "__main__":
+def generate_tasks(num_tasks):
     # Define the proportions
     task_distribution = {
         "small": 0.50,
@@ -61,16 +61,13 @@ if __name__ == "__main__":
     }
 
     # Generate 100 tasks
-    num_tasks = 100
     tasks = []
     for task_type, proportion in task_distribution.items():
         num_task_type = int(num_tasks * proportion)
         for _ in range(num_task_type):
-            task_data = {"task type": task_type}
+            task_data = {"task_type": task_type}
             task_data.update(task_properties[task_type])
             tasks.append(task_data)
     
     # Save the generated tasks to a file
     save_generated_tasks(num_tasks, tasks)
-
-

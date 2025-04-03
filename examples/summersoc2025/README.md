@@ -4,7 +4,7 @@
 
 - Create a virtual environment `python3 -m venv venv`
 - Activate with `source venv/bin/activate`
-- `python3 offloading.py`
+- `python3 scheduler.py`
 
 ## Setup Task Generator
 
