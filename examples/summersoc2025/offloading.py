@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from task_generator import generate_tasks
+from scheduler import Scheduler
+from task_emitter import TaskEmitter
+from multiprocessing import Process
 
 # Scenarios
 properties = {
@@ -18,20 +21,35 @@ def create_scenarios():
         generate_tasks(batch_size)
 
 # TODO: invoke scheduler.py with properties
-def create_schedulers():
+def start_experiments():
     for layer in layers:
         for batch_size in batch_sizes:
-            # TODO: create scheduler
-            # TODO: start task_emitter.py
-            # TODO: 
-            pass
+            properties = {
+                "policy": "FIFO",
+                "batchSize": str(batch_size),
+                "layer": layer
+            }
+            properties["layer"] = layer
+            properties["batchSize"] = str(batch_size)
+            
+            # scheduler
+            scheduler = Scheduler(properties)
+            def run_scheduler():
+                scheduler.start()
 
-
-
-# TODO: invoke task_emitter.py
+            # start scheduling as sub process
+            process = Process(target=run_scheduler)
+            process.start()
+            
+            # task_emitter
+            emitter = TaskEmitter(batch_size=batch_size)
+            emitter.start()
+            
+            # wait for termination, after all tasks are completed
+            process.join()
+            break
 
 if __name__ == "__main__":
     # Add your main execution logic here
     create_scenarios()
-    pass
-
+    start_experiments()
