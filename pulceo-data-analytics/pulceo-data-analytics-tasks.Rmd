@@ -102,7 +102,7 @@ average_response_time_boxplot <- ggplot(requests, aes(x = "", y = X_value)) +
 # Print the boxplot
 print(average_response_time_boxplot)
 ```
-W
+
 ## Metrics
 
 ```{r}
