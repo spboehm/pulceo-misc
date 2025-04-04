@@ -260,10 +260,12 @@ print(average_response_time_boxplot)
 
 ```{r}
 # Calculate throughput
-CalculateThroughput <- function(df) {
+CalculateThroughput <- function(df, ...) {
+    group_by_vars <- enquos(...)
+
     # Ensure the dataframe has valid timestamps
     if (nrow(df) == 0) {
-        return(0) # Handle empty dataframe
+        return(NA) # Handle empty dataframe
     }
 
     # Remove rows with NA in the time column
@@ -272,23 +274,24 @@ CalculateThroughput <- function(df) {
 
     # Check again if the dataframe is empty after filtering
     if (nrow(df) == 0) {
-        return(0) # Handle case where all rows had NA
+        return(NA) # Handle case where all rows had NA
     }
 
-    # Calculate the total time span (in seconds)
-    total_time_span <- as.numeric(difftime(max(df$time), min(df$time), units = "secs"))
-
-    # Calculate the number of tasks
-    total_tasks <- nrow(df)
-
-    # Calculate throughput (requests per second)
-    throughput <- total_tasks / total_time_span
+    # Group by the specified variables (if any) and calculate throughput
+    throughput <- df %>%
+        group_by(!!!group_by_vars) %>%
+        summarize(
+            total_time_span = as.numeric(difftime(max(time), min(time), units = "secs")),
+            total_tasks = n(),
+            throughput = total_tasks / total_time_span,
+            .groups = "drop"
+        )
 
     return(throughput)
 }
 
 # Apply the function to completion_time_df
-throughput <- CalculateThroughput(completion_time_df)
+throughput <- CalculateThroughput(completion_time_df, batchSize, layer)
 
 # Print the throughput
 print(paste("Throughput (requests per second):", throughput))
