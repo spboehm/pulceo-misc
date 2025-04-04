@@ -297,6 +297,24 @@ throughput <- CalculateThroughput(completion_time_df, batchSize, layer)
 print(paste("Throughput (requests per second):", throughput))
 ```
 
+# Create a boxplot for throughput
+```{r}
+throughput_bar_chart <- ggplot(throughput, aes(x = batchSize, y = throughput, fill = layer)) +
+    geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
+    geom_errorbar(aes(ymin = throughput - sd(throughput), ymax = throughput + sd(throughput)),
+        position = position_dodge(0.9), width = 0.25, color = "black"
+    ) +
+    labs(
+        title = "Bar Chart of Throughput by Batch Size and Layer",
+        x = "Batch Size",
+        y = "Throughput (tasks/s)"
+    ) +
+    theme_minimal()
+
+# Print the boxplot
+print(throughput_bar_chart)
+```
+
 ### Task Arrival Rate
 
 ```{r}
