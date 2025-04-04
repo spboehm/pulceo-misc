@@ -54,7 +54,6 @@ class TaskEmitter:
         self.history[task_uuid]['timestamp_res'] = timestamp_res
 
         time_diff_ms = (timestamp_res - self.history[task_uuid]['timestamp_req']) / 1_000_000
-        print(f"Time difference in ms: {time_diff_ms}")
 
         requests_topic = "dt/pulceo/requests"
         task_metric = TaskMetric(
@@ -65,9 +64,7 @@ class TaskEmitter:
         )
         self.mqtt_client.publish(requests_topic, task_metric.to_json())
         self.batch_size = self.batch_size - 1
-        print("Batch size " + str(self.batch_size))
         if self.batch_size == 0:
-            print("Batch size reached 0. Stopping emitter.")
             self.stop()
 
     def read_generated_tasks(self):
@@ -113,14 +110,12 @@ class TaskEmitter:
                 }
             time.sleep(0.1)
 
+        # wait, until all messages have been received
         self.exit_event.wait()
-        print("chau")
 
     def stop(self):
-        print("try to stop")
         self.exit_event.set()
         self.mqtt_client.disconnect()
-        print("stop")
 
 if __name__ == "__main__":
     emitter = TaskEmitter()

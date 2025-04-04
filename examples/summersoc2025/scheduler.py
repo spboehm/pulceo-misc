@@ -7,13 +7,13 @@ import dotenv
 from config import scheme, host, psm_port, prm_port
 
 class Scheduler:
-    def __init__(self, scheduling_properties, mqtt_host="localhost", mqtt_port=1883, mqtt_keepalive=60, batch_size=100):
+    def __init__(self, scheduling_properties, mqtt_host="localhost", mqtt_port=1883, mqtt_keepalive=60):
         self.scheduling_properties = scheduling_properties
         self.mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
         self.mqtt_client.on_connect = self.on_connect
         self.mqtt_client.on_message = self.on_message
         self.mqtt_client.connect(mqtt_host, mqtt_port, mqtt_keepalive)
-        self.batch_size = batch_size
+        self.batch_size = int(scheduling_properties['batchSize'])
 
     def on_connect(self, client, userdata, flags, reason_code, properties):
         print(f"Connected with result code {reason_code}")
@@ -22,7 +22,6 @@ class Scheduler:
         client.subscribe("tasks/scheduled")
         client.subscribe("tasks/offloaded")
         client.subscribe("tasks/completed")
-        # TODO: add failed
 
     def on_message(self, client, userdata, msg):
         print(msg.topic + " " + str(msg.payload))
@@ -34,8 +33,8 @@ class Scheduler:
         elif msg.topic == "tasks/completed":
             self.handle_completed_task(received_task)
             self.batch_size = self.batch_size - 1
+            print("Scheduler remaining batch size " + str(self.batch_size))
             if self.batch_size == 0:
-                print("stop")
                 self.stop()
         else:
             print(f"Unknown message received on topic {msg.topic}: {msg.payload}")
@@ -58,7 +57,7 @@ class Scheduler:
             print(f"Failed to decode task payload: {e}")
 
     def handle_completed_task(self, task):
-        print(f"Received completed task: {task}")
+        print(f"Scheduler Received completed task: {task}")
         # TODO: on completed release resources
         # TODO: cpu
         # TODO: memory
