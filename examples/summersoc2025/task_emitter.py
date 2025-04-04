@@ -27,15 +27,16 @@ class TaskMetric:
         return str(self.to_json())
 
 class TaskEmitter:
-    def __init__(self, mqtt_host="localhost", mqtt_port=1883, batch_size=100):
+    def __init__(self, mqtt_host="localhost", mqtt_port=1883, scheduling_properties = {}):
         self.mqtt_host = mqtt_host
         self.mqtt_port = mqtt_port
-        self.task_file = f"tasks/generated_tasks_{batch_size}.json"
-        self.batch_size = batch_size
+        self.task_file = f"tasks/generated_tasks_{scheduling_properties["batchSize"]}.json"
+        self.batch_size = int(scheduling_properties["batchSize"])
         self.history = {}
         self.mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
         self.mqtt_client.on_connect = self.on_connect
         self.mqtt_client.on_message = self.on_message
+        self.scheduling_properties = scheduling_properties
         self.exit_event = threading.Event()
 
     @staticmethod
@@ -100,6 +101,8 @@ class TaskEmitter:
 
         tasks = self.read_generated_tasks()
         for task in tasks:
+            # enrich with scheduling properties
+            task["schedulingProperties"] = self.scheduling_properties
             print(f"Processing task: {task}")
             timestamp_req = self.get_timestamp()
             task_uuid = self.create_task(json.dumps(task))
@@ -110,7 +113,7 @@ class TaskEmitter:
                 }
             time.sleep(0.1)
 
-        # wait, until all messages have been received
+        # wait, until all messages have been received, then terminate
         self.exit_event.wait()
 
     def stop(self):

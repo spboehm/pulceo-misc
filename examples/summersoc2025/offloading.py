@@ -33,7 +33,7 @@ def start_experiments():
             print(f"Starting scheduler for batch_size={batch_size} and layer={layer}")
             
             # task_emitter
-            emitter = TaskEmitter(batch_size=batch_size)
+            emitter = TaskEmitter(scheduling_properties=properties)
             emitter.start()
             print(f"TaskEmitter started for batch_size={batch_size} and layer={layer}")
             
