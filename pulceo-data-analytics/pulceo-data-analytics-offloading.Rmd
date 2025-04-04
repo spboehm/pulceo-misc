@@ -69,8 +69,6 @@ requests_combined <- tasks %>%
     select(taskUUID, batchSize, layer, requestType, timestamp, unit, X_value, X_field)
 ```
 
-## Metrics
-
 ```{r}
 CalculateTaskSchedulingMetric <- function(df, start_status, end_status, ...) {
     group_by_vars <- enquos(...)
@@ -92,6 +90,7 @@ CalculateTaskSchedulingMetric <- function(df, start_status, end_status, ...) {
 ```
 
 ```{r}
+# TODO: use
 CreateBoxplot <- function(df, title) {
     ggplot(df, aes(y = time)) +
         geom_boxplot(fill = "skyblue", color = "darkblue") +
@@ -103,6 +102,8 @@ CreateBoxplot <- function(df, title) {
         theme_minimal()
 }
 ```
+
+## Scheduling/Offloading Metrics
 
 ### Task Waiting Time
 
@@ -166,8 +167,6 @@ CalculateOverallMakespan <- function(df, ...) {
 overall_makespan <- CalculateOverallMakespan(completion_time_df, batchSize, layer)
 ```
 
-### Overview
-
 ```{r}
 # Create individual boxplots
 boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(x = batchSize, y = time, fill = layer)) +
@@ -212,6 +211,8 @@ grid.arrange(
     ncol = 3
 )
 ```
+
+## Performance Metrics
 
 ### Average Response Time
 
@@ -297,7 +298,6 @@ throughput <- CalculateThroughput(completion_time_df, batchSize, layer)
 print(paste("Throughput (requests per second):", throughput))
 ```
 
-# Create a boxplot for throughput
 ```{r}
 throughput_bar_chart <- ggplot(throughput, aes(x = batchSize, y = throughput, fill = layer)) +
     geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
@@ -318,10 +318,10 @@ print(throughput_bar_chart)
 ### Task Arrival Rate
 
 ```{r}
-library(dplyr)
-
 # Calculate task arrival rate
-CalculateTaskArrivalRate <- function(df) {
+CalculateTaskArrivalRate <- function(df, ...) {
+    group_by_vars <- enquos(...)
+
     # Filter tasks with newStatus = "NEW"
     new_tasks <- df %>%
         filter(newStatus == "NEW")
@@ -340,22 +340,37 @@ CalculateTaskArrivalRate <- function(df) {
         return(0) # Handle case where all rows had NA
     }
 
-    # Calculate the total time span (in seconds)
-    total_time_span <- as.numeric(difftime(max(new_tasks$modifiedOn), min(new_tasks$modifiedOn), units = "secs"))
+    # Group by the specified variables (if any)
+    grouped_tasks <- new_tasks %>%
+        group_by(!!!group_by_vars)
 
-    # Calculate the number of new tasks
-    total_new_tasks <- nrow(new_tasks)
-
-    # Calculate task arrival rate (tasks per second)
-    arrival_rate <- total_new_tasks / total_time_span
+    # Calculate task arrival rate for each group
+    arrival_rate <- grouped_tasks %>%
+        summarize(
+            total_time_span = as.numeric(difftime(max(modifiedOn), min(modifiedOn), units = "secs")),
+            total_new_tasks = n(),
+            arrival_rate = total_new_tasks / total_time_span,
+            .groups = "drop"
+        )
 
     return(arrival_rate)
 }
 
 # Apply the function to the tasks dataframe
-arrival_rate <- CalculateTaskArrivalRate(tasks)
-
-# Print the task arrival rate
-print(paste("Task Arrival Rate (tasks per second):", arrival_rate))
+arrival_rate <- CalculateTaskArrivalRate(tasks, batchSize, layer)
 ```
 
+```{r}
+# Create a bar chart for task arrival rate
+arrival_rate_bar_chart <- ggplot(arrival_rate, aes(x = batchSize, y = arrival_rate, fill = layer)) +
+    geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
+    labs(
+        title = "Bar Chart of Task Arrival Rate by Batch Size and Layer",
+        x = "Batch Size",
+        y = "Arrival Rate (tasks/s)"
+    ) +
+    theme_minimal()
+
+# Print the bar chart
+print(arrival_rate_bar_chart)
+```
