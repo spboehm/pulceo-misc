@@ -29,7 +29,7 @@ library(tinytex)
 ```
 
 ```{r include=TRUE, echo=FALSE}
-SUBFOLDER <- "task-test"
+SUBFOLDER <- "tasks-test"
 ```
 
 ```{r}
@@ -61,6 +61,12 @@ tasks <- TransformTasks(tasks)
 
 ```{r}
 requests <- read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 3)
+
+# Join tasks with requests
+requests_combined <- tasks %>%
+    select(taskUUID, batchSize, layer) %>%
+    inner_join(requests, by = c("taskUUID" = "destinationHost")) %>%
+    select(taskUUID, batchSize, layer, requestType, timestamp, unit, X_value, X_field)
 ```
 
 ## Metrics
@@ -128,7 +134,9 @@ completion_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW",
 
 ```{r}
 # Calculate the overall makespan time
-CalculateOverallMakespan <- function(df) {
+CalculateOverallMakespan <- function(df, ...) {
+    group_by_vars <- enquos(...)
+
     # Ensure the dataframe has valid timestamps
     if (nrow(df) == 0) {
         return(NA) # Handle empty dataframe
@@ -143,50 +151,52 @@ CalculateOverallMakespan <- function(df) {
         return(NA) # Handle case where all rows had NA
     }
 
-    # Calculate the overall makespan time
-    overall_makespan <- as.numeric(difftime(max(df$time), min(df$time), units = "secs"))
+    # Group by the specified variables (if any) and calculate the overall makespan time
+    overall_makespan <- df %>%
+        group_by(!!!group_by_vars) %>%
+        summarize(
+            makespan = as.numeric(difftime(max(time), min(time), units = "secs")),
+            .groups = "drop"
+        )
 
     return(overall_makespan)
 }
 
 # Apply the function to completion_time_df
-overall_makespan <- CalculateOverallMakespan(completion_time_df)
-
-# Print the overall makespan
-print(paste("Overall Makespan Time (seconds):", overall_makespan))
+overall_makespan <- CalculateOverallMakespan(completion_time_df, batchSize, layer)
 ```
 
 ### Overview
 
 ```{r}
 # Create individual boxplots
-boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(x = batchSize, y = time)) +
-    geom_boxplot(fill = "skyblue", color = "darkblue") +
+boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(x = batchSize, y = time, fill = layer)) +
+    geom_boxplot(color = "darkblue") +
     labs(title = "Waiting Time (Total)", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_waiting_psm <- ggplot(waiting_time_on_psm_df, aes(x = batchSize, y = time)) +
-    geom_boxplot(fill = "skyblue", color = "darkblue") +
+boxplot_waiting_psm <- ggplot(waiting_time_on_psm_df, aes(x = batchSize, y = time, fill = layer)) +
+    geom_boxplot(color = "darkblue") +
     labs(title = "Waiting Time (PSM)", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_waiting_pna <- ggplot(waiting_time_on_pna_df, aes(x = batchSize, y = time)) +
-    geom_boxplot(fill = "skyblue", color = "darkblue") +
+boxplot_waiting_pna <- ggplot(waiting_time_on_pna_df, aes(x = batchSize, y = time, fill = layer)) +
+    geom_boxplot(color = "darkblue") +
     labs(title = "Waiting Time (PNA)", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_scheduling <- ggplot(scheduling_time_df, aes(x = batchSize, y = time)) +
-    geom_boxplot(fill = "skyblue", color = "darkblue") +
+boxplot_scheduling <- ggplot(scheduling_time_df, aes(x = batchSize, y = time, fill = layer)) +
+    geom_boxplot(color = "darkblue") +
     labs(title = "Offloading Time", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_processing <- ggplot(processing_time_df, aes(x = batchSize, y = time)) +
-    geom_boxplot(fill = "skyblue", color = "darkblue") +
+boxplot_processing <- ggplot(processing_time_df, aes(x = batchSize, y = time, fill = layer)) +
+    geom_boxplot(color = "darkblue") +
     labs(title = "Processing Time", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_completion <- ggplot(completion_time_df, aes(x = batchSize, y = time)) +
-    geom_boxplot(fill = "skyblue", color = "darkblue") +
+boxplot_completion <- ggplot(completion_time_df, aes(x = batchSize, y = time, fill = layer)) +
+    geom_boxplot(color = "darkblue") +
     labs(title = "Completion Time (Makespan)", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
@@ -207,7 +217,9 @@ grid.arrange(
 
 ```{r}
 # Calculate the average response time
-CalculateAverageResponseTime <- function(df) {
+CalculateAverageResponseTime <- function(df, ...) {
+    group_by_vars <- enquos(...)
+
     # Ensure the dataframe is not empty and contains valid response times
     if (nrow(df) == 0 || !("X_value" %in% colnames(df))) {
         return(NA) # Handle empty dataframe or missing column
@@ -217,26 +229,25 @@ CalculateAverageResponseTime <- function(df) {
     df <- df %>%
         filter(!is.na(X_value))
 
-    # Calculate the average response time
-    avg_response_time <- mean(df$X_value, na.rm = TRUE)
+    # Group by the specified variables (if any) and calculate the average response time
+    avg_response_time <- df %>%
+        group_by(!!!group_by_vars) %>%
+        summarize(avg_response_time = mean(X_value, na.rm = TRUE), .groups = "drop")
 
     return(avg_response_time)
 }
 
 # Apply the function to the REQUESTS dataframe
-average_response_time <- CalculateAverageResponseTime(requests)
-
-# Print the average response time
-print(paste("Average Response Time (ms):", round(average_response_time, 3)))
+average_response_time <- CalculateAverageResponseTime(requests_combined, batchSize, layer)
 ```
 
 ```{r}
 # Create a boxplot for X_value in requests
-average_response_time_boxplot <- ggplot(requests, aes(x = "", y = X_value)) +
-    geom_boxplot(fill = "skyblue", color = "darkblue") +
+average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y = X_value, fill = layer)) +
+    geom_boxplot(color = "darkblue") +
     labs(
-        title = "Boxplot of Response Times (X_value)",
-        x = "",
+        title = "Boxplot of Response Times by Batch Size and Layer",
+        x = "Batch Size and Layer",
         y = "Response Time (ms)"
     ) +
     theme_minimal()
