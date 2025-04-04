@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from task_generator import generate_tasks
-from scheduler import Scheduler
+from task_scheduler import Scheduler
 from task_emitter import TaskEmitter
 from multiprocessing import Process
 
