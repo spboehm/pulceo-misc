@@ -1,17 +1,14 @@
 # Task Offloading Example
 
-## Setup Offloading
-
 - Create a virtual environment `python3 -m venv venv`
 - Activate with `source venv/bin/activate`
-- `python3 scheduler.py`
+- `python3 offloading.py`
 
-## Setup Task Generator
+## Configuration
 
-- `python3 task_generator.py`
+Configure in ``offloading.py``
 
-## Setup Task Emitter
-
-- `python3 task_emitter.py`
-
-
+```python
+batch_sizes = [10, 20, 50, 100]
+layers = ["cloud-only", "edge-only", "joint"]
+```
