@@ -1,0 +1,329 @@
+---
+title: "PULCEO Data Analytics  - Task Scheduling/Offloading" 
+# author:
+#   - name: "Author Name"
+#     affiliation: "Your Institution"
+#     email: "your.email@example.com"
+# date: "`r Sys.Date()`"
+# output: rticles::lncs_article
+---
+
+```{r, include=FALSE}
+# set this option in the first code chunk in the document
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
+```
+
+```{r warning=FALSE, echo=FALSE}
+library(tidyverse)
+library(stringi)
+library(rjson)
+library(kableExtra)
+library(gridExtra)
+library(ggpubr)
+library(data.table)
+library(jsonlite)
+library(rjson)
+library(lubridate) # TODO: *remove*
+library(rticles)
+library(tinytex)
+```
+
+```{r include=TRUE, echo=FALSE}
+SUBFOLDER <- "task-test"
+```
+
+```{r}
+# TODO: Merge with events
+tasks <- read.csv(paste("raw", SUBFOLDER, "query.csv", sep = "/"), skip = 3)
+
+# format
+TransformTasks <- function(df) {
+    df <- df %>%
+        select(
+            policy, batchSize, layer, modifiedBy, modifiedById, modifiedOn, newStatus, previousStatus,
+            taskSchedulingUUID, taskUUID, timestamp
+        )
+
+    # Transform all columns except 'timestamp' to factors
+    df <- df %>%
+        mutate(across(-c(timestamp, modifiedOn), as.factor)) %>%
+        mutate(
+            timestamp = ymd_hms(timestamp, tz = "UTC"),
+            modifiedOn = ymd_hms(modifiedOn, tz = "UTC")
+        )
+
+    return(df)
+}
+
+# Apply the transformation
+tasks <- TransformTasks(tasks)
+```
+
+```{r}
+requests <- read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 3)
+```
+
+## Metrics
+
+```{r}
+CalculateTaskSchedulingMetric <- function(df, start_status, end_status, ...) {
+    group_by_vars <- enquos(...)
+    df %>%
+        filter(newStatus %in% c(start_status, end_status)) %>% # Filter relevant statuses
+        group_by(taskUUID, !!!group_by_vars) %>% # Group by taskUUID and additional properties
+        arrange(modifiedOn) %>% # Ensure chronological order
+        summarize(
+            time = as.numeric(
+                difftime(
+                    modifiedOn[newStatus == end_status][1],
+                    modifiedOn[newStatus == start_status][1],
+                    units = "secs"
+                )
+            )
+        ) %>%
+        ungroup() # Remove grouping
+}
+```
+
+```{r}
+CreateBoxplot <- function(df, title) {
+    ggplot(df, aes(y = time)) +
+        geom_boxplot(fill = "skyblue", color = "darkblue") +
+        labs(
+            title = title,
+            y = "Time (s)",
+            x = ""
+        ) +
+        theme_minimal()
+}
+```
+
+### Task Waiting Time
+
+```{r include=TRUE, echo=FALSE}
+waiting_time_total_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "RUNNING", policy, batchSize, layer)
+
+waiting_time_on_psm_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "SCHEDULED", policy, batchSize, layer)
+
+waiting_time_on_pna_df <- CalculateTaskSchedulingMetric(tasks, start_status = "OFFLOADED", end_status = "RUNNING", policy, batchSize, layer)
+```
+
+### Task Scheduling/Offloading Time
+
+```{r include=TRUE, echo=FALSE}
+scheduling_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "SCHEDULED", end_status = "OFFLOADED", policy, batchSize, layer)
+```
+
+### Task Processing Time
+
+```{r include=TRUE, echo=FALSE}
+processing_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "RUNNING", end_status = "COMPLETED", policy, batchSize, layer)
+```
+
+### Task Completion Time (Makespan)
+
+```{r include=TRUE, echo=FALSE}
+completion_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "COMPLETED", policy, batchSize, layer)
+```
+
+```{r}
+# Calculate the overall makespan time
+CalculateOverallMakespan <- function(df) {
+    # Ensure the dataframe has valid timestamps
+    if (nrow(df) == 0) {
+        return(NA) # Handle empty dataframe
+    }
+
+    # Remove rows with NA in the time column
+    df <- df %>%
+        filter(!is.na(time))
+
+    # Check again if the dataframe is empty after filtering
+    if (nrow(df) == 0) {
+        return(NA) # Handle case where all rows had NA
+    }
+
+    # Calculate the overall makespan time
+    overall_makespan <- as.numeric(difftime(max(df$time), min(df$time), units = "secs"))
+
+    return(overall_makespan)
+}
+
+# Apply the function to completion_time_df
+overall_makespan <- CalculateOverallMakespan(completion_time_df)
+
+# Print the overall makespan
+print(paste("Overall Makespan Time (seconds):", overall_makespan))
+```
+
+### Overview
+
+```{r}
+# Create individual boxplots
+boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(x = batchSize, y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Waiting Time (Total)", y = "Time (s)", x = "Batch Size") +
+    theme_minimal()
+
+boxplot_waiting_psm <- ggplot(waiting_time_on_psm_df, aes(x = batchSize, y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Waiting Time (PSM)", y = "Time (s)", x = "Batch Size") +
+    theme_minimal()
+
+boxplot_waiting_pna <- ggplot(waiting_time_on_pna_df, aes(x = batchSize, y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Waiting Time (PNA)", y = "Time (s)", x = "Batch Size") +
+    theme_minimal()
+
+boxplot_scheduling <- ggplot(scheduling_time_df, aes(x = batchSize, y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Offloading Time", y = "Time (s)", x = "Batch Size") +
+    theme_minimal()
+
+boxplot_processing <- ggplot(processing_time_df, aes(x = batchSize, y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Processing Time", y = "Time (s)", x = "Batch Size") +
+    theme_minimal()
+
+boxplot_completion <- ggplot(completion_time_df, aes(x = batchSize, y = time)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(title = "Completion Time (Makespan)", y = "Time (s)", x = "Batch Size") +
+    theme_minimal()
+
+# Arrange all boxplots in a grid
+grid.arrange(
+    boxplot_waiting_psm,
+    boxplot_waiting_pna,
+    boxplot_waiting_total,
+    boxplot_scheduling,
+    boxplot_processing,
+    boxplot_completion,
+    nrow = 2,
+    ncol = 3
+)
+```
+
+### Average Response Time
+
+```{r}
+# Calculate the average response time
+CalculateAverageResponseTime <- function(df) {
+    # Ensure the dataframe is not empty and contains valid response times
+    if (nrow(df) == 0 || !("X_value" %in% colnames(df))) {
+        return(NA) # Handle empty dataframe or missing column
+    }
+
+    # Remove rows with NA in the X_value column
+    df <- df %>%
+        filter(!is.na(X_value))
+
+    # Calculate the average response time
+    avg_response_time <- mean(df$X_value, na.rm = TRUE)
+
+    return(avg_response_time)
+}
+
+# Apply the function to the REQUESTS dataframe
+average_response_time <- CalculateAverageResponseTime(requests)
+
+# Print the average response time
+print(paste("Average Response Time (ms):", round(average_response_time, 3)))
+```
+
+```{r}
+# Create a boxplot for X_value in requests
+average_response_time_boxplot <- ggplot(requests, aes(x = "", y = X_value)) +
+    geom_boxplot(fill = "skyblue", color = "darkblue") +
+    labs(
+        title = "Boxplot of Response Times (X_value)",
+        x = "",
+        y = "Response Time (ms)"
+    ) +
+    theme_minimal()
+
+# Print the boxplot
+print(average_response_time_boxplot)
+```
+
+### Throughput (Task requests/s)
+
+```{r}
+# Calculate throughput
+CalculateThroughput <- function(df) {
+    # Ensure the dataframe has valid timestamps
+    if (nrow(df) == 0) {
+        return(0) # Handle empty dataframe
+    }
+
+    # Remove rows with NA in the time column
+    df <- df %>%
+        filter(!is.na(time))
+
+    # Check again if the dataframe is empty after filtering
+    if (nrow(df) == 0) {
+        return(0) # Handle case where all rows had NA
+    }
+
+    # Calculate the total time span (in seconds)
+    total_time_span <- as.numeric(difftime(max(df$time), min(df$time), units = "secs"))
+
+    # Calculate the number of tasks
+    total_tasks <- nrow(df)
+
+    # Calculate throughput (requests per second)
+    throughput <- total_tasks / total_time_span
+
+    return(throughput)
+}
+
+# Apply the function to completion_time_df
+throughput <- CalculateThroughput(completion_time_df)
+
+# Print the throughput
+print(paste("Throughput (requests per second):", throughput))
+```
+
+### Task Arrival Rate
+
+```{r}
+library(dplyr)
+
+# Calculate task arrival rate
+CalculateTaskArrivalRate <- function(df) {
+    # Filter tasks with newStatus = "NEW"
+    new_tasks <- df %>%
+        filter(newStatus == "NEW")
+
+    # Ensure there are valid timestamps
+    if (nrow(new_tasks) == 0) {
+        return(0) # Handle case where no new tasks exist
+    }
+
+    # Remove rows with NA in the modifiedOn column
+    new_tasks <- new_tasks %>%
+        filter(!is.na(modifiedOn))
+
+    # Check again if the dataframe is empty after filtering
+    if (nrow(new_tasks) == 0) {
+        return(0) # Handle case where all rows had NA
+    }
+
+    # Calculate the total time span (in seconds)
+    total_time_span <- as.numeric(difftime(max(new_tasks$modifiedOn), min(new_tasks$modifiedOn), units = "secs"))
+
+    # Calculate the number of new tasks
+    total_new_tasks <- nrow(new_tasks)
+
+    # Calculate task arrival rate (tasks per second)
+    arrival_rate <- total_new_tasks / total_time_span
+
+    return(arrival_rate)
+}
+
+# Apply the function to the tasks dataframe
+arrival_rate <- CalculateTaskArrivalRate(tasks)
+
+# Print the task arrival rate
+print(paste("Task Arrival Rate (tasks per second):", arrival_rate))
+```
+
