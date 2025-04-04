@@ -33,7 +33,6 @@ SUBFOLDER <- "tasks-test"
 ```
 
 ```{r}
-# TODO: Merge with events
 tasks <- read.csv(paste("raw", SUBFOLDER, "query.csv", sep = "/"), skip = 3)
 
 # format
