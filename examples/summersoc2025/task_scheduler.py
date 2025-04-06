@@ -164,21 +164,19 @@ class EdgeOnlyScheduler(Scheduler):
             memory_on_node = self.pulceo_api.read_allocatable_memory_by_node_id(node['uuid'])
             self.pulceo_api.update_allocatable_memory(node['uuid'], 'size', self.maxAllocatableMem((memory_on_node['memoryCapacity']['size'])))
 
-    def handle_new_task(self, task):
-        logging.info(f"{self.name} Received new task: {task}")
-
+    def schedule(self, task, nodeType):
         # requirements of tasks
         req_cpu_share_task = int(task['requirements']['cpu_shares'])
         req_memory_task = float(task['requirements']['memory_size'])
 
         # find an eligible node
         # since this is the edge-only scheduler, only edge nodes are required
-        # TODO: change to edge
-        nodeType = "CLOUD"
         cpu_resources = self.pulceo_api.read_allocatable_cpu_by_node_type(nodeType)
-
+        print("here " + cpu_resources)
         # first, try to find an appropriate node that satisfies the CPU requirements
         try:
+            if (len(cpu_resources) == 0):
+                raise RuntimeError("Severe error: Unable to find a suitable node for task scheduling.")
             highest_shares_node = max(cpu_resources, key=lambda x: x["cpuAllocatable"]["shares"])
         except ValueError:
             logging.error("No eligible nodes found. 'cpu_resources' is empty, unable to determine the node with the highest CPU shares.")
@@ -190,6 +188,8 @@ class EdgeOnlyScheduler(Scheduler):
             memory_resources = self.pulceo_api.read_allocatable_memory_by_node_type(nodeType)
 
             try:
+                if (memory_resources is None or len(memory_resources) == 0):
+                    raise RuntimeError("Severe error: Unable to find a suitable node for task scheduling.")
                 highest_memory_size_node = max(memory_resources, key=lambda x: x["memoryAllocatable"]["size"])
             except ValueError:
                 logging.error("No eligible nodes found. 'memory_resources' is empty, unable to determine the node with the highest memory size.")
@@ -225,6 +225,10 @@ class EdgeOnlyScheduler(Scheduler):
             # Add the task to the pendingTasks buffer for future scheduling
             self.pendingTasks.append(task)
             logging.info(f"Task {task['taskUUID']} added to pending buffer due to insufficient CPU resources.")
+    
+    def handle_new_task(self, task):
+        logging.info(f"{self.name} Received new task: {task}")
+        self.schedule(task, "EDGE")
         
     def handle_completed_task(self, task):
         logging.info(f"{self.name} Received completed task: {task}")
