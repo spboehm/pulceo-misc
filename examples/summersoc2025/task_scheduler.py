@@ -6,8 +6,9 @@ from pulceo.sdk import API
 from config import *
 import ssl
 import uuid
+from abc import ABC, abstractmethod
 
-class Scheduler:
+class Scheduler(ABC):
     def __init__(self, scheduling_properties):
         self.scheduling_properties = scheduling_properties
         self.mqtt_host = MQTT_SERVER_NAME
@@ -61,6 +62,26 @@ class Scheduler:
                 self.stop()
         else:
             print(f"Unknown message received on topic {msg.topic}: {msg.payload}")
+    
+    @abstractmethod
+    def handle_new_task(self, task):
+        pass
+    
+    @abstractmethod
+    def handle_completed_task(self, task):
+        pass
+
+    def start(self):
+        self.mqtt_client.connect(self.mqtt_host, self.mqtt_port, 60)
+        self.mqtt_client.loop_forever()
+
+    def stop(self):
+        self.mqtt_client.loop_stop()
+        self.mqtt_client.disconnect()
+
+class CloudOnlyScheduler(Scheduler):
+
+    name = "CloudOnlyScheduler"
 
     def handle_new_task(self, task):
         try:
@@ -75,23 +96,41 @@ class Scheduler:
             application_id = ""  # TODO: replace dummy
             application_component_id = ""  # TODO: replace dummy
 
+            
+
             self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
         except json.JSONDecodeError as e:
             print(f"Failed to decode task payload: {e}")
-
+    
     def handle_completed_task(self, task):
         print(f"Scheduler Received completed task: {task}")
         # TODO: on completed release resources
         # TODO: cpu
         # TODO: memory
 
-    def start(self):
-        self.mqtt_client.connect(self.mqtt_host, self.mqtt_port, 60)
-        self.mqtt_client.loop_forever()
+class EdgeOnlyScheduler(Scheduler):
 
-    def stop(self):
-        self.mqtt_client.loop_stop()
-        self.mqtt_client.disconnect()
+    name = "EdgeOnlyScheduler"
+
+    def handle_new_task(self, task):
+        print(f"{self.name} Received new task: {task}")
+        pass
+    
+    def handle_completed_task(self, task):
+        print(f"{self.name} Received completed task: {task}")
+        pass
+
+class JointScheduler(Scheduler):
+
+    name = "JointScheduler"
+
+    def handle_new_task(self, task):
+        print(f"{self.name} Received new task: {task}")
+        pass
+    
+    def handle_completed_task(self, task):
+        print(f"{self.name} Received completed task: {task}")
+        pass
 
 if __name__ == "__main__":
     # print("=== Example hot to use the Python SDK ===")

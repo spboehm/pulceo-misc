@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from task_generator import generate_tasks
-from task_scheduler import Scheduler
+from task_scheduler import CloudOnlyScheduler, EdgeOnlyScheduler, JointScheduler
 from task_emitter import TaskEmitter
 from multiprocessing import Process
 
@@ -22,18 +22,25 @@ def start_experiments():
                 "batchSize": str(batch_size),
                 "layer": layer
             }
-            
+
             # scheduler
-            scheduler = Scheduler(scheduling_properties=properties)
+            if layer == "cloud-only":
+                scheduler = CloudOnlyScheduler(scheduling_properties=properties)
+            elif layer == "edge-only":
+                scheduler = EdgeOnlyScheduler(scheduling_properties=properties)
+            elif layer == "joint":
+                scheduler = JointScheduler(scheduling_properties=properties)
+            else:
+                raise ValueError(f"No appropriate scheduler found for layer: {layer}")
             def run_scheduler():
                 scheduler.start()
 
-            # start Scheduler as sub process
+            # start scheduler as sub process
             process = Process(target=run_scheduler)
             process.start()
             print(f"Starting scheduler for batch_size={batch_size} and layer={layer}")
             
-            # task_emitter
+            # start task emitter
             emitter = TaskEmitter(scheduling_properties=properties)
             emitter.start()
             print(f"TaskEmitter started for batch_size={batch_size} and layer={layer}")
