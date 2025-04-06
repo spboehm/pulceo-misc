@@ -7,6 +7,10 @@ from config import *
 import ssl
 import uuid
 from abc import ABC, abstractmethod
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Scheduler(ABC):
     def __init__(self, scheduling_properties):
@@ -41,7 +45,7 @@ class Scheduler(ABC):
         return client
 
     def on_connect(self, client, userdata, flags, reason_code, properties):
-        print(f"Connected with result code {reason_code}")
+        logging.info(f"Connected with result code {reason_code}")
         client.subscribe("tasks/new")
         client.subscribe("tasks/running")  # TODO: do we need this?
         client.subscribe("tasks/scheduled")
@@ -49,20 +53,20 @@ class Scheduler(ABC):
         client.subscribe("tasks/completed")
 
     def on_message(self, client, userdata, msg):
-        print(msg.topic + " " + str(msg.payload))
+        logging.info(msg.topic + " " + str(msg.payload))
         received_task = json.loads(msg.payload.decode('utf-8'))
-        print(f"Scheduler received new task: {received_task}")
+        logging.info(f"Scheduler received new task: {received_task}")
 
         if msg.topic == "tasks/new":
             self.handle_new_task(received_task)
         elif msg.topic == "tasks/completed":
             self.handle_completed_task(received_task)
             self.batch_size = self.batch_size - 1
-            print("Scheduler remaining batch size " + str(self.batch_size))
+            logging.info("Scheduler remaining batch size " + str(self.batch_size))
             if self.batch_size == 0:
                 self.stop()
         else:
-            print(f"Unknown message received on topic {msg.topic}: {msg.payload}")
+            logging.info(f"Unknown message received on topic {msg.topic}: {msg.payload}")
     
     @abstractmethod
     def on_init(self):
@@ -108,10 +112,10 @@ class CloudOnlyScheduler(Scheduler):
 
             self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
         except json.JSONDecodeError as e:
-            print(f"Failed to decode task payload: {e}")
+            logging.info(f"Failed to decode task payload: {e}")
     
     def handle_completed_task(self, task):
-        print(f"Scheduler Received completed task: {task}")
+        logging.info(f"Scheduler Received completed task: {task}")
         # TODO: on completed release resources
         # TODO: cpu
         # TODO: memory
@@ -146,31 +150,65 @@ class EdgeOnlyScheduler(Scheduler):
             self.pulceo_api.update_allocatable_memory(node['uuid'], 'size', self.maxAllocatableMem((memory_on_node['memoryCapacity']['size'])))
 
     def handle_new_task(self, task):
-        print(f"{self.name} Received new task: {task}")
+        logging.info(f"{self.name} Received new task: {task}")
 
-        allocatable_cpu_resources = self.pulceo_api.read_allocatable_cpu()
-        print(allocatable_cpu_resources[0]['cpuCapacity'])
-        allocatable_mem_resources = self.pulceo_api.read_allocatable_memory()
+        # required resources of tasks
+        req_cpu_share_task = int(task['requirements']['cpu_shares'])
+        print(req_cpu_share_task)
 
+        req_memory_task = float(task['requirements']['memory_size'])
+        print(req_memory_task)
 
-        cpu_shares = task['properties']['cpu_shares']
-        print(cpu_shares)
+        # find an eligible node
+        # since this is the edge-only scheduler, only edge nodes are required
+        # TODO: change to edge
+        nodeType = "CLOUD"
+        cpu_resources = self.pulceo_api.read_allocatable_cpu_by_node_type(nodeType)
 
+        # first, try to find an appropriate node that satisfies the CPU requirements
+        try:
+            highest_shares_node = max(cpu_resources, key=lambda x: x["cpuAllocatable"]["shares"])
+        except ValueError:
+            logging.error("cpu_resources is empty. Cannot determine the node with the highest shares.")
+            # TODO: buffer and retry
+            return
+        print(type(highest_shares_node["cpuAllocatable"]["shares"]))
+        if highest_shares_node["cpuAllocatable"]["shares"] >= req_cpu_share_task:
+            # CPU requirements are satisfied, now, check for memory resources
+            memory_resources = self.pulceo_api.read_allocatable_memory_by_node_type(nodeType)
 
-        # TODO: first find allocatable CPU resources 
+            try:
+                highest_memory_size_node = max(memory_resources, key=lambda x: x["memoryAllocatable"]["size"])
+            except ValueError:
+                logging.error("memory_resources is empty. Cannot determine the node with the highest memory size.")
+                # TODO: buffer and retry
+                return
+            
+            if highest_memory_size_node['memoryAllocatable']['size'] > req_memory_task:
+                # TODO: ready to deloy
+                elected_node = highest_memory_size_node["nodeName"]
+                print(f"Elected node for task deployment: {elected_node}")
+                node_id = highest_memory_size_node['nodeUUID']
 
-        elected_node = "edge-0"  # TODO: find eligible node
+                # TODO: update resources
+                # cpu
+                self.pulceo_api.update_allocatable_cpu(node_id, "shares", highest_shares_node["cpuAllocatable"]["shares"] - req_cpu_share_task)
+                # memory
+                self.pulceo_api.update_allocatable_memory(node_id, "size", highest_memory_size_node['memoryAllocatable']['size'] - req_memory_task)
+                
+                task_id = task['taskUUID']
+                status = "SCHEDULED"
+                application_id = ""  # TODO: replace dummy
+                application_component_id = ""  # TODO: replace dummy
 
-        task_id = task['taskUUID']
-        node_id = allocatable_cpu_resources[0]['nodeUUID']
-        status = "SCHEDULED"
-        application_id = ""  # TODO: replace dummy
-        application_component_id = ""  # TODO: replace dummy
-        
-        pass
-    
+                self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
+
+            else:
+                # TODO: add to buffer
+                print("Ese case")
+            
     def handle_completed_task(self, task):
-        print(f"{self.name} Received completed task: {task}")
+        logging.info(f"{self.name} Received completed task: {task}")
         pass
 
 class JointScheduler(Scheduler):
@@ -181,11 +219,11 @@ class JointScheduler(Scheduler):
         pass
 
     def handle_new_task(self, task):
-        print(f"{self.name} Received new task: {task}")
+        logging.info(f"{self.name} Received new task: {task}")
         pass
     
     def handle_completed_task(self, task):
-        print(f"{self.name} Received completed task: {task}")
+        logging.info(f"{self.name} Received completed task: {task}")
         pass
 
 if __name__ == "__main__":

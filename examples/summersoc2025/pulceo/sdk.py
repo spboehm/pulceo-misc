@@ -48,6 +48,15 @@ class API:
         else:
             print(f"Failed to fetch allocatable CPU for node {node_id}: {response.status_code}, {response.text}")
             return None
+        
+    def read_allocatable_cpu_by_node_type(self, node_type):
+        url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/cpus?type={node_type}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to fetch allocatable CPU for node type {node_type}: {response.status_code}, {response.text}")
+            return None
 
     def read_allocatable_memory(self):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/memory"
@@ -67,6 +76,15 @@ class API:
             print(f"Failed to fetch allocatable memory for node {node_id}: {response.status_code}, {response.text}")
             return None
     
+    def read_allocatable_memory_by_node_type(self, node_type):
+        url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/memory?type={node_type}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to fetch allocatable memory for node type {node_type}: {response.status_code}, {response.text}")
+            return None
+
     def update_allocatable_cpu(self, node_id, key, value):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/nodes/{node_id}/cpu/allocatable"
         payload = {"key": key,

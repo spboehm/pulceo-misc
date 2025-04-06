@@ -6,8 +6,10 @@
         "sizeDuringTransmission": 10,
         "deadline": 50,
         "payload_length": 10,
-        "cpu_shares": 500,
-        "memory_size": 0.25,
+        "requirements": {
+            "cpu_shares": 500,
+            "memory_size": 0.25
+        },
         "properties": {
             "task_type": "small"
         }
@@ -19,8 +21,10 @@
         "sizeDuringTransmission": 10,
         "deadline": 50,
         "payload_length": 10,
-        "cpu_shares": 500,
-        "memory_size": 0.25,
+        "requirements": {
+            "cpu_shares": 500,
+            "memory_size": 0.25
+        },
         "properties": {
             "task_type": "small"
         }
@@ -32,8 +36,10 @@
         "sizeDuringTransmission": 10,
         "deadline": 50,
         "payload_length": 10,
-        "cpu_shares": 500,
-        "memory_size": 0.25,
+        "requirements": {
+            "cpu_shares": 500,
+            "memory_size": 0.25
+        },
         "properties": {
             "task_type": "small"
         }
@@ -45,8 +51,10 @@
         "sizeDuringTransmission": 10,
         "deadline": 50,
         "payload_length": 10,
-        "cpu_shares": 500,
-        "memory_size": 0.25,
+        "requirements": {
+            "cpu_shares": 500,
+            "memory_size": 0.25
+        },
         "properties": {
             "task_type": "small"
         }
@@ -58,8 +66,10 @@
         "sizeDuringTransmission": 10,
         "deadline": 50,
         "payload_length": 10,
-        "cpu_shares": 500,
-        "memory_size": 0.25,
+        "requirements": {
+            "cpu_shares": 500,
+            "memory_size": 0.25
+        },
         "properties": {
             "task_type": "small"
         }
@@ -71,8 +81,10 @@
         "sizeDuringTransmission": 100,
         "deadline": 250,
         "payload_length": 100,
-        "cpu_shares": 1000,
-        "memory_size": 0.5,
+        "requirements": {
+            "cpu_shares": 1000,
+            "memory_size": 0.5
+        },
         "properties": {
             "task_type": "medium"
         }
@@ -84,8 +96,10 @@
         "sizeDuringTransmission": 100,
         "deadline": 250,
         "payload_length": 100,
-        "cpu_shares": 1000,
-        "memory_size": 0.5,
+        "requirements": {
+            "cpu_shares": 1000,
+            "memory_size": 0.5
+        },
         "properties": {
             "task_type": "medium"
         }
@@ -97,8 +111,10 @@
         "sizeDuringTransmission": 100,
         "deadline": 250,
         "payload_length": 100,
-        "cpu_shares": 1000,
-        "memory_size": 0.5,
+        "requirements": {
+            "cpu_shares": 1000,
+            "memory_size": 0.5
+        },
         "properties": {
             "task_type": "medium"
         }
@@ -110,8 +126,10 @@
         "sizeDuringTransmission": 1000,
         "deadline": 1500,
         "payload_length": 1000,
-        "cpu_shares": 2000,
-        "memory_size": 1.0,
+        "requirements": {
+            "cpu_shares": 1000,
+            "memory_size": 0.5
+        },
         "properties": {
             "task_type": "large"
         }
@@ -123,8 +141,10 @@
         "sizeDuringTransmission": 1000,
         "deadline": 1500,
         "payload_length": 1000,
-        "cpu_shares": 2000,
-        "memory_size": 1.0,
+        "requirements": {
+            "cpu_shares": 1000,
+            "memory_size": 0.5
+        },
         "properties": {
             "task_type": "large"
         }
