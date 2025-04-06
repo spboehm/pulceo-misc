@@ -93,41 +93,6 @@ class Scheduler(ABC):
         self.mqtt_client.loop_stop()
         self.mqtt_client.disconnect()
 
-class CloudOnlyScheduler(Scheduler):
-
-    name = "CloudOnlyScheduler"
-
-    def on_init(self):
-        pass
-
-    def handle_new_task(self, task):
-        try:
-            allocatable_cpu_resources = self.pulceo_api.read_allocatable_cpu()
-            allocatable_mem_resources = self.pulceo_api.read_allocatable_memory()
-
-            elected_node = "edge-0"  # TODO: find eligible node
-
-            task_id = task['taskUUID']
-            node_id = allocatable_cpu_resources[0]['nodeUUID']
-            status = "SCHEDULED"
-            application_id = ""  # TODO: replace dummy
-            application_component_id = ""  # TODO: replace dummy
-
-
-
-            self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
-        except json.JSONDecodeError as e:
-            logging.info(f"Failed to decode task payload: {e}")
-    
-    def handle_completed_task(self, task):
-        logging.info(f"Scheduler Received completed task: {task}")
-        # TODO: on completed release resources
-        # TODO: cpu
-        # TODO: memory
-
-    def on_terminate(self):
-        pass
-
 class EdgeOnlyScheduler(Scheduler):
 
     name = "EdgeOnlyScheduler"
@@ -172,7 +137,7 @@ class EdgeOnlyScheduler(Scheduler):
         # find an eligible node
         # since this is the edge-only scheduler, only edge nodes are required
         cpu_resources = self.pulceo_api.read_allocatable_cpu_by_node_type(nodeType)
-        print("here " + cpu_resources)
+
         # first, try to find an appropriate node that satisfies the CPU requirements
         try:
             if (len(cpu_resources) == 0):
@@ -248,23 +213,21 @@ class EdgeOnlyScheduler(Scheduler):
             if (MAX_RETRIES == 0):
                 raise RuntimeError("Unable to process pending tasks after maximum retries.")
 
-class JointScheduler(Scheduler):
+class JointScheduler(EdgeOnlyScheduler):
 
     name = "JointScheduler"
 
-    def on_init(self):
-        pass
+    def handle_new_task(self, task):
+        logging.info(f"{self.name} Received new task: {task}")
+        self.schedule(task, "")
+
+class CloudOnlyScheduler(EdgeOnlyScheduler):
+
+    name = "CloudOnlyScheduler"
 
     def handle_new_task(self, task):
         logging.info(f"{self.name} Received new task: {task}")
-        pass
-    
-    def handle_completed_task(self, task):
-        logging.info(f"{self.name} Received completed task: {task}")
-        pass
-
-    def on_terminate(self):
-        pass
+        self.schedule(task, "CLOUD")
 
 if __name__ == "__main__":
     # print("=== Example hot to use the Python SDK ===")

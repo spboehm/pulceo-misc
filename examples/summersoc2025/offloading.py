@@ -7,7 +7,7 @@ from multiprocessing import Process
 
 # batch_sizes = [200, 400, 600, 800]
 batch_sizes = [80]
-layers = ["edge-only"]
+layers = ["joint"]
 #layers = ["cloud-only", "edge-only", "joint"]
 
 def create_scenarios():
