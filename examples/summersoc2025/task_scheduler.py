@@ -148,11 +148,14 @@ class EdgeOnlyScheduler(Scheduler):
     def handle_new_task(self, task):
         print(f"{self.name} Received new task: {task}")
 
-        
-
         allocatable_cpu_resources = self.pulceo_api.read_allocatable_cpu()
         print(allocatable_cpu_resources[0]['cpuCapacity'])
         allocatable_mem_resources = self.pulceo_api.read_allocatable_memory()
+
+
+        cpu_shares = task['properties']['cpu_shares']
+        print(cpu_shares)
+
 
         # TODO: first find allocatable CPU resources 
 
