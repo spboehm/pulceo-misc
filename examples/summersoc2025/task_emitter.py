@@ -8,6 +8,8 @@ import os
 import threading
 from pulceo.sdk import API
 from config import *
+import uuid
+import ssl
 
 class TaskMetric:
     def __init__(self, task_uuid, resource, value, unit):
@@ -27,18 +29,38 @@ class TaskMetric:
         return str(self.to_json())
 
 class TaskEmitter:
-    def __init__(self, mqtt_host="localhost", mqtt_port=1883, scheduling_properties = {}):
-        self.mqtt_host = mqtt_host
-        self.mqtt_port = mqtt_port
+    def __init__(self, scheduling_properties = {}):
+        self.mqtt_host = MQTT_SERVER_NAME
+        self.mqtt_port = int(MQTT_PORT)
         self.task_file = f"tasks/generated_tasks_{scheduling_properties["batchSize"]}.json"
         self.batch_size = int(scheduling_properties["batchSize"])
         self.history = {}
-        self.mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
+        self.mqtt_client = self.init_mqtt()
         self.mqtt_client.on_connect = self.on_connect
         self.mqtt_client.on_message = self.on_message
         self.scheduling_properties = scheduling_properties
         self.exit_event = threading.Event()
         self.pulceo_api = API(scheme, host, prm_port, psm_port)
+
+    def init_mqtt(self):
+        client = mqtt.Client(client_id=str(uuid.uuid4()), clean_session=False, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
+        if (os.getenv('MQTT_USERNAME') is not None and os.getenv('MQTT_PASSWORD') is not None):
+            client.username_pw_set(username=os.getenv('MQTT_USERNAME'), password=os.getenv('MQTT_PASSWORD'))
+        if(os.getenv('MQTT_TLS') == 'True'):
+            ca_certs = os.getenv('MQTT_CA_CERTS', default=None)
+            certfile = os.getenv('MQTT_CERTFILE', default=None)
+            keyfile = os.getenv('MQTT_KEYFILE', default=None)
+            cert_reqs = ssl.CERT_REQUIRED if os.getenv('MQTT_CERT_REQ') == 'True' else ssl.CERT_NONE
+
+            client.tls_set(ca_certs=ca_certs, certfile=certfile, keyfile=keyfile, cert_reqs=cert_reqs, tls_version=ssl.PROTOCOL_TLSv1_2)
+            #client.tls_set(cert_reqs=cert_reqs, tls_version=ssl.PROTOCOL_TLSv1_2)
+            if (os.getenv('MQTT_TLS_INSECURE') == 'True'):
+                client.tls_insecure_set(True)
+        client.on_connect = self.on_connect
+        client.on_message = self.on_message
+        client.reconnect_delay_set(min_delay=1, max_delay=3600)
+
+        return client
 
     @staticmethod
     def get_timestamp():
