@@ -123,6 +123,7 @@ class CloudOnlyScheduler(Scheduler):
 class EdgeOnlyScheduler(Scheduler):
 
     name = "EdgeOnlyScheduler"
+    processedTasks = {}
 
     def maxAllocatableCPU(self, value):
         return value * 0.75
@@ -172,7 +173,7 @@ class EdgeOnlyScheduler(Scheduler):
             logging.error("cpu_resources is empty. Cannot determine the node with the highest shares.")
             # TODO: buffer and retry
             return
-        print(type(highest_shares_node["cpuAllocatable"]["shares"]))
+        
         if highest_shares_node["cpuAllocatable"]["shares"] >= req_cpu_share_task:
             # CPU requirements are satisfied, now, check for memory resources
             memory_resources = self.pulceo_api.read_allocatable_memory_by_node_type(nodeType)
@@ -202,14 +203,16 @@ class EdgeOnlyScheduler(Scheduler):
                 application_component_id = ""  # TODO: replace dummy
 
                 self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
-
+                # Add mapping between task_id and node_id to processedTasks
+                self.processedTasks[task_id] = node_id
             else:
                 # TODO: add to buffer
                 print("Ese case")
             
     def handle_completed_task(self, task):
         logging.info(f"{self.name} Received completed task: {task}")
-        pass
+        self.pulceo_api.release_cpu_on_node(self.processedTasks[task['taskUUID']], "shares", int(task['requirements']['cpu_shares']))
+        self.pulceo_api.release_memory_on_node(self.processedTasks[task['taskUUID']], "size", float(task['requirements']['memory_size']))
 
 class JointScheduler(Scheduler):
 
