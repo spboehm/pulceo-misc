@@ -1,6 +1,5 @@
 import requests
 import json
-from config import *
 
 class API:
     def __init__(self, scheme = "http", host = "localhost", prm_port = 7878, psm_port = 7979):
@@ -58,3 +57,18 @@ class API:
         else:
             print(f"Failed to schedule task {task_id}: {response.status_code}, {response.text}")
             return None
+        
+    def create_task(self, task):
+        url = f"http://{self.host}:{self.psm_port}/api/v1/tasks"
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(url, headers=headers, data=task)
+        try:
+            response_payload = response.json()
+        except json.JSONDecodeError:
+            print("Failed to decode response payload as JSON.")
+            return None
+        if response.status_code == 201:
+            print("Task created successfully.")
+        else:
+            print(f"Failed to create task. Status code: {response.status_code}, Response: {response.text}")
+        return response_payload.get('taskUUID')

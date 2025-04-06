@@ -6,8 +6,8 @@ import json
 import time
 import uuid
 import os
-from config import host, psm_port
 import threading
+from pulceo.sdk import API
 
 class TaskMetric:
     def __init__(self, task_uuid, resource, value, unit):
@@ -38,6 +38,7 @@ class TaskEmitter:
         self.mqtt_client.on_message = self.on_message
         self.scheduling_properties = scheduling_properties
         self.exit_event = threading.Event()
+        self.pulceo_api = API()
 
     @staticmethod
     def get_timestamp():
@@ -80,21 +81,6 @@ class TaskEmitter:
             print(f"Error decoding JSON from file: {self.task_file}")
             return []
 
-    def create_task(self, task):
-        url = f"http://{host}:{psm_port}/api/v1/tasks"
-        headers = {'Content-Type': 'application/json'}
-        response = requests.post(url, headers=headers, data=task)
-        try:
-            response_payload = response.json()
-        except json.JSONDecodeError:
-            print("Failed to decode response payload as JSON.")
-            return None
-        if response.status_code == 201:
-            print("Task created successfully.")
-        else:
-            print(f"Failed to create task. Status code: {response.status_code}, Response: {response.text}")
-        return response_payload.get('taskUUID')
-
     def start(self):
         self.mqtt_client.connect(self.mqtt_host, self.mqtt_port, 60)
         self.mqtt_client.loop_start()
@@ -105,7 +91,7 @@ class TaskEmitter:
             task["schedulingProperties"] = self.scheduling_properties
             print(f"Processing task: {task}")
             timestamp_req = self.get_timestamp()
-            task_uuid = self.create_task(json.dumps(task))
+            task_uuid = self.pulceo_api.create_task(json.dumps(task))
             if task_uuid:
                 self.history[task_uuid] = {
                     "task_uuid": task_uuid,
