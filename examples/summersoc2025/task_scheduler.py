@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import paho.mqtt.client as mqtt
-import requests
 import json
-import dotenv
-from config import scheme, host, psm_port, prm_port
+from pulceo.sdk import API
 
 class Scheduler:
     def __init__(self, scheduling_properties, mqtt_host="localhost", mqtt_port=1883, mqtt_keepalive=60):
@@ -14,6 +12,7 @@ class Scheduler:
         self.mqtt_client.on_message = self.on_message
         self.mqtt_client.connect(mqtt_host, mqtt_port, mqtt_keepalive)
         self.batch_size = int(scheduling_properties['batchSize'])
+        self.pulceo_api = API()
 
     def on_connect(self, client, userdata, flags, reason_code, properties):
         print(f"Connected with result code {reason_code}")
@@ -41,8 +40,8 @@ class Scheduler:
 
     def handle_new_task(self, task):
         try:
-            allocatable_cpu_resources = self.read_allocatable_cpu()
-            allocatable_mem_resources = self.read_allocatable_memory()
+            allocatable_cpu_resources = self.pulceo_api.read_allocatable_cpu()
+            allocatable_mem_resources = self.pulceo_api.read_allocatable_memory()
 
             elected_node = "edge-0"  # TODO: find eligible node
 
@@ -52,7 +51,7 @@ class Scheduler:
             application_id = ""  # TODO: replace dummy
             application_component_id = ""  # TODO: replace dummy
 
-            self.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
+            self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
         except json.JSONDecodeError as e:
             print(f"Failed to decode task payload: {e}")
 
@@ -61,56 +60,6 @@ class Scheduler:
         # TODO: on completed release resources
         # TODO: cpu
         # TODO: memory
-
-    def read_nodes(self):
-        url = f"{scheme}://{host}:{prm_port}/api/v1/nodes"
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"Failed to fetch nodes: {response.status_code}, {response.text}")
-            return None
-
-    def read_allocatable_cpu(self):
-        url = f"{scheme}://{host}:{prm_port}/api/v1/resources/cpus"
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"Failed to fetch allocatable CPUs: {response.status_code}, {response.text}")
-            return None
-
-    def read_allocatable_memory(self):
-        url = f"{scheme}://{host}:{prm_port}/api/v1/resources/memory"
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"Failed to fetch allocatable memory: {response.status_code}, {response.text}")
-            return None
-
-    def schedule_task(self, task_id, node_id, status, application_id, application_component_id, properties):
-        url = f"{scheme}://{host}:{psm_port}/api/v1/tasks/{task_id}/scheduling"
-        payload = {
-            "nodeId": node_id,
-            "status": status,
-            "applicationId": application_id,
-            "applicationComponentId": application_component_id,
-            "properties": {
-                "policy": properties["policy"],
-                "batchSize": properties["batchSize"],
-                "layer": properties["layer"]
-            }
-        }
-        headers = {'Content-Type': 'application/json'}
-
-        response = requests.put(url, data=json.dumps(payload), headers=headers)
-        if response.status_code == 200:
-            print(f"Task {task_id} successfully scheduled on node {node_id}.")
-            return response.json()
-        else:
-            print(f"Failed to schedule task {task_id}: {response.status_code}, {response.text}")
-            return None
 
     def start(self):
         self.mqtt_client.loop_forever()

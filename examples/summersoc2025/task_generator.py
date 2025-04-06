@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import json
-from config import host, psm_port
 import os
 
 def save_generated_tasks(num_tasks, tasks):
