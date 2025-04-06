@@ -33,8 +33,10 @@ def generate_tasks(num_tasks):
             "sizeDuringTransmission": 10,
             "deadline": 50,
             "payload_length": 10,
-            "cpu_shares": 500,
-            "memory_size": 0.25,
+            "requirements": {
+                "cpu_shares": 500,
+                "memory_size": 0.25,
+            },
             "properties": {"task_type": "small"}
         },
         "medium": {
@@ -43,8 +45,10 @@ def generate_tasks(num_tasks):
             "sizeDuringTransmission": 100,
             "deadline": 250,
             "payload_length": 100,
-            "cpu_shares": 1000,
-            "memory_size": 0.50,
+            "requirements": {
+                "cpu_shares": 1000,
+                "memory_size": 0.50,
+            },
             "properties": {"task_type": "medium"}
         },
         "large": {
@@ -53,8 +57,10 @@ def generate_tasks(num_tasks):
             "sizeDuringTransmission": 1000,
             "deadline": 1500,
             "payload_length": 1000,
-            "cpu_shares": 2000,
-            "memory_size": 1.00,
+            "requirements": {
+                "cpu_shares": 1000,
+                "memory_size": 0.50,
+            },
             "properties": {"task_type": "large"}
         },
     }

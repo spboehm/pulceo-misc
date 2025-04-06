@@ -18,6 +18,7 @@ class Scheduler(ABC):
         self.mqtt_client.on_message = self.on_message
         self.batch_size = int(scheduling_properties['batchSize'])
         self.pulceo_api = API(scheme, host, prm_port, psm_port)
+        self.on_init()
 
     def init_mqtt(self):
         client = mqtt.Client(client_id=str(uuid.uuid4()), clean_session=False, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
@@ -64,6 +65,10 @@ class Scheduler(ABC):
             print(f"Unknown message received on topic {msg.topic}: {msg.payload}")
     
     @abstractmethod
+    def on_init(self):
+        pass
+
+    @abstractmethod
     def handle_new_task(self, task):
         pass
     
@@ -83,6 +88,9 @@ class CloudOnlyScheduler(Scheduler):
 
     name = "CloudOnlyScheduler"
 
+    def on_init(self):
+        pass
+
     def handle_new_task(self, task):
         try:
             allocatable_cpu_resources = self.pulceo_api.read_allocatable_cpu()
@@ -96,7 +104,7 @@ class CloudOnlyScheduler(Scheduler):
             application_id = ""  # TODO: replace dummy
             application_component_id = ""  # TODO: replace dummy
 
-            
+
 
             self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
         except json.JSONDecodeError as e:
@@ -112,8 +120,50 @@ class EdgeOnlyScheduler(Scheduler):
 
     name = "EdgeOnlyScheduler"
 
+    def maxAllocatableCPU(self, value):
+        return value * 0.75
+
+    def maxAllocatableMem(self, value):
+        if value < 2.00:
+            return 0.576
+        elif value < 4.00:
+            return 3.82
+        elif value < 8:
+            return 5.5125
+        elif value < 16:
+            return 13.2685
+        
+    def on_init(self):
+        # read all nodes
+        nodes = self.pulceo_api.read_nodes()
+        for node in nodes:
+            # set custom resource limits, resources must be left for hypervisor and platform components
+            cpu_on_node = self.pulceo_api.read_allocatable_cpu_by_node_id(node['uuid'])
+            self.pulceo_api.update_allocatable_cpu(node['uuid'], 'shares', self.maxAllocatableCPU(cpu_on_node['cpuCapacity']['shares']))
+
+            # set custom resource limits, resources must be left for hypervisor and platform components
+            memory_on_node = self.pulceo_api.read_allocatable_memory_by_node_id(node['uuid'])
+            self.pulceo_api.update_allocatable_memory(node['uuid'], 'size', self.maxAllocatableMem((memory_on_node['memoryCapacity']['size'])))
+
     def handle_new_task(self, task):
         print(f"{self.name} Received new task: {task}")
+
+        
+
+        allocatable_cpu_resources = self.pulceo_api.read_allocatable_cpu()
+        print(allocatable_cpu_resources[0]['cpuCapacity'])
+        allocatable_mem_resources = self.pulceo_api.read_allocatable_memory()
+
+        # TODO: first find allocatable CPU resources 
+
+        elected_node = "edge-0"  # TODO: find eligible node
+
+        task_id = task['taskUUID']
+        node_id = allocatable_cpu_resources[0]['nodeUUID']
+        status = "SCHEDULED"
+        application_id = ""  # TODO: replace dummy
+        application_component_id = ""  # TODO: replace dummy
+        
         pass
     
     def handle_completed_task(self, task):
@@ -123,6 +173,9 @@ class EdgeOnlyScheduler(Scheduler):
 class JointScheduler(Scheduler):
 
     name = "JointScheduler"
+
+    def on_init(self):
+        pass
 
     def handle_new_task(self, task):
         print(f"{self.name} Received new task: {task}")
