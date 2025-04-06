@@ -133,7 +133,8 @@ class EdgeOnlyScheduler(Scheduler):
     name = "EdgeOnlyScheduler"
     processedTasks = {}
     pendingTasks = []
-    PENDING_TASKS_THRESHOLD = 10
+    PENDING_TASKS_THRESHOLD = 0
+    on_terminate = False
 
     def deferTasks(self, task):
         self.pendingTasks.append(task)
@@ -234,7 +235,7 @@ class EdgeOnlyScheduler(Scheduler):
             self.handle_new_task(self.pendingTasks.pop())
 
     def on_terminate(self):
-        MAX_RETRIES = 10
+        MAX_RETRIES = 1000
         while (len(self.pendingTasks) > 0):
             CURRENT_NUMBER_OF_TASKS = len(self.pendingTasks)
             self.handle_new_task(self.pendingTasks.pop())
