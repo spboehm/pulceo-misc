@@ -80,11 +80,16 @@ class Scheduler(ABC):
     def handle_completed_task(self, task):
         pass
 
+    @abstractmethod
+    def on_terminate(self):
+        pass
+
     def start(self):
         self.mqtt_client.connect(self.mqtt_host, self.mqtt_port, 60)
         self.mqtt_client.loop_forever()
 
     def stop(self):
+        self.on_terminate()
         self.mqtt_client.loop_stop()
         self.mqtt_client.disconnect()
 
@@ -120,11 +125,19 @@ class CloudOnlyScheduler(Scheduler):
         # TODO: cpu
         # TODO: memory
 
+    def on_terminate(self):
+        pass
+
 class EdgeOnlyScheduler(Scheduler):
 
     name = "EdgeOnlyScheduler"
     processedTasks = {}
+    pendingTasks = []
+    PENDING_TASKS_THRESHOLD = 10
 
+    def deferTasks(self, task):
+        self.pendingTasks.append(task)
+        
     def maxAllocatableCPU(self, value):
         return value * 0.75
 
@@ -153,12 +166,9 @@ class EdgeOnlyScheduler(Scheduler):
     def handle_new_task(self, task):
         logging.info(f"{self.name} Received new task: {task}")
 
-        # required resources of tasks
+        # requirements of tasks
         req_cpu_share_task = int(task['requirements']['cpu_shares'])
-        print(req_cpu_share_task)
-
         req_memory_task = float(task['requirements']['memory_size'])
-        print(req_memory_task)
 
         # find an eligible node
         # since this is the edge-only scheduler, only edge nodes are required
@@ -170,8 +180,8 @@ class EdgeOnlyScheduler(Scheduler):
         try:
             highest_shares_node = max(cpu_resources, key=lambda x: x["cpuAllocatable"]["shares"])
         except ValueError:
-            logging.error("cpu_resources is empty. Cannot determine the node with the highest shares.")
-            # TODO: buffer and retry
+            logging.error("No eligible nodes found. 'cpu_resources' is empty, unable to determine the node with the highest CPU shares.")
+            self.pendingTasks.append(task)
             return
         
         if highest_shares_node["cpuAllocatable"]["shares"] >= req_cpu_share_task:
@@ -181,38 +191,57 @@ class EdgeOnlyScheduler(Scheduler):
             try:
                 highest_memory_size_node = max(memory_resources, key=lambda x: x["memoryAllocatable"]["size"])
             except ValueError:
-                logging.error("memory_resources is empty. Cannot determine the node with the highest memory size.")
-                # TODO: buffer and retry
+                logging.error("No eligible nodes found. 'memory_resources' is empty, unable to determine the node with the highest memory size.")
+                self.pendingTasks.append(task)
                 return
             
             if highest_memory_size_node['memoryAllocatable']['size'] > req_memory_task:
-                # TODO: ready to deloy
+                # ready to deloy
                 elected_node = highest_memory_size_node["nodeName"]
                 print(f"Elected node for task deployment: {elected_node}")
                 node_id = highest_memory_size_node['nodeUUID']
 
-                # TODO: update resources
-                # cpu
+                # update resources
                 self.pulceo_api.update_allocatable_cpu(node_id, "shares", highest_shares_node["cpuAllocatable"]["shares"] - req_cpu_share_task)
-                # memory
                 self.pulceo_api.update_allocatable_memory(node_id, "size", highest_memory_size_node['memoryAllocatable']['size'] - req_memory_task)
                 
+                # prepare for scheduling
                 task_id = task['taskUUID']
                 status = "SCHEDULED"
                 application_id = ""  # TODO: replace dummy
                 application_component_id = ""  # TODO: replace dummy
 
+                # schedule
                 self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
-                # Add mapping between task_id and node_id to processedTasks
+                # add mapping between task_id and node_id to processedTasks for later mapping
+                # will be return by the API later
                 self.processedTasks[task_id] = node_id
             else:
-                # TODO: add to buffer
-                print("Ese case")
-            
+                # Add the task to the pendingTasks buffer for future scheduling
+                self.pendingTasks.append(task)
+                logging.info(f"Task {task['taskUUID']} added to pending buffer due to insufficient memory resources.")
+        else:
+            # Add the task to the pendingTasks buffer for future scheduling
+            self.pendingTasks.append(task)
+            logging.info(f"Task {task['taskUUID']} added to pending buffer due to insufficient CPU resources.")
+        
     def handle_completed_task(self, task):
         logging.info(f"{self.name} Received completed task: {task}")
         self.pulceo_api.release_cpu_on_node(self.processedTasks[task['taskUUID']], "shares", int(task['requirements']['cpu_shares']))
         self.pulceo_api.release_memory_on_node(self.processedTasks[task['taskUUID']], "size", float(task['requirements']['memory_size']))
+
+        if len(self.pendingTasks) > self.PENDING_TASKS_THRESHOLD:
+            self.handle_new_task(self.pendingTasks.pop())
+
+    def on_terminate(self):
+        MAX_RETRIES = 10
+        while (len(self.pendingTasks) > 0):
+            CURRENT_NUMBER_OF_TASKS = len(self.pendingTasks)
+            self.handle_new_task(self.pendingTasks.pop())
+            if (len(self.pendingTasks) == CURRENT_NUMBER_OF_TASKS):
+                MAX_RETRIES = MAX_RETRIES - 1
+            if (MAX_RETRIES == 0):
+                raise RuntimeError("Unable to process pending tasks after maximum retries.")
 
 class JointScheduler(Scheduler):
 
@@ -227,6 +256,9 @@ class JointScheduler(Scheduler):
     
     def handle_completed_task(self, task):
         logging.info(f"{self.name} Received completed task: {task}")
+        pass
+
+    def on_terminate(self):
         pass
 
 if __name__ == "__main__":
