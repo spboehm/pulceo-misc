@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import paho.mqtt.client as mqtt
-import requests
 import json
 import time
 import uuid
 import os
 import threading
 from pulceo.sdk import API
+from config import *
 
 class TaskMetric:
     def __init__(self, task_uuid, resource, value, unit):
@@ -38,7 +38,7 @@ class TaskEmitter:
         self.mqtt_client.on_message = self.on_message
         self.scheduling_properties = scheduling_properties
         self.exit_event = threading.Event()
-        self.pulceo_api = API()
+        self.pulceo_api = API(scheme, host, prm_port, psm_port)
 
     @staticmethod
     def get_timestamp():

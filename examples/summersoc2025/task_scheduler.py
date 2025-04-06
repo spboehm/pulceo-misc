@@ -3,6 +3,7 @@
 import paho.mqtt.client as mqtt
 import json
 from pulceo.sdk import API
+from config import *
 
 class Scheduler:
     def __init__(self, scheduling_properties, mqtt_host="localhost", mqtt_port=1883, mqtt_keepalive=60):
@@ -12,7 +13,7 @@ class Scheduler:
         self.mqtt_client.on_message = self.on_message
         self.mqtt_client.connect(mqtt_host, mqtt_port, mqtt_keepalive)
         self.batch_size = int(scheduling_properties['batchSize'])
-        self.pulceo_api = API()
+        self.pulceo_api = API(scheme, host, prm_port, psm_port)
 
     def on_connect(self, client, userdata, flags, reason_code, properties):
         print(f"Connected with result code {reason_code}")
