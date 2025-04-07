@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import base64
 
 def save_generated_tasks(num_tasks, tasks):
     # Ensure the 'tasks' subdirectory exists
@@ -33,6 +34,7 @@ def generate_tasks(num_tasks):
             "sizeDuringTransmission": 10,
             "deadline": 50,
             "payload_length": 10,
+            "payload": base64.b64encode(b"10").decode('utf-8'),
             "requirements": {
                 "cpu_shares": 500,
                 "memory_size": 0.25,
@@ -45,6 +47,7 @@ def generate_tasks(num_tasks):
             "sizeDuringTransmission": 100,
             "deadline": 250,
             "payload_length": 100,
+            "payload": base64.b64encode(b"100").decode('utf-8'),
             "requirements": {
                 "cpu_shares": 1000,
                 "memory_size": 0.50,
@@ -57,6 +60,7 @@ def generate_tasks(num_tasks):
             "sizeDuringTransmission": 1000,
             "deadline": 1500,
             "payload_length": 1000,
+            "payload": base64.b64encode(b"1000").decode('utf-8'),
             "requirements": {
                 "cpu_shares": 1000,
                 "memory_size": 0.50,
