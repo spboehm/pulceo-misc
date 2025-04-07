@@ -6,7 +6,7 @@ from task_emitter import TaskEmitter
 from multiprocessing import Process
 
 # batch_sizes = [200, 400, 600, 800]
-batch_sizes = [100]
+batch_sizes = [10]
 layers = ["cloud-only"]
 #layers = ["cloud-only", "edge-only", "joint"]
 
