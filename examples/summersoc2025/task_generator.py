@@ -36,34 +36,34 @@ def generate_tasks(num_tasks):
             "payload_length": 10,
             "payload": base64.b64encode(b"10").decode('utf-8'),
             "requirements": {
-                "cpu_shares": 500,
+                "cpu_shares": 250,
                 "memory_size": 0.25,
             },
             "properties": {"task_type": "small"}
         },
         "medium": {
             "createdBy": "task_emitter.py",
-            "sizeOfWorkload": 100,
-            "sizeDuringTransmission": 100,
+            "sizeOfWorkload": 50,
+            "sizeDuringTransmission": 50,
             "deadline": 250,
-            "payload_length": 100,
-            "payload": base64.b64encode(b"100").decode('utf-8'),
+            "payload_length": 50,
+            "payload": base64.b64encode(b"50").decode('utf-8'),
             "requirements": {
-                "cpu_shares": 1000,
+                "cpu_shares": 500,
                 "memory_size": 0.50,
             },
             "properties": {"task_type": "medium"}
         },
         "large": {
             "createdBy": "task_emitter.py",
-            "sizeOfWorkload": 1000,
-            "sizeDuringTransmission": 1000,
+            "sizeOfWorkload": 100,
+            "sizeDuringTransmission": 100,
             "deadline": 1500,
-            "payload_length": 1000,
-            "payload": base64.b64encode(b"1000").decode('utf-8'),
+            "payload_length": 100,
+            "payload": base64.b64encode(b"100").decode('utf-8'),
             "requirements": {
-                "cpu_shares": 1000,
-                "memory_size": 0.50,
+                "cpu_shares": 750,
+                "memory_size": 0.75,
             },
             "properties": {"task_type": "large"}
         },

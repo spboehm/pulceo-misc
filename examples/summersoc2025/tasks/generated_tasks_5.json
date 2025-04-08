@@ -1,0 +1,66 @@
+[
+    {
+        "task_type": "small",
+        "createdBy": "task_emitter.py",
+        "sizeOfWorkload": 10,
+        "sizeDuringTransmission": 10,
+        "deadline": 50,
+        "payload_length": 10,
+        "payload": "MTA=",
+        "requirements": {
+            "cpu_shares": 500,
+            "memory_size": 0.25
+        },
+        "properties": {
+            "task_type": "small"
+        }
+    },
+    {
+        "task_type": "small",
+        "createdBy": "task_emitter.py",
+        "sizeOfWorkload": 10,
+        "sizeDuringTransmission": 10,
+        "deadline": 50,
+        "payload_length": 10,
+        "payload": "MTA=",
+        "requirements": {
+            "cpu_shares": 500,
+            "memory_size": 0.25
+        },
+        "properties": {
+            "task_type": "small"
+        }
+    },
+    {
+        "task_type": "medium",
+        "createdBy": "task_emitter.py",
+        "sizeOfWorkload": 100,
+        "sizeDuringTransmission": 100,
+        "deadline": 250,
+        "payload_length": 100,
+        "payload": "MTAw",
+        "requirements": {
+            "cpu_shares": 1000,
+            "memory_size": 0.5
+        },
+        "properties": {
+            "task_type": "medium"
+        }
+    },
+    {
+        "task_type": "large",
+        "createdBy": "task_emitter.py",
+        "sizeOfWorkload": 1000,
+        "sizeDuringTransmission": 1000,
+        "deadline": 1500,
+        "payload_length": 1000,
+        "payload": "MTAwMA==",
+        "requirements": {
+            "cpu_shares": 1000,
+            "memory_size": 0.5
+        },
+        "properties": {
+            "task_type": "large"
+        }
+    }
+]

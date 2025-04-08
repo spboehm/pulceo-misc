@@ -1,0 +1,43 @@
+- name: Reset pulceo-node-agent
+  hosts: fog
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Delete namespace pulceo
+      ansible.builtin.command: sudo kubectl delete namespace pulceo
+      register: result_delete_namespace
+      changed_when: result_delete_namespace.rc != 0
+      become: true
+
+    - name: Rollout restart pulceo-node-agent
+      ansible.builtin.command: sudo kubectl rollout restart deployment pulceo-node-agent
+      register: result
+      changed_when: result.rc != 0
+      become: true
+
+    - name: Wait for availability
+      ansible.builtin.uri:
+        url: "https://{{ ansible_ssh_host }}:7676/health"
+        return_content: true
+        validate_certs: true
+        status_code:
+          - 200
+      until: uri_output.status == 200
+      retries: 10
+      delay: 15
+      register: uri_output
+
+    - name: Reboot
+      ansible.builtin.reboot:
+
+    - name: Wait for availability2
+      ansible.builtin.uri:
+        url: "https://{{ ansible_ssh_host }}:7676/health"
+        return_content: true
+        validate_certs: true
+        status_code:
+          - 200
+      until: uri_output.status == 200
+      retries: 10
+      delay: 15
+      register: uri_output

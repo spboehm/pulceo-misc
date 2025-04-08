@@ -1,0 +1,59 @@
+---
+- name: Deploy pulceo-node-agent
+  hosts: fog
+  become: false
+  gather_facts: true
+  vars:
+    version: v1.3.0
+  tasks:
+    - name: Disable firewall
+      community.general.ufw:
+        state: disabled
+      become: true
+
+    - name: Copy resolv.conf
+      ansible.builtin.copy:
+        src: files/resolv.conf
+        dest: /home/{{ ansible_user }}
+        owner: "{{ ansible_user }}"
+        mode: "0644"
+      tags:
+        - reinstall
+        - always
+
+    - name: Copy .env file
+      ansible.builtin.copy:
+        src: files/.env-pulceo
+        dest: /home/{{ ansible_user }}
+        owner: "{{ ansible_user }}"
+        decrypt: true
+        mode: "0644"
+
+    - name: Download pulceo-node-agent installation script
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/spboehm/pulceo-node-agent/{{ version }}/bootstrap-pulceo-node-agent.sh
+        dest: /home/{{ ansible_user }}
+        owner: "{{ ansible_user }}"
+        mode: a+x
+        force: true
+
+    - name: Install pulceo-node-agent
+      ansible.builtin.shell: PNA_HOST_FQDN={{ ansible_ssh_host }} OVERRIDE_DNS=TRUE bash bootstrap-pulceo-node-agent.sh
+      args:
+        executable: /bin/bash
+      become: true
+      become_user: "{{ ansible_user }}"
+      register: result
+      changed_when: result != 0
+
+    - name: Wait for availability
+      ansible.builtin.uri:
+        url: "https://{{ ansible_ssh_host }}:7676/health"
+        return_content: true
+        validate_certs: true
+        status_code:
+          - 200
+      until: uri_output.status == 200
+      retries: 10
+      delay: 15
+      register: uri_output

@@ -6,6 +6,7 @@
         "sizeDuringTransmission": 10,
         "deadline": 50,
         "payload_length": 10,
+        "payload": "MTA=",
         "requirements": {
             "cpu_shares": 500,
             "memory_size": 0.25

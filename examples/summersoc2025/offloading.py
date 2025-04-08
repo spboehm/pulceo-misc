@@ -5,8 +5,8 @@ from task_scheduler import CloudOnlyScheduler, EdgeOnlyScheduler, JointScheduler
 from task_emitter import TaskEmitter
 from multiprocessing import Process
 
-# batch_sizes = [200, 400, 600, 800]
-batch_sizes = [10]
+batch_sizes = [200, 400, 600, 800]
+#batch_sizes = [200]
 layers = ["cloud-only"]
 #layers = ["cloud-only", "edge-only", "joint"]
 
@@ -42,8 +42,8 @@ def start_experiments():
             
             # start task emitter
             emitter = TaskEmitter(scheduling_properties=properties)
-            emitter.start()
             print(f"TaskEmitter started for batch_size={batch_size} and layer={layer}")
+            emitter.start()
             
             # wait for termination, after all tasks are completed
             process.join()

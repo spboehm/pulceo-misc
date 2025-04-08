@@ -89,6 +89,7 @@ class TaskEmitter:
         self.mqtt_client.publish(requests_topic, task_metric.to_json())
         self.batch_size = self.batch_size - 1
         if self.batch_size == 0:
+            print("TaskEmitter last message received")
             self.stop()
 
     def read_generated_tasks(self):

@@ -1,0 +1,116 @@
+---
+- name: Deploy pulceo
+  hosts: pulceo-dev
+  become: false
+  gather_facts: true
+  vars:
+    version: v1.3.0
+    PRM_VERSION: v1.3.0
+    PSM_VERSION: v1.3.0
+    PMS_VERSION: v1.3.0
+  tasks:
+    - name: Copy .env file
+      ansible.builtin.template:
+        src: files/.env-pulceo
+        dest: /home/{{ ansible_user }}
+        owner: "{{ ansible_user }}"
+        decrypt: true
+        mode: "0600"
+      tags:
+        - reinstall
+        - always
+
+    - name: Copy resolv.conf
+      ansible.builtin.copy:
+        src: files/resolv.conf
+        dest: /home/{{ ansible_user }}
+        owner: "{{ ansible_user }}"
+        mode: "0600"
+      tags:
+        - reinstall
+        - always
+
+    - name: Check if k3s is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/k3s-uninstall.sh
+      register: stat_result
+      tags:
+        - always
+        - reinstall
+
+    - name: Uninstall k3s
+      ansible.builtin.command: /usr/local/bin/k3s-uninstall.sh
+      when: stat_result.stat.exists
+      register: result
+      changed_when: result != 0
+      tags:
+        - never
+        - reinstall
+
+    - name: Remove old kubeconfig
+      ansible.builtin.file:
+        path: /home/{{ ansible_user }}/.kube/config
+        state: absent
+      tags:
+        - never
+        - reinstall
+
+    - name: Check if k3s is installed after uninstallation (again)
+      ansible.builtin.stat:
+        path: /usr/local/bin/k3s-uninstall.sh
+      register: stat_result
+      tags:
+        - never
+        - reinstall
+
+    - name: Install k3s
+      ansible.builtin.shell: 'curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--resolv-conf /home/{{ ansible_user }}/resolv.conf" sh -s -'
+      when: not stat_result.stat.exists
+      register: result
+      changed_when: result != 0
+      become: true
+      tags:
+        - always
+        - reinstall
+
+    - name: Download pulceo installation script
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/spboehm/pulceo-resource-manager/{{ version }}/bootstrap-pulceo.sh
+        dest: /home/{{ ansible_user }}
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: a+x
+      tags:
+        - reinstall
+        - always
+
+    - name: Install pulceo
+      ansible.builtin.shell: bash bootstrap-pulceo.sh
+      args:
+        executable: /bin/bash
+      become: true
+      become_user: "{{ ansible_user }}"
+      register: result
+      changed_when: result != 0
+      tags:
+        - reinstall
+        - always
+
+    - name: Wait for availability
+      ansible.builtin.uri:
+        url: "http://localhost:80/{{ item }}/health"
+        return_content: true
+        validate_certs: true
+        status_code:
+          - 200
+      until: uri_output.status == 200
+      retries: 10
+      delay: 15
+      register: uri_output
+      with_items:
+        - prm
+        - psm
+        - pms
+      tags:
+        - reinstall
+        - always

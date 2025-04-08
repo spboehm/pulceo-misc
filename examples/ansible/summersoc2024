@@ -1,0 +1,8 @@
+[all]
+pulceo ansible_host=pulceo.pi.uni-bamberg.de
+pulceo-dev ansible_host=pulceo-dev.pi.uni-bamberg.de
+
+[fog]
+fog1 ansible_host=h5138.pi.uni-bamberg.de
+fog2 ansible_host=h5136.pi.uni-bamberg.de
+fog3 ansible_host=h5137.pi.uni-bamberg.de

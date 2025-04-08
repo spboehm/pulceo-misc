@@ -12,3 +12,4 @@ Configure in ``offloading.py``
 batch_sizes = [10, 20, 50, 100]
 layers = ["cloud-only", "edge-only", "joint"]
 ```
+
