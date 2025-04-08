@@ -28,12 +28,20 @@ library(rticles)
 library(tinytex)
 ```
 
+```{r}
+# TODO: general package
+SavePlot <- function(filename, plot, width=4, height=3) {
+  ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0,0,0,0,"pt")), width = width, height = height, device=cairo_pdf)
+}
+```
+
+
 ```{r include=TRUE, echo=FALSE}
-SUBFOLDER <- "tasks-test"
+SUBFOLDER <- "summersoc2025"
 ```
 
 ```{r}
-tasks <- read.csv(paste("raw", SUBFOLDER, "query.csv", sep = "/"), skip = 3)
+tasks <- read.csv(paste("raw", SUBFOLDER, "TASKS.csv", sep = "/"), skip = 3)
 
 # format
 TransformTasks <- function(df) {
@@ -41,7 +49,13 @@ TransformTasks <- function(df) {
         select(
             policy, batchSize, layer, modifiedBy, modifiedById, modifiedOn, newStatus, previousStatus,
             taskSchedulingUUID, taskUUID, timestamp
-        )
+        ) %>%
+        mutate(Run = case_when(
+            layer == "cloud-only" ~ "1",
+            layer == "edge-only" ~ "2",
+            layer == "joint" ~ "3",
+            TRUE ~ policy
+        ))
 
     # Transform all columns except 'timestamp' to factors
     df <- df %>%
@@ -107,29 +121,29 @@ CreateBoxplot <- function(df, title) {
 ### Task Waiting Time
 
 ```{r include=TRUE, echo=FALSE}
-waiting_time_total_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "RUNNING", policy, batchSize, layer)
+waiting_time_total_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "RUNNING", policy, batchSize, layer, Run)
 
-waiting_time_on_psm_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "SCHEDULED", policy, batchSize, layer)
+waiting_time_on_psm_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "SCHEDULED", policy, batchSize, layer, Run)
 
-waiting_time_on_pna_df <- CalculateTaskSchedulingMetric(tasks, start_status = "OFFLOADED", end_status = "RUNNING", policy, batchSize, layer)
+waiting_time_on_pna_df <- CalculateTaskSchedulingMetric(tasks, start_status = "OFFLOADED", end_status = "RUNNING", policy, batchSize, layer, Run)
 ```
 
 ### Task Scheduling/Offloading Time
 
 ```{r include=TRUE, echo=FALSE}
-scheduling_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "SCHEDULED", end_status = "OFFLOADED", policy, batchSize, layer)
+scheduling_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "SCHEDULED", end_status = "OFFLOADED", policy, batchSize, layer, Run)
 ```
 
 ### Task Processing Time
 
 ```{r include=TRUE, echo=FALSE}
-processing_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "RUNNING", end_status = "COMPLETED", policy, batchSize, layer)
+processing_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "RUNNING", end_status = "COMPLETED", policy, batchSize, layer, Run)
 ```
 
 ### Task Completion Time (Makespan)
 
 ```{r include=TRUE, echo=FALSE}
-completion_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "COMPLETED", policy, batchSize, layer)
+completion_time_df <- CalculateTaskSchedulingMetric(tasks, start_status = "NEW", end_status = "COMPLETED", policy, batchSize, layer, Run)
 ```
 
 ```{r}
@@ -168,38 +182,38 @@ overall_makespan <- CalculateOverallMakespan(completion_time_df, batchSize, laye
 
 ```{r}
 # Create individual boxplots
-boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(x = batchSize, y = time, fill = layer)) +
+boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Waiting Time (Total)", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_waiting_psm <- ggplot(waiting_time_on_psm_df, aes(x = batchSize, y = time, fill = layer)) +
+boxplot_waiting_psm <- ggplot(waiting_time_on_psm_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Waiting Time (PSM)", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_waiting_pna <- ggplot(waiting_time_on_pna_df, aes(x = batchSize, y = time, fill = layer)) +
+boxplot_waiting_pna <- ggplot(waiting_time_on_pna_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Waiting Time (PNA)", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_scheduling <- ggplot(scheduling_time_df, aes(x = batchSize, y = time, fill = layer)) +
+boxplot_scheduling <- ggplot(scheduling_time_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Offloading Time", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_processing <- ggplot(processing_time_df, aes(x = batchSize, y = time, fill = layer)) +
+boxplot_processing <- ggplot(processing_time_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Processing Time", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
-boxplot_completion <- ggplot(completion_time_df, aes(x = batchSize, y = time, fill = layer)) +
+boxplot_completion <- ggplot(completion_time_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
-    labs(title = "Completion Time (Makespan)", y = "Time (s)", x = "Batch Size") +
+    labs(title = "Completion Time", y = "Time (s)", x = "Batch Size") +
     theme_minimal()
 
 # Arrange all boxplots in a grid
-grid.arrange(
+task_metrics_combined <- ggarrange(
     boxplot_waiting_psm,
     boxplot_waiting_pna,
     boxplot_waiting_total,
@@ -207,9 +221,16 @@ grid.arrange(
     boxplot_processing,
     boxplot_completion,
     nrow = 2,
-    ncol = 3
+    ncol = 3,
+    common.legend = TRUE,
+    legend = "bottom"
 )
 ```
+
+```{r}
+SavePlot("task_metrics.pdf", task_metrics_combined, 8, 6)
+```
+
 
 ## Performance Metrics
 
