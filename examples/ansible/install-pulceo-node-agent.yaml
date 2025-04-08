@@ -5,6 +5,10 @@
   gather_facts: true
   vars:
     version: v1.3.0
+    PNA_VERSION: v1.3.0
+    PRM_VERSION: v1.3.0
+    PSM_VERSION: v1.3.0
+    PMS_VERSION: v1.3.0
   tasks:
     - name: Disable firewall
       community.general.ufw:
@@ -21,10 +25,20 @@
         - reinstall
         - always
 
+    - name: Copy resolv.conf
+      ansible.builtin.copy:
+        src: files/resolv.conf
+        dest: /home/root/resolv.conf
+        owner: "{{ ansible_user }}"
+        mode: "0644"
+      tags:
+        - reinstall
+        - always
+
     - name: Copy .env file
       ansible.builtin.copy:
         src: files/.env-pulceo
-        dest: /home/{{ ansible_user }}
+        dest: /home/{{ ansible_user }}/.env-pna
         owner: "{{ ansible_user }}"
         decrypt: true
         mode: "0644"

@@ -8,7 +8,7 @@
         "payload_length": 10,
         "payload": "MTA=",
         "requirements": {
-            "cpu_shares": 500,
+            "cpu_shares": 250,
             "memory_size": 0.25
         },
         "properties": {

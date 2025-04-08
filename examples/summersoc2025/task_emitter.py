@@ -10,6 +10,7 @@ from pulceo.sdk import API
 from config import *
 import uuid
 import ssl
+import threading
 
 class TaskMetric:
     def __init__(self, task_uuid, resource, value, unit):
@@ -41,6 +42,8 @@ class TaskEmitter:
         self.scheduling_properties = scheduling_properties
         self.exit_event = threading.Event()
         self.pulceo_api = API(scheme, host, prm_port, psm_port)
+        self.lock = threading.Lock()
+        self.processedTasks = {}
 
     def init_mqtt(self):
         client = mqtt.Client(client_id=str(uuid.uuid4()), clean_session=False, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
@@ -69,28 +72,37 @@ class TaskEmitter:
     def on_connect(self, client, userdata, flags, reason_code, properties):
         print(f"Connected with result code {reason_code}")
         client.subscribe("tasks/+/responses")
+        client.subscribe("cmd/tasks")
 
     def on_message(self, client, userdata, msg):
-        received_task = json.loads(msg.payload.decode('utf-8'))
-        print(f"Emitter Received new task: {received_task}")
-        timestamp_res = self.get_timestamp()
-        task_uuid = received_task['globalTaskUUID']
-        self.history[task_uuid]['timestamp_res'] = timestamp_res
-
-        time_diff_ms = (timestamp_res - self.history[task_uuid]['timestamp_req']) / 1_000_000
-
-        requests_topic = "dt/pulceo/requests"
-        task_metric = TaskMetric(
-            task_uuid=task_uuid,
-            resource="response_time",
-            value=time_diff_ms,
-            unit="ms"
-        )
-        self.mqtt_client.publish(requests_topic, task_metric.to_json())
-        self.batch_size = self.batch_size - 1
-        if self.batch_size == 0:
-            print("TaskEmitter last message received")
+        
+        if msg.topic == "cmd/tasks":
             self.stop()
+        else:
+            with self.lock:
+                received_task = json.loads(msg.payload.decode('utf-8'))
+                print(f"Emitter Received new task: {received_task}")
+                timestamp_res = self.get_timestamp()
+                task_uuid = received_task['globalTaskUUID']
+                self.history[task_uuid]['timestamp_res'] = timestamp_res
+
+                time_diff_ms = (timestamp_res - self.history[task_uuid]['timestamp_req']) / 1_000_000
+
+                requests_topic = "dt/pulceo/requests"
+                task_metric = TaskMetric(
+                    task_uuid=task_uuid,
+                    resource="response_time",
+                    value=time_diff_ms,
+                    unit="ms"
+                )
+                self.mqtt_client.publish(requests_topic, task_metric.to_json())
+                del self.processedTasks[received_task['globalTaskUUID']]
+                self.batch_size = self.batch_size - 1
+                for task in self.processedTasks:
+                    print(f"Unreceived task UUID: {task}")
+                if self.batch_size == 0:
+                    print("TaskEmitter last message received")
+                    self.stop()
 
     def read_generated_tasks(self):
         try:
@@ -110,24 +122,27 @@ class TaskEmitter:
 
         tasks = self.read_generated_tasks()
         for task in tasks:
-            # enrich with scheduling properties
-            task["schedulingProperties"] = self.scheduling_properties
-            print(f"Processing task: {task}")
-            timestamp_req = self.get_timestamp()
-            task_uuid = self.pulceo_api.create_task(json.dumps(task))
-            if task_uuid:
-                self.history[task_uuid] = {
-                    "task_uuid": task_uuid,
-                    "timestamp_req": timestamp_req
-                }
-            time.sleep(0.1)
-
+            with self.lock:
+                # enrich with scheduling properties
+                task["schedulingProperties"] = self.scheduling_properties
+                #print(f"Processing task: {task}")
+                timestamp_req = self.get_timestamp()
+                task_uuid = self.pulceo_api.create_task(json.dumps(task))
+                if task_uuid:
+                    self.history[task_uuid] = {
+                        "task_uuid": task_uuid,
+                        "timestamp_req": timestamp_req
+                    }
+                time.sleep(0.1)
+                self.processedTasks[task_uuid] = ""
         # wait, until all messages have been received, then terminate
         self.exit_event.wait()
 
     def stop(self):
-        self.exit_event.set()
+        print("Emitter stop")
+        self.mqtt_client.loop_stop()
         self.mqtt_client.disconnect()
+        self.exit_event.set()
 
 if __name__ == "__main__":
     emitter = TaskEmitter()

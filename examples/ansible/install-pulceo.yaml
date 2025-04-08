@@ -5,6 +5,7 @@
   gather_facts: true
   vars:
     version: v1.3.0
+    PNA_VERSION: v1.3.0
     PRM_VERSION: v1.3.0
     PSM_VERSION: v1.3.0
     PMS_VERSION: v1.3.0

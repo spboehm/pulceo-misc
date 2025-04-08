@@ -62,8 +62,8 @@ def generate_tasks(num_tasks):
             "payload_length": 100,
             "payload": base64.b64encode(b"100").decode('utf-8'),
             "requirements": {
-                "cpu_shares": 750,
-                "memory_size": 0.75,
+                "cpu_shares": 1000,
+                "memory_size": 1.00,
             },
             "properties": {"task_type": "large"}
         },

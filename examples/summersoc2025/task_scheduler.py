@@ -8,6 +8,7 @@ import ssl
 import uuid
 from abc import ABC, abstractmethod
 import logging
+import threading
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -67,7 +68,11 @@ class Scheduler(ABC):
             for task in self.processedTasks:
                 logging.info(f"UnProcessed task UUID: {task}")
             if self.batch_size == 0:
+                print("Scheduler stop")
+                # Posion Pill
+                self.mqtt_client.publish("cmd/tasks", "STOP")
                 self.stop()
+
         else:
             logging.info(f"Unknown message received on topic {msg.topic}: {msg.payload}")
     
@@ -178,15 +183,15 @@ class EdgeOnlyScheduler(Scheduler):
                 task_id = task['taskUUID']
                 status = "SCHEDULED"
                 application_id = ""  # TODO: replace dummy
-                if (LOCAL_SCHEDULING is True):
-                    if (elected_node == "edge-0"):
-                        application_component_id = "127.0.0.1:8087"
-                    else:
-                        application_component_id = "127.0.0.2:8087"
-                else:
+                # if (bool(os.getenv('LOCAL_SCHEDULING')) is True):
+                #     if (elected_node == "edge-0"):
+                #         application_component_id = "127.0.0.1:8087"
+                #     else:
+                #         application_component_id = "127.0.0.2:8087"
+                # else:
                     # TODO: resolve workaround, putting the port the application_component_id
-                    application_component_id = elected_node + "-edge-iot-simulator-component-eis" + ".pulceo.svc.cluster.local:80"
-
+                application_component_id = elected_node + "-edge-iot-simulator-component-eis" + ".pulceo.svc.cluster.local:80"
+                # print(application_component_id)
                 # schedule
                 self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
                 # add mapping between task_id and node_id to processedTasks for later mapping
@@ -204,6 +209,10 @@ class EdgeOnlyScheduler(Scheduler):
     def handle_new_task(self, task):
         logging.info(f"{self.name} Received new task: {task}")
         self.schedule(task, "EDGE")
+
+        if len(self.pendingTasks) > self.PENDING_TASKS_THRESHOLD:
+            self.handle_new_task(self.pendingTasks.pop())
+            print("Remaining in buffer from handle_new_task " + str(len(self.pendingTasks)))
         
     def handle_completed_task(self, task):
         logging.info(f"{self.name} Received completed task: {task}")
@@ -216,18 +225,19 @@ class EdgeOnlyScheduler(Scheduler):
 
         if len(self.pendingTasks) > self.PENDING_TASKS_THRESHOLD:
             self.handle_new_task(self.pendingTasks.pop())
-            print("Remaining in buffer " + str(len(self.pendingTasks)))
+            print("Remaining in buffer from handle_completed_task" + str(len(self.pendingTasks)))
 
     def on_terminate(self):
         MAX_RETRIES = 1000
-        while (len(self.pendingTasks) > 0):
-            print("on_terminate")
-            CURRENT_NUMBER_OF_TASKS = len(self.pendingTasks)
-            self.handle_new_task(self.pendingTasks.pop())
-            if (len(self.pendingTasks) == CURRENT_NUMBER_OF_TASKS):
-                MAX_RETRIES = MAX_RETRIES - 1
-            if (MAX_RETRIES == 0):
-                raise RuntimeError("Unable to process pending tasks after maximum retries.")
+        pass
+        # while (len(self.pendingTasks) > 0):
+        #     print("on_terminate")
+        #     CURRENT_NUMBER_OF_TASKS = len(self.pendingTasks)
+        #     self.handle_new_task(self.pendingTasks.pop())
+        #     if (len(self.pendingTasks) == CURRENT_NUMBER_OF_TASKS):
+        #         MAX_RETRIES = MAX_RETRIES - 1
+        #     if (MAX_RETRIES == 0):
+        #         raise RuntimeError("Unable to process pending tasks after maximum retries.")
 
 class JointScheduler(EdgeOnlyScheduler):
 

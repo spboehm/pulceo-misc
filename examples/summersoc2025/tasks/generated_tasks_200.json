@@ -2568,8 +2568,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2584,8 +2584,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2600,8 +2600,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2616,8 +2616,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2632,8 +2632,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2648,8 +2648,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2664,8 +2664,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2680,8 +2680,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2696,8 +2696,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2712,8 +2712,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2728,8 +2728,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2744,8 +2744,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2760,8 +2760,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2776,8 +2776,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2792,8 +2792,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2808,8 +2808,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2824,8 +2824,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2840,8 +2840,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2856,8 +2856,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2872,8 +2872,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2888,8 +2888,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2904,8 +2904,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2920,8 +2920,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2936,8 +2936,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2952,8 +2952,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2968,8 +2968,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -2984,8 +2984,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3000,8 +3000,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3016,8 +3016,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3032,8 +3032,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3048,8 +3048,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3064,8 +3064,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3080,8 +3080,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3096,8 +3096,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3112,8 +3112,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3128,8 +3128,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3144,8 +3144,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3160,8 +3160,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3176,8 +3176,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"
@@ -3192,8 +3192,8 @@
         "payload_length": 100,
         "payload": "MTAw",
         "requirements": {
-            "cpu_shares": 750,
-            "memory_size": 0.75
+            "cpu_shares": 1000,
+            "memory_size": 1.0
         },
         "properties": {
             "task_type": "large"

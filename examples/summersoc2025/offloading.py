@@ -5,10 +5,10 @@ from task_scheduler import CloudOnlyScheduler, EdgeOnlyScheduler, JointScheduler
 from task_emitter import TaskEmitter
 from multiprocessing import Process
 
-batch_sizes = [200, 400, 600, 800]
-#batch_sizes = [200]
+#batch_sizes = 
+#layers = ["cloud-only"], "edge-only", "joint"]
+batch_sizes = [200,400,600,800]
 layers = ["cloud-only"]
-#layers = ["cloud-only", "edge-only", "joint"]
 
 def create_scenarios():
     for batch_size in batch_sizes:
