@@ -30,8 +30,8 @@ library(tinytex)
 
 ```{r}
 # TODO: general package
-SavePlot <- function(filename, plot, width=4, height=3) {
-  ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0,0,0,0,"pt")), width = width, height = height, device=cairo_pdf)
+SavePlot <- function(filename, plot, width = 4, height = 3) {
+    ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
 }
 ```
 
@@ -79,7 +79,12 @@ requests <- read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 
 requests_combined <- tasks %>%
     select(taskUUID, batchSize, layer) %>%
     inner_join(requests, by = c("taskUUID" = "destinationHost")) %>%
-    select(taskUUID, batchSize, layer, requestType, timestamp, unit, X_value, X_field)
+    select(taskUUID, batchSize, layer, requestType, timestamp, unit, X_value, X_field) %>%
+        mutate(Run = case_when(
+            layer == "cloud-only" ~ "1",
+            layer == "edge-only" ~ "2",
+            layer == "joint" ~ "3"
+        ))
 ```
 
 ```{r}
@@ -185,7 +190,8 @@ overall_makespan <- CalculateOverallMakespan(completion_time_df, batchSize, laye
 boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Waiting Time (Total)", y = "Time (s)", x = "Batch Size") +
-    theme_minimal()
+    theme_minimal() +
+    ylim(0, max(waiting_time_total_df$time * 1.10, na.rm = TRUE))
 
 boxplot_waiting_psm <- ggplot(waiting_time_on_psm_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
@@ -195,25 +201,29 @@ boxplot_waiting_psm <- ggplot(waiting_time_on_psm_df, aes(x = batchSize, y = tim
 boxplot_waiting_pna <- ggplot(waiting_time_on_pna_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Waiting Time (PNA)", y = "Time (s)", x = "Batch Size") +
-    theme_minimal()
+    theme_minimal() +
+    ylim(0, round(max(waiting_time_on_pna_df$time * 1.10, na.rm = TRUE), 2)
 
 boxplot_scheduling <- ggplot(scheduling_time_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Offloading Time", y = "Time (s)", x = "Batch Size") +
-    theme_minimal()
+    theme_minimal() +
+    ylim(0, max(scheduling_time_df$time * 1.10, na.rm = TRUE))
 
 boxplot_processing <- ggplot(processing_time_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Processing Time", y = "Time (s)", x = "Batch Size") +
-    theme_minimal()
+    theme_minimal() +
+    ylim(0, max(processing_time_df$time * 1.10, na.rm = TRUE))
 
 boxplot_completion <- ggplot(completion_time_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(title = "Completion Time", y = "Time (s)", x = "Batch Size") +
-    theme_minimal()
+    theme_minimal() +
+    ylim(0, max(completion_time_df$time * 1.10, na.rm = TRUE))
 
 # Arrange all boxplots in a grid
-task_metrics_combined <- ggarrange(
+(task_metrics_combined <- ggarrange(
     boxplot_waiting_psm,
     boxplot_waiting_pna,
     boxplot_waiting_total,
@@ -224,7 +234,7 @@ task_metrics_combined <- ggarrange(
     ncol = 3,
     common.legend = TRUE,
     legend = "bottom"
-)
+))
 ```
 
 ```{r}
@@ -259,19 +269,21 @@ CalculateAverageResponseTime <- function(df, ...) {
 }
 
 # Apply the function to the REQUESTS dataframe
-average_response_time <- CalculateAverageResponseTime(requests_combined, batchSize, layer)
+average_response_time <- CalculateAverageResponseTime(requests_combined, batchSize, layer, Run)
 ```
 
 ```{r}
 # Create a boxplot for X_value in requests
-average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y = X_value, fill = layer)) +
+average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y = X_value, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(
-        title = "Boxplot of Response Times by Batch Size and Layer",
+        title = "Response Time",
         x = "Batch Size and Layer",
         y = "Response Time (ms)"
     ) +
-    theme_minimal()
+    theme_minimal() +
+    ylim(0, max(requests_combined$X_value * 1.25, na.rm = TRUE)) +
+
 
 # Print the boxplot
 print(average_response_time_boxplot)
@@ -312,24 +324,25 @@ CalculateThroughput <- function(df, ...) {
 }
 
 # Apply the function to completion_time_df
-throughput <- CalculateThroughput(completion_time_df, batchSize, layer)
+throughput <- CalculateThroughput(completion_time_df, batchSize, Run)
 
 # Print the throughput
 print(paste("Throughput (requests per second):", throughput))
 ```
 
 ```{r}
-throughput_bar_chart <- ggplot(throughput, aes(x = batchSize, y = throughput, fill = layer)) +
+throughput_bar_chart <- ggplot(throughput, aes(x = batchSize, y = throughput, fill = Run)) +
     geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
     geom_errorbar(aes(ymin = throughput - sd(throughput), ymax = throughput + sd(throughput)),
         position = position_dodge(0.9), width = 0.25, color = "black"
     ) +
     labs(
-        title = "Bar Chart of Throughput by Batch Size and Layer",
+        title = "Throughput",
         x = "Batch Size",
         y = "Throughput (tasks/s)"
     ) +
-    theme_minimal()
+    theme_minimal() +
+    ylim(0, max(throughput$throughput * 1.25, na.rm = TRUE))
 
 # Print the boxplot
 print(throughput_bar_chart)
@@ -377,20 +390,40 @@ CalculateTaskArrivalRate <- function(df, ...) {
 }
 
 # Apply the function to the tasks dataframe
-arrival_rate <- CalculateTaskArrivalRate(tasks, batchSize, layer)
+arrival_rate <- CalculateTaskArrivalRate(tasks, batchSize, Run)
 ```
 
 ```{r}
 # Create a bar chart for task arrival rate
-arrival_rate_bar_chart <- ggplot(arrival_rate, aes(x = batchSize, y = arrival_rate, fill = layer)) +
+arrival_rate_bar_chart <- ggplot(arrival_rate, aes(x = batchSize, y = arrival_rate, fill = Run)) +
     geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
+    geom_errorbar(aes(ymin = arrival_rate - sd(arrival_rate), ymax = arrival_rate + sd(arrival_rate)),
+        position = position_dodge(0.9), width = 0.25, color = "black"
+    ) +
     labs(
-        title = "Bar Chart of Task Arrival Rate by Batch Size and Layer",
+        title = "Task Arrival Rate",
         x = "Batch Size",
         y = "Arrival Rate (tasks/s)"
     ) +
-    theme_minimal()
+    theme_minimal() +
+    ylim(0, max(arrival_rate$arrival_rate * 1.25, na.rm = TRUE))
 
 # Print the bar chart
 print(arrival_rate_bar_chart)
+```
+
+```{r}
+# Arrange all performance-related charts in a grid
+(performance_metrics_combined <- ggarrange(
+    average_response_time_boxplot,
+    arrival_rate_bar_chart,
+    throughput_bar_chart,
+    nrow = 1,
+    ncol = 3,
+    common.legend = TRUE,
+    legend = "bottom"
+))
+
+# Save the combined performance metrics chart
+SavePlot("performance_metrics.pdf", performance_metrics_combined, 8, 3)
 ```
