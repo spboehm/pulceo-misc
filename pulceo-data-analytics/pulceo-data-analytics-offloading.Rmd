@@ -133,6 +133,45 @@ waiting_time_on_psm_df <- CalculateTaskSchedulingMetric(tasks, start_status = "N
 waiting_time_on_pna_df <- CalculateTaskSchedulingMetric(tasks, start_status = "OFFLOADED", end_status = "RUNNING", policy, batchSize, layer, Run)
 ```
 
+```{r include=TRUE, echo=FALSE}
+# Calculate standard deviation and average for waiting_time_on_psm_df grouped by batchSize
+waiting_time_on_psm_stats <- waiting_time_on_psm_df %>%
+    group_by(batchSize) %>%
+    summarize(
+        start_status = first("NEW"),
+        end_status = first("SCHEDULED"),
+        sd_time = sd(time, na.rm = TRUE),
+        avg_time = mean(time, na.rm = TRUE),
+        metric = "Waiting Time (PSM)",
+        .groups = "drop"
+    )
+
+# Print the result
+print(waiting_time_on_psm_stats)
+
+# Create a LaTeX table for waiting_time_on_psm_stats
+waiting_time_on_psm_table <- waiting_time_on_psm_stats %>%
+    mutate(
+        batchSize = as.character(batchSize),
+        avg_sd_time = paste0("$\\mu$: ", round(avg_time, 2), ", $\\sigma$: ", round(sd_time, 2))
+    ) %>%
+    select(metric, start_status, end_status, batchSize, avg_sd_time) %>%
+    pivot_wider(
+        names_from = batchSize,
+        values_from = avg_sd_time,
+    ) %>%
+    kable(
+        format = "latex",
+        booktabs = TRUE,
+        escape = FALSE,
+        caption = "Waiting Time (PSM) Statistics"
+    ) %>%
+    kable_styling(latex_options = c("hold_position", "scale_down"))
+
+# Print the LaTeX table
+waiting_time_on_psm_table
+```
+
 ### Task Scheduling/Offloading Time
 
 ```{r include=TRUE, echo=FALSE}
