@@ -128,11 +128,10 @@ class TaskEmitter:
                 #print(f"Processing task: {task}")
                 timestamp_req = self.get_timestamp()
                 task_uuid = self.pulceo_api.create_task(json.dumps(task))
-                if task_uuid:
-                    self.history[task_uuid] = {
-                        "task_uuid": task_uuid,
-                        "timestamp_req": timestamp_req
-                    }
+                self.history[task_uuid] = {
+                    "task_uuid": task_uuid,
+                    "timestamp_req": timestamp_req
+                }
                 time.sleep(0.1)
                 self.processedTasks[task_uuid] = ""
         # wait, until all messages have been received, then terminate
