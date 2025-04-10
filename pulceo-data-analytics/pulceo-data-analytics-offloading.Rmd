@@ -342,7 +342,7 @@ average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y 
     geom_boxplot(color = "darkblue") +
     labs(
         title = "Response Time",
-        x = "Batch Size and Layer",
+        x = "Batch Size",
         y = "Response Time (ms)"
     ) +
     theme_minimal() +
@@ -351,6 +351,10 @@ average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y 
 
     # Print the boxplot
     print(average_response_time_boxplot)
+```
+
+```{r}
+average_response_time_by_batch_size <- CalculateAverageResponseTime(requests_combined, batchSize)
 ```
 
 ### Throughput (Task requests/s)
@@ -410,6 +414,10 @@ throughput_bar_chart <- ggplot(throughput, aes(x = batchSize, y = throughput, fi
 
 # Print the boxplot
 print(throughput_bar_chart)
+```
+
+```{r}
+average_troughput_by_batch_size <- CalculateThroughput(completion_time_df, batchSize)
 ```
 
 ### Task Arrival Rate
@@ -474,6 +482,10 @@ arrival_rate_bar_chart <- ggplot(arrival_rate, aes(x = batchSize, y = arrival_ra
 
 # Print the bar chart
 print(arrival_rate_bar_chart)
+```
+
+```{r}
+average_arrival_rate_by_batchSize <- CalculateTaskArrivalRate(tasks, batchSize)
 ```
 
 ```{r}
