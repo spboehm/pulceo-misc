@@ -269,14 +269,15 @@ CreateLatexTableForTaskMetrics <- function(stats_df) {
         ) %>%
         kable(
             format = "latex",
+            label = "tab:task-metric-statistics",
             booktabs = TRUE,
             linesep = c("", "", "\\addlinespace", "", ""),
             escape = FALSE,
-            caption = "Task Metrics Statistics for different batch sizes",
-            col.names = c("Task metric", "$s_{1}$", "$s_{2}", "200", "400", "600", "800"),
+            caption = "Task metric statistics for different batch sizes",
+            col.names = c("Task metric", "$S_{1}$", "$S_{2}$", "200", "400", "600", "800"),
             align = c("l", "l", "l", "c", "c", "c", "c")
         ) %>%
-        add_header_above(c(" " = 1, " " = 2, "Batch Size ($\\\\mu/\\\\sigma$)" = 4), escape = FALSE) %>%
+        add_header_above(c(" " = 1, " " = 2, "Batch size ($\\\\mu/\\\\sigma$)" = 4), escape = FALSE) %>%
         kable_styling(latex_options = c("hold_position", "scale_down"))
 }
 
@@ -298,7 +299,11 @@ all_task_metrics_stats <- rbind(
     completion_time_stats
 )
 
+# Create latex table
 table_task_metrics <- CreateLatexTableForTaskMetrics(all_task_metrics_stats)
+
+# Save latex table
+save_kable(table_task_metrics, paste("latex", SUBFOLDER, "task-metric-statistics.tex", sep = "/"))
 ```
 
 ## Performance Metrics
