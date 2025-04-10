@@ -346,11 +346,11 @@ average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y 
         y = "Response Time (ms)"
     ) +
     theme_minimal() +
-    ylim(0, max(requests_combined$X_value * 1.25, na.rm = TRUE)) +
+    ylim(0, max(requests_combined$X_value * 1.25, na.rm = TRUE))
 
 
-    # Print the boxplot
-    print(average_response_time_boxplot)
+# Print the boxplot
+print(average_response_time_boxplot)
 ```
 
 ```{r}
@@ -490,7 +490,7 @@ average_arrival_rate_by_batchSize <- CalculateTaskArrivalRate(tasks, batchSize)
 
 ```{r}
 # Arrange all performance-related charts in a grid
-(performance_metrics_combined <- ggarrange(
+performance_metrics_combined <- ggarrange(
     average_response_time_boxplot,
     arrival_rate_bar_chart,
     throughput_bar_chart,
@@ -498,7 +498,7 @@ average_arrival_rate_by_batchSize <- CalculateTaskArrivalRate(tasks, batchSize)
     ncol = 3,
     common.legend = TRUE,
     legend = "bottom"
-))
+)
 
 # Save the combined performance metrics chart
 SavePlot("performance_metrics.pdf", performance_metrics_combined, 8, 3)
