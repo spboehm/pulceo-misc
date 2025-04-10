@@ -273,11 +273,11 @@ CreateLatexTableForTaskMetrics <- function(stats_df) {
             booktabs = TRUE,
             linesep = c("", "", "\\addlinespace", "", ""),
             escape = FALSE,
-            caption = "Task metric statistics for different batch sizes",
-            col.names = c("Task metric", "$S_{1}$", "$S_{2}$", "200", "400", "600", "800"),
+            caption = "Task metric statistics for different batch sizes in seconds (s)",
+            col.names = c("Task metric", "$S_{1}$", "$S_{2}$", "200 ($\\mu/\\sigma$)", "400 ($\\mu/\\sigma$)", "600 ($\\mu/\\sigma$)", "800 ($\\mu/\\sigma$)"),
             align = c("l", "l", "l", "c", "c", "c", "c")
         ) %>%
-        add_header_above(c(" " = 1, " " = 2, "Batch size ($\\\\mu/\\\\sigma$)" = 4), escape = FALSE) %>%
+        add_header_above(c(" " = 1, " " = 2, "Batch size" = 4), escape = FALSE) %>%
         kable_styling(latex_options = c("hold_position", "scale_down"))
 }
 
