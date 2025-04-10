@@ -134,26 +134,28 @@ waiting_time_on_pna_df <- CalculateTaskSchedulingMetric(tasks, start_status = "O
 ```
 
 ```{r include=TRUE, echo=FALSE}
-# Calculate standard deviation and average for waiting_time_on_psm_df grouped by batchSize
-waiting_time_on_psm_stats <- waiting_time_on_psm_df %>%
-    group_by(batchSize) %>%
-    summarize(
-        start_status = first("NEW"),
-        end_status = first("SCHEDULED"),
-        sd_time = sd(time, na.rm = TRUE),
-        avg_time = mean(time, na.rm = TRUE),
-        metric = "Waiting Time (PSM)",
-        .groups = "drop"
-    )
+CalculateWaitingTimeStats <- function(df, start_status, end_status, metric_name) {
+    df %>%
+        group_by(batchSize) %>%
+        summarize(
+            start_status = first(start_status),
+            end_status = first(end_status),
+            sd_time = sd(time, na.rm = TRUE),
+            avg_time = mean(time, na.rm = TRUE),
+            .groups = "drop"
+        ) %>%
+            mutate(metric = metric_name)
+}
 
-# Print the result
-print(waiting_time_on_psm_stats)
+waiting_time_on_psm_stats <- CalculateWaitingTimeStats(waiting_time_on_psm_df, start_status = "NEW", end_status = "RUNNING", "Waiting Time (PSM)")
+```
 
-# Create a LaTeX table for waiting_time_on_psm_stats
+```{r include=TRUE, echo=FALSE}
+# Create a LaTeX table for task-metrics
 waiting_time_on_psm_table <- waiting_time_on_psm_stats %>%
     mutate(
         batchSize = as.character(batchSize),
-        avg_sd_time = paste0("$\\mu$: ", round(avg_time, 2), ", $\\sigma$: ", round(sd_time, 2))
+        avg_sd_time = paste0(round(avg_time, 2), "/", round(sd_time, 2))
     ) %>%
     select(metric, start_status, end_status, batchSize, avg_sd_time) %>%
     pivot_wider(
@@ -164,8 +166,11 @@ waiting_time_on_psm_table <- waiting_time_on_psm_stats %>%
         format = "latex",
         booktabs = TRUE,
         escape = FALSE,
-        caption = "Waiting Time (PSM) Statistics"
+        caption = "Task Metrics Statistics",
+        col.names = c("Task metric", "S1", "S2", "200", "400", "600", "800"),
+        align = c("l", "l", "l", "c", "c", "c", "c")
     ) %>%
+    add_header_above(c(" " = 1, " " = 2, "Batch Size ($\\\\mu/\\\\sigma$)" = 4), escape = FALSE) %>%
     kable_styling(latex_options = c("hold_position", "scale_down"))
 
 # Print the LaTeX table
