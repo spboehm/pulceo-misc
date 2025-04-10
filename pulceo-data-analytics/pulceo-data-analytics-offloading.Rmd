@@ -84,7 +84,8 @@ requests_combined <- tasks %>%
         layer == "cloud-only" ~ "1",
         layer == "edge-only" ~ "2",
         layer == "joint" ~ "3"
-    ))
+    )) %>%
+    mutate(X_value = X_value / 1000)
 ```
 
 ```{r}
@@ -349,7 +350,7 @@ average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y 
     labs(
         title = "Response Time",
         x = "Batch Size",
-        y = "Response Time (ms)"
+        y = "Response Time (s)"
     ) +
     theme_minimal() +
     ylim(0, max(requests_combined$X_value * 1.25, na.rm = TRUE))
