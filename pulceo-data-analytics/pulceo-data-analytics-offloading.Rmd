@@ -327,7 +327,13 @@ CalculateAverageResponseTime <- function(df, ...) {
     # Group by the specified variables (if any) and calculate the average response time
     avg_response_time <- df %>%
         group_by(!!!group_by_vars) %>%
-        summarize(avg_response_time = mean(X_value, na.rm = TRUE), .groups = "drop")
+        summarize(
+            avg_response_time = mean(X_value, na.rm = TRUE),
+            sd_response_time = sd(X_value, na.rm = TRUE),
+            min_response_time = min(X_value, na.rm = TRUE),
+            max_response_time = max(X_value, na.rm = TRUE),
+            .groups = "drop"
+        )
 
     return(avg_response_time)
 }
