@@ -2,6 +2,18 @@
 
 # pulceo-misc
 
+## Quick Access SummerSoc 2025
+
+Publication: **API-driven Task Scheduling and Offloading with PULCEO: An Extension**
+
+- Raw data: [pulceo-data-analytics/raw/summersoc2025](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2025)
+- [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report](https://spboehm.github.io/pulceo-misc/reports/summersoc2025/)
+- For all experiments, the following versions have been used:
+  - pulceo-resource-manager: **v1.3.0**
+  - pulceo-monitoring-service: **v1.3.1**
+  - pulceo-service-manager: **v1.3.0**
+  - pulceo-node-agent: **v1.3.0**
+
 ## Quick Access SOSE 2024
 
 Publication: **Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration**
