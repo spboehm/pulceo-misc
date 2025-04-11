@@ -213,13 +213,13 @@ boxplot_scheduling <- ggplot(scheduling_time_df, aes(x = batchSize, y = time, fi
 
 boxplot_processing <- ggplot(processing_time_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
-    labs(title = "Processing Time", y = "Time (s)", x = "Batch Size") +
+    labs(title = "Processing Time (Application)", y = "Time (s)", x = "Batch Size") +
     theme_minimal() +
     ylim(0, max(processing_time_df$time * 1.10, na.rm = TRUE))
 
 boxplot_completion <- ggplot(completion_time_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
-    labs(title = "Completion Time", y = "Time (s)", x = "Batch Size") +
+    labs(title = "Completion Time (Total)", y = "Time (s)", x = "Batch Size") +
     theme_minimal() +
     ylim(0, max(completion_time_df$time * 1.10, na.rm = TRUE))
 
@@ -227,8 +227,8 @@ boxplot_completion <- ggplot(completion_time_df, aes(x = batchSize, y = time, fi
 (task_metrics_combined <- ggarrange(
     boxplot_waiting_psm,
     boxplot_waiting_pna,
-    boxplot_waiting_total,
     boxplot_scheduling,
+    boxplot_waiting_total,
     boxplot_processing,
     boxplot_completion,
     nrow = 2,
@@ -270,9 +270,9 @@ CreateLatexTableForTaskMetrics <- function(stats_df) {
         ) %>%
         kable(
             format = "latex",
-            label = "tab:task-metric-statistics",
+            label = "task-metric-statistics",
             booktabs = TRUE,
-            linesep = c("", "", "\\addlinespace", "", ""),
+            linesep = c("", "", "\\addlinespace", "", "\\addlinespace"),
             escape = FALSE,
             caption = "Task metric statistics for different batch sizes in seconds (s)",
             col.names = c("Task metric", "$S_{1}$", "$S_{2}$", "200 ($\\mu/\\sigma$)", "400 ($\\mu/\\sigma$)", "600 ($\\mu/\\sigma$)", "800 ($\\mu/\\sigma$)"),
@@ -287,15 +287,15 @@ waiting_time_on_psm_stats <- CalculateWaitingTimeStats(waiting_time_on_psm_df, s
 waiting_time_on_pna_stats <- CalculateWaitingTimeStats(waiting_time_on_pna_df, start_status = "OFFLOADED", end_status = "RUNNING", "Waiting Time (PNA)")
 waiting_time_total_stats <- CalculateWaitingTimeStats(waiting_time_total_df, start_status = "NEW", end_status = "RUNNING", "Waiting Time (Total)")
 scheduling_time_stats <- CalculateWaitingTimeStats(scheduling_time_df, start_status = "SCHEDULED", end_status = "OFFLOADED", "Offloading Time")
-processing_time_stats <- CalculateWaitingTimeStats(processing_time_df, start_status = "RUNNING", end_status = "COMPLETED", "Processing Time")
-completion_time_stats <- CalculateWaitingTimeStats(completion_time_df, start_status = "NEW", end_status = "COMPLETED", "Completion Time")
+processing_time_stats <- CalculateWaitingTimeStats(processing_time_df, start_status = "RUNNING", end_status = "COMPLETED", "Processing Time (Application)")
+completion_time_stats <- CalculateWaitingTimeStats(completion_time_df, start_status = "NEW", end_status = "COMPLETED", "Completion Time (Total)")
 
 # Combine all statistics into a single dataframe
 all_task_metrics_stats <- rbind(
     waiting_time_on_psm_stats,
+    scheduling_time_stats,
     waiting_time_on_pna_stats,
     waiting_time_total_stats,
-    scheduling_time_stats,
     processing_time_stats,
     completion_time_stats
 )
@@ -424,7 +424,7 @@ print(throughput_bar_chart)
 ```
 
 ```{r}
-average_troughput_by_batch_size <- CalculateThroughput(completion_time_df, batchSize)
+average_troughput_by_batch_size <- CalculateThroughput(completion_time_df, batchSize, Run)
 ```
 
 ### Task Arrival Rate
@@ -492,7 +492,7 @@ print(arrival_rate_bar_chart)
 ```
 
 ```{r}
-average_arrival_rate_by_batchSize <- CalculateTaskArrivalRate(tasks, batchSize)
+average_arrival_rate_by_batchSize <- CalculateTaskArrivalRate(tasks, batchSize, Run)
 ```
 
 ```{r}
