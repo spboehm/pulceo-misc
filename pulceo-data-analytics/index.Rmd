@@ -16,6 +16,18 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 options(knitr.duplicate.label = 'allow')
 ```
 
+## SummerSoC 2025
+
+[Orchestration Report](summersoc2025)
+
+```{r echo=FALSE }
+subfolder3 <- "summersoc2025"
+rmarkdown::render('pulceo-data-analytics-offloading.Rmd', 
+                  params = list(subfolder = subfolder3),
+                  output_dir = paste0("reports", "/", subfolder3),
+                  output_file = "index.html")
+```
+
 ## SOSE 2024 PROD
 
 [Orchestration Report](sose2024-prod)

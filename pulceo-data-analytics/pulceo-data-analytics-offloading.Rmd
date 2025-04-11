@@ -1,11 +1,15 @@
 ---
 title: "PULCEO Data Analytics  - Task Scheduling/Offloading" 
-# author:
-#   - name: "Author Name"
-#     affiliation: "Your Institution"
-#     email: "your.email@example.com"
-# date: "`r Sys.Date()`"
-# output: rticles::lncs_article
+params:
+  subfolder: "summersoc2025"
+knit: (function(input_file, encoding) {
+  metadata <- rmarkdown::yaml_front_matter(input_file);
+  out_dir <- with(metadata, paste0("reports/", params$subfolder));
+  rmarkdown::render(input_file,
+  encoding=encoding,
+  output_file=file.path(dirname(input_file), out_dir, "index.html"))})
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
 ---
 
 ```{r, include=FALSE}
@@ -186,7 +190,7 @@ CalculateOverallMakespan <- function(df, ...) {
 overall_makespan <- CalculateOverallMakespan(completion_time_df, batchSize, layer)
 ```
 
-```{r}
+```{r include=TRUE, echo=FALSE}
 # Create individual boxplots
 boxplot_waiting_total <- ggplot(waiting_time_total_df, aes(x = batchSize, y = time, fill = Run)) +
     geom_boxplot(color = "darkblue") +
@@ -495,9 +499,9 @@ print(arrival_rate_bar_chart)
 average_arrival_rate_by_batchSize <- CalculateTaskArrivalRate(tasks, batchSize, Run)
 ```
 
-```{r}
+```{r include=TRUE, echo=FALSE}
 # Arrange all performance-related charts in a grid
-performance_metrics_combined <- ggarrange(
+(performance_metrics_combined <- ggarrange(
     average_response_time_boxplot,
     arrival_rate_bar_chart,
     throughput_bar_chart,
@@ -505,7 +509,7 @@ performance_metrics_combined <- ggarrange(
     ncol = 3,
     common.legend = TRUE,
     legend = "bottom"
-)
+))
 
 # Save the combined performance metrics chart
 SavePlot("performance_metrics.pdf", performance_metrics_combined, 8, 3)
