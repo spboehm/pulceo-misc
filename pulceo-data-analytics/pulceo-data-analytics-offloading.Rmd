@@ -352,7 +352,7 @@ average_response_time <- CalculateAverageResponseTime(requests_combined, batchSi
 average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y = X_value, fill = Run)) +
     geom_boxplot(color = "darkblue") +
     labs(
-        title = "Response Time",
+        title = "Task Response Time",
         x = "Batch Size",
         y = "Response Time (s)"
     ) +
@@ -416,7 +416,7 @@ throughput_bar_chart <- ggplot(throughput, aes(x = batchSize, y = throughput, fi
         position = position_dodge(0.9), width = 0.25, color = "black"
     ) +
     labs(
-        title = "Throughput",
+        title = "Task Throughput",
         x = "Batch Size",
         y = "Throughput (tasks/s)"
     ) +
