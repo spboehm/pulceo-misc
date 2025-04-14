@@ -65,11 +65,7 @@ class Scheduler(ABC):
             self.batch_size = self.batch_size - 1
             logging.info("Scheduler remaining batch size " + str(self.batch_size))
             logging.info("Remaining size in buffer " + str(len(self.pendingTasks)))
-            for task in self.processedTasks:
-                logging.info(f"UnProcessed task UUID: {task}")
             if self.batch_size == 0:
-                print("Scheduler stop")
-                # Posion Pill
                 self.mqtt_client.publish("cmd/tasks", "STOP")
                 self.stop()
 
@@ -183,15 +179,15 @@ class EdgeOnlyScheduler(Scheduler):
                 task_id = task['taskUUID']
                 status = "SCHEDULED"
                 application_id = ""  # TODO: replace dummy
-                # if (bool(os.getenv('LOCAL_SCHEDULING')) is True):
-                #     if (elected_node == "edge-0"):
-                #         application_component_id = "127.0.0.1:8087"
-                #     else:
-                #         application_component_id = "127.0.0.2:8087"
-                # else:
+                if (bool(os.getenv('LOCAL_SCHEDULING')) is True):
+                    if (elected_node == "edge-0"):
+                        application_component_id = "127.0.0.1:8087"
+                    else:
+                        application_component_id = "127.0.0.2:8087"
+                else:
+                    pass
                     # TODO: resolve workaround, putting the port the application_component_id
-                application_component_id = elected_node + "-edge-iot-simulator-component-eis" + ".pulceo.svc.cluster.local:80"
-                # print(application_component_id)
+                # application_component_id = elected_node + "-edge-iot-simulator-component-eis" + ".pulceo.svc.cluster.local:80"
                 # schedule
                 self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
                 # add mapping between task_id and node_id to processedTasks for later mapping
@@ -218,10 +214,6 @@ class EdgeOnlyScheduler(Scheduler):
         logging.info(f"{self.name} Received completed task: {task}")
         self.pulceo_api.release_cpu_on_node(self.processedTasks[task['taskUUID']], "shares", int(task['requirements']['cpu_shares']))
         self.pulceo_api.release_memory_on_node(self.processedTasks[task['taskUUID']], "size", float(task['requirements']['memory_size']))
-
-        # TODO: remove from processedTasks
-        print("del " + task['taskUUID'])
-        del self.processedTasks[task['taskUUID']]
 
         if len(self.pendingTasks) > self.PENDING_TASKS_THRESHOLD:
             self.handle_new_task(self.pendingTasks.pop())

@@ -43,7 +43,6 @@ class TaskEmitter:
         self.exit_event = threading.Event()
         self.pulceo_api = API(scheme, host, prm_port, psm_port)
         self.lock = threading.Lock()
-        self.processedTasks = {}
 
     def init_mqtt(self):
         client = mqtt.Client(client_id=str(uuid.uuid4()), clean_session=False, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
@@ -96,10 +95,7 @@ class TaskEmitter:
                     unit="ms"
                 )
                 self.mqtt_client.publish(requests_topic, task_metric.to_json())
-                del self.processedTasks[received_task['globalTaskUUID']]
                 self.batch_size = self.batch_size - 1
-                for task in self.processedTasks:
-                    print(f"Unreceived task UUID: {task}")
                 if self.batch_size == 0:
                     print("TaskEmitter last message received")
                     self.stop()
@@ -125,7 +121,6 @@ class TaskEmitter:
             with self.lock:
                 # enrich with scheduling properties
                 task["schedulingProperties"] = self.scheduling_properties
-                #print(f"Processing task: {task}")
                 timestamp_req = self.get_timestamp()
                 task_uuid = self.pulceo_api.create_task(json.dumps(task))
                 self.history[task_uuid] = {
@@ -133,12 +128,10 @@ class TaskEmitter:
                     "timestamp_req": timestamp_req
                 }
                 time.sleep(0.1)
-                self.processedTasks[task_uuid] = ""
         # wait, until all messages have been received, then terminate
         self.exit_event.wait()
 
     def stop(self):
-        print("Emitter stop")
         self.mqtt_client.loop_stop()
         self.mqtt_client.disconnect()
         self.exit_event.set()
