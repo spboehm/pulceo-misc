@@ -30,51 +30,54 @@ library(rjson)
 ```
 
 ```{r include=TRUE, echo=FALSE}
-SUBFOLDER = params$subfolder
+SUBFOLDER <- params$subfolder
 ```
 
 ```{r}
-dframe <- read.table(file=paste0("raw/", SUBFOLDER, "/", "META.txt"),header=FALSE,
-                     sep='=',col.names=c('Key','Value'))
-dtable <- data.table(dframe,key='Key')
-node_scale_fills <- str_split(dtable['NODE_SCALES']$Value, pattern = ",")[[1]]
-node_scale_fills_ext <- str_split(dtable['NODE_SCALES_EXT']$Value, pattern = ",")[[1]]
-start_timestamp <-dtable['START_TIMESTAMP']$Value
-end_timestamp <- dtable['END_TIMESTAMP']$Value
-nodes <- dtable['NODES']$Value
+dframe <- read.table(
+  file = paste0("raw/", SUBFOLDER, "/", "META.txt"), header = FALSE,
+  sep = "=", col.names = c("Key", "Value")
+)
+dtable <- data.table(dframe, key = "Key")
+node_scale_fills <- str_split(dtable["NODE_SCALES"]$Value, pattern = ",")[[1]]
+node_scale_fills_ext <- str_split(dtable["NODE_SCALES_EXT"]$Value, pattern = ",")[[1]]
+start_timestamp <- dtable["START_TIMESTAMP"]$Value
+end_timestamp <- dtable["END_TIMESTAMP"]$Value
+nodes <- dtable["NODES"]$Value
 
 # defaults
-ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable['ART_PLOT_WIDTH']$Value), 8, dtable['ART_PLOT_WIDTH']$Value))
-ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable['ART_PLOT_HEIGHT']$Value), 3, dtable['ART_PLOT_HEIGHT']$Value))
-ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable['ART_SHORT_NAMES']$Value), FALSE, dtable['ART_SHORT_NAMES']$Value))
+ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable["ART_PLOT_WIDTH"]$Value), 8, dtable["ART_PLOT_WIDTH"]$Value))
+ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable["ART_PLOT_HEIGHT"]$Value), 3, dtable["ART_PLOT_HEIGHT"]$Value))
+ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable["ART_SHORT_NAMES"]$Value), FALSE, dtable["ART_SHORT_NAMES"]$Value))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
 ReadAndFilterTimestamp <- function(file, timestamp) {
-  return(read.csv(file, skip = 3) %>% 
-    filter(between(timestamp, start_timestamp, end_timestamp), grepl(paste0(nodes,"|pna-k8s-node"), resourceName)))
+  return(read.csv(file, skip = 3) %>%
+    filter(between(timestamp, start_timestamp, end_timestamp), grepl(paste0(nodes, "|pna-k8s-node"), resourceName)))
 }
 
 ReadAndFilterEndTime <- function(file, endTime) {
-  return(read.csv(file, skip = 3) %>% 
+  return(read.csv(file, skip = 3) %>%
     filter(between(endTime, start_timestamp, end_timestamp)))
 }
 
+# TODO: move to function
 dir.create(paste("latex", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
 
-CPU_UTIL_RAW=ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "CPU_UTIL.csv", sep = "/"), timestamp)
-MEM_UTIL_RAW=ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "MEM_UTIL.csv", sep = "/"), timestamp)
-STORAGE_UTIL_RAW=ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "STORAGE_UTIL.csv", sep = "/"), timestamp)
-NET_UTIL_RAW=ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "NET_UTIL.csv", sep = "/"), timestamp)
-ICMP_RTT_RAW=ReadAndFilterEndTime(paste("raw", SUBFOLDER, "ICMP_RTT.csv", sep = "/"), endTime)
-TCP_BW_RAW=ReadAndFilterEndTime(paste("raw", SUBFOLDER, "TCP_BW.csv", sep = "/"), endTime)
-UDP_BW_RAW=ReadAndFilterEndTime(paste("raw", SUBFOLDER, "UDP_BW.csv", sep = "/"), endTime)
-NODES_RAW=rjson::fromJSON(file=paste("raw", SUBFOLDER, "NODES.json", sep = "/"))
+CPU_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "CPU_UTIL.csv", sep = "/"), timestamp)
+MEM_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "MEM_UTIL.csv", sep = "/"), timestamp)
+STORAGE_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "STORAGE_UTIL.csv", sep = "/"), timestamp)
+NET_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "NET_UTIL.csv", sep = "/"), timestamp)
+ICMP_RTT_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "ICMP_RTT.csv", sep = "/"), endTime)
+TCP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "TCP_BW.csv", sep = "/"), endTime)
+UDP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "UDP_BW.csv", sep = "/"), endTime)
+NODES_RAW <- rjson::fromJSON(file = paste("raw", SUBFOLDER, "NODES.json", sep = "/"))
 ```
 
 ```{r}
 # transformations
-TransfromNodeMetricsMetadata <- function (df) {
+TransfromNodeMetricsMetadata <- function(df) {
   df$X_field <- as.factor(df$X_field)
   df$k8sResourceType <- as.factor(df$k8sResourceType)
   df$resourceName <- as.factor(df$resourceName)
@@ -87,62 +90,66 @@ TransfromNodeMetricsMetadata <- function (df) {
 }
 
 filterResourceUtilForNode <- function(df, field, resourceType, resource) {
-  return(df %>% filter(X_field == field) %>% 
-           filter(k8sResourceType == resourceType) %>% 
-           filter(grepl(resource, resourceName)))
+  return(df %>% filter(X_field == field) %>%
+    filter(k8sResourceType == resourceType) %>%
+    filter(grepl(resource, resourceName)))
 }
 
 CreateSummary <- function(df, resource) {
-  df <- df %>% 
-    group_by(nodeName) %>% 
-    summarize(min = round(min(X_value), 3),
-              avg = round(mean(X_value), 3),
-              max = round(max(X_value), 3),
-              median = round(median(X_value), 3),
-              sd = round(sd(X_value), 3), .groups = "drop")
+  df <- df %>%
+    group_by(nodeName) %>%
+    summarize(
+      min = round(min(X_value), 3),
+      avg = round(mean(X_value), 3),
+      max = round(max(X_value), 3),
+      median = round(median(X_value), 3),
+      sd = round(sd(X_value), 3), .groups = "drop"
+    )
   names(df) <- c(resource, "Min", "Mean", "Max", "Med", "SD")
   return(df)
 }
 
 CreateSummaryForStorage <- function(df, resource) {
-  df <- df %>% 
-    group_by(resourceName) %>% 
-    summarize(min = round(min(X_value), 3),
-              avg = round(mean(X_value), 3),
-              max = round(max(X_value), 3),
-              median = round(median(X_value), 3),
-              sd = round(sd(X_value), 3), .groups = "drop")
+  df <- df %>%
+    group_by(resourceName) %>%
+    summarize(
+      min = round(min(X_value), 3),
+      avg = round(mean(X_value), 3),
+      max = round(max(X_value), 3),
+      median = round(median(X_value), 3),
+      sd = round(sd(X_value), 3), .groups = "drop"
+    )
   names(df) <- c(resource, "Min", "Mean", "Max", "Med", "SD")
   return(df)
 }
 
 CreateSummaryForNetUtil <- function(df, resource) {
-  df <- df %>% 
-    group_by(nodeName, X_field) %>% 
+  df <- df %>%
+    group_by(nodeName, X_field) %>%
     summarize(max = round(max(X_value_final / 1024 / 1024 / 1024), 3), .groups = "drop")
   return(df)
 }
 
 # latex generation
 SaveLatexTable <- function(summary, caption, label, filename, position = "t") {
-  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 2) %>% kable_styling(full_width = TRUE)
+  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep = "", vline = "", label = label, position = position, digits = 2) %>% kable_styling(full_width = TRUE)
   save_kable(latex_table, paste("latex", SUBFOLDER, filename, sep = "/"))
 }
 
 SaveMultiColLatexTable <- function(summary, caption, label, filename, colnames, header, position = "t") {
-  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, col.names=colnames, position = position, digits = 2) %>%
-    kable_styling(full_width = TRUE) %>% 
+  latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep = "", vline = "", label = label, col.names = colnames, position = position, digits = 2) %>%
+    kable_styling(full_width = TRUE) %>%
     add_header_above(header)
-  
+
   save_kable(latex_table, paste("latex", SUBFOLDER, filename, sep = "/"))
 }
 
 CreateScrollableTable <- function(df) {
-  (kbl(df) %>% scroll_box(width = "100%", height = "400px") %>%  kable_styling(bootstrap_options = c("striped", "hover", "condensed")))
+  (kbl(df) %>% scroll_box(width = "100%", height = "400px") %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed")))
 }
 
 # resources
-node_mapping <- Reduce(rbind, lapply(NODES_RAW, function (x) {
+node_mapping <- Reduce(rbind, lapply(NODES_RAW, function(x) {
   return(c(x$hostname, x$node$name))
 }))
 
@@ -152,33 +159,34 @@ names(node_mapping) <- c("sourceHost", "nodeName")
 node_mapping_dest <- node_mapping
 names(node_mapping_dest) <- c("destinationHost", "nodeNameDest")
 
-scale <- function (x, na.rm=FALSE) (format(round(x, digits = 2), nsmall = 2))
+scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))
 ```
 
 ```{r}
+# TODO: move to function
 dir.create(paste("plots", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
 ```
 
 ```{r}
 # plots
 theme_set(theme_minimal())
-theme_update(plot.margin = margin(0.75,5.5,0,5.5,"pt"))
+theme_update(plot.margin = margin(0.75, 5.5, 0, 5.5, "pt"))
 GenerateBarPlotPercentage <- function(summary, title, ylim_factor = 1.0, vjust = 0.0) {
-  plot <- ggplot(summary, aes(x=Node, y=Mean, fill=Node)) + 
-  geom_bar(stat="identity", width=0.75) +
-  geom_errorbar(aes(x=Node, ymin=Mean-SD, ymax=Mean+SD), width=0.3, colour="blue") + 
-  geom_label(aes(label = format(round(Mean, digits=2), nsmall=2)), vjust = vjust, fill="white") + 
-  ggtitle(title) + 
-  ylab("Utilization (%)") +
-  ylim(0, max(summary$Mean+summary$SD) * ylim_factor) + 
-  theme(legend.position = "none") + 
-  scale_fill_manual(values=node_scale_fills)
+  plot <- ggplot(summary, aes(x = Node, y = Mean, fill = Node)) +
+    geom_bar(stat = "identity", width = 0.75) +
+    geom_errorbar(aes(x = Node, ymin = Mean - SD, ymax = Mean + SD), width = 0.3, colour = "blue") +
+    geom_label(aes(label = format(round(Mean, digits = 2), nsmall = 2)), vjust = vjust, fill = "white") +
+    ggtitle(title) +
+    ylab("Utilization (%)") +
+    ylim(0, max(summary$Mean + summary$SD) * ylim_factor) +
+    theme(legend.position = "none") +
+    scale_fill_manual(values = node_scale_fills)
   return(plot)
 }
 
-SavePlot <- function(filename, plot, width=4, height=3) {
-  ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0,0,0,0,"pt")), width = width, height = height, device=cairo_pdf)
-} 
+SavePlot <- function(filename, plot, width = 4, height = 3) {
+  ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
+}
 ```
 
 ## Topology
@@ -208,7 +216,7 @@ CreateScrollableTable(links)
 ### Metric Requests
 
 ```{r include=TRUE, echo=FALSE}
-metric_requests <-jsonlite::fromJSON(paste("raw", SUBFOLDER, "METRIC_REQUESTS.json", sep = "/"))
+metric_requests <- jsonlite::fromJSON(paste("raw", SUBFOLDER, "METRIC_REQUESTS.json", sep = "/"))
 CreateScrollableTable(metric_requests)
 ```
 
@@ -285,17 +293,20 @@ SaveLatexTable(CPU_UTIL_nodes_summary, "CPU utilization of all nodes in \\%", "c
 
 ```{r include=TRUE, echo=FALSE}
 # cpu plot
-(cpu_util_bar_plot <- GenerateBarPlotPercentage(CPU_UTIL_nodes_summary, "CPU Utilization",  1.3, 0.5))
+(cpu_util_bar_plot <- GenerateBarPlotPercentage(CPU_UTIL_nodes_summary, "CPU Utilization", 1.3, 0.5))
 SavePlot("cpu_util_bar_plot.pdf", cpu_util_bar_plot)
 ```
 
 ```{r}
 # boxplot
-cpu_box_plot <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), aes(x=sourceHost, y=X_value, group=sourceHost)) + geom_boxplot()
+cpu_box_plot <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), aes(x = sourceHost, y = X_value, group = sourceHost)) +
+  geom_boxplot()
 ```
 
 ```{r}
-cpu_plot_node <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), aes(x=timestamp, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost))
+cpu_plot_node <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
 ```
 
 ### Applications
@@ -303,23 +314,25 @@ cpu_plot_node <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage"
 ```{r}
 CPU_UTIL_PODS <- filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "traefik|pulceo-node-agent|edge-iot-simulator")
 
-CPU_UTIL_PODS_PROCESSED <- CPU_UTIL_PODS %>% 
-  group_by(nodeName) %>% 
-  arrange(timestamp, .by_group = TRUE) %>% 
-  mutate(id= row_number()) %>% 
-  mutate(application = if_else(grepl("traefik", resourceName), "traefik", 
-                               if_else(grepl("pulceo-node-agent", resourceName), "pulceo-node-agent", 
-                                       if_else(grepl("edge-iot-simulator", resourceName), "edge-iot-simulator", ""))))
+CPU_UTIL_PODS_PROCESSED <- CPU_UTIL_PODS %>%
+  group_by(nodeName) %>%
+  arrange(timestamp, .by_group = TRUE) %>%
+  mutate(id = row_number()) %>%
+  mutate(application = if_else(grepl("traefik", resourceName), "traefik",
+    if_else(grepl("pulceo-node-agent", resourceName), "pulceo-node-agent",
+      if_else(grepl("edge-iot-simulator", resourceName), "edge-iot-simulator", "")
+    )
+  ))
 
-(cpu_util_pods_plot <- ggplot(CPU_UTIL_PODS_PROCESSED, aes(x=id, y=X_value, colour=application)) + 
-  geom_line() + 
+(cpu_util_pods_plot <- ggplot(CPU_UTIL_PODS_PROCESSED, aes(x = id, y = X_value, colour = application)) +
+  geom_line() +
   # ggtitle("CPU utilization of applications") +
   ylab("Utilization (%)") +
   xlab("Time") +
-  labs(color='Applications') +
+  labs(color = "Applications") +
   facet_grid(vars(nodeName)) +
-  theme_classic() + 
-  theme(legend.position="bottom"))
+  theme_classic() +
+  theme(legend.position = "bottom"))
 
 SavePlot("cpu_util_plot_pods.pdf", cpu_util_pods_plot, 8, 6)
 ```
@@ -327,21 +340,29 @@ SavePlot("cpu_util_plot_pods.pdf", cpu_util_pods_plot, 8, 6)
 ```{r include=TRUE, echo=FALSE}
 CPU_UTIL_pods_summary <- CreateSummary(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "edge-iot-simulator"), "Pod")
 
-CPU_UTIL_PODS_SUMMARY_BY_APP <- CPU_UTIL %>% 
-  filter(k8sResourceType == "POD", X_field == "usageCPUPercentage") %>% 
-  group_by(nodeName, resourceName) %>% 
-  summarize(min = round(min(X_value), 3),
-          avg = round(mean(X_value), 3),
-          max = round(max(X_value), 3),
-          median = round(median(X_value), 3),
-          sd = round(sd(X_value), 3), .groups = "drop")
+CPU_UTIL_PODS_SUMMARY_BY_APP <- CPU_UTIL %>%
+  filter(k8sResourceType == "POD", X_field == "usageCPUPercentage") %>%
+  group_by(nodeName, resourceName) %>%
+  summarize(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    sd = round(sd(X_value), 3), .groups = "drop"
+  )
 CreateScrollableTable(CPU_UTIL_PODS_SUMMARY_BY_APP)
 ```
 
 ```{r}
-cpu_plot_pod_edg_iot_simulator <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "edge-iot-simulator"), aes(x=timestamp, y=X_value, group=resourceName)) + geom_line() + facet_grid(vars(resourceName))
-cpu_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "pulceo-node-agent"), aes(x=timestamp, y=X_value, group=resourceName)) + geom_line() + facet_grid(vars(resourceName))
-cpu_plot_pod_traefik <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "traefik"), aes(x=timestamp, y=X_value, group=resourceName)) + geom_line() + facet_grid(vars(resourceName))
+cpu_plot_pod_edg_iot_simulator <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "edge-iot-simulator"), aes(x = timestamp, y = X_value, group = resourceName)) +
+  geom_line() +
+  facet_grid(vars(resourceName))
+cpu_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "pulceo-node-agent"), aes(x = timestamp, y = X_value, group = resourceName)) +
+  geom_line() +
+  facet_grid(vars(resourceName))
+cpu_plot_pod_traefik <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "traefik"), aes(x = timestamp, y = X_value, group = resourceName)) +
+  geom_line() +
+  facet_grid(vars(resourceName))
 ```
 
 ## Memory Utilization
@@ -364,17 +385,24 @@ SaveLatexTable(MEM_UTIL_nodes_summary, "Idle Memory utilization of all nodes in 
 
 ```{r include=TRUE, echo=FALSE}
 (mem_util_bar_plot <- GenerateBarPlotPercentage(MEM_UTIL_nodes_summary, "Memory Utilization", 1.4, -1.0))
-SavePlot("mem_util_bar_plot.pdf", mem_util_bar_plot, 4,3)
+SavePlot("mem_util_bar_plot.pdf", mem_util_bar_plot, 4, 3)
 ```
 
 ```{r}
-mem_box_plot <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "NODE", "pna-k8s-node"), aes(x=sourceHost, y=X_value, group=sourceHost)) + geom_boxplot()
+mem_box_plot <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "NODE", "pna-k8s-node"), aes(x = sourceHost, y = X_value, group = sourceHost)) +
+  geom_boxplot()
 ```
 
 ```{r}
-mem_plot_node <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "NODE", "pna-k8s-node"), aes(x=timestamp, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost))
-mem_plot_node_pulceo_node_agent <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "pulceo-node-agent"), aes(x=timestamp, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost))
-mem_plot_node_traefik <-ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "traefik"), aes(x=timestamp, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost))
+mem_plot_node <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "NODE", "pna-k8s-node"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+mem_plot_node_pulceo_node_agent <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "pulceo-node-agent"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+mem_plot_node_traefik <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "traefik"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
 ```
 
 ### Applications
@@ -383,22 +411,24 @@ mem_plot_node_traefik <-ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryP
 MEM_UTIL_PODS <- filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "traefik|pulceo-node-agent|edge-iot-simulator")
 
 MEM_UTIL_PODS_PROCESSED <- MEM_UTIL_PODS %>%
-  group_by(nodeName) %>% 
-  arrange(timestamp, .by_group = TRUE) %>% 
-  mutate(id= row_number()) %>% 
-  mutate(application = if_else(grepl("traefik", resourceName), "traefik", 
-                               if_else(grepl("pulceo-node-agent", resourceName), "pulceo-node-agent", 
-                                       if_else(grepl("edge-iot-simulator", resourceName), "edge-iot-simulator", ""))))
+  group_by(nodeName) %>%
+  arrange(timestamp, .by_group = TRUE) %>%
+  mutate(id = row_number()) %>%
+  mutate(application = if_else(grepl("traefik", resourceName), "traefik",
+    if_else(grepl("pulceo-node-agent", resourceName), "pulceo-node-agent",
+      if_else(grepl("edge-iot-simulator", resourceName), "edge-iot-simulator", "")
+    )
+  ))
 
-mem_util_pods_plot <- ggplot(MEM_UTIL_PODS_PROCESSED, aes(x=timestamp, y=X_value, colour=application)) + 
-  geom_line() + 
+mem_util_pods_plot <- ggplot(MEM_UTIL_PODS_PROCESSED, aes(x = timestamp, y = X_value, colour = application)) +
+  geom_line() +
   ggtitle("Memory utilization of applications") +
   ylab("Utilization (%)") +
   xlab("Time") +
-  labs(color='Applications') +
+  labs(color = "Applications") +
   theme_classic() +
   facet_grid(vars(nodeName)) +
-  theme(legend.position="bottom")
+  theme(legend.position = "bottom")
 
 SavePlot("mem_util_plot_pods.pdf", mem_util_pods_plot, 8, 6)
 ```
@@ -406,15 +436,17 @@ SavePlot("mem_util_plot_pods.pdf", mem_util_pods_plot, 8, 6)
 ```{r include=TRUE, echo=FALSE}
 MEM_UTIL_pods_summary <- CreateSummary(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "traefik"), "Pod")
 
-MEM_UTIL_PODS_SUMMARY_BY_APP <- MEM_UTIL %>% 
-  filter(k8sResourceType == "POD", X_field == "usageMemoryPercentage") %>% 
-  group_by(nodeName, resourceName) %>% 
-  summarize(min = round(min(X_value), 3),
-          avg = round(mean(X_value), 3),
-          max = round(max(X_value), 3),
-          median = round(median(X_value), 3),
-          sd = round(sd(X_value), 3),
-          .groups = 'drop')
+MEM_UTIL_PODS_SUMMARY_BY_APP <- MEM_UTIL %>%
+  filter(k8sResourceType == "POD", X_field == "usageMemoryPercentage") %>%
+  group_by(nodeName, resourceName) %>%
+  summarize(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    sd = round(sd(X_value), 3),
+    .groups = "drop"
+  )
 CreateScrollableTable(MEM_UTIL_PODS_SUMMARY_BY_APP)
 ```
 
@@ -433,9 +465,15 @@ SaveLatexTable(STORAGE_UTIL_SUMMARY, "Storage in Percent", "storage-utilization-
 ```
 
 ```{r}
-storage_plot_node <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "NODE", "pna-k8s-node"), aes(x=timestamp, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost))
-storage_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "POD", "pulceo-node-agent"), aes(x=timestamp, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost))
-storage_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "POD", "traefik"), aes(x=timestamp, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost))
+storage_plot_node <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "NODE", "pna-k8s-node"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+storage_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "POD", "pulceo-node-agent"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+storage_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "POD", "traefik"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
 ```
 
 ```{r include=TRUE, echo=FALSE}
@@ -457,10 +495,10 @@ NET_UTIL <- TransfromNodeMetricsMetadata(NET_UTIL_RAW)
 ```
 
 ```{r}
-INITIAL_TX_RX <- NET_UTIL %>% 
-  group_by(nodeName, X_field, k8sResourceType, resourceName) %>% 
-  slice(which.min(timestamp)) %>% 
-  select(nodeName, sourceHost, k8sResourceType, resourceName, X_field, X_value) %>% 
+INITIAL_TX_RX <- NET_UTIL %>%
+  group_by(nodeName, X_field, k8sResourceType, resourceName) %>%
+  slice(which.min(timestamp)) %>%
+  select(nodeName, sourceHost, k8sResourceType, resourceName, X_field, X_value) %>%
   rename(X_value_initial = X_value)
 
 COMBINED_NET_UTIL <- left_join(NET_UTIL, INITIAL_TX_RX, join_by(nodeName, sourceHost, k8sResourceType, resourceName, X_field))
@@ -472,33 +510,35 @@ COMBINED_NET_UTIL$X_value_final <- ((COMBINED_NET_UTIL$X_value - COMBINED_NET_UT
 ```{r}
 COMBINED_NET_UTIL_NODES <- rbind(filterResourceUtilForNode(COMBINED_NET_UTIL, "rxBytes", "NODE", "pna-k8s-node"), filterResourceUtilForNode(COMBINED_NET_UTIL, "txBytes", "NODE", "pna-k8s-node"))
 
-ggplot(COMBINED_NET_UTIL_NODES, aes(x=timestamp, y=X_value_final, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost), vars(X_field))
+ggplot(COMBINED_NET_UTIL_NODES, aes(x = timestamp, y = X_value_final, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost), vars(X_field))
 ```
 
 ```{r}
-COMBINED_NET_UTIL_NODES_TABLE <- CreateSummaryForNetUtil(COMBINED_NET_UTIL_NODES) %>% 
-  rowwise %>% 
+COMBINED_NET_UTIL_NODES_TABLE <- CreateSummaryForNetUtil(COMBINED_NET_UTIL_NODES) %>%
+  rowwise() %>%
   pivot_wider(names_from = X_field, values_from = max)
 names(COMBINED_NET_UTIL_NODES_TABLE) <- c("Node", "Tx", "Rx")
 SaveLatexTable(COMBINED_NET_UTIL_NODES_TABLE, "Transmitted (Tx) and Received (Rx) Data in GB", "tx-rx-of-nodes", "net_util_nodes_summary.tex")
 ```
 
 ```{r include=TRUE, echo=FALSE}
-node_net_util <- CreateSummaryForNetUtil(COMBINED_NET_UTIL_NODES) %>% 
-  rename(Node = nodeName) %>% 
-  mutate(field = if_else(X_field == "rxBytes", "Rx", if_else(X_field == "txBytes", "Tx", ""))) %>% 
+node_net_util <- CreateSummaryForNetUtil(COMBINED_NET_UTIL_NODES) %>%
+  rename(Node = nodeName) %>%
+  mutate(field = if_else(X_field == "rxBytes", "Rx", if_else(X_field == "txBytes", "Tx", ""))) %>%
   rename(Traffic = field)
 
-(net_util_plot_nodes <- ggplot(node_net_util, aes(x=Node, y=max, fill=Node)) + 
-  geom_bar(position=position_dodge(0.8), stat="identity", width=0.75, aes(color=Traffic)) +
-  geom_text(aes(label = format(round(max,2), nsmall=2), group=Traffic), position = position_dodge(0.8), angle = 90, vjust = 0.5, hjust=-0.2, size = 4, fill="white") + 
+(net_util_plot_nodes <- ggplot(node_net_util, aes(x = Node, y = max, fill = Node)) +
+  geom_bar(position = position_dodge(0.8), stat = "identity", width = 0.75, aes(color = Traffic)) +
+  geom_text(aes(label = format(round(max, 2), nsmall = 2), group = Traffic), position = position_dodge(0.8), angle = 90, vjust = 0.5, hjust = -0.2, size = 4, fill = "white") +
   ggtitle("Traffic Received (Rx) and Transmitted (Tx)") +
   ylab("Traffic in GB") +
   xlab("Node") +
-  ylim(0, max(node_net_util$max) * 1.5) + 
+  ylim(0, max(node_net_util$max) * 1.5) +
   theme(legend.position = "right") +
-  scale_fill_manual(values=node_scale_fills) +
-  guides(fill=FALSE))
+  scale_fill_manual(values = node_scale_fills) +
+  guides(fill = FALSE))
 
 SavePlot("net_util_plot_nodes.pdf", net_util_plot_nodes, 8, 6)
 ```
@@ -508,21 +548,23 @@ SavePlot("net_util_plot_nodes.pdf", net_util_plot_nodes, 8, 6)
 ```{r include=TRUE, echo=FALSE}
 COMBINED_NET_UTIL_POD <- rbind(filterResourceUtilForNode(COMBINED_NET_UTIL, "rxBytes", "POD", "traefik|pulceo-node-agent|edge-iot-simulator"), filterResourceUtilForNode(COMBINED_NET_UTIL, "txBytes", "POD", "traefik|pulceo-node-agent|edge-iot-simulator"))
 
-COMBINED_NET_UTIL_POD_PROCESSED <- COMBINED_NET_UTIL_POD %>% 
-  mutate(application = if_else(grepl("traefik", resourceName), "traefik", 
-                               if_else(grepl("pulceo-node-agent", resourceName), "pulceo-node-agent", 
-                                       if_else(grepl("edge-iot-simulator", resourceName), "edge-iot-simulator", "")))) %>% 
+COMBINED_NET_UTIL_POD_PROCESSED <- COMBINED_NET_UTIL_POD %>%
+  mutate(application = if_else(grepl("traefik", resourceName), "traefik",
+    if_else(grepl("pulceo-node-agent", resourceName), "pulceo-node-agent",
+      if_else(grepl("edge-iot-simulator", resourceName), "edge-iot-simulator", "")
+    )
+  )) %>%
   mutate(field = if_else(grepl("rxBytes", X_field), "Received (Rx)", if_else(grepl("txBytes", X_field), "Transmitted (Tx)", "")))
 
-(combined_net_util_pods_facet <- ggplot(COMBINED_NET_UTIL_POD_PROCESSED, aes(x=timestamp, y=X_value_final / 1024 / 1024 / 1024, colour=application)) + 
-  geom_line() + 
+(combined_net_util_pods_facet <- ggplot(COMBINED_NET_UTIL_POD_PROCESSED, aes(x = timestamp, y = X_value_final / 1024 / 1024 / 1024, colour = application)) +
+  geom_line() +
   ylab("Traffic in GB") +
   xlab("Time in h") +
-  scale_x_datetime(breaks = seq(min(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) - 3600 ,max(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) + 3600, by="6 hours"), date_labels = "%H:00") +
-  labs(color='Applications') +
+  scale_x_datetime(breaks = seq(min(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) - 3600, max(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) + 3600, by = "6 hours"), date_labels = "%H:00") +
+  labs(color = "Applications") +
   theme_classic() +
-  facet_grid(vars(nodeName),vars(field)) +
-  theme(legend.position="bottom"))
+  facet_grid(vars(nodeName), vars(field)) +
+  theme(legend.position = "bottom"))
 SavePlot("combined_net_util_pods_facet.pdf", combined_net_util_pods_facet, 10, 6)
 ```
 
@@ -539,7 +581,7 @@ SavePlot("combined_cpu_mem_util_plot.pdf", combined_cpu_mem_util_plot, 8, 3)
 #### Storage and Network Utilization
 
 ```{r include=TRUE, echo=FALSE}
-(combined_storage_net_util_plot <- ggarrange(storage_util_plot_nodes, net_util_plot_nodes, ncol = 2, widths = c(1,1)))
+(combined_storage_net_util_plot <- ggarrange(storage_util_plot_nodes, net_util_plot_nodes, ncol = 2, widths = c(1, 1)))
 SavePlot("combined_storage_net_util_plot.pdf", combined_storage_net_util_plot, 8, 3)
 ```
 
@@ -548,24 +590,25 @@ SavePlot("combined_storage_net_util_plot.pdf", combined_storage_net_util_plot, 8
 #### CPU and Memory Utilization
 
 ```{r include=TRUE, echo=FALSE}
-#combined_cpu_mem_util_plot_pod <- ggarrange(cpu_util_pods_plot, mem_util_pods_plot, ncol = 2, common.legend=TRUE, legend="bottom")
-#SavePlot("combined_cpu_mem_util_plot_pods.pdf", combined_cpu_mem_util_plot_pod, 8, 4)
+# combined_cpu_mem_util_plot_pod <- ggarrange(cpu_util_pods_plot, mem_util_pods_plot, ncol = 2, common.legend=TRUE, legend="bottom")
+# SavePlot("combined_cpu_mem_util_plot_pods.pdf", combined_cpu_mem_util_plot_pod, 8, 4)
 
 combined_df <- rbind(CPU_UTIL_PODS_PROCESSED, MEM_UTIL_PODS_PROCESSED)
-combined_df <- combined_df %>% 
-  ungroup() %>% 
-  mutate(field = if_else(combined_df$X_field == "usageCPUPercentage", "CPU Utilization", 
-                         if_else(combined_df$X_field == "usageMemoryPercentage", "Memory Utilization", "")))
+combined_df <- combined_df %>%
+  ungroup() %>%
+  mutate(field = if_else(combined_df$X_field == "usageCPUPercentage", "CPU Utilization",
+    if_else(combined_df$X_field == "usageMemoryPercentage", "Memory Utilization", "")
+  ))
 
-(combined_cpu_mem_util_plot_pod_df <- ggplot(combined_df, aes(x=timestamp, y=X_value, colour=application)) + 
-  geom_line() + 
+(combined_cpu_mem_util_plot_pod_df <- ggplot(combined_df, aes(x = timestamp, y = X_value, colour = application)) +
+  geom_line() +
   facet_grid(nodeName ~ field) +
   ylab("Utilization (%)") +
   xlab("Time") +
-scale_x_datetime(breaks = seq(min(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) - 3600 ,max(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) + 3600, by="6 hours"), date_labels = "%H:00") +
-  labs(color='Applications') +
+  scale_x_datetime(breaks = seq(min(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) - 3600, max(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) + 3600, by = "6 hours"), date_labels = "%H:00") +
+  labs(color = "Applications") +
   theme_classic() +
-  theme(legend.position="bottom"))
+  theme(legend.position = "bottom"))
 SavePlot("combined_cpu_mem_util_plot_pods_facet.pdf", combined_cpu_mem_util_plot_pod_df, 10, 6)
 ```
 
@@ -575,7 +618,7 @@ SavePlot("combined_cpu_mem_util_plot_pods_facet.pdf", combined_cpu_mem_util_plot
 
 ```{r}
 # functions
-TransfromNetworkMetricsMetadata <- function (df) {
+TransfromNetworkMetricsMetadata <- function(df) {
   df$X_field <- as.factor(df$X_field)
   df$X_measurement <- as.factor(df$X_measurement)
   df$metricType <- as.factor(df$metricType)
@@ -593,38 +636,42 @@ TransfromNetworkMetricsMetadata <- function (df) {
 ICMP_RTT <- TransfromNetworkMetricsMetadata(ICMP_RTT_RAW)
 
 filterICMPRTT <- function(df, field) {
-  return (df %>% filter(X_field == field))
+  return(df %>% filter(X_field == field))
 }
 ```
 
 ```{r include=TRUE, echo=FALSE}
 ICMP_RTT_SUMMARY <- filterICMPRTT(ICMP_RTT, "rttAvg")
 
-ICMP_RTT_SUMMARY <- ICMP_RTT_SUMMARY %>% 
-  group_by(nodeName, nodeNameDest) %>% 
-  summarise(min = round(min(X_value), 3),
-            avg = round(mean(X_value), 3),
-            max = round(max(X_value), 3),
-            median = round(median(X_value), 3),
-            sd = round(sd(X_value), 3), .groups = "drop") %>% 
+ICMP_RTT_SUMMARY <- ICMP_RTT_SUMMARY %>%
+  group_by(nodeName, nodeNameDest) %>%
+  summarise(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    sd = round(sd(X_value), 3), .groups = "drop"
+  ) %>%
   mutate_if(is.numeric, scale, na.rm = TRUE)
 names(ICMP_RTT_SUMMARY) <- c("$v_1$", "$v_2$", "Min", "Mean", "Max", "Med", "SD")
 CreateScrollableTable(ICMP_RTT_SUMMARY)
-#ICMP_RTT_SUMMARY_TABLE <- ICMP_RTT_SUMMARY %>% 
-#  rowwise %>% 
+# ICMP_RTT_SUMMARY_TABLE <- ICMP_RTT_SUMMARY %>%
+#  rowwise %>%
 #  pivot_wider(names_from = nodeNameDest, values_from = rtt, names_sort = TRUE)
 ```
 ```{r}
-# icmp_rtt_plot <- ggplot(ICMP_RTT_SUMMARY, aes(nodeName, nodeNameDest, fill= rtt)) + 
+# icmp_rtt_plot <- ggplot(ICMP_RTT_SUMMARY, aes(nodeName, nodeNameDest, fill= rtt)) +
 #   geom_tile() +
-#   xlab("Source Node") + 
+#   xlab("Source Node") +
 #   ylab("Destinatio Node")
 ```
 
 ```{r}
 SaveLatexTable(ICMP_RTT_SUMMARY, "ICMP round-trip time (ms) between nodes.", "rtt-of-nodes", "rtt_nodes_summary.tex")
 
-icmp_rtt_plot <- ggplot(filterICMPRTT(ICMP_RTT, "rttAvg"), aes(x=endTime, y=X_value, group=nodeName)) + geom_line() + facet_grid(vars(nodeName), vars(nodeNameDest))
+icmp_rtt_plot <- ggplot(filterICMPRTT(ICMP_RTT, "rttAvg"), aes(x = endTime, y = X_value, group = nodeName)) +
+  geom_line() +
+  facet_grid(vars(nodeName), vars(nodeNameDest))
 ```
 
 ### TCP Bandwidth
@@ -634,7 +681,7 @@ TCP_BW <- TransfromNetworkMetricsMetadata(TCP_BW_RAW)
 TCP_BW$iperfRole <- as.factor(TCP_BW$iperfRole)
 
 filterBW <- function(df, field, role) {
-  return (df %>% filter(X_field %in% field) %>% filter(iperfRole == role))
+  return(df %>% filter(X_field %in% field) %>% filter(iperfRole == role))
 }
 ```
 
@@ -644,13 +691,15 @@ filterBW <- function(df, field, role) {
 TCP_BW_SUMMARY <- filterBW(TCP_BW, "bitrate", "SENDER")
 
 # build upload df
-TCP_BW_SUMMARY <- TCP_BW_SUMMARY %>% 
+TCP_BW_SUMMARY <- TCP_BW_SUMMARY %>%
   group_by(nodeName, nodeNameDest) %>%
-  summarise(min = round(min(X_value), 3),
-            avg = round(mean(X_value), 3),
-            max = round(max(X_value), 3),
-            median = round(median(X_value), 3),
-            std = round(sd(X_value), 3), .groups = "drop") %>% 
+  summarise(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    std = round(sd(X_value), 3), .groups = "drop"
+  ) %>%
   mutate(across(where(is.numeric), round, 3))
 
 names(TCP_BW_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
@@ -673,17 +722,21 @@ df %>% filter(!duplicated(pmin(nn, nd), pmax(nn, nd)))
 
 df <- TCP_BW_SUMMARY %>% select(nodeName, nodeNameDest, avg)
 
-TCP_BW_SUMMARY_UPLOAD <- TCP_BW_SUMMARY %>% 
+TCP_BW_SUMMARY_UPLOAD <- TCP_BW_SUMMARY %>%
   mutate(upload = TCP_BW_SUMMARY$X_value)
-  
-TCP_BW_SUMMARY_DOWNLOAD <- TCP_BW_SUMMARY %>% 
-  mutate(download = TCP_BW_SUMMARY$X_value) %>% 
-  rename(nodeName = nodeNameDest,
-         nodeNameDest = nodeName)
+
+TCP_BW_SUMMARY_DOWNLOAD <- TCP_BW_SUMMARY %>%
+  mutate(download = TCP_BW_SUMMARY$X_value) %>%
+  rename(
+    nodeName = nodeNameDest,
+    nodeNameDest = nodeName
+  )
 
 TCP_BW_SUMMARY_COMPLETE <- left_join(TCP_BW_SUMMARY_UPLOAD, TCP_BW_SUMMARY_DOWNLOAD, by = join_by(nodeName, nodeNameDest))
 
-tcp_bw_plot <- ggplot(filterBW(TCP_BW, "bitrate", "SENDER"), aes(x=endTime, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost), vars(destinationHost))
+tcp_bw_plot <- ggplot(filterBW(TCP_BW, "bitrate", "SENDER"), aes(x = endTime, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost), vars(destinationHost))
 # TCP_BW %>% filter(iperfRole == "SENDER") %>% select(sourceHost, destinationHost, iperfRole ,startTime) %>% arrange(startTime)
 ```
 
@@ -697,28 +750,32 @@ UDP_BW$iperfRole <- as.factor(UDP_BW$iperfRole)
 ```{r include=TRUE, echo=FALSE}
 UDP_BW <- filterBW(UDP_BW, c("bitrate", "jitter", "lostDatagrams", "totalDatagrams"), "RECEIVER")
 
-UDP_BW_PACKAGE_LOSS_SUMMARY <- UDP_BW %>%  
-  select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>% 
-  filter(X_field %in% c("lostDatagrams", "totalDatagrams")) %>% 
-  pivot_wider(names_from = X_field, values_from = X_value) %>% 
-  mutate(lostDatagramsPercentage = (lostDatagrams / totalDatagrams) * 100) %>% 
-  group_by(nodeName, nodeNameDest) %>% 
-  summarise(min = round(min(lostDatagramsPercentage), 3),
-          avg = round(mean(lostDatagramsPercentage), 3),
-          max = round(max(lostDatagramsPercentage), 3),
-          median = round(median(lostDatagramsPercentage), 3),
-          std = round(sd(lostDatagramsPercentage), 3), .groups = "drop")
- 
-UDP_BW_SUMMARY <- UDP_BW %>% 
-  select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>% 
+UDP_BW_PACKAGE_LOSS_SUMMARY <- UDP_BW %>%
+  select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>%
+  filter(X_field %in% c("lostDatagrams", "totalDatagrams")) %>%
+  pivot_wider(names_from = X_field, values_from = X_value) %>%
+  mutate(lostDatagramsPercentage = (lostDatagrams / totalDatagrams) * 100) %>%
+  group_by(nodeName, nodeNameDest) %>%
+  summarise(
+    min = round(min(lostDatagramsPercentage), 3),
+    avg = round(mean(lostDatagramsPercentage), 3),
+    max = round(max(lostDatagramsPercentage), 3),
+    median = round(median(lostDatagramsPercentage), 3),
+    std = round(sd(lostDatagramsPercentage), 3), .groups = "drop"
+  )
+
+UDP_BW_SUMMARY <- UDP_BW %>%
+  select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>%
   filter(X_field %in% c("bitrate")) %>%
   group_by(nodeName, nodeNameDest, X_field) %>%
-  summarise(min = round(min(X_value), 3),
-            avg = round(mean(X_value), 3),
-            max = round(max(X_value), 3),
-            median = round(median(X_value), 3),
-            std = round(sd(X_value), 3), .groups = "drop") %>% 
-  select(c(-X_field)) %>% 
+  summarise(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    std = round(sd(X_value), 3), .groups = "drop"
+  ) %>%
+  select(c(-X_field)) %>%
   mutate(across(where(is.numeric), round, 3))
 
 names(UDP_BW_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
@@ -729,17 +786,19 @@ SaveLatexTable(UDP_BW_SUMMARY, "UDP bandwidth (Mbps) between nodes.", "udp-bw-be
 #### UDP Jitter
 
 ```{r include=TRUE, echo=FALSE}
-UDP_BW_SUMMARY_JITTER <- UDP_BW %>% 
-  select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>% 
+UDP_BW_SUMMARY_JITTER <- UDP_BW %>%
+  select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>%
   filter(X_field %in% c("jitter")) %>%
   group_by(nodeName, nodeNameDest, X_field) %>%
-  summarise(min = round(min(X_value), 3),
-            mean = round(mean(X_value), 3),
-            max = round(max(X_value), 3),
-            median = round(median(X_value), 3),
-            std = round(sd(X_value), 3), .groups = "drop") %>% 
-  select(c(-X_field)) %>% 
-  rename(Source = nodeName, Destination=nodeNameDest)
+  summarise(
+    min = round(min(X_value), 3),
+    mean = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    std = round(sd(X_value), 3), .groups = "drop"
+  ) %>%
+  select(c(-X_field)) %>%
+  rename(Source = nodeName, Destination = nodeNameDest)
 
 CreateScrollableTable(UDP_BW_SUMMARY_JITTER)
 
@@ -750,17 +809,19 @@ SaveLatexTable(UDP_BW_SUMMARY_JITTER, "Jitter (UDP) between nodes in ms.", "jitt
 #### UDP Package Loss
 
 ```{r include=TRUE, echo=FALSE}
-UDP_BW_PACKAGE_LOSS <- UDP_BW %>%  
-  select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>% 
-  filter(X_field %in% c("lostDatagrams", "totalDatagrams")) %>% 
-  pivot_wider(names_from = X_field, values_from = X_value) %>% 
-  mutate(lostDatagramsPercentage = (lostDatagrams / totalDatagrams) * 100) %>% 
-  group_by(nodeName, nodeNameDest) %>% 
-  summarise(min = round(min(lostDatagramsPercentage), 3),
-          mean = round(mean(lostDatagramsPercentage), 3),
-          max = round(max(lostDatagramsPercentage), 3),
-          median = round(median(lostDatagramsPercentage), 3),
-          std = round(sd(lostDatagramsPercentage), 3), .groups = "drop") %>% 
+UDP_BW_PACKAGE_LOSS <- UDP_BW %>%
+  select(endTime, nodeName, nodeNameDest, metricUUID, X_field, X_value) %>%
+  filter(X_field %in% c("lostDatagrams", "totalDatagrams")) %>%
+  pivot_wider(names_from = X_field, values_from = X_value) %>%
+  mutate(lostDatagramsPercentage = (lostDatagrams / totalDatagrams) * 100) %>%
+  group_by(nodeName, nodeNameDest) %>%
+  summarise(
+    min = round(min(lostDatagramsPercentage), 3),
+    mean = round(mean(lostDatagramsPercentage), 3),
+    max = round(max(lostDatagramsPercentage), 3),
+    median = round(median(lostDatagramsPercentage), 3),
+    std = round(sd(lostDatagramsPercentage), 3), .groups = "drop"
+  ) %>%
   rename(Source = nodeName, Destination = nodeNameDest)
 
 CreateScrollableTable(UDP_BW_PACKAGE_LOSS)
@@ -770,7 +831,9 @@ SaveLatexTable(UDP_BW_PACKAGE_LOSS, "Package Loss (UDP) between nodes in %.", "p
 ```
 
 ```{r}
-udp_bw_plot <- ggplot(filterBW(UDP_BW, "bitrate", "SENDER"), aes(x=endTime, y=X_value, group=sourceHost)) + geom_line() + facet_grid(vars(sourceHost), vars(destinationHost))
+udp_bw_plot <- ggplot(filterBW(UDP_BW, "bitrate", "SENDER"), aes(x = endTime, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost), vars(destinationHost))
 ```
 
 ### Combined TCP and UDP BW
@@ -778,8 +841,8 @@ udp_bw_plot <- ggplot(filterBW(UDP_BW, "bitrate", "SENDER"), aes(x=endTime, y=X_
 #### TCP and UDP bandwidth
 
 ```{r include=TRUE, echo=FALSE}
-COMBINED_TCP_UDP_SUMMARY <- full_join(TCP_BW_SUMMARY, UDP_BW_SUMMARY, by=c("Source", "Destination")) %>%  mutate_if(is.numeric, scale, na.rm = TRUE)
-names(COMBINED_TCP_UDP_SUMMARY) <- c("Source", "Destination", "Min (TCP)" , "Mean (TCP)", "Max (TCP)", "Med (TCP)", "SD (TCP)", "Min (UDP)" , "Mean (UDP)", "Max (UDP)", "Med (UDP)", "SD (UDP)")
+COMBINED_TCP_UDP_SUMMARY <- full_join(TCP_BW_SUMMARY, UDP_BW_SUMMARY, by = c("Source", "Destination")) %>% mutate_if(is.numeric, scale, na.rm = TRUE)
+names(COMBINED_TCP_UDP_SUMMARY) <- c("Source", "Destination", "Min (TCP)", "Mean (TCP)", "Max (TCP)", "Med (TCP)", "SD (TCP)", "Min (UDP)", "Mean (UDP)", "Max (UDP)", "Med (UDP)", "SD (UDP)")
 CreateScrollableTable(COMBINED_TCP_UDP_SUMMARY)
 SaveMultiColLatexTable(COMBINED_TCP_UDP_SUMMARY, "TCP and UDP bandwidth (ms) between nodes.", "tcp-udp-bandwidth-measured-on-links", "tcp_udp_bw_nodes_summary.tex", c("$v_1$", "$v_2$", names(TCP_BW_SUMMARY)[3:length(TCP_BW_SUMMARY)], names(UDP_BW_SUMMARY)[3:length(UDP_BW_SUMMARY)]), c(" ", " ", "TCP" = 5, "UDP" = 5))
 ```
@@ -787,8 +850,8 @@ SaveMultiColLatexTable(COMBINED_TCP_UDP_SUMMARY, "TCP and UDP bandwidth (ms) bet
 #### Jitter and Package Loss
 
 ```{r include=TRUE, echo=FALSE}
-COMBINED_UDP_JITTER_PACKAGE_LOSS <- full_join(UDP_BW_SUMMARY_JITTER, UDP_BW_PACKAGE_LOSS, by=c(names(UDP_BW_SUMMARY_JITTER[1]), names(UDP_BW_SUMMARY_JITTER[2])))
-names(COMBINED_UDP_JITTER_PACKAGE_LOSS) <- c("Source", "Destination", "Min (Jitter)" , "Mean (Jitter)", "Max (Jitter)", "Med (Jitter)", "SD (Jitter)", "Min (Package loss)" , "Mean (Package loss)", "Max (Package loss)", "Med (Package loss)", "SD (Package loss)")
+COMBINED_UDP_JITTER_PACKAGE_LOSS <- full_join(UDP_BW_SUMMARY_JITTER, UDP_BW_PACKAGE_LOSS, by = c(names(UDP_BW_SUMMARY_JITTER[1]), names(UDP_BW_SUMMARY_JITTER[2])))
+names(COMBINED_UDP_JITTER_PACKAGE_LOSS) <- c("Source", "Destination", "Min (Jitter)", "Mean (Jitter)", "Max (Jitter)", "Med (Jitter)", "SD (Jitter)", "Min (Package loss)", "Mean (Package loss)", "Max (Package loss)", "Med (Package loss)", "SD (Package loss)")
 
 CreateScrollableTable(COMBINED_UDP_JITTER_PACKAGE_LOSS)
 SaveMultiColLatexTable(COMBINED_UDP_JITTER_PACKAGE_LOSS, "Jitter (ms) and package loss (\\%) for UDP between nodes.", "jitter-package-loss-udp-between-nodes", "jitter-package-loss-udp-between-nodes.tex", c("$v_1$", "$v_2$", names(TCP_BW_SUMMARY)[3:length(TCP_BW_SUMMARY)], names(UDP_BW_SUMMARY)[3:length(UDP_BW_SUMMARY)]), c(" ", " ", "Jitter (ms)" = 5, "Package loss (%)" = 5), "t")
@@ -801,8 +864,8 @@ ICMP_RTT_SUMMARY
 names(ICMP_RTT_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
 TCP_BW_SUMMARY
 UDP_BW_SUMMARY
-COMBINED_ICMP_TCP_UDP_SUMMARY <- full_join(ICMP_RTT_SUMMARY, TCP_BW_SUMMARY, by=c("Source", "Destination")) %>%
-                                             full_join(., UDP_BW_SUMMARY, by=c("Source", "Destination")) %>% 
+COMBINED_ICMP_TCP_UDP_SUMMARY <- full_join(ICMP_RTT_SUMMARY, TCP_BW_SUMMARY, by = c("Source", "Destination")) %>%
+  full_join(., UDP_BW_SUMMARY, by = c("Source", "Destination")) %>%
   mutate_if(is.numeric, scale, na.rm = TRUE)
 names(COMBINED_ICMP_TCP_UDP_SUMMARY) <- c("Source", "Destination", rep(c("Min", "Mean", "Max", "Med", "SD"), 3))
 CreateScrollableTable(COMBINED_ICMP_TCP_UDP_SUMMARY)
@@ -814,8 +877,8 @@ SaveMultiColLatexTable(COMBINED_ICMP_TCP_UDP_SUMMARY, "ICMP round-trip time (ms)
 
 ```{r}
 # functions
-TransfromRequests <- function (df) {
-  df$timestamp <- as.POSIXct(df$timestamp/1e9, origin = "1970-01-01", tz="CEST")
+TransfromRequests <- function(df) {
+  df$timestamp <- as.POSIXct(df$timestamp / 1e9, origin = "1970-01-01", tz = "CEST")
   df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")
   df$X_field <- as.factor(df$X_field)
   df$X_measurement <- as.factor(df$X_measurement)
@@ -830,20 +893,22 @@ TransfromRequests <- function (df) {
 ```
 
 ```{r eval=file.exists(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/")), include=TRUE, echo=FALSE }
-REQUESTS_RAW=read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 3)
+REQUESTS_RAW <- read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 3)
 REQUESTS <- TransfromRequests(REQUESTS_RAW)
 REQUESTS <- REQUESTS %>% filter(between(timestamp, start_timestamp, end_timestamp))
 
 REQUESTS_SUMMARY <- REQUESTS %>%
-  select(timestamp, sourceHost, destHost, X_value) %>% 
-  group_by(sourceHost, destHost) %>% 
-  filter(!(abs(X_value - mean(X_value)) > 2*sd(X_value))) %>%
-  summarise(min = round(min(X_value), 3),
-        avg = round(mean(X_value), 3),
-        max = round(max(X_value), 3),
-        median = round(median(X_value), 3),
-        std = round(sd(X_value), 3), .groups = "drop") %>% 
-  rename(source = sourceHost, destination = destHost) %>% 
+  select(timestamp, sourceHost, destHost, X_value) %>%
+  group_by(sourceHost, destHost) %>%
+  filter(!(abs(X_value - mean(X_value)) > 2 * sd(X_value))) %>%
+  summarise(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    std = round(sd(X_value), 3), .groups = "drop"
+  ) %>%
+  rename(source = sourceHost, destination = destHost) %>%
   mutate(SourceDest = paste(source, destination, sep = " -\n"))
 
 if (ART_SHORT_NAMES) {
@@ -854,18 +919,18 @@ if (ART_SHORT_NAMES) {
 
 names(REQUESTS_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD", "SourceDest")
 CreateScrollableTable(REQUESTS_SUMMARY)
-SaveLatexTable(REQUESTS_SUMMARY[,1:7], "Round-trip times between applications", "rtt-between-applications", "requests_summary.tex")
+SaveLatexTable(REQUESTS_SUMMARY[, 1:7], "Round-trip times between applications", "rtt-between-applications", "requests_summary.tex")
 ```
 
 ```{r eval=file.exists(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/")), include=TRUE, echo=FALSE }
-(application_response_time_plot <- ggplot(REQUESTS_SUMMARY, aes(x=SourceDest, y=Mean, fill=SourceDest)) + 
-  geom_bar(stat="identity", width=0.75) +
-  geom_errorbar(aes(x=SourceDest, ymin=Mean-SD, ymax=Mean+SD), width=0.3, colour="blue") + 
-  geom_label(aes(label = format(round(Mean, digits = 2), nsmall=2)), vjust = -1.5, fill="white") + 
+(application_response_time_plot <- ggplot(REQUESTS_SUMMARY, aes(x = SourceDest, y = Mean, fill = SourceDest)) +
+  geom_bar(stat = "identity", width = 0.75) +
+  geom_errorbar(aes(x = SourceDest, ymin = Mean - SD, ymax = Mean + SD), width = 0.3, colour = "blue") +
+  geom_label(aes(label = format(round(Mean, digits = 2), nsmall = 2)), vjust = -1.5, fill = "white") +
   ylab("Application Response Time (ms)") +
   xlab("Source Application  - Destination Application") +
-  ylim(0, max(REQUESTS_SUMMARY$Mean+REQUESTS_SUMMARY$SD) * 1.3) + 
-  theme(legend.position = "none") + 
-  scale_fill_manual(values=node_scale_fills_ext))
+  ylim(0, max(REQUESTS_SUMMARY$Mean + REQUESTS_SUMMARY$SD) * 1.3) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = node_scale_fills_ext))
 SavePlot("application_response_time_plot.pdf", application_response_time_plot, ART_PLOT_WIDTH, ART_PLOT_HEIGHT)
 ```

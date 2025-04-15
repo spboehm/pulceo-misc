@@ -7,7 +7,8 @@ from multiprocessing import Process
 
 #layers = ["cloud-only"], "edge-only", "joint"]
 layers = ["cloud-only"]
-batch_sizes = [200,400,600,800]
+#batch_sizes = [200,400,600,800]
+batch_sizes = [10]
 
 def create_scenarios():
     for batch_size in batch_sizes:
