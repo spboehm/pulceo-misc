@@ -4,15 +4,20 @@ library(rmarkdown)
 library(jsonlite)
 library(redux)
 
-r <- hiredis()
+config <- list(
+    redis_host = Sys.getenv("REDIS_HOST", "localhost"),
+    redis_port = as.integer(Sys.getenv("REDIS_PORT", 6379))
+)
 
-#* @get /render
-function(req, res) {
+r <- hiredis(host = config$redis_host, port = config$redis_port)
+
+#* @get /render/<orchestrationId>
+function(orchestrationId, res) {
     # input <- fromJSON(req$postBody)
-
     # TODO: the orchestration id
+    cat(sprintf("Received render request with orchestrationId: %s\n", orchestrationId))
     job <- list(
-        orchestrationId = "summersoc2025"
+        orchestrationId = orchestrationId
     )
 
     r$LPUSH("rmd_jobs", toJSON(job))
@@ -29,7 +34,7 @@ function(orchestrationId, res) {
         res$body <- "Missing orchestrationId"
         return(res)
     }
-    print(orchestrationId)
+
     log_file <- paste0("pda-worker-logs/", orchestrationId, ".log")
     if (file.exists(log_file)) {
         logs <- readLines(log_file)

@@ -18,7 +18,7 @@ RenderReport <- function(subfolder = "summersoc2025") {
     download.file(events_uri, paste("raw", subfolder, "EVENTS.csv", sep = "/"))
     download.file(requests_uri, paste("raw", subfolder, "REQUESTS.csv", sep = "/"))
 
-    rmd <- "pulceo-data-analytics-offloading.Rmd"
+    rmd <- "../pulceo-data-analytics-offloading.Rmd"
     rmarkdown::render(
         rmd,
         params = list(subfolder = subfolder),
@@ -27,7 +27,12 @@ RenderReport <- function(subfolder = "summersoc2025") {
     )
 }
 
-r <- hiredis()
+config <- list(
+    redis_host = Sys.getenv("REDIS_HOST", "localhost"),
+    redis_port = as.integer(Sys.getenv("REDIS_PORT", 6379))
+)
+
+r <- hiredis(host = config$redis_host, port = config$redis_port)
 
 dir.create("pda-worker-logs", recursive = TRUE, showWarnings = FALSE)
 cat("Worker started. Press Ctrl+C or send SIGTERM to exit.\n")
@@ -57,7 +62,7 @@ while (!stop_worker) {
     tryCatch(
         {
             RenderReport(job$orchestrationId)
-            cat("Report rendered:", job$output_path, "\n")
+            cat("Report rendered:", job$orchestrationId, "\n")
         },
         error = function(e) {
             cat("Render failed:", e$message, "\n")

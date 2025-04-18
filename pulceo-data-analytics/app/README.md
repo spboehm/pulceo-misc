@@ -18,3 +18,14 @@ Start the web server (RESTful API):
 R -e "pr <- plumber::plumb('pda.R'); pr\$run(host='0.0.0.0', port=8181)"
 ```
 
+Run with docker:
+
+```bash
+docker run -d \
+    -e REDIS_HOST=middleware-redis-1 \
+    -e REDIS_PORT=6379 \
+    -p 8181:8181 \
+    --network middleware_pulceo-redis \
+    --name pulceo-data-analytics \
+    pda:latest
+```
