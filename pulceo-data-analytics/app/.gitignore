@@ -53,3 +53,5 @@ latex/
 plots/
 raw/
 reports/
+pda-worker-logs/
+pda-worker.log
