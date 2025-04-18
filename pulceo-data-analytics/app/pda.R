@@ -12,7 +12,7 @@ function(req, res) {
 
     # TODO: the orchestration id
     job <- list(
-        orchestrationId = "report.Rmd"
+        orchestrationId = "summersoc2025"
     )
 
     r$LPUSH("rmd_jobs", toJSON(job))

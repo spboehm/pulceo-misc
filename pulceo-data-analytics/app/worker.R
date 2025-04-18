@@ -29,6 +29,7 @@ RenderReport <- function(subfolder = "summersoc2025") {
 
 r <- hiredis()
 
+dir.create("pda-worker-logs", recursive = TRUE, showWarnings = FALSE)
 cat("Worker started. Press Ctrl+C or send SIGTERM to exit.\n")
 
 # Setup graceful shutdown
@@ -55,13 +56,16 @@ while (!stop_worker) {
     cat("Rendering report...\n")
     tryCatch(
         {
-            RenderReport()
+            RenderReport(job$orchestrationId)
             cat("Report rendered:", job$output_path, "\n")
         },
         error = function(e) {
             cat("Render failed:", e$message, "\n")
         }
     )
+    log_file <- paste0("pda-worker-logs/", job$orchestrationId, ".log")
+    file.copy("pda-worker.log", log_file, overwrite = TRUE)
+    file.create("pda-worker.log", overwrite = TRUE)
 }
 
 cat("Worker exited.\n")
