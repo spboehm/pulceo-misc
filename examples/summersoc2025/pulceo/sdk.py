@@ -16,11 +16,62 @@ import json
 # release_memory_on_node("edge-0", "size",  10.5)
 
 class API:
-    def __init__(self, scheme = "http", host = "localhost", prm_port = 7878, psm_port = 7979):
+    def __init__(self, scheme = "http", host = "localhost", prm_port = 7878, psm_port = 7979, pms_port = 7777):
         self.scheme = scheme
         self.host = host
         self.prm_port = prm_port
         self.psm_port = psm_port
+        self.pms_port = pms_port
+
+    def check_health(self):
+        self.check_heath_prm()
+        self.check_health_psm()
+        self.check_health_pms()
+
+    def check_heath_prm(self):
+        url = f"{self.scheme}://{self.host}:{self.prm_port}/prm/health"
+        response = requests.get(url)
+        if response.status_code == 200:
+            print("PRM health check passed.")
+        else:
+            print(f"PRM health check failed: {response.status_code}, {response.text}")
+            raise Exception(f"PRM health check failed: {response.status_code}, {response.text}")
+
+    def check_health_psm(self):
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/psm/health"
+        response = requests.get(url)
+        if response.status_code == 200:
+            print("PSM health check passed.")
+        else:
+            print(f"PSM health check failed: {response.status_code}, {response.text}")
+            raise Exception(f"PSM health check failed: {response.status_code}, {response.text}")
+
+    def check_health_pms(self):
+        url = f"{self.scheme}://{self.host}:{self.pms_port}/pms/health"
+        response = requests.get(url)
+        if response.status_code == 200:
+            print("PMS health check passed.")
+        else:
+            print(f"PMS health check failed: {response.status_code}, {response.text}")
+            raise Exception(f"PMS health check failed: {response.status_code}, {response.text}")
+
+    def get_orchestration_context(self):
+        url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/orchestration-context"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to fetch orchestration context: {response.status_code}, {response.text}")
+            return None
+
+    def reset_orchestration_context(self):
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/orchestration-context/reset"
+        response = requests.post(url)
+        if response.status_code == 200:
+            print("Orchestration context successfully reset.")
+        else:
+            print(f"Failed to reset orchestration context: {response.status_code}, {response.text}")
+            raise Exception(f"Failed to reset orchestration context: {response.status_code}, {response.text}")
 
     def read_nodes(self):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/nodes"
