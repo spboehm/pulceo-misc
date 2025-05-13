@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 import requests
 import json
 import os
@@ -16,9 +18,6 @@ from . import monitoring
 # print(read_allocatable_memory_by_node_id("edge-0"))
 # release_cpu_on_node("edge-0", "shares", 6000)
 # release_memory_on_node("edge-0", "size",  10.5)
-
-
-
 
 class API:
     def __init__(self, scheme = "http", host = "localhost", prm_port = 7878, psm_port = 7979, pms_port = 7777):
