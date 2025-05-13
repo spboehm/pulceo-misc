@@ -1,8 +1,10 @@
-# Task Offloading Example
+# Offloading
+
+## Preparation
 
 - Create a virtual environment `python3 -m venv venv`
 - Activate with `source venv/bin/activate`
-- `python3 offloading.py`
+- TODO: Start jupyther or Select the right python3 virtual environment
 
 ## Configuration
 

@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 # print("=== Example hot to use the Python SDK ===")
 # print(read_nodes())
@@ -81,6 +82,50 @@ class API:
         else:
             print(f"Failed to fetch nodes: {response.status_code}, {response.text}")
             return None
+
+    def create_node(self, path_to_json):
+        node = self.read_json(path_to_json)
+        if (node['nodeType'] == "ONPREM"):
+            # inject pnaInitToken from env
+            node['pnaInitToken'] = os.getenv('PNA_INIT_TOKEN')
+        url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/nodes"
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(url, headers=headers, data=json.dumps(node))
+        if response.status_code == 201:
+            print("Node created successfully.")
+            return response.json()
+        else:
+            print(f"Failed to create node: {response.status_code}, {response.text}")
+            if "already exists" in response.text:
+                return None
+            raise Exception(f"Node creation failed: {response.status_code}, {response.text}")
+
+    def read_links(self):
+        url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/links"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to fetch links: {response.status_code}, {response.text}")
+            return None
+        
+    def create_link(self, path_to_json):
+        link = self.read_json(path_to_json)
+        url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/links"
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(url, headers=headers, data=json.dumps(link))
+        if response.status_code == 201:
+            print("Link created successfully.")
+            return response.json()
+        else:
+            print(f"Failed to create link: {response.status_code}, {response.text}")
+            if "already exists" in response.text:
+                return None
+            raise Exception(f"Link creation failed: {response.status_code}, {response.text}")
+        
+    def read_json(self, path):
+        with open(path, 'r') as file:
+            return json.load(file)
 
     def read_allocatable_cpu(self):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/cpus"
