@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+from . import monitoring
 
 # print("=== Example hot to use the Python SDK ===")
 # print(read_nodes())
@@ -16,18 +17,27 @@ import os
 # release_cpu_on_node("edge-0", "shares", 6000)
 # release_memory_on_node("edge-0", "size",  10.5)
 
+
+
+
 class API:
     def __init__(self, scheme = "http", host = "localhost", prm_port = 7878, psm_port = 7979, pms_port = 7777):
+        self.check_for_env_file()
         self.scheme = scheme
         self.host = host
         self.prm_port = prm_port
         self.psm_port = psm_port
         self.pms_port = pms_port
+        self.monitoring = monitoring.API()
+
+    def check_for_env_file(self):
+        if not os.path.exists(".env"):
+            raise FileNotFoundError("The .env file does not exist. Please create it and try again.")
 
     def check_health(self):
         self.check_heath_prm()
         self.check_health_psm()
-        self.check_health_pms()
+        self.monitoring.check_health()
 
     def check_heath_prm(self):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/prm/health"
@@ -46,15 +56,6 @@ class API:
         else:
             print(f"PSM health check failed: {response.status_code}, {response.text}")
             raise Exception(f"PSM health check failed: {response.status_code}, {response.text}")
-
-    def check_health_pms(self):
-        url = f"{self.scheme}://{self.host}:{self.pms_port}/pms/health"
-        response = requests.get(url)
-        if response.status_code == 200:
-            print("PMS health check passed.")
-        else:
-            print(f"PMS health check failed: {response.status_code}, {response.text}")
-            raise Exception(f"PMS health check failed: {response.status_code}, {response.text}")
 
     def get_orchestration_context(self):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/orchestration-context"
