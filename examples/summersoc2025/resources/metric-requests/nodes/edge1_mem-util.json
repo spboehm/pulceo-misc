@@ -1,0 +1,6 @@
+{
+	"resourceId": "edge1", 
+	"type":"mem-util",
+	"recurrence":"60",
+	"enabled":"true"
+}
