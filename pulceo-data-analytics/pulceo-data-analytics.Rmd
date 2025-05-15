@@ -1,7 +1,8 @@
 ---
 title: "`r paste0('PULCEO Data Analytics:  ', params$subfolder)`" 
 params:
-  subfolder: "summersoc2024-prod-load"
+  rootfolder: "."
+  subfolder: "sample"
 knit: (function(input_file, encoding) {
   metadata <- rmarkdown::yaml_front_matter(input_file);
   out_dir <- with(metadata, paste0("reports/", params$subfolder));
@@ -18,19 +19,53 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 ```
 
 ```{r warning=FALSE, echo=FALSE}
-library(tidyverse)
-library(stringi)
-library(rjson)
-library(kableExtra)
-library(gridExtra)
-library(ggpubr)
-library(data.table)
-library(jsonlite)
-library(rjson)
+install_and_load <- function(pkg, mirror = "https://cloud.r-project.org") {
+  # Set default CRAN mirror and silent options
+  options(repos = c(CRAN = mirror))
+  options(install.packages.check.source = "no")
+  options(ask = FALSE)
+
+  # Install if missing
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    message(sprintf("Installing '%s'...", pkg))
+    install.packages(pkg, dependencies = TRUE, quiet = TRUE)
+  }
+
+  # Load package quietly
+  suppressPackageStartupMessages(
+    library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
+  )
+}
+install_and_load("tidyverse")
+install_and_load("stringi")
+install_and_load("rjson")
+install_and_load("kableExtra")
+install_and_load("gridExtra")
+install_and_load("ggpubr")
+install_and_load("data.table")
+install_and_load("jsonlite")
 ```
 
 ```{r include=TRUE, echo=FALSE}
-SUBFOLDER <- params$subfolder
+# ROOTFOLDER
+ROOTFOLDER <- ifelse(!exists("params") || is.null(params$rootfolder) || params$rootfolder == "", ".", params$rootfolder)
+SUBFOLDER <- ifelse(!exists("params") || is.null(params$subfolder) || params$subfolder == "", "sample", params$subfolder)
+
+# TODO: remove
+ROOTFOLDER <- "/tmp/psm-data"
+
+# directories
+FOLDER_PFX_RAW <- paste(ROOTFOLDER, "raw", SUBFOLDER, sep = "/")
+FOLDER_PFX_REPORTS <- paste(ROOTFOLDER, "reports", SUBFOLDER, sep = "/")
+FOLDER_PFX_LATEX <- paste(ROOTFOLDER, "latex", SUBFOLDER, sep = "/")
+FOLDER_PFX_PLOTS <- paste(ROOTFOLDER, "plots", SUBFOLDER, sep = "/")
+
+# create directors
+lapply(list(FOLDER_PFX_RAW, 
+            FOLDER_PFX_REPORTS, 
+            FOLDER_PFX_LATEX, 
+            FOLDER_PFX_PLOTS), 
+dir.create,  recursive = TRUE, showWarnings = FALSE)
 ```
 
 ```{r}
