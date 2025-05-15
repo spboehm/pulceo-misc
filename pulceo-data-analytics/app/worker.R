@@ -1,24 +1,17 @@
-# worker.R
-library(redux)
-library(rmarkdown)
-library(jsonlite)
-library(withr)
+# # worker.R
+# library(redux)
+# library(rmarkdown)
+# library(jsonlite)
+# library(withr)
 
 # functions
 RenderReport <- function(subfolder = "summersoc2025") {
     dir.create(paste("raw", subfolder, sep = "/"), recursive = TRUE, showWarnings = FALSE)
     dir.create(paste("reports", subfolder, sep = "/"), recursive = TRUE, showWarnings = FALSE)
     dir.create(paste("latex", subfolder, sep = "/"), recursive = TRUE, showWarnings = FALSE)
+    dir.create(paste("plots", subfolder, sep = "/"), recursive = TRUE, showWarnings = FALSE)
 
-    tasks_uri <- paste0("https://raw.githubusercontent.com/spboehm/pulceo-misc/refs/heads/feature/1mn-rework/pulceo-data-analytics/raw/", subfolder, "/TASKS.csv")
-    events_uri <- paste0("https://raw.githubusercontent.com/spboehm/pulceo-misc/refs/heads/feature/1mn-rework/pulceo-data-analytics/raw/", subfolder, "/EVENTS.csv")
-    requests_uri <- paste0("https://raw.githubusercontent.com/spboehm/pulceo-misc/refs/heads/feature/1mn-rework/pulceo-data-analytics/raw/", subfolder, "/REQUESTS.csv")
-
-    download.file(tasks_uri, paste("raw", subfolder, "TASKS.csv", sep = "/"))
-    download.file(events_uri, paste("raw", subfolder, "EVENTS.csv", sep = "/"))
-    download.file(requests_uri, paste("raw", subfolder, "REQUESTS.csv", sep = "/"))
-
-    rmd <- "../pulceo-data-analytics-offloading.Rmd"
+    rmd <- "../pulceo-data-analytics.Rmd"
     rmarkdown::render(
         rmd,
         params = list(subfolder = subfolder),

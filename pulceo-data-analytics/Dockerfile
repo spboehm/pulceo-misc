@@ -5,7 +5,7 @@ RUN R -e "install.packages(c('plumber', 'rjson', 'kableExtra', 'gridExtra', 'ggp
 COPY /app/pda.R /pulceo-data-analytics/app/pda.R
 COPY /app/worker.R  /pulceo-data-analytics/app/worker.R
 COPY /app/pda.sh /pulceo-data-analytics/app/pda.sh
-COPY pulceo-data-analytics-offloading.Rmd /pulceo-data-analytics/pulceo-data-analytics-offloading.Rmd
+COPY pulceo-data-analytics.Rmd /pulceo-data-analytics/pulceo-data-analytics.Rmd
 ENV REDIS_HOST=localhost
 ENV PORT=6379
 EXPOSE 8181
