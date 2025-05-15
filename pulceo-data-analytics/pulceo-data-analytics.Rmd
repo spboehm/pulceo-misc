@@ -61,16 +61,12 @@ FOLDER_PFX_LATEX <- paste(ROOTFOLDER, "latex", SUBFOLDER, sep = "/")
 FOLDER_PFX_PLOTS <- paste(ROOTFOLDER, "plots", SUBFOLDER, sep = "/")
 
 # create directors
-lapply(list(FOLDER_PFX_RAW, 
-            FOLDER_PFX_REPORTS, 
-            FOLDER_PFX_LATEX, 
-            FOLDER_PFX_PLOTS), 
-dir.create,  recursive = TRUE, showWarnings = FALSE)
+lapply(list(FOLDER_PFX_RAW, FOLDER_PFX_REPORTS, FOLDER_PFX_LATEX, FOLDER_PFX_PLOTS), dir.create,  recursive = TRUE, showWarnings = FALSE)
 ```
 
 ```{r}
 dframe <- read.table(
-  file = paste0("raw/", SUBFOLDER, "/", "META.txt"), header = FALSE,
+  file = paste(FOLDER_PFX_RAW, "META.txt", sep = "/"), header = FALSE,
   sep = "=", col.names = c("Key", "Value")
 )
 dtable <- data.table(dframe, key = "Key")
@@ -96,9 +92,6 @@ ReadAndFilterEndTime <- function(file, endTime) {
   return(read.csv(file, skip = 3) %>%
     filter(between(endTime, start_timestamp, end_timestamp)))
 }
-
-# TODO: move to function
-dir.create(paste("latex", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
 
 CPU_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "CPU_UTIL.csv", sep = "/"), timestamp)
 MEM_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "MEM_UTIL.csv", sep = "/"), timestamp)
@@ -198,11 +191,6 @@ scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))
 ```
 
 ```{r}
-# TODO: move to function
-dir.create(paste("plots", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
-```
-
-```{r}
 # plots
 theme_set(theme_minimal())
 theme_update(plot.margin = margin(0.75, 5.5, 0, 5.5, "pt"))
@@ -224,42 +212,7 @@ SavePlot <- function(filename, plot, width = 4, height = 3) {
 }
 ```
 
-## Topology
-
-### Providers
-
-```{r include=TRUE, echo=FALSE}
-providers <- jsonlite::fromJSON(paste("raw", SUBFOLDER, "PROVIDERS.json", sep = "/"))
-CreateScrollableTable(providers)
-```
-
-### Nodes
-
-```{r include=TRUE, echo=FALSE}
-nodes <- jsonlite::fromJSON(paste("raw", SUBFOLDER, "NODES.json", sep = "/"))
-CreateScrollableTable(nodes)
-CreateScrollableTable(nodes$node)
-```
-
-### Links
-
-```{r include=TRUE, echo=FALSE}
-links <- jsonlite::fromJSON(paste("raw", SUBFOLDER, "LINKS.json", sep = "/"))
-CreateScrollableTable(links)
-```
-
-### Metric Requests
-
-```{r include=TRUE, echo=FALSE}
-metric_requests <- jsonlite::fromJSON(paste("raw", SUBFOLDER, "METRIC_REQUESTS.json", sep = "/"))
-CreateScrollableTable(metric_requests)
-```
-
-## Applications
-
-```{r include=TRUE, echo=FALSE}
-applications <- jsonlite::fromJSON(paste("raw", SUBFOLDER, "METRIC_REQUESTS.json", sep = "/"))
-CreateScrollableTable(applications)
+```{r child = 'includes/topology.Rmd'}
 ```
 
 ## Resources
