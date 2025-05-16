@@ -1,0 +1,6 @@
+### Nodes
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable(nodes)
+CreateScrollableTable(nodes$node)
+```

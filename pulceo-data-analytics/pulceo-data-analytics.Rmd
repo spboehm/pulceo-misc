@@ -12,12 +12,6 @@ knit: (function(input_file, encoding) {
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
-
-```{r, include=FALSE}
-# set this option in the first code chunk in the document
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
-```
-
 ```{r warning=FALSE, echo=FALSE}
 install_and_load <- function(pkg, mirror = "https://cloud.r-project.org") {
   # Set default CRAN mirror and silent options
@@ -44,24 +38,26 @@ install_and_load("gridExtra")
 install_and_load("ggpubr")
 install_and_load("data.table")
 install_and_load("jsonlite")
+install_and_load("here")
+```
+
+```{r, include=FALSE}
+# set this option in the first code chunk in the document
+# TODO: maybe remove
+knitr::opts_knit$set(root.dir = here())
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 ```
 
 ```{r include=TRUE, echo=FALSE}
-# ROOTFOLDER
-ROOTFOLDER <- ifelse(!exists("params") || is.null(params$rootfolder) || params$rootfolder == "", ".", params$rootfolder)
-SUBFOLDER <- ifelse(!exists("params") || is.null(params$subfolder) || params$subfolder == "", "sample", params$subfolder)
-
 # TODO: remove
 ROOTFOLDER <- "/tmp/psm-data"
+```
 
-# directories
-FOLDER_PFX_RAW <- paste(ROOTFOLDER, "raw", SUBFOLDER, sep = "/")
-FOLDER_PFX_REPORTS <- paste(ROOTFOLDER, "reports", SUBFOLDER, sep = "/")
-FOLDER_PFX_LATEX <- paste(ROOTFOLDER, "latex", SUBFOLDER, sep = "/")
-FOLDER_PFX_PLOTS <- paste(ROOTFOLDER, "plots", SUBFOLDER, sep = "/")
-
-# create directors
-lapply(list(FOLDER_PFX_RAW, FOLDER_PFX_REPORTS, FOLDER_PFX_LATEX, FOLDER_PFX_PLOTS), dir.create,  recursive = TRUE, showWarnings = FALSE)
+```{r directories, include=FALSE, echo=FALSE}
+source(here("includes/R/directories.R"))
+source(here("includes/R/static-orchestration-data.R"))
+# TODO: dynamic orchestration data
+source(here("includes/R/tables.R"))
 ```
 
 ```{r}
@@ -92,7 +88,9 @@ ReadAndFilterEndTime <- function(file, endTime) {
   return(read.csv(file, skip = 3) %>%
     filter(between(endTime, start_timestamp, end_timestamp)))
 }
+```
 
+```{r warning=FALSE, echo=FALSE}
 CPU_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "CPU_UTIL.csv", sep = "/"), timestamp)
 MEM_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "MEM_UTIL.csv", sep = "/"), timestamp)
 STORAGE_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "STORAGE_UTIL.csv", sep = "/"), timestamp)
@@ -170,10 +168,6 @@ SaveMultiColLatexTable <- function(summary, caption, label, filename, colnames, 
     add_header_above(header)
 
   save_kable(latex_table, paste("latex", SUBFOLDER, filename, sep = "/"))
-}
-
-CreateScrollableTable <- function(df) {
-  (kbl(df) %>% scroll_box(width = "100%", height = "400px") %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed")))
 }
 
 # resources

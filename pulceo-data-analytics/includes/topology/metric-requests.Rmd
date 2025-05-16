@@ -1,0 +1,5 @@
+### Metric Requests
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable(metric_requests)
+```

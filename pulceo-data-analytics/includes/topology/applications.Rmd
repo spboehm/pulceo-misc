@@ -1,0 +1,5 @@
+### Applications
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable(applications)
+```
