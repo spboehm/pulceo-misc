@@ -1,0 +1,5 @@
+### Storage
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable(storage_resources)
+```
