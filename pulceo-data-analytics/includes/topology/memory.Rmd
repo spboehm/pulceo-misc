@@ -1,0 +1,17 @@
+### Memory
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable(memory_resources)
+```
+
+#### Memory capacity
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable((memory_resources$memoryCapacity))
+```
+
+#### Memory allocatable
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable((memory_resources$memoryAllocatable))
+```

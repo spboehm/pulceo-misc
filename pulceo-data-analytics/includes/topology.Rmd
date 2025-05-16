@@ -1,11 +1,18 @@
-```{r "setup", include=FALSE}
+```{r setup-topology, include=FALSE}
 knitr::opts_knit$set(root.dir = here())
 ```
 
-```{r directories, include=FALSE, echo=FALSE}
+```{r topology-directories, include=FALSE, echo=FALSE}
 source(here("includes/R/directories.R"))
-source(here("includes/R/static-orchestration-data.R"))
 source(here("includes/R/tables.R"))
+```
+
+```{r topology-data, include=FALSE, echo=FALSE}
+source(here("includes/resources/providers.R"))
+source(here("includes/resources/nodes.R"))
+source(here("includes/resources/links.R"))
+source(here("includes/resources/metric-requests.R"))
+source(here("includes/resources/applications.R"))
 ```
 
 ## Topology
@@ -19,7 +26,7 @@ source(here("includes/R/tables.R"))
 ```{r topology-links, eval=nrow(links) > 0, child = 'includes/topology/links.Rmd', include=TRUE, echo=FALSE}
 ```
 
-```{r topology-metric-requests, eval=nrow(links) > 0, child = 'includes/topology/metric-requests.Rmd', include=TRUE, echo=FALSE}
+```{r topology-metric-requests, eval=nrow(metric_requests) > 0, child = 'includes/topology/metric-requests.Rmd', include=TRUE, echo=FALSE}
 ```
 
 ```{r topology-applications, eval=nrow(applications) > 0, child = 'includes/topology/applications.Rmd', include=TRUE, echo=FALSE}

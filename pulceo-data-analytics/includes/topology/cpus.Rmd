@@ -1,0 +1,17 @@
+### CPU
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable(cpu_resources)
+```
+
+#### CPU capacity
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable(cpu_resources$cpuCapacity)
+```
+
+#### CPU allocatable
+
+```{r include=TRUE, echo=FALSE}
+CreateScrollableTable(cpu_resources$cpuAllocatable)
+```
