@@ -1,6 +1,22 @@
 ### Applications
 
-```{r}
+```{r metrics-cpu-utilization-applications-summary}
+CPU_UTIL_pods_summary <- CreateSummary(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "edge-iot-simulator"), "Pod")
+
+CPU_UTIL_PODS_SUMMARY_BY_APP <- CPU_UTIL %>%
+  filter(k8sResourceType == "POD", X_field == "usageCPUPercentage") %>%
+  group_by(nodeName, resourceName) %>%
+  summarize(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    sd = round(sd(X_value), 3), .groups = "drop"
+  )
+CreateScrollableTable(CPU_UTIL_PODS_SUMMARY_BY_APP)
+```
+
+```{r metrics-cpu-utilization-applications-line-plot, include=TRUE, echo=FALSE}
 CPU_UTIL_PODS <- filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "traefik|pulceo-node-agent|edge-iot-simulator")
 
 CPU_UTIL_PODS_PROCESSED <- CPU_UTIL_PODS %>%
@@ -26,23 +42,7 @@ CPU_UTIL_PODS_PROCESSED <- CPU_UTIL_PODS %>%
 SavePlot("cpu_util_plot_pods.pdf", cpu_util_pods_plot, 8, 6)
 ```
 
-```{r include=TRUE, echo=FALSE}
-CPU_UTIL_pods_summary <- CreateSummary(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "edge-iot-simulator"), "Pod")
-
-CPU_UTIL_PODS_SUMMARY_BY_APP <- CPU_UTIL %>%
-  filter(k8sResourceType == "POD", X_field == "usageCPUPercentage") %>%
-  group_by(nodeName, resourceName) %>%
-  summarize(
-    min = round(min(X_value), 3),
-    avg = round(mean(X_value), 3),
-    max = round(max(X_value), 3),
-    median = round(median(X_value), 3),
-    sd = round(sd(X_value), 3), .groups = "drop"
-  )
-CreateScrollableTable(CPU_UTIL_PODS_SUMMARY_BY_APP)
-```
-
-```{r}
+```{r metrics-cpu-utilization-applications-line-plots}
 cpu_plot_pod_edg_iot_simulator <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "edge-iot-simulator"), aes(x = timestamp, y = X_value, group = resourceName)) +
   geom_line() +
   facet_grid(vars(resourceName))

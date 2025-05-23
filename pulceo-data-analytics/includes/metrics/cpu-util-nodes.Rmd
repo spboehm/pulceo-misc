@@ -19,6 +19,7 @@ cpu_box_plot <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage",
 ```
 
 ```{r metrics-cpu-utilization-nodes-line-plot}
+# line plot
 cpu_plot_node <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), aes(x = timestamp, y = X_value, group = sourceHost)) +
   geom_line() +
   facet_grid(vars(sourceHost))
