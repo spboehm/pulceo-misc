@@ -1,0 +1,28 @@
+```{r setup-metrics-cpu-utilization, include=FALSE}
+knitr::opts_knit$set(root.dir = here())
+```
+
+```{r metrics-cpu-utilization-directories, include=FALSE, echo=FALSE}
+source(here("includes/R/directories.R"))
+source(here("includes/R/tables.R"))
+```
+
+```{r metrics-cpu-utilization-sources, include=FALSE, echo=FALSE}
+source(here("includes/R/nodes.R"))
+source(here("includes/R/applications.R"))
+source(here("includes/R/latex.R"))
+source(here("includes/R/statistics.R"))
+source(here("includes/R/plots.R"))
+```
+
+```{r metrics-cpu-utilization-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/cpu-util.R"))
+```
+
+## CPU Utilization
+
+```{r metrics-cpu-utilization-nodes, eval=HasNodes(CPU_UTIL) > 0, child = 'includes/metrics/cpu-util-nodes.Rmd', include=TRUE, echo=FALSE}
+```
+
+```{r metrics-cpu-utilization-applications, eval=HasApplications(CPU_UTIL) > 0, child = 'includes/metrics/cpu-util-applications.Rmd', include=TRUE, echo=FALSE}
+```

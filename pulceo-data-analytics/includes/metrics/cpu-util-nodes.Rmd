@@ -1,0 +1,25 @@
+### Nodes
+
+```{r metrics-cpu-utilization-nodes-summary include=TRUE, echo=FALSE}
+CPU_UTIL_nodes_summary <- CreateSummary(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), "Node")
+CreateScrollableTable(CPU_UTIL_nodes_summary)
+SaveLatexTable(CPU_UTIL_nodes_summary, "CPU utilization of all nodes in \\%", "cpu-utilization-of-nodes", "cpu_util_nodes_summary.tex")
+```
+
+```{r metrics-cpu-utilization-nodes-bar-plot, include=TRUE, echo=FALSE}
+# cpu plot
+(cpu_util_bar_plot <- GenerateBarPlotPercentage(CPU_UTIL_nodes_summary, "CPU Utilization", 1.3, 0.5))
+SavePlot("cpu_util_bar_plot.pdf", cpu_util_bar_plot)
+```
+
+```{r metrics-cpu-utilization-nodes-boxplot}
+# boxplot
+cpu_box_plot <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), aes(x = sourceHost, y = X_value, group = sourceHost)) +
+  geom_boxplot()
+```
+
+```{r metrics-cpu-utilization-nodes-line-plot}
+cpu_plot_node <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+```

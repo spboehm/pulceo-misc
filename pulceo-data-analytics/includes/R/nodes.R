@@ -9,3 +9,13 @@ TransfromNodeMetricsMetadata <- function(df) {
   df <- merge(df, node_mapping, by = "sourceHost")
   return(df)
 }
+
+filterResourceUtilForNode <- function(df, field, resourceType, resource) {
+  return(df %>% filter(X_field == field) %>%
+    filter(k8sResourceType == resourceType) %>%
+    filter(grepl(resource, resourceName)))
+}
+
+HasNodes <- function(df) {
+  nrow(df %>% filter(k8sResourceType == "NODE")) > 0
+}
