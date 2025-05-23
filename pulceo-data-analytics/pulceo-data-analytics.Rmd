@@ -100,7 +100,7 @@ NET_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "NET_UTIL.csv", s
 ICMP_RTT_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "ICMP_RTT.csv", sep = "/"), endTime)
 TCP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "TCP_BW.csv", sep = "/"), endTime)
 UDP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "UDP_BW.csv", sep = "/"), endTime)
-NODES_RAW <- rjson::fromJSON(file = paste("raw", SUBFOLDER, "NODES.json", sep = "/"))
+# NODES_RAW <- rjson::fromJSON(file = paste("raw", SUBFOLDER, "NODES.json", sep = "/"))
 ```
 
 ```{r}
