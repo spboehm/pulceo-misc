@@ -1,6 +1,6 @@
 ### Nodes
 
-```{r metrics-cpu-utilization-nodes-summary include=TRUE, echo=FALSE}
+```{r metrics-cpu-utilization-nodes-summary, include=TRUE, echo=FALSE}
 CPU_UTIL_nodes_summary <- CreateSummary(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "NODE", "pna-k8s-node"), "Node")
 CreateScrollableTable(CPU_UTIL_nodes_summary)
 SaveLatexTable(CPU_UTIL_nodes_summary, "CPU utilization of all nodes in \\%", "cpu-utilization-of-nodes", "cpu_util_nodes_summary.tex")
