@@ -1,0 +1,17 @@
+```{r setup-resource, include=FALSE}
+knitr::opts_knit$set(root.dir = here())
+```
+
+```{r metrics-directories, include=FALSE, echo=FALSE}
+source(here("includes/R/directories.R"))
+source(here("includes/R/tables.R"))
+```
+
+## CPU utilization
+
+### Nodes
+
+```{r metrics-cpu-utilization-nodes, include=FALSE, echo=FALSE}
+source(here("includes/R/nodes.R"))
+source(here("includes/resources/metrics/cpu-util.R"))
+```

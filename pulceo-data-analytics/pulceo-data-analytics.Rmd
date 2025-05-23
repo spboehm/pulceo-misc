@@ -13,32 +13,34 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
 ```{r warning=FALSE, echo=FALSE}
-install_and_load <- function(pkg, mirror = "https://cloud.r-project.org") {
-  # Set default CRAN mirror and silent options
-  options(repos = c(CRAN = mirror))
-  options(install.packages.check.source = "no")
-  options(ask = FALSE)
+# install_and_load <- function(pkg, mirror = "https://cloud.r-project.org") {
+#   # Set default CRAN mirror and silent options
+#   options(repos = c(CRAN = mirror))
+#   options(install.packages.check.source = "no")
+#   options(ask = FALSE)
 
-  # Install if missing
-  if (!requireNamespace(pkg, quietly = TRUE)) {
-    message(sprintf("Installing '%s'...", pkg))
-    install.packages(pkg, dependencies = TRUE, quiet = TRUE)
-  }
+#   # Install if missing
+#   if (!requireNamespace(pkg, quietly = TRUE)) {
+#     message(sprintf("Installing '%s'...", pkg))
+#     install.packages(pkg, dependencies = TRUE, quiet = TRUE)
+#   }
 
-  # Load package quietly
-  suppressPackageStartupMessages(
-    library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
-  )
-}
-install_and_load("tidyverse")
+#   # Load package quietly
+#   suppressPackageStartupMessages(
+#     library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
+#   )
+# }
+# install_and_load("tidyverse")
 install_and_load("stringi")
-install_and_load("rjson")
+# install_and_load("rjson")
 install_and_load("kableExtra")
 install_and_load("gridExtra")
 install_and_load("ggpubr")
 install_and_load("data.table")
 install_and_load("jsonlite")
 install_and_load("here")
+
+# TODO: globally load library(here)
 ```
 
 ```{r, include=FALSE}
@@ -61,37 +63,37 @@ source(here("includes/R/tables.R"))
 ```
 
 ```{r}
-dframe <- read.table(
-  file = paste(FOLDER_PFX_RAW, "META.txt", sep = "/"), header = FALSE,
-  sep = "=", col.names = c("Key", "Value")
-)
-dtable <- data.table(dframe, key = "Key")
-node_scale_fills <- str_split(dtable["NODE_SCALES"]$Value, pattern = ",")[[1]]
-node_scale_fills_ext <- str_split(dtable["NODE_SCALES_EXT"]$Value, pattern = ",")[[1]]
-start_timestamp <- dtable["START_TIMESTAMP"]$Value
-end_timestamp <- dtable["END_TIMESTAMP"]$Value
-nodes <- dtable["NODES"]$Value
+# dframe <- read.table(
+#   file = paste(FOLDER_PFX_RAW, "META.txt", sep = "/"), header = FALSE,
+#   sep = "=", col.names = c("Key", "Value")
+# )
+# dtable <- data.table(dframe, key = "Key")
+# node_scale_fills <- str_split(dtable["NODE_SCALES"]$Value, pattern = ",")[[1]]
+# node_scale_fills_ext <- str_split(dtable["NODE_SCALES_EXT"]$Value, pattern = ",")[[1]]
+# start_timestamp <- dtable["START_TIMESTAMP"]$Value
+# end_timestamp <- dtable["END_TIMESTAMP"]$Value
+# nodes <- dtable["NODES"]$Value
 
-# defaults
+# defaults for application response time
 ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable["ART_PLOT_WIDTH"]$Value), 8, dtable["ART_PLOT_WIDTH"]$Value))
 ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable["ART_PLOT_HEIGHT"]$Value), 3, dtable["ART_PLOT_HEIGHT"]$Value))
 ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable["ART_SHORT_NAMES"]$Value), FALSE, dtable["ART_SHORT_NAMES"]$Value))
 ```
 
 ```{r warning=FALSE, echo=FALSE}
-ReadAndFilterTimestamp <- function(file, timestamp) {
-  return(read.csv(file, skip = 3) %>%
-    filter(between(timestamp, start_timestamp, end_timestamp), grepl(paste0(nodes, "|pna-k8s-node"), resourceName)))
-}
+# ReadAndFilterTimestamp <- function(file, timestamp) {
+#   return(read.csv(file, skip = 3) %>%
+#     filter(between(timestamp, start_timestamp, end_timestamp), grepl(paste0(nodes, "|pna-k8s-node"), resourceName)))
+# }
 
-ReadAndFilterEndTime <- function(file, endTime) {
-  return(read.csv(file, skip = 3) %>%
-    filter(between(endTime, start_timestamp, end_timestamp)))
-}
+# ReadAndFilterEndTime <- function(file, endTime) {
+#   return(read.csv(file, skip = 3) %>%
+#     filter(between(endTime, start_timestamp, end_timestamp)))
+# }
 ```
 
 ```{r warning=FALSE, echo=FALSE}
-CPU_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "CPU_UTIL.csv", sep = "/"), timestamp)
+# CPU_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "CPU_UTIL.csv", sep = "/"), timestamp)
 MEM_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "MEM_UTIL.csv", sep = "/"), timestamp)
 STORAGE_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "STORAGE_UTIL.csv", sep = "/"), timestamp)
 NET_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "NET_UTIL.csv", sep = "/"), timestamp)
@@ -103,17 +105,17 @@ NODES_RAW <- rjson::fromJSON(file = paste("raw", SUBFOLDER, "NODES.json", sep = 
 
 ```{r}
 # transformations
-TransfromNodeMetricsMetadata <- function(df) {
-  df$X_field <- as.factor(df$X_field)
-  df$k8sResourceType <- as.factor(df$k8sResourceType)
-  df$resourceName <- as.factor(df$resourceName)
-  df$X_measurement <- as.factor(df$X_measurement)
-  df$metricType <- as.factor(df$metricType)
-  df$sourceHost <- as.factor(df$sourceHost)
-  df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")
-  df <- merge(df, node_mapping, by = "sourceHost")
-  return(df)
-}
+# TransfromNodeMetricsMetadata <- function(df) {
+#   df$X_field <- as.factor(df$X_field)
+#   df$k8sResourceType <- as.factor(df$k8sResourceType)
+#   df$resourceName <- as.factor(df$resourceName)
+#   df$X_measurement <- as.factor(df$X_measurement)
+#   df$metricType <- as.factor(df$metricType)
+#   df$sourceHost <- as.factor(df$sourceHost)
+#   df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")
+#   df <- merge(df, node_mapping, by = "sourceHost")
+#   return(df)
+# }
 
 filterResourceUtilForNode <- function(df, field, resourceType, resource) {
   return(df %>% filter(X_field == field) %>%
@@ -171,17 +173,17 @@ SaveMultiColLatexTable <- function(summary, caption, label, filename, colnames, 
 }
 
 # resources
-node_mapping <- Reduce(rbind, lapply(NODES_RAW, function(x) {
-  return(c(x$hostname, x$node$name))
-}))
+# node_mapping <- Reduce(rbind, lapply(NODES_RAW, function(x) {
+#   return(c(x$hostname, x$node$name))
+# }))
 
-node_mapping <- as.data.frame(node_mapping)
-names(node_mapping) <- c("sourceHost", "nodeName")
+# node_mapping <- as.data.frame(node_mapping)
+# names(node_mapping) <- c("sourceHost", "nodeName")
 
-node_mapping_dest <- node_mapping
-names(node_mapping_dest) <- c("destinationHost", "nodeNameDest")
+# node_mapping_dest <- node_mapping
+# names(node_mapping_dest) <- c("destinationHost", "nodeNameDest")
 
-scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))
+# scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))
 ```
 
 ```{r}
@@ -219,10 +221,14 @@ events <- read.csv(paste("raw", SUBFOLDER, "EVENTS.csv", sep = "/"), skip = 3)
 CreateScrollableTable(events)
 ```
 
+```{r child = 'includes/metrics.Rmd'}
+
+```
+
 ## CPU utilization
 
 ```{r}
-CPU_UTIL <- TransfromNodeMetricsMetadata(CPU_UTIL_RAW)
+# CPU_UTIL <- TransfromNodeMetricsMetadata(CPU_UTIL_RAW)
 ```
 
 ### Nodes
