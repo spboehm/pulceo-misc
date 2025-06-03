@@ -1,0 +1,28 @@
+```{r setup-metrics-mem-utilization, include=FALSE}
+knitr::opts_knit$set(root.dir = here())
+```
+
+```{r metrics-mem-utilization-directories, include=FALSE, echo=FALSE}
+source(here("includes/R/directories.R"))
+source(here("includes/R/tables.R"))
+```
+
+```{r metrics-mem-utilization-sources, include=FALSE, echo=FALSE}
+source(here("includes/R/nodes.R"))
+source(here("includes/R/applications.R"))
+source(here("includes/R/latex.R"))
+source(here("includes/R/statistics.R"))
+source(here("includes/R/plots.R"))
+```
+
+```{r metrics-mem-utilization-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/mem-util.R"))
+```
+
+## Memory Utilization
+
+```{r metrics-mem-utilization-nodes, eval=HasNodes(MEM_UTIL) > 0, child = 'includes/metrics/mem-util-nodes.Rmd', include=TRUE, echo=FALSE}
+```
+
+```{r metrics-mem-utilization-applications, eval=HasApplications(MEM_UTIL) > 0, child = 'includes/metrics/mem-util-applications.Rmd', include=TRUE, echo=FALSE}
+```

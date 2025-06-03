@@ -1,0 +1,24 @@
+### Applications
+
+```{r metrics-net-utilization-applications-line-plot, include=TRUE, echo=FALSE}
+COMBINED_NET_UTIL_POD <- rbind(filterResourceUtilForNode(COMBINED_NET_UTIL, "rxBytes", "POD", "traefik|pulceo-node-agent|edge-iot-simulator"), filterResourceUtilForNode(COMBINED_NET_UTIL, "txBytes", "POD", "traefik|pulceo-node-agent|edge-iot-simulator"))
+
+COMBINED_NET_UTIL_POD_PROCESSED <- COMBINED_NET_UTIL_POD %>%
+  mutate(application = if_else(grepl("traefik", resourceName), "traefik",
+    if_else(grepl("pulceo-node-agent", resourceName), "pulceo-node-agent",
+      if_else(grepl("edge-iot-simulator", resourceName), "edge-iot-simulator", "")
+    )
+  )) %>%
+  mutate(field = if_else(grepl("rxBytes", X_field), "Received (Rx)", if_else(grepl("txBytes", X_field), "Transmitted (Tx)", "")))
+
+(combined_net_util_pods_facet <- ggplot(COMBINED_NET_UTIL_POD_PROCESSED, aes(x = timestamp, y = X_value_final / 1024 / 1024 / 1024, colour = application)) +
+  geom_line() +
+  ylab("Traffic in GB") +
+  xlab("Time in h") +
+  scale_x_datetime(breaks = seq(min(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) - 3600, max(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) + 3600, by = "6 hours"), date_labels = "%H:00") +
+  labs(color = "Applications") +
+  theme_classic() +
+  facet_grid(vars(nodeName), vars(field)) +
+  theme(legend.position = "bottom"))
+SavePlot("combined_net_util_pods_facet.pdf", combined_net_util_pods_facet, 10, 6)
+```

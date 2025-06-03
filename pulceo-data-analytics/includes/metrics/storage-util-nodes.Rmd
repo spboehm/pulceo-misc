@@ -1,0 +1,25 @@
+### Nodes
+
+```{r metrics-storage-utilization-nodes-summary, include=TRUE, echo=FALSE}
+STORAGE_UTIL_SUMMARY <- CreateSummary(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "NODE", "pna-k8s-node"), "Node")
+CreateScrollableTable(STORAGE_UTIL_SUMMARY)
+SaveLatexTable(STORAGE_UTIL_SUMMARY, "Storage in Percent", "storage-utilization-of-nodes", "storage_util_nodes_summary.tex")
+```
+
+```{r metrics-storage-utilization-nodes-bar-plot, include=TRUE, echo=FALSE}
+(storage_util_plot_nodes <- GenerateBarPlotPercentage(STORAGE_UTIL_SUMMARY, "Storage Utilization", ylim_factor = 1.4, vjust = -0.5))
+SavePlot("storage_util_plot_nodes.pdf", storage_util_plot_nodes, 4, 3)
+```
+
+```{r metrics-storage-utilization-nodes-line-plot}
+storage_plot_node <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "NODE", "pna-k8s-node"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+storage_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "POD", "pulceo-node-agent"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+storage_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(STORAGE_UTIL, "usageStoragePercentage", "POD", "traefik"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+```
+

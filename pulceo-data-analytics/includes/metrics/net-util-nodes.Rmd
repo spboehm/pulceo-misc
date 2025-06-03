@@ -1,0 +1,37 @@
+### Nodes
+
+```{r metrics-net-utilization-line-plot, include=TRUE, echo=FALSE}
+COMBINED_NET_UTIL_NODES <- rbind(filterResourceUtilForNode(COMBINED_NET_UTIL, "rxBytes", "NODE", "pna-k8s-node"), filterResourceUtilForNode(COMBINED_NET_UTIL, "txBytes", "NODE", "pna-k8s-node"))
+
+ggplot(COMBINED_NET_UTIL_NODES, aes(x = timestamp, y = X_value_final, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost), vars(X_field))
+```
+
+```{r metrics-net-utilization-nodes-summary, include=TRUE, echo=FALSE}
+COMBINED_NET_UTIL_NODES_TABLE <- CreateSummaryForNetUtil(COMBINED_NET_UTIL_NODES) %>%
+  rowwise() %>%
+  pivot_wider(names_from = X_field, values_from = max)
+names(COMBINED_NET_UTIL_NODES_TABLE) <- c("Node", "Tx", "Rx")
+SaveLatexTable(COMBINED_NET_UTIL_NODES_TABLE, "Transmitted (Tx) and Received (Rx) Data in GB", "tx-rx-of-nodes", "net_util_nodes_summary.tex")
+```
+
+```{r metrics-net-utilization-nodes-bar-plot, include=TRUE, echo=FALSE}
+node_net_util <- CreateSummaryForNetUtil(COMBINED_NET_UTIL_NODES) %>%
+  rename(Node = nodeName) %>%
+  mutate(field = if_else(X_field == "rxBytes", "Rx", if_else(X_field == "txBytes", "Tx", ""))) %>%
+  rename(Traffic = field)
+
+(net_util_plot_nodes <- ggplot(node_net_util, aes(x = Node, y = max, fill = Node)) +
+  geom_bar(position = position_dodge(0.8), stat = "identity", width = 0.75, aes(color = Traffic)) +
+  geom_text(aes(label = format(round(max, 2), nsmall = 2), group = Traffic), position = position_dodge(0.8), angle = 90, vjust = 0.5, hjust = -0.2, size = 4, fill = "white") +
+  ggtitle("Traffic Received (Rx) and Transmitted (Tx)") +
+  ylab("Traffic in GB") +
+  xlab("Node") +
+  ylim(0, max(node_net_util$max) * 1.5) +
+  theme(legend.position = "right") +
+  scale_fill_manual(values = node_scale_fills) +
+  guides(fill = FALSE))
+
+SavePlot("net_util_plot_nodes.pdf", net_util_plot_nodes, 8, 6)
+```
