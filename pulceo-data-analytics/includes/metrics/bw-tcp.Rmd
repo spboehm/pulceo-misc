@@ -1,0 +1,56 @@
+### TCP
+
+```{r metrics-bw-tcp-summary, include=TRUE, echo=FALSE}
+# src->dest->recever = Upload speed of src
+# dest->src->receiver = Download speed of src
+TCP_BW_SUMMARY <- filterBW(TCP_BW, "bitrate", "SENDER")
+
+# build upload df
+TCP_BW_SUMMARY <- TCP_BW_SUMMARY %>%
+  group_by(nodeName, nodeNameDest) %>%
+  summarise(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    std = round(sd(X_value), 3), .groups = "drop"
+  ) %>%
+  mutate(across(where(is.numeric), round, 3))
+
+names(TCP_BW_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
+CreateScrollableTable(TCP_BW_SUMMARY)
+SaveLatexTable(TCP_BW_SUMMARY, "TCP bandwidth (Mbps) between nodes.", "tcp-bw-between-nodes", "tcp_bw_nodes_summary.tex")
+```
+
+```{r metrics-bw-tcp-upload-download-summary, eval=FALSE}
+source_nodes <- unique(TCP_BW_SUMMARY$Source)
+dest_nodes <- unique(TCP_BW_SUMMARY$Destination)
+nodes_unique <- intersect(source_nodes, dest_nodes)
+
+df <- left_join(TCP_BW_SUMMARY, TCP_BW_SUMMARY, by = c("nodeName" = "nodeNameDest", "nodeNameDest" = "nodeName"))
+
+df$nodeName <- as.factor(df$nodeName)
+df$nodeNameDest <- as.factor(df$nodeNameDest)
+df$nn <- as.numeric(df$nodeName)
+df$nd <- as.numeric(df$nodeNameDest)
+df %>% filter(!duplicated(pmin(nn, nd), pmax(nn, nd)))
+
+df <- TCP_BW_SUMMARY %>% select(nodeName, nodeNameDest, avg)
+
+TCP_BW_SUMMARY_UPLOAD <- TCP_BW_SUMMARY %>%
+  mutate(upload = TCP_BW_SUMMARY$X_value)
+
+TCP_BW_SUMMARY_DOWNLOAD <- TCP_BW_SUMMARY %>%
+  mutate(download = TCP_BW_SUMMARY$X_value) %>%
+  rename(
+    nodeName = nodeNameDest,
+    nodeNameDest = nodeName
+  )
+
+TCP_BW_SUMMARY_COMPLETE <- left_join(TCP_BW_SUMMARY_UPLOAD, TCP_BW_SUMMARY_DOWNLOAD, by = join_by(nodeName, nodeNameDest))
+
+tcp_bw_plot <- ggplot(filterBW(TCP_BW, "bitrate", "SENDER"), aes(x = endTime, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost), vars(destinationHost))
+# TCP_BW %>% filter(iperfRole == "SENDER") %>% select(sourceHost, destinationHost, iperfRole ,startTime) %>% arrange(startTime)
+```

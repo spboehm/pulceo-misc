@@ -1,24 +1,29 @@
-```{r setup-metrics-rtt, include=FALSE}
+```{r setup-metrics-bw, include=FALSE}
 knitr::opts_knit$set(root.dir = here())
 ```
 
-```{r metrics-rtt-directories, include=FALSE, echo=FALSE}
+```{r metrics-bw-directories, include=FALSE, echo=FALSE}
 source(here("includes/R/directories.R"))
 source(here("includes/R/tables.R"))
 ```
 
-```{r metrics-rtt-sources, include=FALSE, echo=FALSE}
+```{r metrics-bw-sources, include=FALSE, echo=FALSE}
 source(here("includes/R/links.R"))
 source(here("includes/R/latex.R"))
 source(here("includes/R/statistics.R"))
 source(here("includes/R/plots.R"))
 ```
 
-```{r metrics-rtt-load-data-set, include=FALSE, echo=FALSE}
+```{r metrics-bw-load-data-set, include=FALSE, echo=FALSE}
 source(here("includes/resources/metrics/bw.R"))
 ```
 
 ## Bandwidth
 
 <!-- TCP -->
+```{r metrics-bw-tcp, eval=nrow(TCP_BW) > 0, child = 'includes/metrics/bw-tcp.Rmd', include=TRUE, echo=FALSE}
+```
+
 <!-- UDP -->
+```{r metrics-bw-udp, eval=nrow(UDP_BW) > 0, child = 'includes/metrics/bw-udp.Rmd', include=TRUE, echo=FALSE}
+```

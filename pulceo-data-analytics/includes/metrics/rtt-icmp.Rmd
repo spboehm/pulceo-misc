@@ -19,6 +19,7 @@ CreateScrollableTable(ICMP_RTT_SUMMARY)
 #  rowwise %>%
 #  pivot_wider(names_from = nodeNameDest, values_from = rtt, names_sort = TRUE)
 ```
+
 ```{r}
 # icmp_rtt_plot <- ggplot(ICMP_RTT_SUMMARY, aes(nodeName, nodeNameDest, fill= rtt)) +
 #   geom_tile() +
