@@ -21,8 +21,8 @@ source(here("includes/resources/metrics/cpu-util.R"))
 
 ## CPU Utilization
 
-```{r metrics-cpu-utilization-nodes, eval=HasNodes(CPU_UTIL) > 0, child = 'includes/metrics/cpu-util-nodes.Rmd', include=TRUE, echo=FALSE}
+```{r metrics-cpu-utilization-nodes, eval=HasNodes(CPU_UTIL), child = 'includes/metrics/cpu-util-nodes.Rmd', include=TRUE, echo=FALSE}
 ```
 
-```{r metrics-cpu-utilization-applications, eval=HasApplications(CPU_UTIL) > 0, child = 'includes/metrics/cpu-util-applications.Rmd', include=TRUE, echo=FALSE}
+```{r metrics-cpu-utilization-applications, eval=HasApplications(CPU_UTIL), child = 'includes/metrics/cpu-util-applications.Rmd', include=TRUE, echo=FALSE}
 ```

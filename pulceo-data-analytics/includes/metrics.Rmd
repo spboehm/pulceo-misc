@@ -13,3 +13,7 @@ source(here("includes/resources/metrics/cpu-util.R"))
 
 ```{r metrics-cpu-utilization, eval=nrow(CPU_UTIL) > 0, child = 'includes/metrics/cpu-util.Rmd', include=TRUE, echo=FALSE}
 ```
+
+<!-- mem-util -->
+<!-- net-util -->
+<!-- storage-util --> 
