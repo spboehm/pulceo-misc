@@ -1,0 +1,24 @@
+```{r setup-metrics-rtt, include=FALSE}
+knitr::opts_knit$set(root.dir = here())
+```
+
+```{r metrics-rtt-directories, include=FALSE, echo=FALSE}
+source(here("includes/R/directories.R"))
+source(here("includes/R/tables.R"))
+```
+
+```{r metrics-rtt-sources, include=FALSE, echo=FALSE}
+source(here("includes/R/links.R"))
+source(here("includes/R/latex.R"))
+source(here("includes/R/statistics.R"))
+source(here("includes/R/plots.R"))
+```
+
+```{r metrics-rtt-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/rtt.R"))
+```
+
+## RTT
+
+```{r metrics-rtt-icmp, eval=HasLinks(ICMP_RTT), child = 'includes/metrics/rtt-icmp.Rmd', include=TRUE, echo=FALSE}
+```
