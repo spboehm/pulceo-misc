@@ -1,4 +1,5 @@
 source(here("includes/R/libraries.R"))
+source(here("includes/R/directories.R"))
 
 install_and_load("data.table")
 install_and_load("rjson")

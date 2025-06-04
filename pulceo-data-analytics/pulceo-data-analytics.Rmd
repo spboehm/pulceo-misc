@@ -97,9 +97,9 @@ ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable["ART_SHORT_NAMES"]$Value), FAL
 # MEM_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "MEM_UTIL.csv", sep = "/"), timestamp)
 # STORAGE_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "STORAGE_UTIL.csv", sep = "/"), timestamp)
 # NET_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "NET_UTIL.csv", sep = "/"), timestamp)
-ICMP_RTT_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "ICMP_RTT.csv", sep = "/"), endTime)
-TCP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "TCP_BW.csv", sep = "/"), endTime)
-UDP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "UDP_BW.csv", sep = "/"), endTime)
+# ICMP_RTT_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "ICMP_RTT.csv", sep = "/"), endTime)
+#TCP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "TCP_BW.csv", sep = "/"), endTime)
+#UDP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "UDP_BW.csv", sep = "/"), endTime)
 # NODES_RAW <- rjson::fromJSON(file = paste("raw", SUBFOLDER, "NODES.json", sep = "/"))
 ```
 
@@ -625,12 +625,12 @@ MEM_UTIL <- TransfromNodeMetricsMetadata(MEM_UTIL_RAW)
 ### TCP Bandwidth
 
 ```{r}
-TCP_BW <- TransfromNetworkMetricsMetadata(TCP_BW_RAW)
-TCP_BW$iperfRole <- as.factor(TCP_BW$iperfRole)
+# TCP_BW <- TransfromNetworkMetricsMetadata(TCP_BW_RAW)
+# TCP_BW$iperfRole <- as.factor(TCP_BW$iperfRole)
 
-filterBW <- function(df, field, role) {
-  return(df %>% filter(X_field %in% field) %>% filter(iperfRole == role))
-}
+# filterBW <- function(df, field, role) {
+#   return(df %>% filter(X_field %in% field) %>% filter(iperfRole == role))
+# }
 ```
 
 ```{r include=TRUE, echo=FALSE}
@@ -691,8 +691,8 @@ tcp_bw_plot <- ggplot(filterBW(TCP_BW, "bitrate", "SENDER"), aes(x = endTime, y 
 ### UDP Bandwidth
 
 ```{r}
-UDP_BW <- TransfromNetworkMetricsMetadata(UDP_BW_RAW)
-UDP_BW$iperfRole <- as.factor(UDP_BW$iperfRole)
+# UDP_BW <- TransfromNetworkMetricsMetadata(UDP_BW_RAW)
+# UDP_BW$iperfRole <- as.factor(UDP_BW$iperfRole)
 ```
 
 ```{r include=TRUE, echo=FALSE}

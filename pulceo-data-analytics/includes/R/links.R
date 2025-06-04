@@ -19,6 +19,10 @@ filterICMPRTT <- function(df, field) {
   return(df %>% filter(X_field == field))
 }
 
+filterBW <- function(df, field, role) {
+  return(df %>% filter(X_field %in% field) %>% filter(iperfRole == role))
+}
+
 HasLinks <- function(df) {
   nrow(df) > 0
 }
