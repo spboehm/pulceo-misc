@@ -1,0 +1,59 @@
+```{r setup-metrics-requests, include=FALSE}
+knitr::opts_knit$set(root.dir = here())
+```
+
+```{r metrics-requests-directories, include=FALSE, echo=FALSE}
+source(here("includes/R/directories.R"))
+source(here("includes/R/tables.R"))
+```
+
+```{r metrics-requests-sources, include=FALSE, echo=FALSE}
+source(here("includes/R/latex.R"))
+source(here("includes/R/plots.R"))
+```
+
+```{r metrics-requests-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/requests.R"))
+```
+
+## Requests 
+
+### Application Response Time
+
+```{r eval=nrow(REQUESTS) > 0, include=TRUE, echo=FALSE}
+REQUESTS_SUMMARY <- REQUESTS %>%
+  select(timestamp, sourceHost, destHost, X_value) %>%
+  group_by(sourceHost, destHost) %>%
+  filter(!(abs(X_value - mean(X_value)) > 2 * sd(X_value))) %>%
+  summarise(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    std = round(sd(X_value), 3), .groups = "drop"
+  ) %>%
+  rename(source = sourceHost, destination = destHost) %>%
+  mutate(SourceDest = paste(source, destination, sep = " -\n"))
+
+if (ART_SHORT_NAMES) {
+  REQUESTS_SUMMARY$SourceDest <- gsub("-eis", "", REQUESTS_SUMMARY$SourceDest)
+  REQUESTS_SUMMARY$SourceDest <- gsub("gateway1", "gw1", REQUESTS_SUMMARY$SourceDest)
+}
+
+names(REQUESTS_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD", "SourceDest")
+CreateScrollableTable(REQUESTS_SUMMARY)
+SaveLatexTable(REQUESTS_SUMMARY[, 1:7], "Round-trip times between applications", "rtt-between-applications", "requests_summary.tex")
+```
+
+```{r eval=nrow(REQUESTS) > 0, include=TRUE, echo=FALSE}
+(application_response_time_plot <- ggplot(REQUESTS_SUMMARY, aes(x = SourceDest, y = Mean, fill = SourceDest)) +
+  geom_bar(stat = "identity", width = 0.75) +
+  geom_errorbar(aes(x = SourceDest, ymin = Mean - SD, ymax = Mean + SD), width = 0.3, colour = "blue") +
+  geom_label(aes(label = format(round(Mean, digits = 2), nsmall = 2)), vjust = -1.5, fill = "white") +
+  ylab("Application Response Time (ms)") +
+  xlab("Source Application  - Destination Application") +
+  ylim(0, max(REQUESTS_SUMMARY$Mean + REQUESTS_SUMMARY$SD) * 1.3) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = node_scale_fills_ext))
+SavePlot("application_response_time_plot.pdf", application_response_time_plot, ART_PLOT_WIDTH, ART_PLOT_HEIGHT)
+```

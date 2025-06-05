@@ -10,8 +10,8 @@ dframe <- read.table(
   sep = "=", col.names = c("Key", "Value")
 )
 dtable <- data.table(dframe, key = "Key")
-node_scale_fills <- str_split(dtable["NODE_SCALES"]$Value, pattern = ",")[[1]]
-node_scale_fills_ext <- str_split(dtable["NODE_SCALES_EXT"]$Value, pattern = ",")[[1]]
+node_scale_fills <- strsplit(dtable["NODE_SCALES"]$Value, ",")[[1]]
+node_scale_fills_ext <- strsplit(dtable["NODE_SCALES_EXT"]$Value, ",")[[1]]
 start_timestamp <- dtable["START_TIMESTAMP"]$Value
 end_timestamp <- dtable["END_TIMESTAMP"]$Value
 nodes <- dtable["NODES"]$Value
@@ -31,3 +31,7 @@ node_mapping_dest <- node_mapping
 names(node_mapping_dest) <- c("destinationHost", "nodeNameDest")
 
 scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))
+
+ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable["ART_PLOT_WIDTH"]$Value), 8, dtable["ART_PLOT_WIDTH"]$Value))
+ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable["ART_PLOT_HEIGHT"]$Value), 3, dtable["ART_PLOT_HEIGHT"]$Value))
+ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable["ART_SHORT_NAMES"]$Value), FALSE, dtable["ART_SHORT_NAMES"]$Value))

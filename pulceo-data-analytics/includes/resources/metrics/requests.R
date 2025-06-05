@@ -1,0 +1,5 @@
+source(here("includes/R/requests.R"))
+source(here("includes/resources/meta.R"))
+REQUESTS_RAW <- read.csv(here(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/")), skip = 3)
+REQUESTS <- TransfromRequests(REQUESTS_RAW)
+REQUESTS <- REQUESTS %>% filter(between(timestamp, as.POSIXct(start_timestamp, format = "%Y-%m-%dT%H:%M:%OSZ"), as.POSIXct(end_timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")))
