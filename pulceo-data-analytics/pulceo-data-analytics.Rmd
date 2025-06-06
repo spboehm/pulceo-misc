@@ -34,7 +34,7 @@ output: html_document
 # install_and_load("stringi")
 # install_and_load("rjson")
 # install_and_load("kableExtra")
-install_and_load("gridExtra")
+# install_and_load("gridExtra")
 #install_and_load("ggpubr")
 # install_and_load("data.table")
 # install_and_load("jsonlite")
@@ -57,155 +57,7 @@ ROOTFOLDER <- "/tmp/psm-data"
 
 ```{r directories, include=FALSE, echo=FALSE}
 source(here("includes/R/directories.R"))
-source(here("includes/R/static-orchestration-data.R"))
-# TODO: dynamic orchestration data
 source(here("includes/R/tables.R"))
-```
-
-```{r}
-# dframe <- read.table(
-#   file = paste(FOLDER_PFX_RAW, "META.txt", sep = "/"), header = FALSE,
-#   sep = "=", col.names = c("Key", "Value")
-# )
-# dtable <- data.table(dframe, key = "Key")
-# node_scale_fills <- str_split(dtable["NODE_SCALES"]$Value, pattern = ",")[[1]]
-# node_scale_fills_ext <- str_split(dtable["NODE_SCALES_EXT"]$Value, pattern = ",")[[1]]
-# start_timestamp <- dtable["START_TIMESTAMP"]$Value
-# end_timestamp <- dtable["END_TIMESTAMP"]$Value
-# nodes <- dtable["NODES"]$Value
-
-# defaults for application response time
-#ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable["ART_PLOT_WIDTH"]$Value), 8, dtable["ART_PLOT_WIDTH"]$Value))
-#ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable["ART_PLOT_HEIGHT"]$Value), 3, dtable["ART_PLOT_HEIGHT"]$Value))
-#ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable["ART_SHORT_NAMES"]$Value), FALSE, dtable["ART_SHORT_NAMES"]$Value))
-```
-
-```{r warning=FALSE, echo=FALSE}
-# ReadAndFilterTimestamp <- function(file, timestamp) {
-#   return(read.csv(file, skip = 3) %>%
-#     filter(between(timestamp, start_timestamp, end_timestamp), grepl(paste0(nodes, "|pna-k8s-node"), resourceName)))
-# }
-
-# ReadAndFilterEndTime <- function(file, endTime) {
-#   return(read.csv(file, skip = 3) %>%
-#     filter(between(endTime, start_timestamp, end_timestamp)))
-# }
-```
-
-```{r warning=FALSE, echo=FALSE}
-# CPU_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "CPU_UTIL.csv", sep = "/"), timestamp)
-# MEM_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "MEM_UTIL.csv", sep = "/"), timestamp)
-# STORAGE_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "STORAGE_UTIL.csv", sep = "/"), timestamp)
-# NET_UTIL_RAW <- ReadAndFilterTimestamp(paste("raw", SUBFOLDER, "NET_UTIL.csv", sep = "/"), timestamp)
-# ICMP_RTT_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "ICMP_RTT.csv", sep = "/"), endTime)
-# TCP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "TCP_BW.csv", sep = "/"), endTime)
-# UDP_BW_RAW <- ReadAndFilterEndTime(paste("raw", SUBFOLDER, "UDP_BW.csv", sep = "/"), endTime)
-# NODES_RAW <- rjson::fromJSON(file = paste("raw", SUBFOLDER, "NODES.json", sep = "/"))
-```
-
-```{r}
-# transformations
-# TransfromNodeMetricsMetadata <- function(df) {
-#   df$X_field <- as.factor(df$X_field)
-#   df$k8sResourceType <- as.factor(df$k8sResourceType)
-#   df$resourceName <- as.factor(df$resourceName)
-#   df$X_measurement <- as.factor(df$X_measurement)
-#   df$metricType <- as.factor(df$metricType)
-#   df$sourceHost <- as.factor(df$sourceHost)
-#   df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")
-#   df <- merge(df, node_mapping, by = "sourceHost")
-#   return(df)
-# }
-
-# filterResourceUtilForNode <- function(df, field, resourceType, resource) {
-#   return(df %>% filter(X_field == field) %>%
-#     filter(k8sResourceType == resourceType) %>%
-#     filter(grepl(resource, resourceName)))
-# }
-
-# CreateSummary <- function(df, resource) {
-#   df <- df %>%
-#     group_by(nodeName) %>%
-#     summarize(
-#       min = round(min(X_value), 3),
-#       avg = round(mean(X_value), 3),
-#       max = round(max(X_value), 3),
-#       median = round(median(X_value), 3),
-#       sd = round(sd(X_value), 3), .groups = "drop"
-#     )
-#   names(df) <- c(resource, "Min", "Mean", "Max", "Med", "SD")
-#   return(df)
-# }
-
-# CreateSummaryForStorage <- function(df, resource) {
-#   df <- df %>%
-#     group_by(resourceName) %>%
-#     summarize(
-#       min = round(min(X_value), 3),
-#       avg = round(mean(X_value), 3),
-#       max = round(max(X_value), 3),
-#       median = round(median(X_value), 3),
-#       sd = round(sd(X_value), 3), .groups = "drop"
-#     )
-#   names(df) <- c(resource, "Min", "Mean", "Max", "Med", "SD")
-#   return(df)
-# }
-
-# CreateSummaryForNetUtil <- function(df, resource) {
-#   df <- df %>%
-#     group_by(nodeName, X_field) %>%
-#     summarize(max = round(max(X_value_final / 1024 / 1024 / 1024), 3), .groups = "drop")
-#   return(df)
-# }
-
-# latex generation
-# SaveLatexTable <- function(summary, caption, label, filename, position = "t") {
-#   latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep = "", vline = "", label = label, position = position, digits = 2) %>% kable_styling(full_width = TRUE)
-#   save_kable(latex_table, paste("latex", SUBFOLDER, filename, sep = "/"))
-# }
-
-# SaveMultiColLatexTable <- function(summary, caption, label, filename, colnames, header, position = "t") {
-#   latex_table <- kbl(summary, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep = "", vline = "", label = label, col.names = colnames, position = position, digits = 2) %>%
-#     kable_styling(full_width = TRUE) %>%
-#     add_header_above(header)
-
-#   save_kable(latex_table, paste("latex", SUBFOLDER, filename, sep = "/"))
-# }
-
-# resources
-# node_mapping <- Reduce(rbind, lapply(NODES_RAW, function(x) {
-#   return(c(x$hostname, x$node$name))
-# }))
-
-# node_mapping <- as.data.frame(node_mapping)
-# names(node_mapping) <- c("sourceHost", "nodeName")
-
-# node_mapping_dest <- node_mapping
-# names(node_mapping_dest) <- c("destinationHost", "nodeNameDest")
-
-# scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))
-```
-
-```{r}
-# plots
-# theme_set(theme_minimal())
-# theme_update(plot.margin = margin(0.75, 5.5, 0, 5.5, "pt"))
-# GenerateBarPlotPercentage <- function(summary, title, ylim_factor = 1.0, vjust = 0.0) {
-#   plot <- ggplot(summary, aes(x = Node, y = Mean, fill = Node)) +
-#     geom_bar(stat = "identity", width = 0.75) +
-#     geom_errorbar(aes(x = Node, ymin = Mean - SD, ymax = Mean + SD), width = 0.3, colour = "blue") +
-#     geom_label(aes(label = format(round(Mean, digits = 2), nsmall = 2)), vjust = vjust, fill = "white") +
-#     ggtitle(title) +
-#     ylab("Utilization (%)") +
-#     ylim(0, max(summary$Mean + summary$SD) * ylim_factor) +
-#     theme(legend.position = "none") +
-#     scale_fill_manual(values = node_scale_fills)
-#   return(plot)
-# }
-
-# SavePlot <- function(filename, plot, width = 4, height = 3) {
-#   ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
-# }
 ```
 
 ```{r child = 'includes/topology.Rmd'}
@@ -214,15 +66,10 @@ source(here("includes/R/tables.R"))
 ```{r child = 'includes/resources.Rmd'}
 ```
 
-## Events
-
-```{r include=TRUE, echo=FALSE}
-events <- read.csv(paste("raw", SUBFOLDER, "EVENTS.csv", sep = "/"), skip = 3)
-CreateScrollableTable(events)
+```{r child = 'includes/events.Rmd'}
 ```
 
 ```{r child = 'includes/metrics.Rmd'}
-
 ```
 
 ## CPU utilization
@@ -316,7 +163,7 @@ CreateScrollableTable(events)
 ## Memory Utilization
 
 ```{r}
-MEM_UTIL <- TransfromNodeMetricsMetadata(MEM_UTIL_RAW)
+# MEM_UTIL <- TransfromNodeMetricsMetadata(MEM_UTIL_RAW)
 ```
 
 ### Nodes
@@ -820,64 +667,5 @@ MEM_UTIL <- TransfromNodeMetricsMetadata(MEM_UTIL_RAW)
 # SaveMultiColLatexTable(COMBINED_ICMP_TCP_UDP_SUMMARY, "ICMP round-trip time (ms), TCP and UDP bandwidth (Mbps) between nodes.", "combined-icmp-tcp-udp-link-quality", "combined-icmp-tcp-udp-link-quality.tex", c("$v_1$", "$v_2$", rep(c("Min", "Mean", "Max", "Med", "SD"), 3)), c(" ", " ", "ICMP round-trip time (ms)" = 5, "TCP bandwidth (Mbps)" = 5, "UDP bandwidth (Mbps)" = 5), "t")
 ```
 
-
-## Requests (Application Response Time)
-
-```{r}
-# functions
-# TransfromRequests <- function(df) {
-#   df$timestamp <- as.POSIXct(df$timestamp / 1e9, origin = "1970-01-01", tz = "CEST")
-#   df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")
-#   df$X_field <- as.factor(df$X_field)
-#   df$X_measurement <- as.factor(df$X_measurement)
-#   df$sourceHost <- as.factor(df$sourceHost)
-#   df$destinationHost <- gsub("https://|:80", "", df$destinationHost)
-#   df <- merge(df, node_mapping, by.x = "destinationHost", by.y = "sourceHost")
-#   df$sourceHost <- gsub("-edge-iot-simulator", "-eis", df$sourceHost)
-#   names(df)[names(df) == "nodeName"] <- "destHost"
-#   df$destHost <- paste0(df$destHost, "-eis", "")
-#   return(df)
-# }
-```
-
-```{r eval=file.exists(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/")), include=TRUE, echo=FALSE }
-# REQUESTS_RAW <- read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 3)
-# REQUESTS <- TransfromRequests(REQUESTS_RAW)
-# REQUESTS <- REQUESTS %>% filter(between(timestamp, start_timestamp, end_timestamp))
-
-# REQUESTS_SUMMARY <- REQUESTS %>%
-#   select(timestamp, sourceHost, destHost, X_value) %>%
-#   group_by(sourceHost, destHost) %>%
-#   filter(!(abs(X_value - mean(X_value)) > 2 * sd(X_value))) %>%
-#   summarise(
-#     min = round(min(X_value), 3),
-#     avg = round(mean(X_value), 3),
-#     max = round(max(X_value), 3),
-#     median = round(median(X_value), 3),
-#     std = round(sd(X_value), 3), .groups = "drop"
-#   ) %>%
-#   rename(source = sourceHost, destination = destHost) %>%
-#   mutate(SourceDest = paste(source, destination, sep = " -\n"))
-
-# if (ART_SHORT_NAMES) {
-#   REQUESTS_SUMMARY$SourceDest <- gsub("-eis", "", REQUESTS_SUMMARY$SourceDest)
-#   REQUESTS_SUMMARY$SourceDest <- gsub("gateway1", "gw1", REQUESTS_SUMMARY$SourceDest)
-# }
-
-# names(REQUESTS_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD", "SourceDest")
-# CreateScrollableTable(REQUESTS_SUMMARY)
-# SaveLatexTable(REQUESTS_SUMMARY[, 1:7], "Round-trip times between applications", "rtt-between-applications", "requests_summary.tex")
-```
-
-```{r eval=file.exists(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/")), include=TRUE, echo=FALSE }
-# (application_response_time_plot <- ggplot(REQUESTS_SUMMARY, aes(x = SourceDest, y = Mean, fill = SourceDest)) +
-#   geom_bar(stat = "identity", width = 0.75) +
-#   geom_errorbar(aes(x = SourceDest, ymin = Mean - SD, ymax = Mean + SD), width = 0.3, colour = "blue") +
-#   geom_label(aes(label = format(round(Mean, digits = 2), nsmall = 2)), vjust = -1.5, fill = "white") +
-#   ylab("Application Response Time (ms)") +
-#   xlab("Source Application  - Destination Application") +
-#   ylim(0, max(REQUESTS_SUMMARY$Mean + REQUESTS_SUMMARY$SD) * 1.3) +
-#   theme(legend.position = "none") +
-#   scale_fill_manual(values = node_scale_fills_ext))
-# SavePlot("application_response_time_plot.pdf", application_response_time_plot, ART_PLOT_WIDTH, ART_PLOT_HEIGHT)
+```{r child = 'includes/metrics/requests.Rmd'}
 ```

@@ -16,7 +16,7 @@ source(here("includes/R/plots.R"))
 source(here("includes/resources/metrics/requests.R"))
 ```
 
-## Requests 
+## Requests
 
 ### Application Response Time
 
