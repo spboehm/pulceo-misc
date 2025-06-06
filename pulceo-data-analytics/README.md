@@ -21,6 +21,6 @@ library(rmarkdown)
 | 4 |  |  |
 | 5 |  |  |
 | 6 |  |  |
-| 7 |  |  |
+| 7 | Bandwidth | `rmarkdown::render(here('includes/metrics/bw.Rmd'))` |
 | 8 | Combined link quality | `rmarkdown::render(here('includes/metrics/combined-link-quality.Rmd'))` |
 | 9 | Requests | `rmarkdown::render(here('includes/metrics/requests.Rmd'))` |

@@ -20,10 +20,8 @@ source(here("includes/resources/metrics/bw.R"))
 
 ## Bandwidth
 
-<!-- TCP -->
 ```{r metrics-bw-tcp, eval=nrow(TCP_BW) > 0, child = 'includes/metrics/bw-tcp.Rmd', include=TRUE, echo=FALSE}
 ```
 
-<!-- UDP -->
 ```{r metrics-bw-udp, eval=nrow(UDP_BW) > 0, child = 'includes/metrics/bw-udp.Rmd', include=TRUE, echo=FALSE}
 ```
