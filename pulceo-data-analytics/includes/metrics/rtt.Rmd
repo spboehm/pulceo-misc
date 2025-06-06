@@ -18,7 +18,7 @@ source(here("includes/R/plots.R"))
 source(here("includes/resources/metrics/rtt.R"))
 ```
 
-## RTT
+## Round-trip Time (RTT)
 
 ```{r metrics-rtt-icmp, eval=HasLinks(ICMP_RTT), child = 'includes/metrics/rtt-icmp.Rmd', include=TRUE, echo=FALSE}
 ```

@@ -6,8 +6,7 @@
 ## How to test
 
 ``` r
-library(here)
-library(rmarkdown)
+
 ```
 
 ### Includes
@@ -20,7 +19,7 @@ library(rmarkdown)
 | 3 |  |  |
 | 4 |  |  |
 | 5 |  |  |
-| 6 |  |  |
+| 6 | RTT | `rmarkdown::render(here('includes/metrics/rtt.Rmd'))` |
 | 7 | Bandwidth | `rmarkdown::render(here('includes/metrics/bw.Rmd'))` |
 | 8 | Combined link quality | `rmarkdown::render(here('includes/metrics/combined-link-quality.Rmd'))` |
 | 9 | Requests | `rmarkdown::render(here('includes/metrics/requests.Rmd'))` |
