@@ -3,21 +3,7 @@
 ```{r metrics-bw-tcp-summary, include=TRUE, echo=FALSE}
 # src->dest->recever = Upload speed of src
 # dest->src->receiver = Download speed of src
-TCP_BW_SUMMARY <- filterBW(TCP_BW, "bitrate", "SENDER")
 
-# build upload df
-TCP_BW_SUMMARY <- TCP_BW_SUMMARY %>%
-  group_by(nodeName, nodeNameDest) %>%
-  summarise(
-    min = round(min(X_value), 3),
-    avg = round(mean(X_value), 3),
-    max = round(max(X_value), 3),
-    median = round(median(X_value), 3),
-    std = round(sd(X_value), 3), .groups = "drop"
-  ) %>%
-  mutate(across(where(is.numeric), \(x) round(x, 3)))
-
-names(TCP_BW_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
 CreateScrollableTable(TCP_BW_SUMMARY)
 SaveLatexTable(TCP_BW_SUMMARY, "TCP bandwidth (Mbps) between nodes.", "tcp-bw-between-nodes", "tcp_bw_nodes_summary.tex")
 ```

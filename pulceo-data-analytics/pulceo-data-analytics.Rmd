@@ -363,48 +363,9 @@ source(here("includes/R/tables.R"))
 # SavePlot("combined_net_util_pods_facet.pdf", combined_net_util_pods_facet, 10, 6)
 ```
 
-## Combined Measurements
+<!-- Combined Measurements -->
 
-### Nodes
-
-#### CPU and Memory Utilization
-```{r include=TRUE, echo=FALSE}
-# (combined_cpu_mem_util_plot <- ggarrange(cpu_util_bar_plot, mem_util_bar_plot, ncol = 2))
-# SavePlot("combined_cpu_mem_util_plot.pdf", combined_cpu_mem_util_plot, 8, 3)
-```
-
-#### Storage and Network Utilization
-
-```{r include=TRUE, echo=FALSE}
-# (combined_storage_net_util_plot <- ggarrange(storage_util_plot_nodes, net_util_plot_nodes, ncol = 2, widths = c(1, 1)))
-# SavePlot("combined_storage_net_util_plot.pdf", combined_storage_net_util_plot, 8, 3)
-```
-
-### Applications
-
-#### CPU and Memory Utilization
-
-```{r include=TRUE, echo=FALSE}
-# combined_cpu_mem_util_plot_pod <- ggarrange(cpu_util_pods_plot, mem_util_pods_plot, ncol = 2, common.legend=TRUE, legend="bottom")
-# SavePlot("combined_cpu_mem_util_plot_pods.pdf", combined_cpu_mem_util_plot_pod, 8, 4)
-
-# combined_df <- rbind(CPU_UTIL_PODS_PROCESSED, MEM_UTIL_PODS_PROCESSED)
-# combined_df <- combined_df %>%
-#   ungroup() %>%
-#   mutate(field = if_else(combined_df$X_field == "usageCPUPercentage", "CPU Utilization",
-#     if_else(combined_df$X_field == "usageMemoryPercentage", "Memory Utilization", "")
-#   ))
-
-# (combined_cpu_mem_util_plot_pod_df <- ggplot(combined_df, aes(x = timestamp, y = X_value, colour = application)) +
-#   geom_line() +
-#   facet_grid(nodeName ~ field) +
-#   ylab("Utilization (%)") +
-#   xlab("Time") +
-#   scale_x_datetime(breaks = seq(min(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) - 3600, max(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) + 3600, by = "6 hours"), date_labels = "%H:00") +
-#   labs(color = "Applications") +
-#   theme_classic() +
-#   theme(legend.position = "bottom"))
-# SavePlot("combined_cpu_mem_util_plot_pods_facet.pdf", combined_cpu_mem_util_plot_pod_df, 10, 6)
+```{r child = 'includes/metrics/combined-util.Rmd'}
 ```
 
 ## Link Quality Metrics

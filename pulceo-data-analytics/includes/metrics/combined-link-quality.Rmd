@@ -21,12 +21,6 @@ source(here("includes/resources/metrics/bw.R"))
 
 ### Combined Link Quality Metrics
 
-```{r metrics-bw-tcp-summary, eval=nrow(TCP_BW) > 0}
-```
-
-```{r metrics-bw-udp-summary, eval=nrow(UDP_BW) > 0}
-```
-
 #### TCP and UDP Bandwidth
 
 ```{r metrics-combined-link-quality-metrics-tcp-udp, eval=(nrow(TCP_BW_SUMMARY) > 0 && nrow(UDP_BW_SUMMARY) > 0), include=TRUE, echo=FALSE}

@@ -2,15 +2,15 @@
 
 #### CPU and Memory Utilization
 
-```{r metrics-combined-utilization-nodes-include-cpu-util-applications, eval=HasApplications(CPU_UTIL), child = 'includes/metrics/cpu-util-applications.Rmd', include=FALSE, echo=FALSE}
+```{r metrics-cpu-utilization-applications-processed, eval=HasApplications(CPU_UTIL)}
 ```
 
-```{r metrics-combined-utilization-nodes-include-mem-util-applications, eval=HasApplications(MEM_UTIL), child = 'includes/metrics/mem-util-applications.Rmd', include=FALSE, echo=FALSE}
+```{r metrics-mem-utilization-applications-processed, eval=HasApplications(MEM_UTIL)}
 ```
 
-<!-- TODO: storage util -->
+<!-- TODO: Storage Util -->
 
-```{r metrics-combined-utilization-nodes-include-net-util-applications, eval=HasApplications(NET_UTIL), child = 'includes/metrics/net-util-applications.Rmd', include=FALSE, echo=FALSE}
+```{r metrics-net-utilization-applications-processed, eval=HasApplications(NET_UTIL)}
 ```
 
 ```{r include=TRUE, echo=FALSE}
