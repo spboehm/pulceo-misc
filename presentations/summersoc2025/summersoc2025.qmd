@@ -1,0 +1,83 @@
+---
+title: "PULCEO in Action"
+subtitle: "API-driven Task Scheduling and Offloading <br /> with PULCEO: An Extension"
+author: Sebastian Böhm and Guido Wirtz
+institute: University of Bamberg, Germany
+format: 
+  revealjs:
+    smaller: true
+    slide-number: true
+    footer: <https://github.com/spboehm/pulceo-misc>
+    logo: images/dsg.png
+    css: custom.scss
+    template-partials:
+      - title-slide.html
+---
+
+## Task Scheduling / Offloading {.smaller}
+
+::: columns
+::: {.column width="50%"}
+
+- Scheduling of set of tasks T
+
+:::
+
+::: {.column width="50%"}
+Figure goes here
+:::
+:::
+
+## Motivation
+
+::: columns
+::: {.column width="50%"}
+**Edge computing:** Placing of computational resources close to end-users.
+
+Many solutions exist for **task scheduling / offloading / resource allocation**
+
+But, limited
+
+-   **Reproducibility**
+-   (General) **Applicability**
+
+because of
+
+-   **custom** implementations
+-   missing **real-world experiments**
+:::
+
+::: {.column width="50%"}
+Simulations are prevalent: only 19 out of 99 solutions used a small test-bed.[^1]
+:::
+:::
+
+# Contributions
+
+Four major contributions
+
+1. Integrating task scheduling and offloading into our holistic cloud-edge orchestration life cycle.
+2. A general, universal, and flexible model of tasks that is implemented in a publicly available software prototype.
+3. Seamless technical integration of already available task-processing applications.
+4. A set of standard evaluation metrics for task scheduling and offloading, automatically provided by our
+platform.
+
+## Holistic Cloud-Edge Orchestration
+
+## PULCEO
+
+## Task Scheduling and Offloading
+
+# Experiment
+
+Name the paper here.
+
+# Evaluation
+
+## Task Metrics
+
+## Performance Metrics
+
+## Limitations
+
+## Conclusion
