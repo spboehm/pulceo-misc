@@ -1,6 +1,6 @@
 ### ICMP
 
-```{r include=TRUE, echo=FALSE}
+```{r icmp-rtt-summary, include=TRUE, echo=FALSE}
 ICMP_RTT_SUMMARY <- filterICMPRTT(ICMP_RTT, "rttAvg")
 
 ICMP_RTT_SUMMARY <- ICMP_RTT_SUMMARY %>%
@@ -14,10 +14,13 @@ ICMP_RTT_SUMMARY <- ICMP_RTT_SUMMARY %>%
   ) %>%
   mutate_if(is.numeric, scale, na.rm = TRUE)
 names(ICMP_RTT_SUMMARY) <- c("$v_1$", "$v_2$", "Min", "Mean", "Max", "Med", "SD")
-CreateScrollableTable(ICMP_RTT_SUMMARY)
 # ICMP_RTT_SUMMARY_TABLE <- ICMP_RTT_SUMMARY %>%
 #  rowwise %>%
 #  pivot_wider(names_from = nodeNameDest, values_from = rtt, names_sort = TRUE)
+```
+
+```{r icmp-rtt-summary-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(ICMP_RTT_SUMMARY)
 ```
 
 ```{r}
@@ -27,7 +30,7 @@ CreateScrollableTable(ICMP_RTT_SUMMARY)
 #   ylab("Destinatio Node")
 ```
 
-```{r}
+```{r }
 SaveLatexTable(ICMP_RTT_SUMMARY, "ICMP round-trip time (ms) between nodes.", "rtt-of-nodes", "rtt_nodes_summary.tex")
 
 icmp_rtt_plot <- ggplot(filterICMPRTT(ICMP_RTT, "rttAvg"), aes(x = endTime, y = X_value, group = nodeName)) +
