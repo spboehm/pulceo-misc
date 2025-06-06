@@ -1,3 +1,7 @@
+source(here("includes/R/libraries.R"))
+
+install_and_load("tidyverse")
+
 TransfromRequests <- function(df) {
   df$timestamp <- as.POSIXct(df$timestamp / 1e9, origin = "1970-01-01", tz = "CEST")
   df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")
