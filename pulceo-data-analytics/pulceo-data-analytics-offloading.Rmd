@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 if (exists("params")) {
     SUBFOLDER <- ifelse(params$subfolder != "", params$subfolder, "test")
 } else {
-    SUBFOLDER <- "test"
+    SUBFOLDER <- "summersoc2025"
 }
 ```
 
@@ -42,6 +42,7 @@ library(tinytex)
 # TODO: general package
 SavePlot <- function(filename, plot, width = 4, height = 3) {
     ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
+    ggsave(paste0("plots/", SUBFOLDER, "/", filename, ".svg"), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = "svg")
 }
 ```
 

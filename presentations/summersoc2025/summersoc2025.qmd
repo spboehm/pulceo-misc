@@ -76,8 +76,18 @@ Name the paper here.
 
 ## Task Metrics
 
+::: columns
+::: {.column width="70%"}
+![](plots/task_metrics.pdf.svg)
+:::
+
+::: {.column width="30%"}
+- Overhead of the platform
+:::
+:::
+
 ## Performance Metrics
 
-## Limitations
+![](plots/performance_metrics.pdf.svg)
 
 ## Conclusion
