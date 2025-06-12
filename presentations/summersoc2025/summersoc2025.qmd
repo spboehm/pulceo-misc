@@ -19,6 +19,8 @@ format:
 ::: columns
 ::: {.column width="50%"}
 
+**Task Scheduling / Offloading :** Placing of computational resources close to end-users.
+
 - Scheduling of set of tasks T
 
 :::
@@ -32,11 +34,10 @@ Figure goes here
 
 ::: columns
 ::: {.column width="50%"}
-**Edge computing:** Placing of computational resources close to end-users.
 
 Many solutions exist for **task scheduling / offloading / resource allocation**
 
-But, limited
+But, similar to alternative provision models (e.g., service placement):
 
 -   **Reproducibility**
 -   (General) **Applicability**
@@ -45,12 +46,15 @@ because of
 
 -   **custom** implementations
 -   missing **real-world experiments**
+-   Simulations
 :::
 
 ::: {.column width="50%"}
-Simulations are prevalent: only 19 out of 99 solutions used a small test-bed.[^1]
+Simulations are prevalent: Only 3 out of 36 task offloading strategies were using real-world implementations and evaluations.[^1]
 :::
 :::
+
+[^1]: S. Dong et al., “Task offloading strategies for mobile edge computing: A survey,” Computer Networks, vol. 254, p. 110791, Dec. 2024, doi: 10.1016/j.comnet.2024.110791.
 
 # Contributions
 
