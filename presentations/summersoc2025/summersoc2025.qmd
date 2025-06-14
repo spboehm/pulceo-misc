@@ -32,19 +32,27 @@ format:
 
 Many solutions exist for **task scheduling / offloading / resource allocation**
 
-But, similar to alternative provision models (e.g., service placement):
+But, similar to the provision model of service placement: Limited
 
--   **Reproducibility**
--   (General) **Applicability**
+- **Reproducibility**
+- (General) **Applicability**
 
-because of
+is because of:
 
--   **custom** implementations
--   missing **real-world experiments**
+- **simulation-based** evaluations
+- **custom** implementations
+- missing **real-world experiments**
 :::
 
-::: {.column width="50%"}
-Simulations are prevalent: Only 3 out of 36 task offloading strategies were using real-world implementations and evaluations.[^1]
+::: {.column width="40%"}
+
+Prevalent are:
+
+- iFogSim / iFogSim2
+- Local, custom Applications
+- Solvers
+
+Only 3 out of 36 task offloading strategies were using real-world implementations and evaluations.[^1]
 :::
 :::
 
@@ -56,7 +64,7 @@ Selected limitations, addressed by the **authors** of task offloading / scheduli
 
 > Where the value of **CPU weight** and **memory weight** is an **empirical issue**, and **multiple experiments are required** to obtain the optimal value such that α + β = 1. In this paper, all parameters are set to appropriate values.[^1]
 
-> Phare requires updated information on the clusters participating in the federation,
+> Phare [the scheduling solution] requires updated information on the clusters participating in the federation,
 including **CPU**, **memory**, and **bandwidth usage**. A **real-world implementation** should thus **carefully balance** the resolution of such data and the additional overhead required to process it.[^2]
 
 [^2]: G. Castellano, S. Galantino, F. Risso, and A. Manzalini, “Scheduling Multi-Component Applications Across Federated Edge Clusters With Phare,” IEEE Open J. Commun. Soc., vol. 5, pp. 1814–1826, 2024, doi: 10.1109/OJCOMS.2024.3377917.
@@ -73,17 +81,72 @@ Four major contributions
 4. A set of standard evaluation metrics for task scheduling and offloading, automatically provided by our
 platform.
 
-## PULCEO
+## Holistic Coud-Edge Orchestration {.smaller}
 
+![](figures/holistic%20cloud-edge-orchestration-with-pulceo.svg)
 
+## Tasks: Domain Model
 
-## Task Scheduling and Offloading
+Extension of step **Operation**, supported by **P**ulceo-**S**ervice-**M**anager (**PSM**).
 
-# Experiment
+::: columns
+::: {.column width="40%"}
+- *Task* with fixed / variable 
+  - requirements $R$
+  - properties $T$
+- *TaskMetaData*: Internal routing information
+- *TaskScheduling*: Current State of Scheduling
+- *TaskStatusLog*: State transitions over time
+:::
+
+::: {.column width="60%"}
+![](figures/pulceo-architecture-domain-model-condensed.drawio.svg)
+:::
+:::
+
+# Orchestration Workflow
 
 Based on *A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing*.
 
 *Y. Dong, G. Xu, M. Zhang, and X. Meng, “A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing,” IEEE Access, vol. 9, pp. 12791–12802, 2021, doi: 10.1109/ACCESS.2021.3051672.*
+
+## Preparations
+
+TODO
+
+## Task Submission / Retrieval
+
+::: columns
+::: {.column width="50%"}
+
+Example task $t_i$:
+
+POST /tasks
+
+```json
+{
+  "createdBy": "task_emitter.py",
+  "sizeOfWorkload": 50,
+  "sizeDuringTransmission": 50,
+  "deadline": 50,
+  "payload_length": 50,
+  "payload": "payload",
+  "cpu_shares": 500,
+  "memory_size": 0.25,
+  "properties": {
+    "task_type": "small"
+  }
+ }
+```
+
+:::
+
+::: {.column width="50%"}
+![](figures/1-task-submission.drawio.svg)
+:::
+:::
+
+## PULCEO Node Agent
 
 # Evaluation
 
