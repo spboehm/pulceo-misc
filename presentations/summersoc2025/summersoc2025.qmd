@@ -30,14 +30,14 @@ format:
 ::: columns
 ::: {.column width="60%"}
 
-Many solutions exist for **task scheduling / offloading / resource allocation**
+Many solutions exist for **task scheduling / offloading**
 
-But, similar to the provision model of service placement: Limited
+But, similar to the provision model of service placement:
 
 - **Reproducibility**
 - (General) **Applicability**
 
-is because of:
+are **limited** because of:
 
 - **simulation-based** evaluations
 - **custom** implementations
@@ -52,7 +52,9 @@ Prevalent are:
 - Local, custom Applications
 - Solvers
 
-Only 3 out of 36 task offloading strategies were using real-world implementations and evaluations.[^1]
+<br ><br >
+
+Only **3** out of **36** task offloading strategies were using real-world implementations and evaluations.[^1]
 :::
 :::
 
@@ -78,7 +80,7 @@ Consequently, there is a need for real-world experiments.
 3. Integration of task-processing applications.
 4. Automated standard evaluation with  metrics for task scheduling and offloading.
 
-## Holistic Coud-Edge Orchestration {.smaller}
+## Holistic Cloud-Edge Orchestration {.smaller}
 
 ![](figures/holistic%20cloud-edge-orchestration-with-pulceo.svg)
 
@@ -107,9 +109,28 @@ Based on *A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deploy
 
 *Y. Dong, G. Xu, M. Zhang, and X. Meng, “A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing,” IEEE Access, vol. 9, pp. 12791–12802, 2021, doi: 10.1109/ACCESS.2021.3051672.*
 
-## Preparations
+## Overview of Experiment
 
-TODO
+::: columns
+::: {.column width="50%"}
+- POST /nodes: Node connected and running PNA
+- POST /applications: Node running an instance of edge-iot-simulator /applications
+- Set of tasks $T$, small, medium, and large size
+
+PULCEO-Node-Agent:
+
+- PNA supports containerized applications via Kubernetes
+- Proxy allows to run applications securely (authentication and authorization)
+- Applications use the internal RESTful API to update task status changes
+:::
+
+::: {.column width="50%"}
+![](figures/pulceo-architecture-experimental-setup.drawio.svg)
+
+
+![](figures/pna-architecture.drawio.svg){fig-align="center"}
+:::
+:::
 
 ## Task Submission
 
@@ -216,34 +237,71 @@ HTTP PUT /internal/tasks/{id}
 :::
 :::
 
-
-## Application Integration
-
-![](figures/pna-architecture.drawio.svg){fig-align="center"}
-
-- PNA supports containerized applications via Kubernetes
-- Proxy allows to run applications securely (authentication and authorization)
-- Applications use the internal RESTful API to update task status changes
-
 # Evaluation
+
+Task Metrics ‧ Performance Metrics  
+
+- Provided by the automatically generated orchestration reports
+- On top of already implemented metrics, like CPU, memory, and network-related metrics
 
 ## Task Metrics
 
 ::: columns
-::: {.column width="70%"}
+::: {.column width="68%"}
 ![](plots/task_metrics.pdf.svg)
 :::
 
-::: {.column width="30%"}
-- Overhead of the platform
+::: {.column width="32%"}
+- Drilldown into overall completion time
+- Overhead of platform components
+  - Scheduling (PSM): 0.05$s
+  - Offloading: $0.44$s
+  - Waiting (PNA): $0.05$s
+  - Waiting (Total): $0.54$s
+- Naive overhead: $0.49$s (including HTTP overhead)
 :::
 :::
 
+## Task Metrics cont'd
+
+Detailed overview of task metrics for different batch sizes
+
+![](images/task-metric-statistics.png)
+
 ## Performance Metrics
+
+- *Task Response Time*: Time between submitting the task and receiving the response
+- *Task Arrival Rate*: Number of tasks/s arriving at PSM
+- *Task Throughput*: Number of tasks/s completed by the system (*NEW*->*RUNNING*)
 
 ![](plots/performance_metrics.pdf.svg)
 
 ## Conclusion & Limitations
 
+::: columns
+::: {.column width="50%"}
+**Contributions**
 
+1. 🚀 Task scheduling and offloading in line with holistic cloud-edge orchestration.
+2. 🌐 A general, universal, and flexible model of tasks.
+3. ✅ Integration of task-processing applications.
+4. 🔄 Automated standard evaluation with  metrics for task scheduling and offloading.
 
+Empirical evaluation with first insights on the overall overhead.
+:::
+
+::: {.column width="50%"}
+
+**Limitations**
+
+- 🚨 Integration of task-processing applications only via HTTP and MQTT
+- 🚨 Centralized, cloud-based, and only partly decentralized orchestration 
+- 🚨 Minimal cloud-edge topology for first evaluation
+
+<div style="text-align: center;">
+Additional Resources
+</div>
+
+![](images/qr_code_pulceo_misc.svg){fig-align="center"}
+:::
+:::
