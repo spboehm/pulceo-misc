@@ -73,13 +73,10 @@ Consequently, there is a need for real-world experiments.
 
 # Contributions
 
-Four major contributions
-
-1. Integrating task scheduling and offloading into our holistic cloud-edge orchestration life cycle.
-2. A general, universal, and flexible model of tasks, implemented in a publicly available software prototype.
-3. Seamless technical integration of already available task-processing applications.
-4. A set of standard evaluation metrics for task scheduling and offloading, automatically provided by our
-platform.
+1. Task scheduling and offloading in line with holistic cloud-edge orchestration.
+2. A general, universal, and flexible model of tasks.
+3. Integration of task-processing applications.
+4. Automated standard evaluation with  metrics for task scheduling and offloading.
 
 ## Holistic Coud-Edge Orchestration {.smaller}
 
@@ -114,12 +111,10 @@ Based on *A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deploy
 
 TODO
 
-## Task Submission / Retrieval
+## Task Submission
 
 ::: columns
 ::: {.column width="50%"}
-
-Example task $t_i$:
 
 POST /tasks
 
@@ -142,11 +137,93 @@ POST /tasks
 :::
 
 ::: {.column width="50%"}
-![](figures/1-task-submission.drawio.svg)
+![](figures/1-task-submission.drawio.svg){fig-align="center"}
 :::
 :::
 
-## PULCEO Node Agent
+## Task Scheduling and Offloading
+
+::: columns
+::: {.column width="40%"}
+
+HTTP PUT /tasks/{id}
+
+```json
+{
+  "taskId": "831de05b-...",
+  "nodeId": "0b1c6697-...",
+  "appId": "74e18419-",
+  "appComponentId": "6a463804-",
+  "status": "SCHEDULED",
+  "properties": {
+	"batchSize": "100",
+	"layer": "cloud-only",
+	"policy": "dong et al."
+  }
+}
+```
+
+HTTP POST /tasks on PNA
+
+```json
+{
+  "taskId": "831de05b-...",
+  "nodeId": "0b1c6697-...",
+  "appId": "74e18419-",
+  "appComponentId": "6a463804-",
+  ...
+}
+```
+:::
+
+::: {.column width="60%"}
+![](figures/2-task-scheduling-offloading.drawio.svg){fig-align="center"}
+:::
+:::
+
+## Task Processing
+
+::: columns
+::: {.column width="42%"}
+
+**Forward to application:**
+
+HTTP POST /endpoint
+
+```json
+{
+  "taskId": "831de05b-...",
+  "callbackProtocol": "0b1c6697-...",
+  "callbackEndpoint": "74e18419-",
+  ...
+}
+```
+
+**Update task status internally:**
+
+HTTP PUT /internal/tasks/{id}
+
+```json
+{
+  "taskId": "831de05b-...",
+  "newTaskStatus": "COMPLETED"
+}
+```
+:::
+
+::: {.column width="58%"}
+![](figures/3-task-processing.drawio.svg){fig-align="center"}
+:::
+:::
+
+
+## Application Integration
+
+![](figures/pna-architecture.drawio.svg){fig-align="center"}
+
+- PNA supports containerized applications via Kubernetes
+- Proxy allows to run applications securely (authentication and authorization)
+- Applications use the internal RESTful API to update task status changes
 
 # Evaluation
 
@@ -166,4 +243,7 @@ POST /tasks
 
 ![](plots/performance_metrics.pdf.svg)
 
-## Conclusion
+## Conclusion & Limitations
+
+
+
