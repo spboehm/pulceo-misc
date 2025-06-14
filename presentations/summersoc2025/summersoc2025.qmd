@@ -16,24 +16,19 @@ format:
 
 ## Task Scheduling / Offloading {.smaller}
 
-::: columns
-::: {.column width="50%"}
+![](figures/task-offloading.drawio.svg)
 
-**Task Scheduling / Offloading :** Placing of computational resources close to end-users.
 
-- Scheduling of set of tasks T
-
-:::
-
-::: {.column width="50%"}
-Figure goes here
-:::
-:::
+- IoT / mobile clients, submitting set of independent / atomic tasks $T$
+- Heterogeneous cloud, edge and fog nodes $N$
+- Tasks $T$ and nodes $N$ are described by 
+  - Properties $P$: Layer, Location, Costs, ... 
+  - Requirements $R$: CPU, memory, bandwidth, ...
 
 ## Motivation
 
 ::: columns
-::: {.column width="50%"}
+::: {.column width="60%"}
 
 Many solutions exist for **task scheduling / offloading / resource allocation**
 
@@ -46,7 +41,6 @@ because of
 
 -   **custom** implementations
 -   missing **real-world experiments**
--   Simulations
 :::
 
 ::: {.column width="50%"}
@@ -56,25 +50,40 @@ Simulations are prevalent: Only 3 out of 36 task offloading strategies were usin
 
 [^1]: S. Dong et al., “Task offloading strategies for mobile edge computing: A survey,” Computer Networks, vol. 254, p. 110791, Dec. 2024, doi: 10.1016/j.comnet.2024.110791.
 
+## Simulations are sufficient?
+
+Selected limitations, addressed by the **authors** of task offloading / scheduling solutions:
+
+> Where the value of **CPU weight** and **memory weight** is an **empirical issue**, and **multiple experiments are required** to obtain the optimal value such that α + β = 1. In this paper, all parameters are set to appropriate values.[^1]
+
+> Phare requires updated information on the clusters participating in the federation,
+including **CPU**, **memory**, and **bandwidth usage**. A **real-world implementation** should thus **carefully balance** the resolution of such data and the additional overhead required to process it.[^2]
+
+[^2]: G. Castellano, S. Galantino, F. Risso, and A. Manzalini, “Scheduling Multi-Component Applications Across Federated Edge Clusters With Phare,” IEEE Open J. Commun. Soc., vol. 5, pp. 1814–1826, 2024, doi: 10.1109/OJCOMS.2024.3377917.
+
+Consequently, there is a need for real-world experiments.
+
 # Contributions
 
 Four major contributions
 
 1. Integrating task scheduling and offloading into our holistic cloud-edge orchestration life cycle.
-2. A general, universal, and flexible model of tasks that is implemented in a publicly available software prototype.
+2. A general, universal, and flexible model of tasks, implemented in a publicly available software prototype.
 3. Seamless technical integration of already available task-processing applications.
 4. A set of standard evaluation metrics for task scheduling and offloading, automatically provided by our
 platform.
 
-## Holistic Cloud-Edge Orchestration
-
 ## PULCEO
+
+
 
 ## Task Scheduling and Offloading
 
 # Experiment
 
-Name the paper here.
+Based on *A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing*.
+
+*Y. Dong, G. Xu, M. Zhang, and X. Meng, “A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing,” IEEE Access, vol. 9, pp. 12791–12802, 2021, doi: 10.1109/ACCESS.2021.3051672.*
 
 # Evaluation
 
