@@ -109,28 +109,16 @@ Based on *A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deploy
 
 *Y. Dong, G. Xu, M. Zhang, and X. Meng, “A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing,” IEEE Access, vol. 9, pp. 12791–12802, 2021, doi: 10.1109/ACCESS.2021.3051672.*
 
-## Overview of Experiment
+## Overview of Experiment (simplified)
 
-::: columns
-::: {.column width="50%"}
-- POST /nodes: Node connected and running PNA
-- POST /applications: Node running an instance of edge-iot-simulator /applications
-- Set of tasks $T$, small, medium, and large size
-
-PULCEO-Node-Agent:
-
-- PNA supports containerized applications via Kubernetes
-- Proxy allows to run applications securely (authentication and authorization)
-- Applications use the internal RESTful API to update task status changes
-:::
-
-::: {.column width="50%"}
 ![](figures/pulceo-architecture-experimental-setup.drawio.svg)
 
-
-![](figures/pna-architecture.drawio.svg){fig-align="center"}
-:::
-:::
+- Decoupled scheduler using HTTP (`/tasks`) and MQTT (`tasks/+`) for $\theta$
+- $T$, $P(t_i)_{size}={S, M, L}$ and batch sizes $(200,...,800)$
+  - P1
+  - P2
+  - P3
+- Instance of edge-iot-simulator used for task-processing
 
 ## Task Submission
 
