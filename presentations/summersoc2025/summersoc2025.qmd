@@ -109,16 +109,17 @@ Based on *A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deploy
 
 *Y. Dong, G. Xu, M. Zhang, and X. Meng, “A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing,” IEEE Access, vol. 9, pp. 12791–12802, 2021, doi: 10.1109/ACCESS.2021.3051672.*
 
-## Overview of Experiment (simplified)
+## Experiment (simplified)
 
 ![](figures/pulceo-architecture-experimental-setup.drawio.svg)
 
-- Decoupled scheduler using HTTP (`/tasks`) and MQTT (`tasks/+`) for $\theta$
-- $T$, $P(t_i)_{size}={S, M, L}$ and batch sizes $(200,...,800)$
-  - P1
-  - P2
-  - P3
-- Instance of edge-iot-simulator used for task-processing
+- Decoupled scheduler using HTTP (`/tasks`) and MQTT (`tasks/+`) for $\theta: T \rightarrow N$
+- $T$, $P_{task\_type}(t_i)={S\,(50\%), M\,(30\%), L\,(20\%)}$ and batch size of $200,...,800$
+  - $P_{size}(t_i)={10,50,100} \quad P_{payload}(t_i)={10,50,100}$
+  - $R_{cpu\_shares}(t_i)={250,500,1000} \quad R_{memory\_size}(t_i)={0.25,0.50,1.0}$
+- Instance of [edge-iot-simulator](https://github.com/spboehm/edge-iot-simulator)[^3] used for task-processing
+
+[^3]: https://github.com/spboehm/edge-iot-simulator
 
 ## Task Submission
 
