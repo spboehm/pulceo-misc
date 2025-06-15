@@ -1,23 +1,15 @@
+```{r metrics-combined-utilization-applications-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/cpu-util-applications.R"))
+```
+
 ### Applications
 
 #### CPU and Memory Utilization
-
-```{r metrics-cpu-utilization-applications-processed, eval=HasApplications(CPU_UTIL)}
-```
-
-```{r metrics-mem-utilization-applications-processed, eval=HasApplications(MEM_UTIL)}
-```
-
-<!-- TODO: Storage Util -->
-
-```{r metrics-net-utilization-applications-processed, eval=HasApplications(NET_UTIL)}
-```
 
 ```{r include=TRUE, echo=FALSE}
 # TODO: condition
 # combined_cpu_mem_util_plot_pod <- ggarrange(cpu_util_pods_plot, mem_util_pods_plot, ncol = 2, common.legend=TRUE, legend="bottom")
 # SavePlot("combined_cpu_mem_util_plot_pods.pdf", combined_cpu_mem_util_plot_pod, 8, 4)
-
 combined_df <- rbind(CPU_UTIL_PODS_PROCESSED, MEM_UTIL_PODS_PROCESSED)
 combined_df <- combined_df %>%
   ungroup() %>%
