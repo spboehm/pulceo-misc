@@ -13,15 +13,3 @@ source(here("includes/resources/metrics/mem-util.R"))
 source(here("includes/resources/metrics/storage-util.R"))
 source(here("includes/resources/metrics/net-util.R"))
 ```
-
-```{r metrics-cpu-utilization, eval=nrow(CPU_UTIL) > 0, child = 'includes/metrics/cpu-util.Rmd', include=TRUE, echo=FALSE}
-```
-
-```{r metrics-mem-utilization, eval=nrow(MEM_UTIL) > 0, child = 'includes/metrics/mem-util.Rmd', include=TRUE, echo=FALSE}
-```
-
-```{r metrics-storage-utilization, eval=nrow(STORAGE_UTIL) > 0, child = 'includes/metrics/storage-util.Rmd', include=TRUE, echo=FALSE}
-```
-
-```{r metrics-storage-utilization, eval=nrow(NET_UTIL) > 0, child = 'includes/metrics/net-util.Rmd', include=TRUE, echo=FALSE}
-```
