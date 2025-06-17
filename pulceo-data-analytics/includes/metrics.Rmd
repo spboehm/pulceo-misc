@@ -13,3 +13,20 @@ source(here("includes/resources/metrics/mem-util.R"))
 source(here("includes/resources/metrics/storage-util.R"))
 source(here("includes/resources/metrics/net-util.R"))
 ```
+
+`r if (CPU_UTIL_PRESENT || MEM_UTIL_PRESENT || STORAGE_UTIL_PRESENT || NET_UTIL_PRESENT) "## Metrics"`
+
+```{r child = 'includes/metrics/cpu-util.Rmd'}
+```
+
+```{r child = 'includes/metrics/mem-util.Rmd'}
+```
+
+```{r child = 'includes/metrics/storage-util.Rmd'}
+```
+
+```{r child = 'includes/metrics/net-util.Rmd'}
+```
+
+```{r child = 'includes/metrics/combined-util.Rmd'}
+```

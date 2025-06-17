@@ -19,7 +19,7 @@ source(here("includes/R/plots.R"))
 source(here("includes/resources/metrics/cpu-util.R"))
 ```
 
-## CPU Utilization
+`r if (HasNodes(CPU_UTIL) || HasApplications(CPU_UTIL)) "## CPU Utilization"`
 
 ```{r metrics-cpu-utilization-nodes, eval=HasNodes(CPU_UTIL), child = 'includes/metrics/cpu-util-nodes.Rmd', include=TRUE, echo=FALSE}
 ```

@@ -68,23 +68,8 @@ source(here("includes/R/tables.R"))
 
 ```{r child = 'includes/events.Rmd'}
 ```
-
+    
 ```{r child = 'includes/metrics.Rmd'}
-```
-
-```{r child = 'includes/metrics/cpu-util.Rmd'}
-```
-
-```{r child = 'includes/metrics/mem-util.Rmd'}
-```
-
-```{r child = 'includes/metrics/storage-util.Rmd'}
-```
-
-```{r child = 'includes/metrics/net-util.Rmd'}
-```
-
-```{r child = 'includes/metrics/combined-util.Rmd'}
 ```
 
 ## Link Quality Metrics
