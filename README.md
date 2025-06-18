@@ -4,7 +4,7 @@
 
 ## Quick Access SummerSoc 2025
 
-Publication: **API-driven Task Scheduling and Offloading with PULCEO: An Extension**
+Publication: **API-driven Task Scheduling and Offloading with PULCEO: An Extension**  
 Presentation: 🪧 [API-driven Task Scheduling and Offloading with PULCEO: An Extension(online)](https://spboehm.github.io/pulceo-misc/presentations/summersoc2025), [(PDF version)](https://github.com/spboehm/pulceo-misc/blob/main/docs/presentations/summersoc2025/summersoc2025.pdf)  
 - Raw data: [pulceo-data-analytics/raw/summersoc2025](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2025)
 - [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report](https://spboehm.github.io/pulceo-misc/reports/summersoc2025/)
