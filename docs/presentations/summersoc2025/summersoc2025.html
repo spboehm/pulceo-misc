@@ -252,7 +252,7 @@
 <blockquote>
 <p>Phare [the scheduling solution] requires updated information on the clusters participating in the federation, including <strong>CPU</strong>, <strong>memory</strong>, and <strong>bandwidth usage</strong>. A <strong>real-world implementation</strong> should thus <strong>carefully balance</strong> the resolution of such data and the additional overhead required to process it.<sup>2</sup></p>
 </blockquote>
-<p>Consequently, there is a need for real-world experiments and evaluations.</p>
+<p>Consequently, there is a need for <strong>real-world experiments</strong> and <strong>evaluations</strong>.</p>
 <aside><ol class="aside-footnotes"><li id="fn2"><p>Y. Dong, G. Xu, M. Zhang, and X. Meng, “A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing,” IEEE Access, vol.&nbsp;9, pp.&nbsp;12791–12802, 2021, doi: 10.1109/ACCESS.2021.3051672.</p></li><li id="fn3"><p>G. Castellano, S. Galantino, F. Risso, and A. Manzalini, “Scheduling Multi-Component Applications Across Federated Edge Clusters With Phare,” IEEE Open J. Commun. Soc., vol.&nbsp;5, pp.&nbsp;1814–1826, 2024, doi: 10.1109/OJCOMS.2024.3377917.</p></li></ol></aside></section>
 <section id="holistic-cloud-edge-orchestration" class="slide level2 smaller">
 <h2>Holistic Cloud-Edge Orchestration</h2>
@@ -268,8 +268,8 @@
 <li>Automated standard evaluation with metrics for task scheduling and offloading.</li>
 </ol>
 </section>
-<section id="tasks-domain-model" class="slide level2">
-<h2>Tasks: Domain Model</h2>
+<section id="task-domain-model" class="slide level2">
+<h2>Task: Domain Model</h2>
 <p>Extension of step <strong>Operation</strong>, supported by <strong>p</strong>ulceo-<strong>s</strong>ervice-<strong>m</strong>anager (<strong>PSM</strong>).</p>
 <div class="columns">
 <div class="column" style="width:30%;">
@@ -293,20 +293,17 @@
 <h1>Orchestration Workflow</h1>
 <p>Experiment ‧ Task Submission, Scheduling, Offloading, Processing, and Completion</p>
 </section>
-<section id="experiment-simplified" class="slide level2">
-<h2>Experiment (simplified)</h2>
+<section id="experiment" class="slide level2">
+<h2>Experiment</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="figures/pulceo-architecture-experimental-setup.drawio.svg" class="quarto-figure quarto-figure-center"></p>
 </figure>
 </div>
 <ul>
-<li>Decoupled scheduler uses HTTP (<code>/tasks</code>) and MQTT (<code>tasks/+</code>) for <span class="math inline">\(\theta: T \rightarrow N\)</span></li>
-<li><span class="math inline">\(T\)</span>, <span class="math inline">\(P_{task\_type}(t_i)={S\,(50\%), M\,(30\%), L\,(20\%)}\)</span> and batch size of <span class="math inline">\(200,...,800\)</span>
-<ul>
-<li><span class="math inline">\(P_{size}(t_i)={10,50,100} \quad P_{payload}(t_i)={10,50,100}\)</span></li>
-<li><span class="math inline">\(R_{cpu\_shares}(t_i)={250,500,1000} \quad R_{memory\_size}(t_i)={0.25,0.50,1.0}\)</span></li>
-</ul></li>
+<li>Decoupled scheduler uses HTTP (<code>/tasks</code>) and MQTT (<code>tasks/+</code>)</li>
+<li><span class="math inline">\(P_{task\_type}(t_i)={S\,(50\%), M\,(30\%), L\,(20\%)} \qquad  batch\_{sizes}=200,...,400\)</span></li>
+<li><span class="math inline">\(P_{size}(t_i)={10,50,100} \quad ... \qquad R_{cpu\_shares}(t_i)={250,500,1000} \quad ...\)</span></li>
 <li>Instance of <a href="https://github.com/spboehm/edge-iot-simulator">edge-iot-simulator</a><sup>1</sup> used for task processing</li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn4"><p>https://github.com/spboehm/edge-iot-simulator</p></li></ol></aside></section>
@@ -429,15 +426,6 @@
 </ul>
 </div></div>
 </section>
-<section id="task-metrics-detailed" class="slide level2">
-<h2>Task Metrics (detailed)</h2>
-<ul>
-<li>Overview of task metrics and corresponding task states</li>
-<li>Calculation of task metrics <span class="math inline">\((timestamp(S_2) - timestamp(S_1))\)</span></li>
-<li>Distribution (<span class="math inline">\(\mu, \sigma, min, max\)</span>)<sup>1</sup></li>
-</ul>
-<p><img data-src="images/task-metric-statistics.png"></p>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>fully available in the orchestration report</p></li></ol></aside></section>
 <section id="performance-metrics" class="slide level2">
 <h2>Performance Metrics</h2>
 <ul>
@@ -472,8 +460,8 @@
 </figure>
 </div>
 </div></div>
-
-</section></section>
+</section>
+</section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
