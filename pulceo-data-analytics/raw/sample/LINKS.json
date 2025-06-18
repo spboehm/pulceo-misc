@@ -1,0 +1,50 @@
+[
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "85110ccf-d12d-44c7-bb2e-17105ef34b62",
+    "remoteNodeLinkUUID": "362d00ae-5cec-4193-9ff9-a8a0c5f84c6e",
+    "name": "fog3-fog1",
+    "srcNodeUUID": "56718563-3580-498e-8441-8aa7d92f7654",
+    "destNodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "7c3a7888-2aca-4e42-95d4-36621b1272ff",
+    "remoteNodeLinkUUID": "62bb1805-1b08-4193-b225-10a4d68d2d08",
+    "name": "fog3-fog2",
+    "srcNodeUUID": "56718563-3580-498e-8441-8aa7d92f7654",
+    "destNodeUUID": "934bc9f9-33c6-4e40-a186-017ea28f80b8"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "e84b3aa8-687c-44a6-b109-c6a3f68ec922",
+    "remoteNodeLinkUUID": "b2b4fde1-98cd-4a01-a1cb-e41cca958622",
+    "name": "fog1-cloud1",
+    "srcNodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309",
+    "destNodeUUID": "4c37dcca-998d-49a4-861b-49b0ef91516d"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "a16dcf8c-b8e9-4b62-8bc0-4dafe38c74a2",
+    "remoteNodeLinkUUID": "c7a945de-945c-4ecc-884f-b6393dc53bff",
+    "name": "fog2-cloud1",
+    "srcNodeUUID": "934bc9f9-33c6-4e40-a186-017ea28f80b8",
+    "destNodeUUID": "4c37dcca-998d-49a4-861b-49b0ef91516d"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "67fbfccf-f470-4a82-81f0-731480be934b",
+    "remoteNodeLinkUUID": "4df64c53-0f35-4143-bce6-d726eff899c2",
+    "name": "cloud1-fog1",
+    "srcNodeUUID": "4c37dcca-998d-49a4-861b-49b0ef91516d",
+    "destNodeUUID": "e1076174-380a-47e4-a468-b9fd1b0ea309"
+  },
+  {
+    "linkType": "NODE_LINK",
+    "linkUUID": "532030fd-9c23-44d9-9df7-ab62a90727ed",
+    "remoteNodeLinkUUID": "45c33b76-37b8-484b-8b9f-7aec51a36be6",
+    "name": "cloud1-fog2",
+    "srcNodeUUID": "4c37dcca-998d-49a4-861b-49b0ef91516d",
+    "destNodeUUID": "934bc9f9-33c6-4e40-a186-017ea28f80b8"
+  }
+]

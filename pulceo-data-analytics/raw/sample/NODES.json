@@ -1,0 +1,97 @@
+[
+  {
+    "uuid": "56718563-3580-498e-8441-8aa7d92f7654",
+    "providerName": "default",
+    "hostname": "h5138.pi.uni-bamberg.de",
+    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
+    "node": {
+      "name": "fog3",
+      "type": "FOG",
+      "layer": 2,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "934bc9f9-33c6-4e40-a186-017ea28f80b8",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-de55018079.germanywestcentral.cloudapp.azure.com",
+    "pnaUUID": "8fa971ea-5ed3-48bc-8d3b-dc5cc977c2be",
+    "node": {
+      "name": "fog2",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Hessen",
+      "city": "Frankfurt",
+      "longitude": 8.682127,
+      "latitude": 50.110924,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "e1076174-380a-47e4-a468-b9fd1b0ea309",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-16e5021250.francecentral.cloudapp.azure.com",
+    "pnaUUID": "2975e5e7-58bc-4ffe-ba8b-58b795431321",
+    "node": {
+      "name": "fog1",
+      "type": "FOG",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "France",
+      "state": "Paris (chef-lieu)",
+      "city": "Paris",
+      "longitude": 2.373,
+      "latitude": 46.3772,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "4c37dcca-998d-49a4-861b-49b0ef91516d",
+    "providerName": "azure-provider",
+    "hostname": "pulceo-node-cc15023803.eastus.cloudapp.azure.com",
+    "pnaUUID": "0360b064-f433-4efd-aee1-5d9ae167f4d3",
+    "node": {
+      "name": "cloud1",
+      "type": "CLOUD",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "USA",
+      "state": "Virginia",
+      "city": "Boydton",
+      "longitude": -78.37465887756295,
+      "latitude": 37.3719,
+      "tags": []
+    }
+  },
+  {
+    "uuid": "6dd39b86-1b6e-4122-8739-cd4572f197dd",
+    "providerName": "default",
+    "hostname": "h5136.pi.uni-bamberg.de",
+    "pnaUUID": "265916fb-2092-40ee-9528-b32f4ea911a1",
+    "node": {
+      "name": "gateway1",
+      "type": "GATEWAY",
+      "layer": 1,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": []
+    }
+  }
+]
