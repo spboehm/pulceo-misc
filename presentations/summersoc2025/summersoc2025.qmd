@@ -291,6 +291,10 @@ Overhead:
 
 ## Task Metrics (detailed)
 
+- Overview of task metrics and corresponding task states
+- Calculation of task metrics $(timestamp(S_2) - timestamp(S_1))$
+- Distribution ($\mu, \sigma, min, max$)^[fully available in the orchestration report] 
+
 ![](images/task-metric-statistics.png)
 
 ## Performance Metrics
