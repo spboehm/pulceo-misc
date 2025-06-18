@@ -89,7 +89,7 @@ including **CPU**, **memory**, and **bandwidth usage**. A **real-world implement
 
 [^4]: Y. Dong, G. Xu, M. Zhang, and X. Meng, “A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing,” IEEE Access, vol. 9, pp. 12791–12802, 2021, doi: 10.1109/ACCESS.2021.3051672.
 
-Consequently, there is a need for real-world experiments and evaluations.
+Consequently, there is a need for **real-world experiments** and **evaluations**.
 
 ## Holistic Cloud-Edge Orchestration {.smaller}
 
@@ -102,7 +102,7 @@ Consequently, there is a need for real-world experiments and evaluations.
 3. Integration of task-processing applications.
 4. Automated standard evaluation with metrics for task scheduling and offloading.
 
-## Tasks: Domain Model
+## Task: Domain Model
 
 Extension of step **Operation**, supported by **p**ulceo-**s**ervice-**m**anager (**PSM**).
 
@@ -127,14 +127,13 @@ Extension of step **Operation**, supported by **p**ulceo-**s**ervice-**m**anager
 
 Experiment ‧ Task Submission, Scheduling, Offloading, Processing, and Completion
 
-## Experiment (simplified)
+## Experiment
 
 ![](figures/pulceo-architecture-experimental-setup.drawio.svg){fig-align="center"}
 
-- Decoupled scheduler uses HTTP (`/tasks`) and MQTT (`tasks/+`) for $\theta: T \rightarrow N$
-- $T$, $P_{task\_type}(t_i)={S\,(50\%), M\,(30\%), L\,(20\%)}$ and batch size of $200,...,800$
-  - $P_{size}(t_i)={10,50,100} \quad P_{payload}(t_i)={10,50,100}$
-  - $R_{cpu\_shares}(t_i)={250,500,1000} \quad R_{memory\_size}(t_i)={0.25,0.50,1.0}$
+- Decoupled scheduler uses HTTP (`/tasks`) and MQTT (`tasks/+`)
+- $P_{task\_type}(t_i)={S\,(50\%), M\,(30\%), L\,(20\%)} \qquad  batch\_{sizes}=200,...,400$
+- $P_{size}(t_i)={10,50,100} \quad ... \qquad R_{cpu\_shares}(t_i)={250,500,1000} \quad ...$
 - Instance of [edge-iot-simulator](https://github.com/spboehm/edge-iot-simulator)[^3] used for task processing
 
 [^3]: https://github.com/spboehm/edge-iot-simulator
@@ -286,14 +285,6 @@ Overhead:
 :::
 :::
 
-## Task Metrics (detailed)
-
-- Overview of task metrics and corresponding task states
-- Calculation of task metrics $(timestamp(S_2) - timestamp(S_1))$
-- Distribution ($\mu, \sigma, min, max$)^[fully available in the orchestration report] 
-
-![](images/task-metric-statistics.png)
-
 ## Performance Metrics
 
 - **Task Response Time**: Time between submitting the task and receiving the response
@@ -327,3 +318,11 @@ Empirical evaluation with first insights on the overall overhead.
 ![](images/qr_code_pulceo_misc.svg){fig-align="center"}
 :::
 :::
+
+## Task Metrics (detailed) {visibility="hidden"}
+
+- Overview of task metrics and corresponding task states
+- Calculation of task metrics $(timestamp(S_2) - timestamp(S_1))$
+- Distribution ($\mu, \sigma, min, max$)^[fully available in the orchestration report] 
+
+![](images/task-metric-statistics.png)
