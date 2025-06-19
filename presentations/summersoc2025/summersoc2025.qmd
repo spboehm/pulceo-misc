@@ -186,7 +186,7 @@ Experiment ‧ Task Submission, Scheduling, Offloading, Processing, and Completi
 ```json
 {
   "nodeId": "0b1c6697-...",
-  "appId": "74e18419-",
+  "appId": "74e18419-...",
   "status": "SCHEDULED",
   "properties": {
 	"batchSize": "100",
@@ -203,8 +203,8 @@ Experiment ‧ Task Submission, Scheduling, Offloading, Processing, and Completi
 ```json
 {
   "taskId": "831de05b-...",
-  "appId": "74e18419-",
-  "appComponentId": "6a463804-",
+  "appId": "74e18419-...",
+  "appComponentId": "6a463804-...",
   ...
 }
 ```
@@ -230,7 +230,7 @@ Experiment ‧ Task Submission, Scheduling, Offloading, Processing, and Completi
 {
   "taskId": "831de05b-...",
   "callbackProtocol": "0b1c6697-...",
-  "callbackEndpoint": "74e18419-",
+  "callbackEndpoint": "74e18419-...",
   ...
 }
 ```
