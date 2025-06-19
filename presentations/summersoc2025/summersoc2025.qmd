@@ -19,7 +19,7 @@ format:
 ![](figures/task-offloading.drawio.svg){fig-align="center"}
 
 
-- IoT / mobile clients, submitting set of independent / atomic tasks $T$
+- IoT / mobile clients, submitting independent / atomic tasks $T$
 - Heterogeneous cloud, edge and fog nodes $N$
 - Tasks $T$ and Nodes $N$ are described by 
   - Properties $P$: Layer, Location, Costs, ... 
@@ -174,14 +174,14 @@ Experiment ‧ Task Submission, Scheduling, Offloading, Processing, and Completi
 
 ## Task Scheduling and Offloading
 
-**Task states:** <span style="color:gray;"> NONE -> NEW -> </span> SCHEDULED -> OFFLOADED <span style="color:gray;"> -> RUNNING -> COMPLETED</span>
+**Task states:** <span style="color:gray;"> NONE -> </span> NEW -> SCHEDULED -> OFFLOADED <span style="color:gray;"> -> RUNNING -> COMPLETED</span>
 
 ::: columns
-::: {.column width="40%"}
+::: {.column width="45%"}
 
 **Scheduler assigns node:**
 
-`HTTP PUT /tasks/{id}`
+`HTTP PUT /tasks/{id}/scheduling`
 
 ```json
 {
@@ -210,14 +210,14 @@ Experiment ‧ Task Submission, Scheduling, Offloading, Processing, and Completi
 ```
 :::
 
-::: {.column width="60%"}
+::: {.column width="55%"}
 ![](figures/2-task-scheduling-offloading.drawio.svg){fig-align="center"}
 :::
 :::
 
 ## Task Processing
 
-**Task states:** <span style="color:gray;"> NONE -> NEW -> SCHEDULED -> OFFLOADED -> </span> RUNNING -> COMPLETED
+**Task states:** <span style="color:gray;"> NONE -> NEW -> SCHEDULED -> </span> OFFLOADED -> RUNNING -> COMPLETED
 
 ::: columns
 ::: {.column width="42%"}
@@ -280,7 +280,7 @@ Overhead:
 
 - Communication (HTTP)
 - Telemetry
-- Proxied applications
+- Proxied application
 
 :::
 :::
@@ -299,10 +299,10 @@ Overhead:
 ::: {.column width="55%"}
 **Contributions**
 
-1. 🚀 Task scheduling and offloading in line with holistic cloud-edge orchestration
-2. 🌐 A general, universal, and flexible model of tasks
-3. ✅ Integration of task-processing applications
-4. 🔄 Automated standard evaluation with  metrics for task scheduling and offloading
+1. 🚀 Task scheduling and offloading in line with holistic cloud-edge orchestration  
+2. 🌐 A general, universal, and flexible model of tasks  
+3. ✅ Integration of task-processing applications  
+4. 🔄 Automated standard evaluation with  metrics for task scheduling and offloading  
 
 Empirical evaluation with first insights on the overall overhead.
 :::
