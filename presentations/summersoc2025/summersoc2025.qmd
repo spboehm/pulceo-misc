@@ -32,7 +32,7 @@ format:
 
 Many solutions exist for **task scheduling / offloading**
 
-But, similar to **Service Placement**:
+But, similar to **service placement**:
 
 - **Reproducibility**
 - (General) **Applicability**
@@ -110,7 +110,7 @@ Extension of step **Operation**, supported by **p**ulceo-**s**ervice-**m**anager
 ::: {.column width="30%"}
 - *Task* with fixed / variable 
   - requirements $R$
-  - properties $T$
+  - properties $P$
 - *TaskMetaData*: Internal routing information
 - *TaskScheduling*: Current state of scheduling
 - *TaskStatusLog*: State transitions over time
