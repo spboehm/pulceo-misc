@@ -5,8 +5,9 @@ source(here("includes/resources/meta.R"))
 # TCP
 TCP_BW_RAW <- ReadAndFilterEndTime(here(paste("raw", SUBFOLDER, "TCP_BW.csv", sep = "/")), endTime)
 TCP_BW <- TransfromNetworkMetricsMetadata(TCP_BW_RAW)
-TCP_BW$iperfRole <- as.factor(TCP_BW$iperfRole)
+TCP_BW_PRESENT <- nrow(TCP_BW)
 
+TCP_BW$iperfRole <- as.factor(TCP_BW$iperfRole)
 TCP_BW_SUMMARY <- filterBW(TCP_BW, "bitrate", "SENDER")
 
 # build upload df
@@ -26,8 +27,9 @@ names(TCP_BW_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med",
 # UDP
 UDP_BW_RAW <- ReadAndFilterEndTime(here(paste("raw", SUBFOLDER, "UDP_BW.csv", sep = "/")), endTime)
 UDP_BW <- TransfromNetworkMetricsMetadata(UDP_BW_RAW)
-UDP_BW$iperfRole <- as.factor(UDP_BW$iperfRole)
+UDP_BW_PRESENT <- nrow(UDP_BW)
 
+UDP_BW$iperfRole <- as.factor(UDP_BW$iperfRole)
 UDP_BW <- filterBW(UDP_BW, c("bitrate", "jitter", "lostDatagrams", "totalDatagrams"), "RECEIVER")
 
 UDP_BW_PACKAGE_LOSS_SUMMARY <- UDP_BW %>%

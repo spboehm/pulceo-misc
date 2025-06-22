@@ -14,7 +14,9 @@ source(here("includes/resources/metrics/storage-util.R"))
 source(here("includes/resources/metrics/net-util.R"))
 ```
 
-`r if (CPU_UTIL_PRESENT || MEM_UTIL_PRESENT || STORAGE_UTIL_PRESENT || NET_UTIL_PRESENT) "## Metrics"`
+`r if (CPU_UTIL_PRESENT || MEM_UTIL_PRESENT 
+|| STORAGE_UTIL_PRESENT || NET_UTIL_PRESENT
+|| ICMP_RTT_PRESENT || ) "## Metrics"`
 
 ```{r child = 'includes/metrics/cpu-util.Rmd'}
 ```
@@ -29,4 +31,13 @@ source(here("includes/resources/metrics/net-util.R"))
 ```
 
 ```{r child = 'includes/metrics/combined-util.Rmd'}
+```
+
+```{r child = 'includes/metrics/rtt.Rmd'}
+```
+
+```{r child = 'includes/metrics/bw.Rmd'}
+```
+
+```{r child = 'includes/metrics/combined-link-quality.Rmd'}
 ```
