@@ -12,11 +12,12 @@ source(here("includes/resources/metrics/cpu-util.R"))
 source(here("includes/resources/metrics/mem-util.R"))
 source(here("includes/resources/metrics/storage-util.R"))
 source(here("includes/resources/metrics/net-util.R"))
+source(here("includes/resources/metrics/rtt.R"))
 ```
 
 `r if (CPU_UTIL_PRESENT || MEM_UTIL_PRESENT 
 || STORAGE_UTIL_PRESENT || NET_UTIL_PRESENT
-|| ICMP_RTT_PRESENT || ) "## Metrics"`
+|| ICMP_RTT_PRESENT) "## Metrics"`
 
 ```{r child = 'includes/metrics/cpu-util.Rmd'}
 ```
