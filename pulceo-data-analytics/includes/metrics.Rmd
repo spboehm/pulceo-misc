@@ -1,3 +1,8 @@
+---
+params:
+  rootfolder: "."
+---
+
 ```{r setup-metrics, include=FALSE}
 knitr::opts_knit$set(root.dir = here())
 ```

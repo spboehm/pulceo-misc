@@ -21,7 +21,7 @@ SUBFOLDER <- "sample"
 
 | \# | Resource | Command |
 |---|--------------|--------------------------------------------------------|
-| 0 | PDA | `rmarkdown::render(here('pulceo-data-analytics.Rmd'))` |
+| 0 | PDA | `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = ""))` |
 | 1 | Topology | `rmarkdown::render(here('includes/topology.Rmd'))` |
 | 2 | Events | `rmarkdown::render(here('includes/events.Rmd'))` |
 | 3 | Resources | `rmarkdown::render(here('includes/resources.Rmd'))` |
