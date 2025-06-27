@@ -10,6 +10,13 @@ library(here)
 library(rmarkdown)
 ```
 
+Specify the project to render:
+
+```r
+ROOTFOLDER <- "/tmp/psm-data" 
+SUBFOLDER <- "sample"
+```
+
 ### Includes
 
 | \# | Resource | Command |
@@ -27,3 +34,4 @@ library(rmarkdown)
 | 10 | Bandwidth | `rmarkdown::render(here('includes/metrics/bw.Rmd'))` |
 | 11 | Combined Link Quality | `rmarkdown::render(here('includes/metrics/combined-link-quality.Rmd'))` |
 | 12 | Requests | `rmarkdown::render(here('includes/metrics/requests.Rmd'))` |
+| 13 | Tasks | `rmarkdown::render(here('includes/metrics/tasks.Rmd'))` |

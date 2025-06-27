@@ -1,9 +1,9 @@
-source(here("includes/resources/metrics/cpu-util.R"))
+source(here("includes/resources/metrics/mem-util.R"))
 source(here("includes/R/statistics.R"))
 
-CPU_UTIL_PODS <- filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "traefik|pulceo-node-agent|edge-iot-simulator")
+MEM_UTIL_PODS <- filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "traefik|pulceo-node-agent|edge-iot-simulator")
 
-CPU_UTIL_PODS_PROCESSED <- CPU_UTIL_PODS %>%
+MEM_UTIL_PODS_PROCESSED <- MEM_UTIL_PODS %>%
   group_by(nodeName) %>%
   arrange(timestamp, .by_group = TRUE) %>%
   mutate(id = row_number()) %>%
@@ -13,16 +13,16 @@ CPU_UTIL_PODS_PROCESSED <- CPU_UTIL_PODS %>%
     )
   ))
 
-CPU_UTIL_pods_summary <- CreateSummary(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "edge-iot-simulator"), "Pod")
+MEM_UTIL_pods_summary <- CreateSummary(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "traefik"), "Pod")
 
-CPU_UTIL_PODS_SUMMARY_BY_APP <- CPU_UTIL %>%
-  filter(k8sResourceType == "POD", X_field == "usageCPUPercentage") %>%
+MEM_UTIL_PODS_SUMMARY_BY_APP <- MEM_UTIL %>%
+  filter(k8sResourceType == "POD", X_field == "usageMemoryPercentage") %>%
   group_by(nodeName, resourceName) %>%
   summarize(
     min = round(min(X_value), 3),
     avg = round(mean(X_value), 3),
     max = round(max(X_value), 3),
     median = round(median(X_value), 3),
-    sd = round(sd(X_value), 3), 
+    sd = round(sd(X_value), 3),
     .groups = "drop"
   )

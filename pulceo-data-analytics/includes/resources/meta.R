@@ -6,7 +6,7 @@ install_and_load("rjson")
 
 # meta file for orchestration
 dframe <- read.table(
-  file = here(paste(FOLDER_PFX_RAW, "META.txt", sep = "/")), header = FALSE,
+  file = paste(FOLDER_PFX_RAW, "META.txt", sep = "/"), header = FALSE,
   sep = "=", col.names = c("Key", "Value")
 )
 dtable <- data.table(dframe, key = "Key")
@@ -16,8 +16,8 @@ start_timestamp <- dtable["START_TIMESTAMP"]$Value
 end_timestamp <- dtable["END_TIMESTAMP"]$Value
 nodes <- dtable["NODES"]$Value
 
-# TODO: remove NODE_RAW
-NODES_RAW <- rjson::fromJSON(file = here(paste("raw", SUBFOLDER, "NODES.json", sep = "/")))
+# TODO: remove NODE_RAW with rson
+NODES_RAW <- rjson::fromJSON(file = here(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/")))
 
 # node mapping
 node_mapping <- Reduce(rbind, lapply(NODES_RAW, function(x) {

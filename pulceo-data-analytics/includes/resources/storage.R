@@ -1,1 +1,1 @@
-storage_resources <- jsonlite::fromJSON(here(paste("raw", SUBFOLDER, "STORAGE.json", sep = "/")))
+storage_resources <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "STORAGE.json", sep = "/"))

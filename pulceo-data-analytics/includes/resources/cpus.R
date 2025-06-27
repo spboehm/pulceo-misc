@@ -1,1 +1,1 @@
-cpu_resources <- jsonlite::fromJSON(here(paste("raw", SUBFOLDER, "CPUS.json", sep = "/")))
+cpu_resources <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "CPUS.json", sep = "/"))
