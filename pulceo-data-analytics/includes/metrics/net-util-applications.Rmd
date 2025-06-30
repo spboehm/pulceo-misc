@@ -1,3 +1,7 @@
+```{r metrics-net-utilization-applications-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/net-util-applications.R"))
+```
+
 ### Applications
 
 ```{r metrics-net-utilization-applications-line-plot, include=TRUE, echo=FALSE}

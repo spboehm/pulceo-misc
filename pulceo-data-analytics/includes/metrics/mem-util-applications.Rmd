@@ -1,3 +1,7 @@
+```{r metrics-mem-utilization-applications-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/mem-util-applications.R"))
+```
+
 ### Applications
 
 ```{r include=TRUE, echo=FALSE}
