@@ -30,8 +30,8 @@ names(node_mapping) <- c("sourceHost", "nodeName")
 node_mapping_dest <- node_mapping
 names(node_mapping_dest) <- c("destinationHost", "nodeNameDest")
 
-scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))
-
 ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable["ART_PLOT_WIDTH"]$Value), 8, dtable["ART_PLOT_WIDTH"]$Value))
 ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable["ART_PLOT_HEIGHT"]$Value), 3, dtable["ART_PLOT_HEIGHT"]$Value))
 ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable["ART_SHORT_NAMES"]$Value), FALSE, dtable["ART_SHORT_NAMES"]$Value))
+
+scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))

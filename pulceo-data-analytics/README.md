@@ -1,7 +1,7 @@
 # PULCEO-DATA-ANALYTICS
 
--   `raw/`: Contains raw data
--   `reports/`: Contains generated orchestration reports
+- `raw/`: Contains raw data
+- `reports/`: Contains generated orchestration reports
 
 ## How to test
 
@@ -17,11 +17,13 @@ ROOTFOLDER <- "/tmp/psm-data"
 SUBFOLDER <- "sample"
 ```
 
+Render the full report: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = ROOTFOLDER, subfolder=SUBFOLDER))`
+
 ### Includes
 
 | \# | Resource | Command |
 |---|--------------|--------------------------------------------------------|
-| 0 | PDA | `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = ""))` |
+| 0 | PDA | `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="sample"))` |
 | 1 | Topology | `rmarkdown::render(here('includes/topology.Rmd'))` |
 | 2 | Events | `rmarkdown::render(here('includes/events.Rmd'))` |
 | 3 | Resources | `rmarkdown::render(here('includes/resources.Rmd'))` |
@@ -35,3 +37,9 @@ SUBFOLDER <- "sample"
 | 11 | Combined Link Quality | `rmarkdown::render(here('includes/metrics/combined-link-quality.Rmd'))` |
 | 12 | Requests | `rmarkdown::render(here('includes/metrics/requests.Rmd'))` |
 | 13 | Tasks | `rmarkdown::render(here('includes/metrics/tasks.Rmd'))` |
+
+## Sample Reports
+
+- SummerSoC2024-PROD-IDLE: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2024-prod-idle"))`
+- SummerSoC2024-PROD-LOAD: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2024-prod-load"))`
+- SummerSoC2025: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2025"))`

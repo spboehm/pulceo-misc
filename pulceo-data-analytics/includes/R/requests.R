@@ -4,7 +4,7 @@ install_and_load("tidyverse")
 
 TransfromRequests <- function(df) {
   df$timestamp <- as.POSIXct(df$timestamp / 1e9, origin = "1970-01-01", tz = "CEST")
-  df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")
+  df$timestamp <- as.POSIXct(df$timestamp, format = "%Y-%m-%dT%H:%M:%OSZ", tz = "CEST")
   df$X_field <- as.factor(df$X_field)
   df$X_measurement <- as.factor(df$X_measurement)
   df$sourceHost <- as.factor(df$sourceHost)
@@ -14,4 +14,8 @@ TransfromRequests <- function(df) {
   names(df)[names(df) == "nodeName"] <- "destHost"
   df$destHost <- paste0(df$destHost, "-eis", "")
   return(df)
+}
+
+HasReqRtt <- function(df) {
+  nrow(df %>% filter(requestType == "req_rtt")) > 0
 }

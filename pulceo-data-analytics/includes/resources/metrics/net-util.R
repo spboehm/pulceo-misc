@@ -1,9 +1,16 @@
 source(here("includes/R/nodes.R"))
 source(here("includes/R/filter.R"))
 source(here("includes/resources/meta.R"))
-NET_UTIL_RAW <- ReadAndFilterTimestamp(paste(FOLDER_PFX_RAW, "NET_UTIL.csv", sep = "/"), timestamp)
-NET_UTIL <- TransfromNodeMetricsMetadata(NET_UTIL_RAW)
-NET_UTIL_PRESENT <- nrow(NET_UTIL) > 0
+
+tryCatch({
+    NET_UTIL_RAW <- ReadAndFilterTimestamp(paste(FOLDER_PFX_RAW, "NET_UTIL.csv", sep = "/"), timestamp)
+    NET_UTIL <- TransfromNodeMetricsMetadata(NET_UTIL_RAW)
+}, error = function(e) {
+    message("Error loading or transforming NET_UTIL: ", e$message)
+    NET_UTIL <- data.frame()
+}, finally = {
+    NET_UTIL_PRESENT <- nrow(NET_UTIL) > 0
+})
 
 if (NET_UTIL_PRESENT) {
     INITIAL_TX_RX <- NET_UTIL %>%

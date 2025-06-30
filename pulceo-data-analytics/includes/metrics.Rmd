@@ -19,39 +19,39 @@ source(here("includes/resources/metrics/storage-util.R"))
 source(here("includes/resources/metrics/net-util.R"))
 source(here("includes/resources/metrics/rtt.R"))
 source(here("includes/resources/metrics/bw.R"))
-source(here("includes/resources/metrics/rtt.R"))
+source(here("includes/resources/metrics/requests.R"))
 ```
 
 `r if (CPU_UTIL_PRESENT || MEM_UTIL_PRESENT || STORAGE_UTIL_PRESENT || NET_UTIL_PRESENT
-|| ICMP_RTT_PRESENT || TCP_BW_PRESENT || UDP_BW_PRESENT) "## Metrics"`
+|| ICMP_RTT_PRESENT || TCP_BW_PRESENT || UDP_BW_PRESENT || REQUESTS_PRESENT) "## Metrics"`
 
-```{r metrics-cpu, child = 'includes/metrics/cpu-util.Rmd'}
+```{r metrics-cpu, eval=(CPU_UTIL_PRESENT), child = 'includes/metrics/cpu-util.Rmd'}
 ```
 
-```{r metrics-mem, child = 'includes/metrics/mem-util.Rmd'}
+```{r metrics-mem, eval=(MEM_UTIL_PRESENT), child = 'includes/metrics/mem-util.Rmd'}
 ```
 
-```{r metrics-storage, child = 'includes/metrics/storage-util.Rmd'}
+```{r metrics-storage, eval=(STORAGE_UTIL_PRESENT), child = 'includes/metrics/storage-util.Rmd'}
 ```
 
-```{r metrics-net, child = 'includes/metrics/net-util.Rmd'}
+```{r metrics-net, eval=(NET_UTIL_PRESENT), child = 'includes/metrics/net-util.Rmd'}
 ```
 
-```{r metrics-combined-util, child = 'includes/metrics/combined-util.Rmd'}
+```{r metrics-combined-util, eval=(CPU_UTIL_PRESENT && MEM_UTIL_PRESENT) || (STORAGE_UTIL_PRESENT && NET_UTIL_PRESENT), child = 'includes/metrics/combined-util.Rmd'}
 ```
 
 `r if (ICMP_RTT_PRESENT || TCP_BW_PRESENT || UDP_BW_PRESENT) "## Link Quality Metrics"`
 
-```{r metrics-rtt, child = 'includes/metrics/rtt.Rmd'}
+```{r metrics-rtt, eval=(ICMP_RTT_PRESENT), child = 'includes/metrics/rtt.Rmd'}
 ```
 
-```{r metrics-bw, child = 'includes/metrics/bw.Rmd'}
+```{r metrics-bw, eval=(TCP_BW_PRESENT || UDP_BW_PRESENT), child = 'includes/metrics/bw.Rmd'}
 ```
 
-```{r metrics-combined-link-quality, child = 'includes/metrics/combined-link-quality.Rmd'}
+```{r metrics-combined-link-quality, eval=(TCP_BW_PRESENT && UDP_BW_PRESENT), child = 'includes/metrics/combined-link-quality.Rmd'}
 ```
 
-```{r metrics-requests, child = 'includes/metrics/requests.Rmd'}
+```{r metrics-requests, eval=(REQUESTS_PRESENT), child = 'includes/metrics/requests.Rmd'}
 ```
 
 ```{r metrics-tasks, child = 'includes/metrics/tasks.Rmd'}
