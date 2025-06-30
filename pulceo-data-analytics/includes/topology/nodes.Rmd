@@ -1,6 +1,6 @@
 ### Nodes
 
-```{r include=TRUE, echo=FALSE}
+```{r topology-nodes-table, include=TRUE, echo=FALSE}
 CreateScrollableTable(nodes)
 CreateScrollableTable(nodes$node)
 ```

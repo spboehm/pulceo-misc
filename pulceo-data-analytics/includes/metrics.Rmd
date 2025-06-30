@@ -25,28 +25,28 @@ source(here("includes/resources/metrics/rtt.R"))
 `r if (CPU_UTIL_PRESENT || MEM_UTIL_PRESENT || STORAGE_UTIL_PRESENT || NET_UTIL_PRESENT
 || ICMP_RTT_PRESENT || TCP_BW_PRESENT || UDP_BW_PRESENT) "## Metrics"`
 
-```{r child = 'includes/metrics/cpu-util.Rmd'}
+```{r metrics-cpu, child = 'includes/metrics/cpu-util.Rmd'}
 ```
 
-```{r child = 'includes/metrics/mem-util.Rmd'}
+```{r metrics-mem, child = 'includes/metrics/mem-util.Rmd'}
 ```
 
-```{r child = 'includes/metrics/storage-util.Rmd'}
+```{r metrics-storage, child = 'includes/metrics/storage-util.Rmd'}
 ```
 
-```{r child = 'includes/metrics/net-util.Rmd'}
+```{r metrics-net, child = 'includes/metrics/net-util.Rmd'}
 ```
 
-```{r child = 'includes/metrics/combined-util.Rmd'}
+```{r metrics-combined-util, child = 'includes/metrics/combined-util.Rmd'}
 ```
 
 `r if (ICMP_RTT_PRESENT || TCP_BW_PRESENT || UDP_BW_PRESENT) "## Link Quality Metrics"`
 
-```{r child = 'includes/metrics/rtt.Rmd'}
+```{r metrics-rtt, child = 'includes/metrics/rtt.Rmd'}
 ```
 
-```{r child = 'includes/metrics/bw.Rmd'}
+```{r metrics-bw, child = 'includes/metrics/bw.Rmd'}
 ```
 
-```{r child = 'includes/metrics/combined-link-quality.Rmd'}
+```{r metrics-combined-link-quality, child = 'includes/metrics/combined-link-quality.Rmd'}
 ```

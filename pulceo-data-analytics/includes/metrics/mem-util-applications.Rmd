@@ -4,11 +4,11 @@ source(here("includes/resources/metrics/mem-util-applications.R"))
 
 ### Applications
 
-```{r include=TRUE, echo=FALSE}
+```{r metrics-mem-utilization-applications-summary, include=TRUE, echo=FALSE}
 CreateScrollableTable(MEM_UTIL_PODS_SUMMARY_BY_APP)
 ```
 
-```{r}
+```{r metrics-mem-utilization-applications-line-plot}
 mem_util_pods_plot <- ggplot(MEM_UTIL_PODS_PROCESSED, aes(x = timestamp, y = X_value, colour = application)) +
   geom_line() +
   ggtitle("Memory utilization of applications") +

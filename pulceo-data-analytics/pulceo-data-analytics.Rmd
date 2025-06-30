@@ -12,7 +12,7 @@ knit: (function(input_file, encoding) {
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
-```{r, include=FALSE}
+```{r, include=FALSE, echo=FALSE}
 source("includes/R/filter.R")
 install_and_load("here")
 knitr::opts_knit$set(root.dir = here())
@@ -20,9 +20,8 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 ```
 
 ```{r eval=FALSE, include=FALSE, echo=FALSE}
-# TODO: remove
-#ROOTFOLDER <- "/tmp/psm-data"
-#SUBFOLDER <- "sample"
+ROOTFOLDER <- "/tmp/psm-data"
+SUBFOLDER <- "sample"
 ```
 
 ```{r directories, include=FALSE, echo=FALSE}
@@ -30,22 +29,22 @@ source(here("includes/R/directories.R"))
 source(here("includes/R/tables.R"))
 ```
 
-```{r child = 'includes/topology.Rmd'}
+```{r topology, child = 'includes/topology.Rmd'}
 ```
 
-```{r child = 'includes/resources.Rmd'}
+```{r resources, child = 'includes/resources.Rmd'}
 ```
 
-```{r child = 'includes/events.Rmd'}
+```{r events, child = 'includes/events.Rmd'}
 ```
     
-```{r child = 'includes/metrics.Rmd'}
+```{r metrics, child = 'includes/metrics.Rmd'}
 ```
 
-```{r child = 'includes/metrics/requests.Rmd'}
+```{r requests, child = 'includes/metrics/requests.Rmd'}
 ```
 
 <!-- TODO: Task Offloading -->
 
-```{r child = 'includes/metrics/tasks.Rmd'}
+```{r tasks, child = 'includes/metrics/tasks.Rmd'}
 ```

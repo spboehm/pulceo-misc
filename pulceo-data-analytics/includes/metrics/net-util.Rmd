@@ -26,9 +26,6 @@ source(here("includes/resources/metrics/net-util.R"))
 
 ## Network Utilization
 
-```{r metrics-net-utilization-combined-net-util, eval=(HasNodes(NET_UTIL) | HasApplications(NET_UTIL))}
-```
-
 ```{r metrics-net-utilization-nodes, eval=HasNodes(NET_UTIL), child = 'includes/metrics/net-util-nodes.Rmd', include=TRUE, echo=FALSE}
 ```
 

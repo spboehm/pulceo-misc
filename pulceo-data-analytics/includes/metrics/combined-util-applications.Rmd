@@ -6,7 +6,7 @@ source(here("includes/resources/metrics/cpu-util-applications.R"))
 
 #### CPU and Memory Utilization
 
-```{r include=TRUE, echo=FALSE}
+```{r metrics-combined-utilization-applications-cpu-mem-util-plot, include=TRUE, echo=FALSE}
 # TODO: condition
 # combined_cpu_mem_util_plot_pod <- ggarrange(cpu_util_pods_plot, mem_util_pods_plot, ncol = 2, common.legend=TRUE, legend="bottom")
 # SavePlot("combined_cpu_mem_util_plot_pods.pdf", combined_cpu_mem_util_plot_pod, 8, 4)

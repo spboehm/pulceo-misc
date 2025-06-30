@@ -25,7 +25,7 @@ source(here("includes/resources/metrics/requests.R"))
 
 ### Application Response Time
 
-```{r eval=nrow(REQUESTS) > 0, include=TRUE, echo=FALSE}
+```{r metrics-requests-application-response-time-summary-table, eval=nrow(REQUESTS) > 0, include=TRUE, echo=FALSE}
 REQUESTS_SUMMARY <- REQUESTS %>%
   select(timestamp, sourceHost, destHost, X_value) %>%
   group_by(sourceHost, destHost) %>%
@@ -50,7 +50,7 @@ CreateScrollableTable(REQUESTS_SUMMARY)
 SaveLatexTable(REQUESTS_SUMMARY[, 1:7], "Round-trip times between applications", "rtt-between-applications", "requests_summary.tex")
 ```
 
-```{r eval=nrow(REQUESTS) > 0, include=TRUE, echo=FALSE}
+```{r metrics-requests-application-response-time-summary-bar-plot, eval=nrow(REQUESTS) > 0, include=TRUE, echo=FALSE}
 (application_response_time_plot <- ggplot(REQUESTS_SUMMARY, aes(x = SourceDest, y = Mean, fill = SourceDest)) +
   geom_bar(stat = "identity", width = 0.75) +
   geom_errorbar(aes(x = SourceDest, ymin = Mean - SD, ymax = Mean + SD), width = 0.3, colour = "blue") +

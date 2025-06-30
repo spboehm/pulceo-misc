@@ -1,17 +1,17 @@
 ### CPU
 
-```{r include=TRUE, echo=FALSE}
+```{r topology-resources-cpu-table, include=TRUE, echo=FALSE}
 CreateScrollableTable(cpu_resources)
 ```
 
 #### CPU capacity
 
-```{r include=TRUE, echo=FALSE}
+```{r topology-resources-cpu-capacity-table, include=TRUE, echo=FALSE}
 CreateScrollableTable(cpu_resources$cpuCapacity)
 ```
 
 #### CPU allocatable
 
-```{r include=TRUE, echo=FALSE}
+```{r topology-resources-cpu-allocatable-table, include=TRUE, echo=FALSE}
 CreateScrollableTable(cpu_resources$cpuAllocatable)
 ```

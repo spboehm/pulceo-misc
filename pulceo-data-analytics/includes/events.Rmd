@@ -18,6 +18,6 @@ source(here("includes/resources/events.R"))
 
 ## Events
 
-```{r include=TRUE, echo=FALSE}
+```{r events-table, include=TRUE, echo=FALSE}
 CreateScrollableTable(events)
 ```

@@ -1,5 +1,5 @@
 ### Links
 
-```{r include=TRUE, echo=FALSE}
+```{r topology-links-table, include=TRUE, echo=FALSE}
 CreateScrollableTable(links)
 ```

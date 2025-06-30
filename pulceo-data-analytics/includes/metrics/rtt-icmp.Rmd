@@ -6,6 +6,7 @@ source(here("includes/resources/metrics/rtt-icmp.R"))
 
 ```{r icmp-rtt-summary-table, include=TRUE, echo=FALSE}
 CreateScrollableTable(ICMP_RTT_SUMMARY)
+SaveLatexTable(ICMP_RTT_SUMMARY, "ICMP round-trip time (ms) between nodes.", "rtt-of-nodes", "rtt_nodes_summary.tex")
 ```
 
 ```{r}
@@ -15,9 +16,7 @@ CreateScrollableTable(ICMP_RTT_SUMMARY)
 #   ylab("Destinatio Node")
 ```
 
-```{r }
-SaveLatexTable(ICMP_RTT_SUMMARY, "ICMP round-trip time (ms) between nodes.", "rtt-of-nodes", "rtt_nodes_summary.tex")
-
+```{r icmp-rtt-plot}
 icmp_rtt_plot <- ggplot(filterICMPRTT(ICMP_RTT, "rttAvg"), aes(x = endTime, y = X_value, group = nodeName)) +
   geom_line() +
   facet_grid(vars(nodeName), vars(nodeNameDest))
