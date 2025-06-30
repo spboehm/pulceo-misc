@@ -21,7 +21,8 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 
 ```{r eval=FALSE, include=FALSE, echo=FALSE}
 # TODO: remove
-# ROOTFOLDER <- "/tmp/psm-data"
+ROOTFOLDER <- "/tmp/psm-data"
+SUBFOLDER <- "sample"
 ```
 
 ```{r directories, include=FALSE, echo=FALSE}

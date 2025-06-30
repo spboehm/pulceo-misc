@@ -3,7 +3,7 @@ source(here("includes/R/filter.R"))
 source(here("includes/resources/meta.R"))
 
 # TCP
-TCP_BW_RAW <- ReadAndFilterEndTime(here(paste("raw", SUBFOLDER, "TCP_BW.csv", sep = "/")), endTime)
+TCP_BW_RAW <- ReadAndFilterEndTime(paste(FOLDER_PFX_RAW, "TCP_BW.csv", sep = "/"), endTime)
 TCP_BW <- TransfromNetworkMetricsMetadata(TCP_BW_RAW)
 TCP_BW_PRESENT <- nrow(TCP_BW)
 
@@ -25,7 +25,7 @@ TCP_BW_SUMMARY <- TCP_BW_SUMMARY %>%
 names(TCP_BW_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD")
 
 # UDP
-UDP_BW_RAW <- ReadAndFilterEndTime(here(paste("raw", SUBFOLDER, "UDP_BW.csv", sep = "/")), endTime)
+UDP_BW_RAW <- ReadAndFilterEndTime(paste(FOLDER_PFX_RAW, "UDP_BW.csv", sep = "/"), endTime)
 UDP_BW <- TransfromNetworkMetricsMetadata(UDP_BW_RAW)
 UDP_BW_PRESENT <- nrow(UDP_BW)
 
