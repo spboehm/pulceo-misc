@@ -3,7 +3,6 @@ source(here("includes/resources/meta.R"))
 
 tryCatch({
     REQUESTS_RAW <- read.csv(paste(FOLDER_PFX_RAW, "REQUESTS.csv", sep = "/"), skip = 3)
-    message(paste(FOLDER_PFX_RAW, "REQUESTS.csv", sep = "/"))
     REQUESTS <- TransfromRequests(REQUESTS_RAW)
 }, error = function(e) {
     message("Error loading or transforming REQUESTS: ", e$message)
