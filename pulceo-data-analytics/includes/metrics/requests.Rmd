@@ -29,7 +29,7 @@ source(here("includes/resources/metrics/requests.R"))
 ```{r metrics-requests-application-response-time-summary-table, eval=HasReqRtt(REQUESTS), include=TRUE, echo=FALSE}
 # TODO: HAS either request_type req_rtt or task_rtt
 # TODO: HAS request_type task_rtt
-REQUESTS <- REQUESTS %>% filter(data.table::between(timestamp, as.POSIXct(start_timestamp, format = "%Y-%m-%dT%H:%M:%OSZ"), as.POSIXct(end_timestamp, format = "%Y-%m-%dT%H:%M:%OSZ")))
+REQUESTS <- REQUESTS %>% filter(between(timestamp, as.POSIXct(start_timestamp, format = "%Y-%m-%dT%H:%M:%OSZ",  tz = "UTC"), as.POSIXct(end_timestamp, format = "%Y-%m-%dT%H:%M:%OSZ",  tz = "UTC")))
 REQUESTS_SUMMARY <- REQUESTS %>%
   select(timestamp, sourceHost, destHost, X_value) %>%
   group_by(sourceHost, destHost) %>%

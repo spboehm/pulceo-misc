@@ -1,6 +1,6 @@
 # ROOTFOLDER
-ROOTFOLDER <- ifelse(!exists("params") || is.null(params$rootfolder) || params$rootfolder == "", ".", params$rootfolder)
-SUBFOLDER <- ifelse(!exists("params") || is.null(params$subfolder) || params$subfolder == "", "sample", params$subfolder)
+ROOTFOLDER <- ifelse(!exists("params") || is.null(params$rootfolder) || params$rootfolder == "", ifelse(exists("ROOTFOLDER") && ROOTFOLDER != "", ROOTFOLDER, "."), params$rootfolder)
+SUBFOLDER <- ifelse(!exists("params") || is.null(params$subfolder) || params$subfolder == "", ifelse(exists("SUBFOLDER") && SUBFOLDER != "", SUBFOLDER, "sample"), params$subfolder)
 
 # directories
 FOLDER_PFX_RAW <- paste(ROOTFOLDER, "raw", SUBFOLDER, sep = "/")
