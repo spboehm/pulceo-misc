@@ -44,7 +44,5 @@ source(here("includes/R/tables.R"))
 ```{r requests, child = 'includes/metrics/requests.Rmd'}
 ```
 
-<!-- TODO: Task Offloading -->
-
 ```{r tasks, child = 'includes/metrics/tasks.Rmd'}
 ```
