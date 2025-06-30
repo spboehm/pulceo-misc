@@ -29,8 +29,8 @@ source(here("includes/resources/metrics/net-util.R"))
 
 ## Combined Measurements
 
-```{r metrics-combined-utilization-nodes, eval=(HasNodes(CPU_UTIL) && HasNodes(MEM_UTIL)), child = 'includes/metrics/combined-util-nodes.Rmd', include=TRUE, echo=FALSE}
+```{r metrics-combined-utilization-nodes, eval=(HasNodes(CPU_UTIL) && HasNodes(MEM_UTIL)) || (HasNodes(STORAGE_UTIL) && HasNodes(NET_UTIL)), child = 'includes/metrics/combined-util-nodes.Rmd', include=TRUE, echo=FALSE}
 ```
 
-```{r metrics-combined-utilization-applications, eval=(HasApplications(CPU_UTIL) && HasApplications(MEM_UTIL)), child = 'includes/metrics/combined-util-applications.Rmd', include=TRUE, echo=FALSE}
+```{r metrics-combined-utilization-applications, eval=(HasApplications(CPU_UTIL) && HasApplications(MEM_UTIL)) || (HasApplications(STORAGE_UTIL) && HasApplications(NET_UTIL)), child = 'includes/metrics/combined-util-applications.Rmd', include=TRUE, echo=FALSE}
 ```

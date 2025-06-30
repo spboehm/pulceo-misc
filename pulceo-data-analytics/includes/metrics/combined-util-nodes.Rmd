@@ -1,16 +1,16 @@
 ### Nodes
 
-#### CPU and Memory Utilization
+`r if (CPU_UTIL_PRESENT && MEM_UTIL_PRESENT) "#### CPU and Memory Utilization"`
 
-```{r metrics-combined-utilization-nodes-cpu-mem-util-plot, include=TRUE, echo=FALSE}
+```{r metrics-combined-utilization-nodes-cpu-mem-util-plot, eval=(CPU_UTIL_PRESENT && MEM_UTIL_PRESENT), include=(CPU_UTIL_PRESENT && MEM_UTIL_PRESENT), echo=FALSE}
 # TODO: condition
 (combined_cpu_mem_util_plot <- ggarrange(cpu_util_bar_plot, mem_util_bar_plot, ncol = 2))
 SavePlot("combined_cpu_mem_util_plot.pdf", combined_cpu_mem_util_plot, 8, 3)
 ```
 
-#### Storage and Network Utilization
+`r if (STORAGE_UTIL_PRESENT && NET_UTIL_PRESENT) "#### Storage and Network Utilization"`
 
-```{r  metrics-combined-utilization-nodes-storage-net-util-plot, include=TRUE, echo=FALSE}
+```{r metrics-combined-utilization-nodes-storage-net-util-plot, eval=(STORAGE_UTIL_PRESENT && NET_UTIL_PRESENT), include=(STORAGE_UTIL_PRESENT && NET_UTIL_PRESENT), echo=FALSE}
 # TODO: condition
 (combined_storage_net_util_plot <- ggarrange(storage_util_plot_nodes, net_util_plot_nodes, ncol = 2, widths = c(1, 1)))
 SavePlot("combined_storage_net_util_plot.pdf", combined_storage_net_util_plot, 8, 3)

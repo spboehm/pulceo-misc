@@ -50,3 +50,9 @@ source(here("includes/resources/metrics/rtt.R"))
 
 ```{r metrics-combined-link-quality, child = 'includes/metrics/combined-link-quality.Rmd'}
 ```
+
+```{r metrics-requests, child = 'includes/metrics/requests.Rmd'}
+```
+
+```{r metrics-tasks, child = 'includes/metrics/tasks.Rmd'}
+```

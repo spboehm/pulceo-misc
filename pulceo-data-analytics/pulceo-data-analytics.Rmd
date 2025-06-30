@@ -40,9 +40,3 @@ source(here("includes/R/tables.R"))
     
 ```{r metrics, child = 'includes/metrics.Rmd'}
 ```
-
-```{r requests, child = 'includes/metrics/requests.Rmd'}
-```
-
-```{r tasks, child = 'includes/metrics/tasks.Rmd'}
-```
