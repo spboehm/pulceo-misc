@@ -2,6 +2,7 @@ source(here("includes/R/libraries.R"))
 source(here("includes/R/directories.R"))
 
 install_and_load("data.table")
+install_and_load("tidyverse")
 install_and_load("rjson")
 
 # meta file for orchestration
@@ -17,18 +18,18 @@ end_timestamp <- dtable["END_TIMESTAMP"]$Value
 nodes <- dtable["NODES"]$Value
 
 # TODO: remove NODE_RAW with rson
-NODES_RAW <- rjson::fromJSON(file = here(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/")))
+# NODES_RAW <- rjson::fromJSON(file = here(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/")))
+NODES_RAW <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/"))
 
-# node mapping
-node_mapping <- Reduce(rbind, lapply(NODES_RAW, function(x) {
-  return(c(x$hostname, x$node$name))
-}))
+node_mapping <- NODES_RAW %>%
+  unnest(cols = c(node)) %>%
+  select(hostname, name) %>%
+  rename(sourceHost = hostname, nodeName = name)
 
-node_mapping <- as.data.frame(node_mapping)
-names(node_mapping) <- c("sourceHost", "nodeName")
-
-node_mapping_dest <- node_mapping
-names(node_mapping_dest) <- c("destinationHost", "nodeNameDest")
+node_mapping_dest <- NODES_RAW %>%
+  unnest(cols = c(node)) %>%
+  select(hostname, name) %>%
+  rename(destinationHost = hostname, nodeNameDest = name)
 
 ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable["ART_PLOT_WIDTH"]$Value), 8, dtable["ART_PLOT_WIDTH"]$Value))
 ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable["ART_PLOT_HEIGHT"]$Value), 3, dtable["ART_PLOT_HEIGHT"]$Value))
