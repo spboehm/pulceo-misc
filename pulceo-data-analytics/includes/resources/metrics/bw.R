@@ -35,7 +35,7 @@ if (TCP_BW_PRESENT) {
 # UDP
 tryCatch({
   UDP_BW_RAW <- ReadAndFilterEndTime(paste(FOLDER_PFX_RAW, "UDP_BW.csv", sep = "/"), endTime)
-  UDP_BW <<- TransfromNetworkMetricsMetadata(UDP_BW_RAW)
+  UDP_BW <- TransfromNetworkMetricsMetadata(UDP_BW_RAW)
 }, error = function(e) {
     message("Error loading or transforming UDP_BW: ", e$message)
     UDP_BW <<- data.frame()
