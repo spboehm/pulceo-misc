@@ -7,7 +7,7 @@ tryCatch({
     MEM_UTIL <- TransfromNodeMetricsMetadata(MEM_UTIL_RAW)
 }, error = function(e) {
     message("Error loading or transforming MEM_UTIL: ", e$message)
-    MEM_UTIL <- data.frame()
+    MEM_UTIL <<- data.frame()
 }, finally = {
     MEM_UTIL_PRESENT <- nrow(MEM_UTIL) > 0
 })

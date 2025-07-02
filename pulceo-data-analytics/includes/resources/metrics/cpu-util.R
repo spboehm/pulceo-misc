@@ -7,7 +7,7 @@ tryCatch({
     CPU_UTIL <- TransfromNodeMetricsMetadata(CPU_UTIL_RAW)
 }, error = function(e) {
     message("Error loading or transforming CPU_UTIL: ", e$message)
-    CPU_UTIL <- data.frame()
+    CPU_UTIL <<- data.frame()
 }, finally = {
     CPU_UTIL_PRESENT <- nrow(CPU_UTIL) > 0
 })

@@ -7,7 +7,7 @@ tryCatch({
     NET_UTIL <- TransfromNodeMetricsMetadata(NET_UTIL_RAW)
 }, error = function(e) {
     message("Error loading or transforming NET_UTIL: ", e$message)
-    NET_UTIL <- data.frame()
+    NET_UTIL <<- data.frame()
 }, finally = {
     NET_UTIL_PRESENT <- nrow(NET_UTIL) > 0
 })

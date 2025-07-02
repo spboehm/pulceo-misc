@@ -7,7 +7,7 @@ tryCatch({
     ICMP_RTT <- TransfromNetworkMetricsMetadata(ICMP_RTT_RAW)
 }, error = function(e) {
     message("Error loading or transforming ICMP_RTT: ", e$message)
-    STORAGE_UTIL <- data.frame()
+    STORAGE_UTIL <<- data.frame()
 }, finally = {
     ICMP_RTT_PRESENT <- nrow(ICMP_RTT) > 0
 })

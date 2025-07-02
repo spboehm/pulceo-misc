@@ -7,7 +7,7 @@ tryCatch({
     STORAGE_UTIL <- TransfromNodeMetricsMetadata(STORAGE_UTIL_RAW)
 }, error = function(e) {
     message("Error loading or transforming STORAGE_UTIL: ", e$message)
-    STORAGE_UTIL <- data.frame()
+    STORAGE_UTIL <<- data.frame()
 }, finally = {
     STORAGE_UTIL_PRESENT <- nrow(STORAGE_UTIL) > 0
 })
