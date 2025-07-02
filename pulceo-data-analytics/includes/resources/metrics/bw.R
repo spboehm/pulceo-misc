@@ -38,7 +38,7 @@ tryCatch({
   UDP_BW <<- TransfromNetworkMetricsMetadata(UDP_BW_RAW)
 }, error = function(e) {
     message("Error loading or transforming UDP_BW: ", e$message)
-    UDP_BW <- data.frame()
+    UDP_BW <<- data.frame()
 }, finally = {
   UDP_BW_PRESENT <- nrow(UDP_BW)
 })
