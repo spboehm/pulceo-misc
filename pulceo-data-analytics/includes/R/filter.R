@@ -22,3 +22,18 @@ ReadAndFilterEndTime <- function(file, endTime) {
     return(data.frame())
   })
 }
+
+FilterInfluxDbCsv <- function(df) {
+  df %>% select(-"X", -"result", -"X_start", -"X_stop", -"X_time", -"X_field")
+}
+
+ProcessInfluxDbDfSummary <- function(df) {
+  df %>%
+    group_by(X_measurement, eventType) %>%
+    summarise(
+      count = n(),
+      min_timestamp = min(timestamp, na.rm = TRUE),
+      max_timestamp = max(timestamp, na.rm = TRUE),
+      .groups = "drop"
+    )
+}

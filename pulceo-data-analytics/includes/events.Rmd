@@ -19,5 +19,5 @@ source(here("includes/resources/events.R"))
 ## Events
 
 ```{r events-table, include=TRUE, echo=FALSE}
-CreateScrollableTable(events)
+CreatePaginatedTableDT(events_summary)
 ```
