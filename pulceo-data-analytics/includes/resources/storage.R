@@ -3,4 +3,6 @@ tryCatch({
 }, error = function(e) {
     message("Error in read STORAGE.json: ", e$message)
     storage_resources <<- data.frame()
+}, finally = {
+    STORAGE_PRESENT <- nrow(storage_resources) > 0
 })

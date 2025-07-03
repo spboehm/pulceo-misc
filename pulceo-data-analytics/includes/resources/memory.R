@@ -3,4 +3,6 @@ tryCatch({
 }, error = function(e) {
     message("Error in read MEMORY.json: ", e$message)
     memory_resources <<- data.frame()
+}, finally = {
+    MEMORY_PRESENT <- nrow(memory_resources) > 0
 })

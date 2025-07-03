@@ -18,7 +18,7 @@ source(here("includes/resources/memory.R"))
 source(here("includes/resources/storage.R"))
 ```
 
-## Resources
+`r if (CPUS_PRESENT || MEMORY_PRESENT || STORAGE_PRESENT) "## Resources"`
 
 ```{r resources-cpus, eval=nrow(cpu_resources) > 0, child = 'includes/topology/cpus.Rmd', include=TRUE, echo=FALSE}
 ```
