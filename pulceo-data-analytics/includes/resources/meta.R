@@ -1,24 +1,21 @@
 source(here("includes/R/libraries.R"))
 source(here("includes/R/directories.R"))
 
-install_and_load("data.table")
 install_and_load("tidyverse")
-install_and_load("rjson")
 
-# meta file for orchestration
-dframe <- read.table(
-  file = paste(FOLDER_PFX_RAW, "META.txt", sep = "/"), header = FALSE,
-  sep = "=", col.names = c("Key", "Value")
-)
-dtable <- data.table(dframe, key = "Key")
-node_scale_fills <- strsplit(dtable["NODE_SCALES"]$Value, ",")[[1]]
-node_scale_fills_ext <- strsplit(dtable["NODE_SCALES_EXT"]$Value, ",")[[1]]
-start_timestamp <- dtable["START_TIMESTAMP"]$Value
-end_timestamp <- dtable["END_TIMESTAMP"]$Value
-nodes <- dtable["NODES"]$Value
+tryCatch({
+    meta <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "META.json", sep = "/"))
+}, error = function(e) {
+    message("Error in read META: ", e$message)
+    quit(save = "no", -1)
+})
 
-# TODO: remove NODE_RAW with rson
-# NODES_RAW <- rjson::fromJSON(file = here(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/")))
+node_scale_fills <- meta$NODE_SCALES
+node_scale_fills_ext <- meta$NODE_SCALES_EXT
+start_timestamp <- meta$START_TIMESTAMP
+end_timestamp <- meta$END_TIMESTAMP
+nodes <- meta$NODES
+
 NODES_RAW <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/"))
 
 node_mapping <- NODES_RAW %>%
@@ -31,8 +28,8 @@ node_mapping_dest <- NODES_RAW %>%
   select(hostname, name) %>%
   rename(destinationHost = hostname, nodeNameDest = name)
 
-ART_PLOT_WIDTH <- as.numeric(ifelse(is.na(dtable["ART_PLOT_WIDTH"]$Value), 8, dtable["ART_PLOT_WIDTH"]$Value))
-ART_PLOT_HEIGHT <- as.numeric(ifelse(is.na(dtable["ART_PLOT_HEIGHT"]$Value), 3, dtable["ART_PLOT_HEIGHT"]$Value))
-ART_SHORT_NAMES <- as.logical(ifelse(is.na(dtable["ART_SHORT_NAMES"]$Value), FALSE, dtable["ART_SHORT_NAMES"]$Value))
+ART_PLOT_WIDTH <- as.numeric(ifelse(is.null(meta$ART_PLOT_WIDTH), 8, meta$ART_PLOT_WIDTH))
+ART_PLOT_HEIGHT <- as.numeric(ifelse(is.null(meta$ART_PLOT_HEIGHT), 3, meta$ART_PLOT_HEIGHT))
+ART_SHORT_NAMES <- as.logical(ifelse(is.null(meta$ART_SHORT_NAMES), FALSE, meta$ART_SHORT_NAMES))
 
 scale <- function(x, na.rm = FALSE) (format(round(x, digits = 2), nsmall = 2))

@@ -42,4 +42,5 @@ Render the full report: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), pa
 
 - SummerSoC2024-PROD-IDLE: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2024-prod-idle"))`
 - SummerSoC2024-PROD-LOAD: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2024-prod-load"))`
+- SOSE2024-prod: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="sose2024-prod"))`
 - SummerSoC2025: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2025"))`

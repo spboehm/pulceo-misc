@@ -1,0 +1,14 @@
+{
+  "NODE_SCALES": ["#DAE8FC", "#DAE8FC", "#D5E8D4", "#D5E8D4", "#D5E8D4", "6D8764"],
+  "NODE_SCALES_EXT": [
+    "#DAE8FC", "#D5E8D4", "#D5E8D4", "#D5E8D4", "#D5E8D4",
+    "#D5E8D4", "#D5E8D4", "#D5E8D4", "#D5E8D4", "#D5E8D4",
+    "6D8764", "6D8764", "6D8764", "6D8764", "6D8764"
+  ],
+  "START_TIMESTAMP": "2024-04-16T18:00:00Z",
+  "END_TIMESTAMP": "2024-04-17T18:00:00Z",
+  "NODES": ["cloud1", "cloud2", "fog1", "fog2", "fog3"],
+  "ART_PLOT_WIDTH": 9,
+  "ART_PLOT_HEIGHT": 4,
+  "ART_SHORT_NAMES": true
+}
