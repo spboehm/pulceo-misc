@@ -1,0 +1,21 @@
+[
+  {
+    "uuid": "56718563-3580-498e-8441-8aa7d92f7654",
+    "providerName": "default",
+    "hostname": "h5138.pi.uni-bamberg.de",
+    "pnaUUID": "6dc8fca9-d1a6-4436-b1c9-122bbaa55235",
+    "node": {
+      "name": "fog1",
+      "type": "FOG",
+      "layer": 2,
+      "role": "WORKLOAD",
+      "group": "",
+      "country": "Germany",
+      "state": "Bavaria",
+      "city": "Bamberg",
+      "longitude": 10.87,
+      "latitude": 49.9036,
+      "tags": []
+    }
+  }
+]
