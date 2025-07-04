@@ -4,10 +4,10 @@ source(here("includes/R/directories.R"))
 install_and_load("tidyverse")
 
 tryCatch({
-    meta <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "META.json", sep = "/"))
+  meta <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "META.json", sep = "/"))
 }, error = function(e) {
-    message("Error in read META: ", e$message)
-    quit(save = "no", -1)
+  message("Error in reading META.json: ", e$message)
+  stop("Failed to load META.json")
 })
 
 node_scale_fills <- meta$NODE_SCALES
@@ -16,7 +16,12 @@ start_timestamp <- meta$START_TIMESTAMP
 end_timestamp <- meta$END_TIMESTAMP
 nodes <- meta$NODES
 
-NODES_RAW <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/"))
+tryCatch({
+  NODES_RAW <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/"))
+}, error = function(e) {
+  message("Error in reading NODES.json: ", e$message)
+  stop("Failed to load NODES.json")
+})
 
 node_mapping <- NODES_RAW %>%
   unnest(cols = c(node)) %>%

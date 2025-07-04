@@ -17,6 +17,17 @@ GenerateBarPlotPercentage <- function(summary, title, ylim_factor = 1.0, vjust =
   return(plot)
 }
 
+CreateBoxplot <- function(df, title) {
+    ggplot(df, aes(y = time)) +
+        geom_boxplot(fill = "skyblue", color = "darkblue") +
+        labs(
+            title = title,
+            y = "Time (s)",
+            x = ""
+        )
+        # theme_minimal()
+}
+
 SavePlot <- function(filename, plot, width = 4, height = 3) {
-  ggsave(here(paste0("plots/", SUBFOLDER, "/", filename)), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
+  ggsave(paste(FOLDER_PFX_PLOTS, filename, sep = "/"), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
 }

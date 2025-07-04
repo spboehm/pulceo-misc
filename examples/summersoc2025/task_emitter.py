@@ -18,7 +18,7 @@ class TaskMetric:
         self.timestamp = TaskEmitter.get_timestamp()
         self.requestType = "task_rtt"
         self.sourceHost = os.getenv('MQTT_CLIENT_ID')
-        self.destinationHost = task_uuid
+        self.destinationHost = task_uuid # TODO: replace with uuid from PSM OR UUID from processing node
         self.resource = resource
         self.value = value
         self.unit = unit

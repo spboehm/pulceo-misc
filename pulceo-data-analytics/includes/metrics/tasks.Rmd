@@ -26,5 +26,8 @@ source(here("includes/resources/metrics/tasks.R"))
 
 ## Tasks
 
-```{r metrics-tasks-, eval=HasLinks(), child = '', include=TRUE, echo=FALSE}
+```{r metrics-tasks-requests-combined, eval=HasLinks(), child = '', include=TRUE, echo=FALSE}
+
+
+
 ```

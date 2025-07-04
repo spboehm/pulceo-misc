@@ -25,3 +25,21 @@ TransformTasks <- function(df) {
 
     return(df)
 }
+
+CalculateTaskSchedulingMetric <- function(df, start_status, end_status, ...) {
+    group_by_vars <- enquos(...)
+    df %>%
+        filter(newStatus %in% c(start_status, end_status)) %>% # Filter relevant statuses
+        group_by(taskUUID, !!!group_by_vars) %>% # Group by taskUUID and additional properties
+        arrange(modifiedOn) %>% # Ensure chronological order
+        summarize(
+            time = as.numeric(
+                difftime(
+                    modifiedOn[newStatus == end_status][1],
+                    modifiedOn[newStatus == start_status][1],
+                    units = "secs"
+                )
+            )
+        ) %>%
+        ungroup() # Remove grouping
+}
