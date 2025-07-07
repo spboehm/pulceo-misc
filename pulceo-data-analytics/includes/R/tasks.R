@@ -39,7 +39,8 @@ CalculateTaskSchedulingMetric <- function(df, start_status, end_status, ...) {
                     modifiedOn[newStatus == start_status][1],
                     units = "secs"
                 )
-            )
+            ),
+            .groups = "drop"
         ) %>%
         ungroup() # Remove grouping
 }
