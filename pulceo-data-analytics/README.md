@@ -36,7 +36,7 @@ Render the full report: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), pa
 | 10 | Bandwidth | `rmarkdown::render(here('includes/metrics/bw.Rmd'))` |
 | 11 | Combined Link Quality | `rmarkdown::render(here('includes/metrics/combined-link-quality.Rmd'))` |
 | 12 | Requests | `rmarkdown::render(here('includes/metrics/requests.Rmd'))` |
-| 13 | Tasks | `rmarkdown::render(here('includes/metrics/tasks.Rmd'))` |
+| 13 | Tasks | `rmarkdown::render(here('includes/metrics/tasks.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2025"))` |
 
 ## Sample Reports
 

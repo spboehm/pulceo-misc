@@ -32,6 +32,7 @@ source(here("includes/resources/metrics/tasks.R"))
 
 ```{r include=TRUE, echo=FALSE}
 waiting_time_total_df <- CalculateTaskSchedulingMetric(TASKS, start_status = "NEW", end_status = "RUNNING", policy, batchSize, layer, Run)
+CreateScrollableTable(waiting_time_total_df)
 # TODO: save latex table
 
 boxplot_waiting_total <- CreateTaskMetricBoxplot(waiting_time_total_df, "Waiting Time (Total)")
@@ -85,7 +86,7 @@ SavePlot("completion_time_boxplot.pdf", boxplot_completion_time, 4, 3)
 overall_makespan <- CalculateOverallMakespan(completion_time_df, batchSize, layer)
 ```
 
-```{r metrics-combined-tasks-metrics-plot include=TRUE, echo=FALSE}
+```{r metrics-combined-tasks-metrics-plot, include=TRUE, echo=FALSE}
 combined_task_metrics_plot <- ggarrange(
     boxplot_waiting_psm,
     boxplot_waiting_pna,
