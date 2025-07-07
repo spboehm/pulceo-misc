@@ -28,6 +28,14 @@ CreateBoxplot <- function(df, title) {
         # theme_minimal()
 }
 
+CreateTaskMetricBoxplot <- function(df, title, y_label = "Time (s)", x_label = "Batch Size") {
+  ggplot(df, aes(x = batchSize, y = time, fill = Run)) +
+    geom_boxplot(color = "darkblue") +
+    labs(title = title, y = y_label, x = x_label) +
+    theme_minimal() +
+    ylim(0, max(df$time * 1.10, na.rm = TRUE))
+}
+
 SavePlot <- function(filename, plot, width = 4, height = 3) {
   ggsave(paste(FOLDER_PFX_PLOTS, filename, sep = "/"), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
 }
