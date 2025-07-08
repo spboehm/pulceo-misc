@@ -85,3 +85,96 @@ CalculateWaitingTimeStats <- function(df, start_status, end_status, metric_name)
         ) %>%
         mutate(metric = metric_name)
 }
+
+CalculateAverageResponseTime <- function(df, ...) {
+    group_by_vars <- enquos(...)
+
+    # Ensure the dataframe is not empty and contains valid response times
+    if (nrow(df) == 0 || !("X_value" %in% colnames(df))) {
+        return(NA) # Handle empty dataframe or missing column
+    }
+
+    # Remove rows with NA in the X_value column
+    df <- df %>%
+        filter(!is.na(X_value))
+
+    # Group by the specified variables (if any) and calculate the average response time
+    avg_response_time <- df %>%
+        group_by(!!!group_by_vars) %>%
+        summarize(
+            avg_response_time = mean(X_value, na.rm = TRUE),
+            sd_response_time = sd(X_value, na.rm = TRUE),
+            min_response_time = min(X_value, na.rm = TRUE),
+            max_response_time = max(X_value, na.rm = TRUE),
+            .groups = "drop"
+        )
+
+    return(avg_response_time)
+}
+
+CalculateThroughput <- function(df, ...) {
+    group_by_vars <- enquos(...)
+
+    # Ensure the dataframe has valid timestamps
+    if (nrow(df) == 0) {
+        return(NA) # Handle empty dataframe
+    }
+
+    # Remove rows with NA in the time column
+    df <- df %>%
+        filter(!is.na(time))
+
+    # Check again if the dataframe is empty after filtering
+    if (nrow(df) == 0) {
+        return(NA) # Handle case where all rows had NA
+    }
+
+    # Group by the specified variables (if any) and calculate throughput
+    throughput <- df %>%
+        group_by(!!!group_by_vars) %>%
+        summarize(
+            total_time_span = as.numeric(difftime(max(time), min(time), units = "secs")),
+            total_tasks = n(),
+            throughput = total_tasks / total_time_span,
+            .groups = "drop"
+        )
+
+    return(throughput)
+}
+
+CalculateTaskArrivalRate <- function(df, ...) {
+    group_by_vars <- enquos(...)
+
+    # Filter tasks with newStatus = "NEW"
+    new_tasks <- df %>%
+        filter(newStatus == "NEW")
+
+    # Ensure there are valid timestamps
+    if (nrow(new_tasks) == 0) {
+        return(0) # Handle case where no new tasks exist
+    }
+
+    # Remove rows with NA in the modifiedOn column
+    new_tasks <- new_tasks %>%
+        filter(!is.na(modifiedOn))
+
+    # Check again if the dataframe is empty after filtering
+    if (nrow(new_tasks) == 0) {
+        return(0) # Handle case where all rows had NA
+    }
+
+    # Group by the specified variables (if any)
+    grouped_tasks <- new_tasks %>%
+        group_by(!!!group_by_vars)
+
+    # Calculate task arrival rate for each group
+    arrival_rate <- grouped_tasks %>%
+        summarize(
+            total_time_span = as.numeric(difftime(max(modifiedOn), min(modifiedOn), units = "secs")),
+            total_new_tasks = n(),
+            arrival_rate = total_new_tasks / total_time_span,
+            .groups = "drop"
+        )
+
+    return(arrival_rate)
+}

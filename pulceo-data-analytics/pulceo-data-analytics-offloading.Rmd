@@ -310,200 +310,200 @@ requests_combined <- tasks %>%
 
 ```{r}
 # Calculate the average response time
-CalculateAverageResponseTime <- function(df, ...) {
-    group_by_vars <- enquos(...)
+# CalculateAverageResponseTime <- function(df, ...) {
+#     group_by_vars <- enquos(...)
 
-    # Ensure the dataframe is not empty and contains valid response times
-    if (nrow(df) == 0 || !("X_value" %in% colnames(df))) {
-        return(NA) # Handle empty dataframe or missing column
-    }
+#     # Ensure the dataframe is not empty and contains valid response times
+#     if (nrow(df) == 0 || !("X_value" %in% colnames(df))) {
+#         return(NA) # Handle empty dataframe or missing column
+#     }
 
-    # Remove rows with NA in the X_value column
-    df <- df %>%
-        filter(!is.na(X_value))
+#     # Remove rows with NA in the X_value column
+#     df <- df %>%
+#         filter(!is.na(X_value))
 
-    # Group by the specified variables (if any) and calculate the average response time
-    avg_response_time <- df %>%
-        group_by(!!!group_by_vars) %>%
-        summarize(
-            avg_response_time = mean(X_value, na.rm = TRUE),
-            sd_response_time = sd(X_value, na.rm = TRUE),
-            min_response_time = min(X_value, na.rm = TRUE),
-            max_response_time = max(X_value, na.rm = TRUE),
-            .groups = "drop"
-        )
+#     # Group by the specified variables (if any) and calculate the average response time
+#     avg_response_time <- df %>%
+#         group_by(!!!group_by_vars) %>%
+#         summarize(
+#             avg_response_time = mean(X_value, na.rm = TRUE),
+#             sd_response_time = sd(X_value, na.rm = TRUE),
+#             min_response_time = min(X_value, na.rm = TRUE),
+#             max_response_time = max(X_value, na.rm = TRUE),
+#             .groups = "drop"
+#         )
 
-    return(avg_response_time)
-}
+#     return(avg_response_time)
+# }
 
 # Apply the function to the REQUESTS dataframe
-average_response_time <- CalculateAverageResponseTime(requests_combined, batchSize, layer, Run)
+# average_response_time <- CalculateAverageResponseTime(requests_combined, batchSize, layer, Run)
 ```
 
 ```{r}
 # Create a boxplot for X_value in requests
-average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y = X_value, fill = Run)) +
-    geom_boxplot(color = "darkblue") +
-    labs(
-        title = "Task Response Time",
-        x = "Batch Size",
-        y = "Response Time (s)"
-    ) +
-    theme_minimal() +
-    ylim(0, max(requests_combined$X_value * 1.25, na.rm = TRUE))
+# average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y = X_value, fill = Run)) +
+#     geom_boxplot(color = "darkblue") +
+#     labs(
+#         title = "Task Response Time",
+#         x = "Batch Size",
+#         y = "Response Time (s)"
+#     ) +
+#     theme_minimal() +
+#     ylim(0, max(requests_combined$X_value * 1.25, na.rm = TRUE))
 
 
 # Print the boxplot
-print(average_response_time_boxplot)
+# print(average_response_time_boxplot)
 ```
 
 ```{r}
-average_response_time_by_batch_size <- CalculateAverageResponseTime(requests_combined, batchSize)
+# average_response_time_by_batch_size <- CalculateAverageResponseTime(requests_combined, batchSize)
 ```
 
 ### Throughput (Task requests/s)
 
 ```{r}
 # Calculate throughput
-CalculateThroughput <- function(df, ...) {
-    group_by_vars <- enquos(...)
+# CalculateThroughput <- function(df, ...) {
+#     group_by_vars <- enquos(...)
 
-    # Ensure the dataframe has valid timestamps
-    if (nrow(df) == 0) {
-        return(NA) # Handle empty dataframe
-    }
+#     # Ensure the dataframe has valid timestamps
+#     if (nrow(df) == 0) {
+#         return(NA) # Handle empty dataframe
+#     }
 
-    # Remove rows with NA in the time column
-    df <- df %>%
-        filter(!is.na(time))
+#     # Remove rows with NA in the time column
+#     df <- df %>%
+#         filter(!is.na(time))
 
-    # Check again if the dataframe is empty after filtering
-    if (nrow(df) == 0) {
-        return(NA) # Handle case where all rows had NA
-    }
+#     # Check again if the dataframe is empty after filtering
+#     if (nrow(df) == 0) {
+#         return(NA) # Handle case where all rows had NA
+#     }
 
-    # Group by the specified variables (if any) and calculate throughput
-    throughput <- df %>%
-        group_by(!!!group_by_vars) %>%
-        summarize(
-            total_time_span = as.numeric(difftime(max(time), min(time), units = "secs")),
-            total_tasks = n(),
-            throughput = total_tasks / total_time_span,
-            .groups = "drop"
-        )
+#     # Group by the specified variables (if any) and calculate throughput
+#     throughput <- df %>%
+#         group_by(!!!group_by_vars) %>%
+#         summarize(
+#             total_time_span = as.numeric(difftime(max(time), min(time), units = "secs")),
+#             total_tasks = n(),
+#             throughput = total_tasks / total_time_span,
+#             .groups = "drop"
+#         )
 
-    return(throughput)
-}
+#     return(throughput)
+# }
 
 # Apply the function to completion_time_df
-throughput <- CalculateThroughput(completion_time_df, batchSize, Run)
+# throughput <- CalculateThroughput(completion_time_df, batchSize, Run)
 
 # Print the throughput
-print(paste("Throughput (requests per second):", throughput))
+#print(paste("Throughput (requests per second):", throughput))
 ```
 
 ```{r}
-throughput_bar_chart <- ggplot(throughput, aes(x = batchSize, y = throughput, fill = Run)) +
-    geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
-    geom_errorbar(aes(ymin = throughput - sd(throughput), ymax = throughput + sd(throughput)),
-        position = position_dodge(0.9), width = 0.25, color = "black"
-    ) +
-    labs(
-        title = "Task Throughput",
-        x = "Batch Size",
-        y = "Throughput (tasks/s)"
-    ) +
-    theme_minimal() +
-    ylim(0, max(throughput$throughput * 1.25, na.rm = TRUE))
+# throughput_bar_chart <- ggplot(throughput, aes(x = batchSize, y = throughput, fill = Run)) +
+#     geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
+#     geom_errorbar(aes(ymin = throughput - sd(throughput), ymax = throughput + sd(throughput)),
+#         position = position_dodge(0.9), width = 0.25, color = "black"
+#     ) +
+#     labs(
+#         title = "Task Throughput",
+#         x = "Batch Size",
+#         y = "Throughput (tasks/s)"
+#     ) +
+#     theme_minimal() +
+#     ylim(0, max(throughput$throughput * 1.25, na.rm = TRUE))
 
 # Print the boxplot
-print(throughput_bar_chart)
+# print(throughput_bar_chart)
 ```
 
 ```{r}
-average_troughput_by_batch_size <- CalculateThroughput(completion_time_df, batchSize, Run)
+#average_troughput_by_batch_size <- CalculateThroughput(completion_time_df, batchSize, Run)
 ```
 
 ### Task Arrival Rate
 
 ```{r}
 # Calculate task arrival rate
-CalculateTaskArrivalRate <- function(df, ...) {
-    group_by_vars <- enquos(...)
+# CalculateTaskArrivalRate <- function(df, ...) {
+#     group_by_vars <- enquos(...)
 
-    # Filter tasks with newStatus = "NEW"
-    new_tasks <- df %>%
-        filter(newStatus == "NEW")
+#     # Filter tasks with newStatus = "NEW"
+#     new_tasks <- df %>%
+#         filter(newStatus == "NEW")
 
-    # Ensure there are valid timestamps
-    if (nrow(new_tasks) == 0) {
-        return(0) # Handle case where no new tasks exist
-    }
+#     # Ensure there are valid timestamps
+#     if (nrow(new_tasks) == 0) {
+#         return(0) # Handle case where no new tasks exist
+#     }
 
-    # Remove rows with NA in the modifiedOn column
-    new_tasks <- new_tasks %>%
-        filter(!is.na(modifiedOn))
+#     # Remove rows with NA in the modifiedOn column
+#     new_tasks <- new_tasks %>%
+#         filter(!is.na(modifiedOn))
 
-    # Check again if the dataframe is empty after filtering
-    if (nrow(new_tasks) == 0) {
-        return(0) # Handle case where all rows had NA
-    }
+#     # Check again if the dataframe is empty after filtering
+#     if (nrow(new_tasks) == 0) {
+#         return(0) # Handle case where all rows had NA
+#     }
 
-    # Group by the specified variables (if any)
-    grouped_tasks <- new_tasks %>%
-        group_by(!!!group_by_vars)
+#     # Group by the specified variables (if any)
+#     grouped_tasks <- new_tasks %>%
+#         group_by(!!!group_by_vars)
 
-    # Calculate task arrival rate for each group
-    arrival_rate <- grouped_tasks %>%
-        summarize(
-            total_time_span = as.numeric(difftime(max(modifiedOn), min(modifiedOn), units = "secs")),
-            total_new_tasks = n(),
-            arrival_rate = total_new_tasks / total_time_span,
-            .groups = "drop"
-        )
+#     # Calculate task arrival rate for each group
+#     arrival_rate <- grouped_tasks %>%
+#         summarize(
+#             total_time_span = as.numeric(difftime(max(modifiedOn), min(modifiedOn), units = "secs")),
+#             total_new_tasks = n(),
+#             arrival_rate = total_new_tasks / total_time_span,
+#             .groups = "drop"
+#         )
 
-    return(arrival_rate)
-}
+#     return(arrival_rate)
+# }
 
 # Apply the function to the tasks dataframe
-arrival_rate <- CalculateTaskArrivalRate(tasks, batchSize, Run)
+# arrival_rate <- CalculateTaskArrivalRate(tasks, batchSize, Run)
 ```
 
 ```{r}
 # Create a bar chart for task arrival rate
-arrival_rate_bar_chart <- ggplot(arrival_rate, aes(x = batchSize, y = arrival_rate, fill = Run)) +
-    geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
-    geom_errorbar(aes(ymin = arrival_rate - sd(arrival_rate), ymax = arrival_rate + sd(arrival_rate)),
-        position = position_dodge(0.9), width = 0.25, color = "black"
-    ) +
-    labs(
-        title = "Task Arrival Rate",
-        x = "Batch Size",
-        y = "Arrival Rate (tasks/s)"
-    ) +
-    theme_minimal() +
-    ylim(0, max(arrival_rate$arrival_rate * 1.25, na.rm = TRUE))
+# arrival_rate_bar_chart <- ggplot(arrival_rate, aes(x = batchSize, y = arrival_rate, fill = Run)) +
+#     geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
+#     geom_errorbar(aes(ymin = arrival_rate - sd(arrival_rate), ymax = arrival_rate + sd(arrival_rate)),
+#         position = position_dodge(0.9), width = 0.25, color = "black"
+#     ) +
+#     labs(
+#         title = "Task Arrival Rate",
+#         x = "Batch Size",
+#         y = "Arrival Rate (tasks/s)"
+#     ) +
+#     theme_minimal() +
+#     ylim(0, max(arrival_rate$arrival_rate * 1.25, na.rm = TRUE))
 
 # Print the bar chart
-print(arrival_rate_bar_chart)
+# print(arrival_rate_bar_chart)
 ```
 
 ```{r}
-average_arrival_rate_by_batchSize <- CalculateTaskArrivalRate(tasks, batchSize, Run)
+# average_arrival_rate_by_batchSize <- CalculateTaskArrivalRate(tasks, batchSize, Run)
 ```
 
 ```{r include=TRUE, echo=FALSE}
 # Arrange all performance-related charts in a grid
-(performance_metrics_combined <- ggarrange(
-    average_response_time_boxplot,
-    arrival_rate_bar_chart,
-    throughput_bar_chart,
-    nrow = 1,
-    ncol = 3,
-    common.legend = TRUE,
-    legend = "bottom"
-))
+# (performance_metrics_combined <- ggarrange(
+#     average_response_time_boxplot,
+#     arrival_rate_bar_chart,
+#     throughput_bar_chart,
+#     nrow = 1,
+#     ncol = 3,
+#     common.legend = TRUE,
+#     legend = "bottom"
+# ))
 
-# Save the combined performance metrics chart
-SavePlot("performance_metrics.pdf", performance_metrics_combined, 8, 3)
+# # Save the combined performance metrics chart
+# SavePlot("performance_metrics.pdf", performance_metrics_combined, 8, 3)
 ```
