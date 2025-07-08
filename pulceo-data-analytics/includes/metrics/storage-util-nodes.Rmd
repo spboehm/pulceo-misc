@@ -22,4 +22,3 @@ storage_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(STORAGE_U
   geom_line() +
   facet_grid(vars(sourceHost))
 ```
-

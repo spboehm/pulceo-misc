@@ -97,6 +97,19 @@ overall_makespan <- CalculateOverallMakespan(completion_time_df, batchSize, laye
 
 #### Combined Task Metrics (Scheduling/Offloading Metrics)
 
+```{r include=TRUE, echo=FALSE}
+all_task_metrics_stats <- rbind(
+    waiting_time_on_psm_stats,
+    offloading_time_stats,
+    waiting_time_on_pna_stats,
+    waiting_time_total_stats,
+    processing_time_stats,
+    completion_time_stats
+)
+CreateScrollableTable(all_task_metrics_stats)
+SaveLatexTableForTaskMetrics(all_task_metrics_stats, "Task metric statistics for different batch sizes in seconds (s)", "task-metrics-statistics", "task_metrics_statistics.tex")
+```
+
 ```{r metrics-combined-tasks-metrics-plot, include=TRUE, echo=FALSE}
 (combined_task_metrics_plot <- ggarrange(
     boxplot_waiting_psm,

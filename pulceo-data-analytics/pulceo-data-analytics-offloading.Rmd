@@ -40,18 +40,17 @@ library(tinytex)
 
 ```{r}
 # TODO: general package
-SavePlot <- function(filename, plot, width = 4, height = 3) {
-    ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
-    ggsave(paste0("plots/", SUBFOLDER, "/", filename, ".svg"), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = "svg")
-}
+# SavePlot <- function(filename, plot, width = 4, height = 3) {
+#     ggsave(paste0("plots/", SUBFOLDER, "/", filename), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = cairo_pdf)
+#     ggsave(paste0("plots/", SUBFOLDER, "/", filename, ".svg"), plot + theme(plot.margin = margin(0, 0, 0, 0, "pt")), width = width, height = height, device = "svg")
+# }
 ```
 
 ```{r include=TRUE, echo=FALSE}
 # TODO: move to function
-
-dir.create(paste("plots", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
-dir.create(paste("latex", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
-dir.create(paste("reports", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
+# dir.create(paste("plots", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
+# dir.create(paste("latex", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
+# dir.create(paste("reports", SUBFOLDER, sep = "/"), recursive = TRUE, showWarnings = FALSE)
 ```
 
 ```{r}
@@ -272,38 +271,38 @@ dir.create(paste("reports", SUBFOLDER, sep = "/"), recursive = TRUE, showWarning
 #completion_time_stats <- CalculateWaitingTimeStats(completion_time_df, start_status = "NEW", end_status = "COMPLETED", "Completion Time (Total)")
 
 # Combine all statistics into a single dataframe
-all_task_metrics_stats <- rbind(
-    waiting_time_on_psm_stats,
-    scheduling_time_stats,
-    waiting_time_on_pna_stats,
-    waiting_time_total_stats,
-    processing_time_stats,
-    completion_time_stats
-)
+# all_task_metrics_stats <- rbind(
+#     waiting_time_on_psm_stats,
+#     scheduling_time_stats,
+#     waiting_time_on_pna_stats,
+#     waiting_time_total_stats,
+#     processing_time_stats,
+#     completion_time_stats
+# )
 
 # Create latex table
-table_task_metrics <- CreateLatexTableForTaskMetrics(all_task_metrics_stats)
+# table_task_metrics <- CreateLatexTableForTaskMetrics(all_task_metrics_stats)
 
 # Save latex table
-save_kable(table_task_metrics, paste("latex", SUBFOLDER, "task-metric-statistics.tex", sep = "/"))
+# save_kable(table_task_metrics, paste("latex", SUBFOLDER, "task-metric-statistics.tex", sep = "/"))
 ```
 
 ## Performance Metrics
 
 ```{r}
-requests <- read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 3)
+# requests <- read.csv(paste("raw", SUBFOLDER, "REQUESTS.csv", sep = "/"), skip = 3)
 
-# Join tasks with requests
-requests_combined <- tasks %>%
-    select(taskUUID, batchSize, layer) %>%
-    inner_join(requests, by = c("taskUUID" = "destinationHost")) %>%
-    select(taskUUID, batchSize, layer, requestType, timestamp, unit, X_value, X_field) %>%
-    mutate(Run = case_when(
-        layer == "cloud-only" ~ "1",
-        layer == "edge-only" ~ "2",
-        layer == "joint" ~ "3"
-    )) %>%
-    mutate(X_value = X_value / 1000)
+# # Join tasks with requests
+# requests_combined <- tasks %>%
+#     select(taskUUID, batchSize, layer) %>%
+#     inner_join(requests, by = c("taskUUID" = "destinationHost")) %>%
+#     select(taskUUID, batchSize, layer, requestType, timestamp, unit, X_value, X_field) %>%
+#     mutate(Run = case_when(
+#         layer == "cloud-only" ~ "1",
+#         layer == "edge-only" ~ "2",
+#         layer == "joint" ~ "3"
+#     )) %>%
+#     mutate(X_value = X_value / 1000)
 ```
 
 ### Average Response Time
