@@ -24,8 +24,8 @@ Render the full report: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), pa
 | \# | Resource | Command |
 |---|--------------|--------------------------------------------------------|
 | 0 | PDA | `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="sample"))` |
-| 1 | Topology | `rmarkdown::render(here('includes/topology.Rmd'))` |
-| 2 | Events | `rmarkdown::render(here('includes/events.Rmd'))` |
+| 1 | Topology | `rmarkdown::render(here('includes/topology.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2025"))` |
+| 2 | Events | `rmarkdown::render(here('includes/events.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2025"))` |
 | 3 | Resources | `rmarkdown::render(here('includes/resources.Rmd'))` |
 | 4 | CPU Utilization  | `rmarkdown::render(here('includes/metrics/cpu-util.Rmd'))` |
 | 5 | Memory Utilization  | `rmarkdown::render(here('includes/metrics/mem-util.Rmd'))`  |

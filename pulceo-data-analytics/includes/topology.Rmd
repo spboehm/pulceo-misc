@@ -1,6 +1,7 @@
 ---
 params:
   rootfolder: "."
+  subfolder: "sample"
 ---
 
 ```{r setup-topology, include=FALSE}
