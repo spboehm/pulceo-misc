@@ -1,23 +1,6 @@
-# functions
-install_and_load <- function(pkg, mirror = "https://cloud.r-project.org") {
-  # Set default CRAN mirror and silent options
-  options(repos = c(CRAN = mirror))
-  options(install.packages.check.source = "no")
-  options(ask = FALSE)
+# prs.R
+source("common.R")
 
-  # Install if missing
-  if (!requireNamespace(pkg, quietly = TRUE)) {
-    message(sprintf("Installing '%s'...", pkg))
-    install.packages(pkg, dependencies = TRUE, quiet = TRUE)
-  }
-
-  # Load package quietly
-  suppressPackageStartupMessages(
-    library(pkg, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)
-  )
-}
-
-# plumber.R
 install_and_load("plumber")
 install_and_load("rmarkdown")
 install_and_load("jsonlite")
@@ -32,8 +15,6 @@ r <- hiredis(host = config$redis_host, port = config$redis_port)
 
 #* @post /reports
 function(req, res) {
-    
-    # validate
     input <- tryCatch({
         fromJSON(req$postBody)
     }, error = function(e) {
@@ -70,7 +51,7 @@ function(orchestrationId, res) {
         return(res)
     }
 
-    log_file <- paste0("pda-worker-logs/", orchestrationId, ".log")
+    log_file <- paste0("prs-worker-logs/", orchestrationId, ".log")
     if (file.exists(log_file)) {
         logs <- readLines(log_file)
     } else {
