@@ -68,3 +68,10 @@ function(orchestrationId, res) {
     res$body <- toJSON(logs)
     return(res)
 }
+
+#* @get /health
+function(res) {
+    res$status <- 200
+    res$body <- "OK"
+    return(res)
+}
