@@ -30,5 +30,11 @@ docker run -d \
     -p 8181:8181 \
     --network middleware_pulceo-redis \
     --name pulceo-report-service \
-    prs:latest
+    pulceo-report-service:latest
+```
+
+## How to build
+
+```bash
+docker build -t pulceo-report-service:latest ..
 ```
