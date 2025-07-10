@@ -36,6 +36,10 @@ docker run -d \
     pulceo-report-service:latest
 ```
 
+```bash
+docker pull ghcr.io/spboehm/pulceo-report-service:latest
+```
+
 ## How to build
 
 ```bash
