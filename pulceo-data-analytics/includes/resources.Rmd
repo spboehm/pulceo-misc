@@ -1,6 +1,7 @@
 ---
 params:
   rootfolder: "."
+  subfolder: "sample"
 ---
 
 ```{r setup-resources, include=FALSE}
