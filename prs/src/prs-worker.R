@@ -14,9 +14,12 @@ RenderReport <- function(ROOTFOLDER = Sys.getenv("PULCEO_DATA_DIR", "/tmp/psm-da
     # create directors
     lapply(list(FOLDER_PFX_RAW, FOLDER_PFX_REPORTS, FOLDER_PFX_LATEX, FOLDER_PFX_PLOTS), dir.create,  recursive = TRUE, showWarnings = FALSE)
 
-    #rmd <- "../pulceo-data-analytics.Rmd"
+    rmd_file <- paste0(Sys.getenv("RMARKDOWN_DIR", "../../pulceo-data-analytics"), "/pulceo-data-analytics.Rmd")
+    if (!file.exists(rmd_file)) {
+        stop(paste("RMarkdown file does not exist:", rmd_file))
+    }
     rmarkdown::render(
-        "../pulceo-data-analytics.Rmd",
+        rmd_file,
         params = list(rootfolder = ROOTFOLDER, subfolder = subfolder),
         output_dir = FOLDER_PFX_REPORTS,
         output_file = "index.html"
@@ -30,7 +33,7 @@ config <- list(
 
 r <- hiredis(host = config$redis_host, port = config$redis_port)
 
-dir.create("prs-worker-logs", recursive = TRUE, showWarnings = FALSE)
+dir.create(PRS_LOG_DIRECTORY, recursive = TRUE, showWarnings = FALSE)
 cat("Worker started. Press Ctrl+C or send SIGTERM to exit.\n")
 
 # Setup graceful shutdown
@@ -59,14 +62,14 @@ while (!stop_worker) {
         {
             RenderReport(subfolder = job$orchestrationId)
             cat("Report rendered:", job$orchestrationId, "\n")
-        },
-        error = function(e) {
+        }, error = function(e) {
             cat("Render failed:", e$message, "\n")
+        }, finally = {
+        log_file <- paste0(PRS_LOG_DIRECTORY, "/", job$orchestrationId, ".log")
+        file.copy(paste0(PRS_LOG_DIRECTORY, "/prs-worker.log"), log_file, overwrite = TRUE)
+        file.create(paste0(PRS_LOG_DIRECTORY, "/prs-worker.log"), overwrite = TRUE)
         }
     )
-    log_file <- paste0("prs-worker-logs/", job$orchestrationId, ".log")
-    file.copy("prs-worker.log", log_file, overwrite = TRUE)
-    file.create("prs-worker.log", overwrite = TRUE)
 }
 
 cat("Worker exited.\n")

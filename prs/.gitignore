@@ -55,3 +55,5 @@ raw/
 reports/
 prs-worker-logs/
 prs-worker.log
+TRUE
+worker.pid

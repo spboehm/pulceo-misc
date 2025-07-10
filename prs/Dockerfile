@@ -2,11 +2,9 @@ FROM rocker/verse:4.4.3
 RUN apt-get update && apt-get install -y libhiredis-dev libhiredis1.1.0 && apt-get clean && rm -rf /var/lib/apt/lists/*
 WORKDIR /pulceo-data-analytics/prs
 RUN R -e "install.packages(c('plumber', 'DT', 'kableExtra', 'gridExtra', 'ggpubr', 'redux'), repos='http://cran.us.r-project.org')"
-COPY prs.R prs.R
-COPY prs-worker.R worker.R
-COPY prs.sh prs.sh
-COPY pulceo-data-analytics.Rmd /pulceo-data-analytics/pulceo-data-analytics.Rmd
-COPY pulceo-data-analytics.Rproj /pulceo-data-analytics/pulceo-data-analytics.Rproj
+COPY src .
+RUN mkdir /rmarkdown
+ENV RMARKDOWN_DIR=/rmarkdown
 ENV REDIS_HOST=localhost
 ENV PORT=6379
 EXPOSE 8181

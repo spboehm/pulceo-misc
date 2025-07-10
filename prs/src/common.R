@@ -1,3 +1,9 @@
+# common.R
+
+# constants
+PRS_LOG_DIRECTORY <- "../prs-worker-logs"
+
+# functions
 install_and_load <- function(pkg, mirror = "https://cloud.r-project.org") {
   # Set default CRAN mirror and silent options
   options(repos = c(CRAN = mirror))

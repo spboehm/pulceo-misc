@@ -25,9 +25,12 @@ Run with docker:
 ```bash
 docker run -d \
     -e PULCEO_DATA_DIR="/tmp/psm-data" \
+    -e RMARKDOWN_DIR="/rmarkdown" \
     -e REDIS_HOST=middleware-redis-1 \
     -e REDIS_PORT=6379 \
     -p 8181:8181 \
+    -v $PWD/../pulceo-data-analytics:/rmarkdown:ro \
+    -v /tmp/psm-data:/tmp/psm-data:rw \
     --network middleware_pulceo-redis \
     --name pulceo-report-service \
     pulceo-report-service:latest

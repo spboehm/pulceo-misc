@@ -51,7 +51,7 @@ function(orchestrationId, res) {
         return(res)
     }
 
-    log_file <- paste0("prs-worker-logs/", orchestrationId, ".log")
+    log_file <- paste0(PRS_LOG_DIRECTORY, "/", orchestrationId, ".log")
     if (file.exists(log_file)) {
         logs <- readLines(log_file)
     } else {
