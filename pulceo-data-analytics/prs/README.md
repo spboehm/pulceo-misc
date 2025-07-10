@@ -36,5 +36,5 @@ docker run -d \
 ## How to build
 
 ```bash
-docker build -t pulceo-report-service:latest ..
+docker build -t pulceo-report-service:latest .
 ```
