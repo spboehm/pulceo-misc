@@ -1,5 +1,5 @@
 ### Applications
 
 ```{r topology-applications-table, include=TRUE, echo=FALSE}
-CreateScrollableTable(applications)
+CreateScrollableTable(applications, removeCols = c("applicationComponents"))
 ```
