@@ -1,7 +1,7 @@
 ### CPU
 
 ```{r topology-resources-cpu-table, include=TRUE, echo=FALSE}
-CreateScrollableTable(cpu_resources)
+CreateScrollableTable(cpu_resources, removeCols = c("cpuCapacity", "cpuAllocatable"))
 ```
 
 #### CPU capacity

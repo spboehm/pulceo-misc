@@ -23,7 +23,7 @@ Render the full report: `rmarkdown::render(here('pulceo-data-analytics.Rmd'), pa
 
 | \# | Resource | Command |
 |---|--------------|--------------------------------------------------------|
-| 0 | PDA | `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="sample"))` |
+| 0 | PDA | `rmarkdown::render(here('pulceo-data-analytics.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2024-prod-load"))` |
 | 1 | Topology | `rmarkdown::render(here('includes/topology.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2025"))` |
 | 2 | Events | `rmarkdown::render(here('includes/events.Rmd'), params = list(rootfolder = "/tmp/psm-data", subfolder="summersoc2025"))` |
 | 3 | Resources | `rmarkdown::render(here('includes/resources.Rmd'))` |

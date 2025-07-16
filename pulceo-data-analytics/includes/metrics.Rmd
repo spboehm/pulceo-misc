@@ -55,5 +55,5 @@ source(here("includes/resources/metrics/requests.R"))
 ```{r metrics-requests, eval=(REQUESTS_PRESENT), child = 'includes/metrics/requests.Rmd'}
 ```
 
-```{r metrics-tasks, child = 'includes/metrics/tasks.Rmd'}
+```{r metrics-tasks, eval=(TASKS_PRESENT), child = 'includes/metrics/tasks.Rmd'}
 ```

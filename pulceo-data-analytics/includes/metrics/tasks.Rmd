@@ -24,10 +24,10 @@ source(here("includes/R/plots.R"))
 source(here("includes/resources/metrics/tasks.R"))
 ```
 
-## Tasks
+`r if (TASKS_PRESENT) "## Tasks"`
 
-```{r metrics-tasks-task-metrics, eval=TRUE, child = 'includes/metrics/tasks-task-metrics.Rmd', include=TRUE, echo=FALSE}
+```{r metrics-tasks-task-metrics, eval=(TASKS_PRESENT), child = 'includes/metrics/tasks-task-metrics.Rmd', include=TRUE, echo=FALSE}
 ```
 
-```{r metrics-tasks-performance-metrics, eval=TRUE, child = 'includes/metrics/tasks-performance-metrics.Rmd', include=TRUE, echo=FALSE}
+```{r metrics-tasks-performance-metrics, eval=(TASKS_PRESENT), child = 'includes/metrics/tasks-performance-metrics.Rmd', include=TRUE, echo=FALSE}
 ```

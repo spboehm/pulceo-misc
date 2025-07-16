@@ -1,5 +1,5 @@
 ### Storage
 
 ```{r topology-storage-table, include=TRUE, echo=FALSE}
-CreateScrollableTable(storage_resources)
+CreateScrollableTable(storage_resources, removeCols = c("storageCapacity", "storageAllocatable"))
 ```

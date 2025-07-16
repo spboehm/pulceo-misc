@@ -1,7 +1,7 @@
 ### Memory
 
 ```{r topology-resources-memory-table, include=TRUE, echo=FALSE}
-CreateScrollableTable(memory_resources)
+CreateScrollableTable(memory_resources, removeCols = c("memoryCapacity", "memoryAllocatable"))
 ```
 
 #### Memory capacity
