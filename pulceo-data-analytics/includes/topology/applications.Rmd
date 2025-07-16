@@ -3,3 +3,7 @@
 ```{r topology-applications-table, include=TRUE, echo=FALSE}
 CreateScrollableTable(applications, removeCols = c("applicationComponents"))
 ```
+
+```{r topology-application-components-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(do.call(rbind, applications$applicationComponents))
+```
