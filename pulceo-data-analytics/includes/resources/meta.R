@@ -28,8 +28,6 @@ NODE_SCALE_FILLS_MAPPINGS <- data.frame(
   stringsAsFactors = FALSE
 )
 
-node_scale_fills <- meta$NODE_SCALES
-
 NODE_SCALE_FILLS <- NODES_RAW %>%
   unnest(cols = c(node)) %>%
   left_join(y = NODE_SCALE_FILLS_MAPPINGS, by = c("type")) %>%
