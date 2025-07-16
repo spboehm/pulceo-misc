@@ -55,6 +55,14 @@ SaveLatexTable(REQUESTS_SUMMARY[, 1:7], "Round-trip times between applications",
 ```
 
 ```{r metrics-requests-application-response-time-summary-bar-plot, eval=HasReqRtt(REQUESTS), include=TRUE, echo=FALSE}
+SCALE_FILLS_FOR_REQUESTS <- case_when(
+  grepl("cloud", REQUESTS_SUMMARY$Source, ignore.case = TRUE)   ~ NODE_SCALE_FILLS_MAPPINGS[NODE_SCALE_FILLS_MAPPINGS$type=="CLOUD",]$scale_fills,
+  grepl("fog", REQUESTS_SUMMARY$Source, ignore.case = TRUE)     ~ NODE_SCALE_FILLS_MAPPINGS[NODE_SCALE_FILLS_MAPPINGS$type=="FOG",]$scale_fills,
+  grepl("edge", REQUESTS_SUMMARY$Source, ignore.case = TRUE)    ~ NODE_SCALE_FILLS_MAPPINGS[NODE_SCALE_FILLS_MAPPINGS$type=="EDGE",]$scale_fills,
+  grepl("gateway", REQUESTS_SUMMARY$Source, ignore.case = TRUE) ~ NODE_SCALE_FILLS_MAPPINGS[NODE_SCALE_FILLS_MAPPINGS$type=="GATEWAY",]$scale_fills,
+  TRUE ~ NA_character_
+)
+
 (application_response_time_plot <- ggplot(REQUESTS_SUMMARY, aes(x = SourceDest, y = Mean, fill = SourceDest)) +
   geom_bar(stat = "identity", width = 0.75) +
   geom_errorbar(aes(x = SourceDest, ymin = Mean - SD, ymax = Mean + SD), width = 0.3, colour = "blue") +
@@ -63,7 +71,6 @@ SaveLatexTable(REQUESTS_SUMMARY[, 1:7], "Round-trip times between applications",
   xlab("Source Application  - Destination Application") +
   ylim(0, max(REQUESTS_SUMMARY$Mean + REQUESTS_SUMMARY$SD) * 1.3) +
   theme(legend.position = "none") +
-  scale_fill_manual(values = node_scale_fills_ext))
+  scale_fill_manual(values = SCALE_FILLS_FOR_REQUESTS))
 SavePlot("application_response_time_plot.pdf", application_response_time_plot, ART_PLOT_WIDTH, ART_PLOT_HEIGHT)
 ```
-

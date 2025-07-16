@@ -1,4 +1,5 @@
 source(here("includes/R/libraries.R"))
+source(here("includes/resources/meta.R"))
 
 install_and_load("ggpubr")
 
@@ -13,7 +14,7 @@ GenerateBarPlotPercentage <- function(summary, title, ylim_factor = 1.0, vjust =
     ylab("Utilization (%)") +
     ylim(0, max(summary$Mean + summary$SD) * ylim_factor) +
     theme(legend.position = "none") +
-    scale_fill_manual(values = node_scale_fills)
+    scale_fill_manual(values = NODE_SCALE_FILLS)
   return(plot)
 }
 

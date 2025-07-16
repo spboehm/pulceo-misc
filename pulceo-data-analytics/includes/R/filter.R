@@ -6,7 +6,7 @@ install_and_load("tidyverse")
 ReadAndFilterTimestamp <- function(file, timestamp) {
   tryCatch({
     return(read.csv(file, skip = 3) %>%
-      filter(between(timestamp, start_timestamp, end_timestamp), grepl(paste0(nodes, "|pna-k8s-node"), resourceName)))
+      filter(between(timestamp, start_timestamp, end_timestamp), grepl(paste0(NODE_NAMES_CONCAT, "|pna-k8s-node"), resourceName)))
   }, error = function(e) {
     message("Error in ReadAndFilterTimestamp: ", e$message)
     return(data.frame())

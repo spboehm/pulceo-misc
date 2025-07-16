@@ -10,11 +10,8 @@ tryCatch({
   stop("Failed to load META.json")
 })
 
-node_scale_fills <- meta$NODE_SCALES
-node_scale_fills_ext <- meta$NODE_SCALES_EXT
 start_timestamp <- meta$START_TIMESTAMP
 end_timestamp <- meta$END_TIMESTAMP
-nodes <- meta$NODES
 
 tryCatch({
   NODES_RAW <- jsonlite::fromJSON(paste(FOLDER_PFX_RAW, "NODES.json", sep = "/"))
@@ -22,6 +19,21 @@ tryCatch({
   message("Error in reading NODES.json: ", e$message)
   stop("Failed to load NODES.json")
 })
+
+NODE_NAMES_CONCAT <- paste(NODES_RAW$node$name, collapse = "|")
+
+NODE_SCALE_FILLS_MAPPINGS <- data.frame(
+  type = c("CLOUD", "EDGE", "FOG", "GATEWAY"),
+  scale_fills = c("#DAE8FC", "#FF6D2D", "#D5E8D4", "#CD14BC"),
+  stringsAsFactors = FALSE
+)
+
+node_scale_fills <- meta$NODE_SCALES
+
+NODE_SCALE_FILLS <- NODES_RAW %>%
+  unnest(cols = c(node)) %>%
+  left_join(y = NODE_SCALE_FILLS_MAPPINGS, by = c("type")) %>%
+  pull(scale_fills)
 
 node_mapping <- NODES_RAW %>%
   unnest(cols = c(node)) %>%

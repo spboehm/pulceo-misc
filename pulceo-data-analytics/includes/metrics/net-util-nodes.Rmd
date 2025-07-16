@@ -30,7 +30,7 @@ node_net_util <- CreateSummaryForNetUtil(COMBINED_NET_UTIL_NODES) %>%
   xlab("Node") +
   ylim(0, max(node_net_util$max) * 1.5) +
   theme(legend.position = "right") +
-  scale_fill_manual(values = node_scale_fills) +
+  scale_fill_manual(values = NODE_SCALE_FILLS) +
   guides(fill = FALSE))
 
 SavePlot("net_util_plot_nodes.pdf", net_util_plot_nodes, 8, 6)
