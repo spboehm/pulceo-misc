@@ -8,6 +8,8 @@ Start the middleware:
 docker-compose -f ../middleware/docker-compose.yml up -d
 ```
 
+`cd src`
+
 Start the background worker:
 
 ```bash
@@ -15,6 +17,8 @@ Rscript prs-worker.R
 ```
 
 Start the web server (RESTful API):
+
+`cd src`
 
 ```bash
 R -e "pr <- plumber::plumb('prs.R'); pr\$run(host='0.0.0.0', port=8181)"

@@ -13,7 +13,7 @@ config <- list(
 
 r <- hiredis(host = config$redis_host, port = config$redis_port)
 
-#* @post /reports
+#* @post /api/v1/reports
 function(req, res) {
     input <- tryCatch({
         fromJSON(req$postBody)
@@ -43,7 +43,7 @@ function(req, res) {
     return(res)
 }
 
-#* @get /logs/<orchestrationId>
+#* @get /api/v1/logs/<orchestrationId>
 function(orchestrationId, res) {
     if (missing(orchestrationId)) {
         res$status <- 400
@@ -69,7 +69,7 @@ function(orchestrationId, res) {
     return(res)
 }
 
-#* @get /health
+#* @get /prs/health
 function(res) {
     res$status <- 200
     res$body <- "OK"
