@@ -2,8 +2,14 @@ source(here("includes/resources/meta.R"))
 source(here("includes/resources/metrics/requests.R"))
 source(here("includes/R/tasks.R"))
 
+TASKS_FILE_PATH <- paste(FOLDER_PFX_RAW, "TASKS.csv", sep = "/")
+
+if (!file.exists(TASKS_FILE_PATH)) {
+    TASKS_FILE_PATH <- paste(FOLDER_PFX_RAW, "TASK_STATUS_LOG.csv", sep = "/")
+}
+
 tryCatch({
-    TASKS_RAW <- read.csv(paste(FOLDER_PFX_RAW, "TASKS.csv", sep = "/"), skip = "3")
+    TASKS_RAW <- read.csv(TASKS_FILE_PATH, skip = "3")
     TASKS <- TransformTasks(TASKS_RAW)
 }, error = function(e) {
     message("Error loading or transforming TASKS: ", e$message)
