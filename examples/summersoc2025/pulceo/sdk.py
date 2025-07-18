@@ -4,6 +4,7 @@ import requests
 import json
 import os
 from . import monitoring
+from enum import Enum
 
 # print("=== Example hot to use the Python SDK ===")
 # print(read_nodes())
@@ -73,6 +74,28 @@ class API:
         else:
             print(f"Failed to reset orchestration context: {response.status_code}, {response.text}")
             raise Exception(f"Failed to reset orchestration context: {response.status_code}, {response.text}")
+    
+    def start_orchestration(self, orchestration_id):
+        self.update_orchestration_status(orchestration_id, OrchestrationStatus.RUNNING.name)
+
+    def stop_orchestration(self, orchestration_id):
+        self.update_orchestration_status(orchestration_id, OrchestrationStatus.COMPLETED.name)
+
+    def update_orchestration_status(self, orchestration_id, status):
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/orchestrations/{orchestration_id}/status"
+
+        if status not in OrchestrationStatus.__members__:
+            raise ValueError(f"Invalid status '{status}'. Must be one of: {list(OrchestrationStatus.__members__.keys())}")
+
+        payload = {"orchestrationStatus": status}
+        headers = {'Content-Type': 'application/json'}
+        response = requests.put(url, headers=headers, data=json.dumps(payload))
+        if response.status_code == 200:
+            print(f"Orchestration status updated to {status}.")
+            return response.json()
+        else:
+            print(f"Failed to update orchestration status: {response.status_code}, {response.text}")
+            return None
 
     def read_nodes(self):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/nodes"
@@ -256,3 +279,7 @@ class API:
         else:
             print(f"Failed to create task. Status code: {response.status_code}, Response: {response.text}")
         return response_payload.get('taskUUID')
+
+class OrchestrationStatus(Enum):
+    RUNNING = "RUNNING"
+    COMPLETED = "COMPLETED"
