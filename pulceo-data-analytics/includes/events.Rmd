@@ -8,8 +8,11 @@ params:
 knitr::opts_knit$set(root.dir = here())
 ```
 
+```{r resources-events-directories, child = 'directories.Rmd' }
+```
+
 ```{r resources-events, include=FALSE, echo=FALSE}
-source(here("includes/R/directories.R"))
+#source(here("includes/R/directories.R"))
 source(here("includes/R/tables.R"))
 ```
 
@@ -17,8 +20,8 @@ source(here("includes/R/tables.R"))
 source(here("includes/resources/events.R"))
 ```
 
-## Events
+`r if (EVENTS_PRESENT) "## Events"`
 
-```{r events-table, include=TRUE, echo=FALSE}
+```{r events-table, eval=(EVENTS_PRESENT), echo=FALSE}
 CreatePaginatedTableDT(events_summary)
 ```

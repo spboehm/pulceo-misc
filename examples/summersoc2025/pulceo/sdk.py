@@ -266,7 +266,7 @@ class API:
             return None
         
     def create_task(self, task):
-        url = f"http://{self.host}:{self.psm_port}/api/v1/tasks"
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/tasks"
         headers = {'Content-Type': 'application/json'}
         response = requests.post(url, headers=headers, data=task)
         try:
@@ -279,6 +279,16 @@ class API:
         else:
             print(f"Failed to create task. Status code: {response.status_code}, Response: {response.text}")
         return response_payload.get('taskUUID')
+
+    def create_orchestration_report(self, orchestration_id):
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/orchestrations/{orchestration_id}/reports"
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(url, headers=headers)
+        if response.status_code == 201:
+            print("Orchestration report created successfully.")
+        else:
+            print(f"Failed to create orchestration report: {response.status_code}, {response.text}")
+            return None
 
 class OrchestrationStatus(Enum):
     RUNNING = "RUNNING"

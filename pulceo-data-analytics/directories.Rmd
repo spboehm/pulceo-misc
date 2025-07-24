@@ -1,0 +1,12 @@
+---
+params:
+  rootfolder: "."
+  subfolder: "sample"
+---
+
+```{r include=FALSE, echo=FALSE}
+ROOTFOLDER <<- params$rootfolder
+SUBFOLDER <<- params$subfolder
+source(here("includes/R/directories.R"))
+source(here("includes/R/tables.R"))
+```

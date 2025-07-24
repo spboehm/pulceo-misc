@@ -8,8 +8,10 @@ params:
 knitr::opts_knit$set(root.dir = here())
 ```
 
-```{r metrics-requests-directories, include=FALSE, echo=FALSE}
-source(here("includes/R/directories.R"))
+```{r metrics-requests-directories, child = 'directories.Rmd' }
+```
+
+```{r metrics-requests-r, include=FALSE, echo=FALSE}
 source(here("includes/R/tables.R"))
 ```
 

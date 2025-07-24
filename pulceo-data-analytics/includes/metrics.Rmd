@@ -8,8 +8,10 @@ params:
 knitr::opts_knit$set(root.dir = here())
 ```
 
-```{r metrics-directories, include=FALSE, echo=FALSE}
-source(here("includes/R/directories.R"))
+```{r metrics-directories, child = 'directories.Rmd' }
+```
+
+```{r metrics-r, include=FALSE, echo=FALSE}
 source(here("includes/R/tables.R"))
 ```
 
@@ -25,7 +27,7 @@ source(here("includes/resources/metrics/tasks.R"))
 ```
 
 `r if (CPU_UTIL_PRESENT || MEM_UTIL_PRESENT || STORAGE_UTIL_PRESENT || NET_UTIL_PRESENT
-|| ICMP_RTT_PRESENT || TCP_BW_PRESENT || UDP_BW_PRESENT || REQUESTS_PRESENT) "## Metrics"`
+|| ICMP_RTT_PRESENT || TCP_BW_PRESENT || UDP_BW_PRESENT || REQUESTS_PRESENT || TASKS_PRESENT) "## Metrics"`
 
 ```{r metrics-cpu, eval=(CPU_UTIL_PRESENT), child = 'includes/metrics/cpu-util.Rmd'}
 ```

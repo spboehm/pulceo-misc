@@ -25,12 +25,12 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, include = FALSE)
 ```{r eval=FALSE, include=FALSE, echo=FALSE}
 # for testing and debugging purposes
 ROOTFOLDER <- "/tmp/psm-data"
-SUBFOLDER <- "summersoc2024-prod-load"
+SUBFOLDER <- "3d027107-0854-4ca6-be3a-546153cda8a8"
+ROOTFOLDER <<- params$rootfolder
+SUBFOLDER <<- params$subfolder
 ```
 
-```{r directories, include=FALSE, echo=FALSE}
-source(here("includes/R/directories.R"), local = list2env(list(params = params)))
-source(here("includes/R/tables.R"))
+```{r directories, child = 'directories.Rmd' }
 ```
 
 ```{r topology, child = 'includes/topology.Rmd'}

@@ -8,8 +8,10 @@ params:
 knitr::opts_knit$set(root.dir = here())
 ```
 
-```{r topology-directories, include=FALSE, echo=FALSE}
-source(here("includes/R/directories.R"))
+```{r topology-directories, child = 'directories.Rmd' }
+```
+
+```{r topology-r, include=FALSE, echo=FALSE}
 source(here("includes/R/tables.R"))
 ```
 
@@ -26,14 +28,14 @@ source(here("includes/resources/applications.R"))
 ```{r topology-providers, eval=nrow(providers) > 0, child = 'includes/topology/providers.Rmd', include=TRUE, echo=FALSE}
 ```
 
-```{r topology-nodes, eval=nrow(nodes) > 0, child = 'includes/topology/nodes.Rmd', include=TRUE, echo=FALSE}
+```{r topology-nodes, eval=(NODES_PRESENT) > 0, child = 'includes/topology/nodes.Rmd', include=TRUE, echo=FALSE}
 ```
 
-```{r topology-links, eval=nrow(links) > 0, child = 'includes/topology/links.Rmd', include=TRUE, echo=FALSE}
+```{r topology-links, eval=(LINKS_PRESENT) > 0, child = 'includes/topology/links.Rmd', include=TRUE, echo=FALSE}
 ```
 
-```{r topology-metric-requests, eval=nrow(metric_requests) > 0, child = 'includes/topology/metric-requests.Rmd', include=TRUE, echo=FALSE}
+```{r topology-metric-requests, eval=(METRIC_REQUESTS_PRESENT) > 0, child = 'includes/topology/metric-requests.Rmd', include=TRUE, echo=FALSE}
 ```
 
-```{r topology-applications, eval=nrow(applications) > 0, child = 'includes/topology/applications.Rmd', include=TRUE, echo=FALSE}
+```{r topology-applications, eval=(APPLICATIONS_PRESENT) > 0, child = 'includes/topology/applications.Rmd', include=TRUE, echo=FALSE}
 ```
