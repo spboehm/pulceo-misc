@@ -57,15 +57,17 @@ class API:
             print(f"PSM health check failed: {response.status_code}, {response.text}")
             raise Exception(f"PSM health check failed: {response.status_code}, {response.text}")
 
-    def get_orchestration_context(self):
-        url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/orchestration-context"
+    def get_orchestration_context(self, scope = "service"):
+        if scope not in ["service", "all"]:
+            raise ValueError("scope must be either 'service' or 'all'")
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/orchestration-context?scope={scope}"
         response = requests.get(url)
         if response.status_code == 200:
             return response.json()
         else:
             print(f"Failed to fetch orchestration context: {response.status_code}, {response.text}")
             return None
-
+        
     def reset_orchestration_context(self):
         url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/orchestration-context/reset"
         response = requests.post(url)
@@ -75,6 +77,22 @@ class API:
             print(f"Failed to reset orchestration context: {response.status_code}, {response.text}")
             raise Exception(f"Failed to reset orchestration context: {response.status_code}, {response.text}")
     
+    def create_orchestration(self, name = "name", description = "description", properties = {}):
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/orchestrations"
+        payload = {
+            "name": name,
+            "description": description,
+            "properties": properties
+        }
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        if response.status_code == 201:
+            print("Orchestration created successfully.")
+            return response.json()
+        else:
+            print(f"Failed to create orchestration: {response.status_code}, {response.text}")
+            return None
+
     def start_orchestration(self, orchestration_id):
         self.update_orchestration_status(orchestration_id, OrchestrationStatus.RUNNING.name)
 
