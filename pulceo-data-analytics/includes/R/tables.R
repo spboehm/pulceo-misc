@@ -6,7 +6,7 @@ install_and_load("tidyverse")
 
 
 CreateScrollableTable <- function(df, removeCols = NULL) {
-  if (!is.null(cols)) {
+  if (!is.null(removeCols)) {
     df <- select(df, -all_of(removeCols))
   }
   CreatePaginatedTableDT(df)
