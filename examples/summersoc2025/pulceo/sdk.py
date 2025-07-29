@@ -5,6 +5,7 @@ import json
 import os
 from . import monitoring
 from enum import Enum
+from jinja2 import Template
 
 # print("=== Example hot to use the Python SDK ===")
 # print(read_nodes())
@@ -259,6 +260,22 @@ class API:
     def release_memory_on_node(self, node_id, key, value):
         current_allocatable_memory = self.read_allocatable_memory_by_node_id(node_id)
         self.update_allocatable_memory(node_id, key, current_allocatable_memory['memoryAllocatable'][key] + value)
+
+    def create_application(self, node_id, application_name, path_to_json):
+        application = self.read_json(path_to_json)
+        template = Template(json.dumps(application))
+        application = json.loads(template.render(node_id=node_id, name=application_name, **os.environ))
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/applications"
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(url, headers=headers, data=json.dumps(application))
+        if response.status_code == 201:
+            print("Applications created successfully.")
+            return response.json()
+        else:
+            print(f"Failed to create application: {response.status_code}, {response.text}")
+            if "already exists" in response.text:
+                return None
+            raise Exception(f"Node creation failed: {response.status_code}, {response.text}")
 
     def schedule_task(self, task_id, node_id, status, application_id, application_component_id, properties):
         url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/tasks/{task_id}/scheduling"
