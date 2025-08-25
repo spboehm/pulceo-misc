@@ -147,7 +147,6 @@ class EdgeOnlyScheduler(Scheduler):
             # set custom resource limits, resources must be left for hypervisor and platform components
             memory_on_node = self.pulceo_api.read_allocatable_memory_by_node_id(node['uuid'])
             self.pulceo_api.update_allocatable_memory(node['uuid'], 'size', self.maxAllocatableMem((memory_on_node['memoryCapacity']['size'])))
-            print()
 
     def schedule(self, task, nodeType):
         # requirements of tasks
@@ -223,10 +222,6 @@ class EdgeOnlyScheduler(Scheduler):
         logging.info(f"{self.name} Received new task: {task}")
         print(f"{self.name} Received new task: {task}")
         self.schedule(task, "EDGE")
-
-        if len(self.pendingTasks) > self.PENDING_TASKS_THRESHOLD:
-            self.handle_new_task(self.pendingTasks.pop())
-            print("Remaining in buffer from handle_new_task " + str(len(self.pendingTasks)))
         
     def handle_completed_task(self, task):
         logging.info(f"{self.name} Received completed task: {task}")
@@ -235,7 +230,7 @@ class EdgeOnlyScheduler(Scheduler):
 
         if len(self.pendingTasks) > self.PENDING_TASKS_THRESHOLD:
             self.handle_new_task(self.pendingTasks.pop())
-            print("Remaining in buffer from handle_completed_task" + str(len(self.pendingTasks)))
+            print("Remaining in buffer from handle_completed_task " + str(len(self.pendingTasks)))
 
     def on_terminate(self):
         MAX_RETRIES = 1000
