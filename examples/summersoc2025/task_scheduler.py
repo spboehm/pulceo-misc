@@ -9,9 +9,10 @@ import uuid
 from abc import ABC, abstractmethod
 import logging
 import threading
+import itertools
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.CRITICAL, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Scheduler(ABC):
     def __init__(self, scheduling_properties):
@@ -22,11 +23,16 @@ class Scheduler(ABC):
         self.mqtt_client.on_connect = self.on_connect
         self.mqtt_client.on_message = self.on_message
         self.batch_size = int(scheduling_properties['batchSize'])
+        self.total_number_of_tasks = int(scheduling_properties['batchSize'])
         self.pulceo_api = API(scheme, host, prm_port, psm_port)
         self.on_init()
+        self.created_tasks_counter = itertools.count(1)
+        self.new_tasks_counter = itertools.count(1)
+        self.running_tasks_counter = itertools.count(1)
+        self.completed_tasks_counter = itertools.count(1) 
 
     def init_mqtt(self):
-        client = mqtt.Client(client_id=str(uuid.uuid4()), clean_session=False, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
+        client = mqtt.Client(client_id="task_scheduler.py", clean_session=False, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
         if (os.getenv('MQTT_USERNAME') is not None and os.getenv('MQTT_PASSWORD') is not None):
             client.username_pw_set(username=os.getenv('MQTT_USERNAME'), password=os.getenv('MQTT_PASSWORD'))
         if(os.getenv('MQTT_TLS') == 'True'):
@@ -46,12 +52,13 @@ class Scheduler(ABC):
         return client
 
     def on_connect(self, client, userdata, flags, reason_code, properties):
-        logging.info(f"Connected with result code {reason_code}")
         client.subscribe("tasks/new")
         client.subscribe("tasks/running")  # TODO: do we need this?
         client.subscribe("tasks/scheduled")
         client.subscribe("tasks/offloaded")
         client.subscribe("tasks/completed")
+        client.subscribe("health")
+        logging.info(f"Scheduler connected with result code {reason_code}")
 
     def on_message(self, client, userdata, msg):
         logging.info(msg.topic + " " + str(msg.payload))
@@ -59,8 +66,10 @@ class Scheduler(ABC):
         logging.info(f"Scheduler received new task: {received_task}")
 
         if msg.topic == "tasks/new":
+            print(f"Number of NEW tasks: {int(next(self.new_tasks_counter))} / {self.total_number_of_tasks}")
             self.handle_new_task(received_task)
         elif msg.topic == "tasks/completed":
+            print(f"Number of COMPLETED tasks: {int(next(self.completed_tasks_counter))} / {self.total_number_of_tasks}")
             self.handle_completed_task(received_task)
             self.batch_size = self.batch_size - 1
             logging.info("Scheduler remaining batch size " + str(self.batch_size))
@@ -68,7 +77,8 @@ class Scheduler(ABC):
             if self.batch_size == 0:
                 self.mqtt_client.publish("cmd/tasks", "STOP")
                 self.stop()
-
+        elif msg.topic == "health":
+            self.handle_health()
         else:
             logging.info(f"Unknown message received on topic {msg.topic}: {msg.payload}")
     
@@ -83,6 +93,9 @@ class Scheduler(ABC):
     @abstractmethod
     def handle_completed_task(self, task):
         pass
+    
+    def handle_health(self):
+        self.mqtt_client.publish("health/response", json.dumps("{'msg':'scheduler healthy'}"))
 
     @abstractmethod
     def on_terminate(self):
@@ -120,6 +133,8 @@ class EdgeOnlyScheduler(Scheduler):
             return 5.5125
         elif value < 16:
             return 13.2685
+        else:
+            return value * 0.75
         
     def on_init(self):
         # read all nodes
@@ -132,6 +147,7 @@ class EdgeOnlyScheduler(Scheduler):
             # set custom resource limits, resources must be left for hypervisor and platform components
             memory_on_node = self.pulceo_api.read_allocatable_memory_by_node_id(node['uuid'])
             self.pulceo_api.update_allocatable_memory(node['uuid'], 'size', self.maxAllocatableMem((memory_on_node['memoryCapacity']['size'])))
+            print()
 
     def schedule(self, task, nodeType):
         # requirements of tasks
@@ -187,6 +203,7 @@ class EdgeOnlyScheduler(Scheduler):
                 else:
                     pass
                     # TODO: resolve workaround, putting the port the application_component_id
+                    application_component_id = "127.0.0.1:8087"
                 # application_component_id = elected_node + "-edge-iot-simulator-component-eis" + ".pulceo.svc.cluster.local:80"
                 # schedule
                 self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
@@ -204,6 +221,7 @@ class EdgeOnlyScheduler(Scheduler):
     
     def handle_new_task(self, task):
         logging.info(f"{self.name} Received new task: {task}")
+        print(f"{self.name} Received new task: {task}")
         self.schedule(task, "EDGE")
 
         if len(self.pendingTasks) > self.PENDING_TASKS_THRESHOLD:

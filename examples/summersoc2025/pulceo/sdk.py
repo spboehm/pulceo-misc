@@ -186,7 +186,7 @@ class API:
         else:
             print(f"Failed to fetch allocatable CPU for node {node_id}: {response.status_code}, {response.text}")
             return None
-        
+    
     def read_allocatable_cpu_by_node_type(self, node_type):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/cpus?type={node_type}"
         response = requests.get(url)

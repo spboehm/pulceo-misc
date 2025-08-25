@@ -11,6 +11,9 @@ from config import *
 import uuid
 import ssl
 import threading
+import itertools
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class TaskMetric:
     def __init__(self, task_uuid, resource, value, unit):
@@ -43,9 +46,11 @@ class TaskEmitter:
         self.exit_event = threading.Event()
         self.pulceo_api = API(scheme, host, prm_port, psm_port)
         self.lock = threading.Lock()
+        self.created_tasks_counter = itertools.count(1)
+        self.scheduler_ready_event = threading.Event()
 
     def init_mqtt(self):
-        client = mqtt.Client(client_id=str(uuid.uuid4()), clean_session=False, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
+        client = mqtt.Client(client_id="task_emitter.py", clean_session=False, callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
         if (os.getenv('MQTT_USERNAME') is not None and os.getenv('MQTT_PASSWORD') is not None):
             client.username_pw_set(username=os.getenv('MQTT_USERNAME'), password=os.getenv('MQTT_PASSWORD'))
         if(os.getenv('MQTT_TLS') == 'True'):
@@ -69,14 +74,17 @@ class TaskEmitter:
         return int(time.time_ns())
 
     def on_connect(self, client, userdata, flags, reason_code, properties):
-        print(f"Connected with result code {reason_code}")
         client.subscribe("tasks/+/responses")
         client.subscribe("cmd/tasks")
+        client.subscribe("health/response")
+        print(f"Emitter connected with result code {reason_code}")
 
     def on_message(self, client, userdata, msg):
-        
         if msg.topic == "cmd/tasks":
             self.stop()
+        elif msg.topic == "health/response":
+            print("was here")
+            self.scheduler_ready_event.set()
         else:
             with self.lock:
                 received_task = json.loads(msg.payload.decode('utf-8'))
@@ -116,6 +124,10 @@ class TaskEmitter:
         self.mqtt_client.connect(self.mqtt_host, self.mqtt_port, 60)
         self.mqtt_client.loop_start()
 
+        while (self.scheduler_ready_event.is_set() is not True):
+            self.mqtt_client.publish("health", json.dumps("{'msg':'are you alive'}"))
+            self.scheduler_ready_event.wait(1)
+
         tasks = self.read_generated_tasks()
         for task in tasks:
             with self.lock:
@@ -123,6 +135,7 @@ class TaskEmitter:
                 task["schedulingProperties"] = self.scheduling_properties
                 timestamp_req = self.get_timestamp()
                 task_uuid = self.pulceo_api.create_task(json.dumps(task))
+                print(f"Number of CREATED tasks: {int(next(self.created_tasks_counter))} / {len(task)}")
                 self.history[task_uuid] = {
                     "task_uuid": task_uuid,
                     "timestamp_req": timestamp_req
