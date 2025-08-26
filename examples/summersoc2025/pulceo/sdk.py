@@ -94,6 +94,15 @@ class API:
             print(f"Failed to create orchestration: {response.status_code}, {response.text}")
             return None
 
+    def read_orchestration(self, orchestration_id):
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/orchestrations/{orchestration_id}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to fetch orchestration: {response.status_code}, {response.text}")
+            return None
+
     def start_orchestration(self, orchestration_id):
         self.update_orchestration_status(orchestration_id, OrchestrationStatus.RUNNING.name)
 
