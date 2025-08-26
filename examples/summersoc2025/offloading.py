@@ -10,8 +10,8 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 
 #layers = ["cloud-only"], "edge-only", "joint"]
 layers = ["edge-only"]
-#batch_sizes = [200,400,600,800]
-batch_sizes = [100]
+batch_sizes = [200,400,600,800]
+#batch_sizes = [100]
 
 def create_scenarios():
     for batch_size in batch_sizes:
