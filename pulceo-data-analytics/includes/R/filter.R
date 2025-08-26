@@ -5,7 +5,7 @@ install_and_load("tidyverse")
 # TODO: add start_timestamp and end_timestamp to function
 ReadAndFilterTimestamp <- function(file, timestamp) {
   tryCatch({
-    return(read.csv(file, skip = 3) %>%
+    return(ReadInfluxDbCsv(file) %>%
       filter(between(timestamp, start_timestamp, end_timestamp), grepl(paste0(NODE_NAMES_CONCAT, "|pna-k8s-node"), resourceName)))
   }, error = function(e) {
     message("Error in ReadAndFilterTimestamp: ", e$message)
@@ -15,7 +15,7 @@ ReadAndFilterTimestamp <- function(file, timestamp) {
 
 ReadAndFilterEndTime <- function(file, endTime) {
   tryCatch({
-    return(read.csv(file, skip = 3) %>%
+    return(ReadInfluxDbCsv(file) %>%
       filter(between(endTime, start_timestamp, end_timestamp)))
   }, error = function(e) {
     message("Error in ReadAndFilterEndTime: ", e$message)
@@ -23,8 +23,19 @@ ReadAndFilterEndTime <- function(file, endTime) {
   })
 }
 
+ReadInfluxDbCsv <- function(file) {
+  if (grepl("#", readLines(file, n = 1), fixed = TRUE)) {
+      # indicates old version with header of 3
+      df <- read.csv(file, skip = 3)
+  } else {
+      # indicated new version without the header
+      df <- read.csv(file, skip = 0)
+  }
+  return(df)
+}
+
 FilterInfluxDbCsv <- function(df) {
-  df %>% select(-"X", -"result", -"X_start", -"X_stop", -"X_time", -"X_field")
+  df %>% select(-any_of(c("X", "result", "X_start", "X_stop", "X_time", "X_field")))
 }
 
 ProcessInfluxDbDfSummary <- function(df) {

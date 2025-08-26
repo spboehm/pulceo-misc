@@ -8,7 +8,7 @@ if (!file.exists(REQUESTS_FILE_PATH)) {
 }
 
 tryCatch({
-    REQUESTS_RAW <- read.csv(REQUESTS_FILE_PATH, skip = 3)
+    REQUESTS_RAW <- ReadInfluxDbCsv(REQUESTS_FILE_PATH)
     REQUESTS <- TransfromRequests(REQUESTS_RAW)
 }, error = function(e) {
     message("Error loading or transforming REQUESTS: ", e$message)

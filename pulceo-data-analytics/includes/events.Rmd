@@ -22,6 +22,6 @@ source(here("includes/resources/events.R"))
 
 `r if (EVENTS_PRESENT) "## Events"`
 
-```{r events-table, eval=(EVENTS_PRESENT), echo=FALSE}
+```{r events-table, eval=(EVENTS_PRESENT), include=TRUE, echo=FALSE}
 CreatePaginatedTableDT(events_summary)
 ```

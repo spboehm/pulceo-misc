@@ -9,7 +9,7 @@ if (!file.exists(TASKS_FILE_PATH)) {
 }
 
 tryCatch({
-    TASKS_RAW <- read.csv(TASKS_FILE_PATH, skip = "3")
+    TASKS_RAW <- ReadInfluxDbCsv(TASKS_FILE_PATH)
     TASKS <- TransformTasks(TASKS_RAW)
 }, error = function(e) {
     message("Error loading or transforming TASKS: ", e$message)

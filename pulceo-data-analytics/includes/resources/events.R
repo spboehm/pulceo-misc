@@ -7,7 +7,7 @@ if (!file.exists(EVENTS_FILE_PATH)) {
 }
 
 tryCatch({
-    EVENTS_RAW <- read.csv(EVENTS_FILE_PATH, skip = 3)
+    EVENTS_RAW <- ReadInfluxDbCsv(EVENTS_FILE_PATH)
 }, error = function(e) {
     message("Error in read EVENTS.csv: ", e$message)
     EVENTS_RAW <<- data.frame()
