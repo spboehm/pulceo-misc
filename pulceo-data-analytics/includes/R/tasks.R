@@ -4,10 +4,10 @@ install_and_load("tidyverse")
 
 TransformTasks <- function(df) {
     df <- df %>%
-        select(
-            policy, batchSize, layer, modifiedBy, modifiedById, modifiedOn, newStatus, previousStatus,
-            taskSchedulingUUID, taskUUID, timestamp
-        ) %>%
+        select(any_of(c(
+            "policy", "batchSize", "layer", "modifiedBy", "modifiedById", "modifiedOn", "newStatus", "previousStatus",
+            "taskSchedulingUUID", "taskUUID", "timestamp"
+        ))) %>%
         mutate(Run = case_when(
             layer == "cloud-only" ~ "1",
             layer == "edge-only" ~ "2",

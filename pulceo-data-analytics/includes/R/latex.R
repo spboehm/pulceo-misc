@@ -34,10 +34,13 @@ SaveLatexTableForTaskMetrics <- function(summary, caption, label, filename, posi
           linesep = c("", "", "\\addlinespace", "", "\\addlinespace"),
           escape = FALSE,
           caption = caption,
-          col.names = c("Task metric", "$S_{1}$", "$S_{2}$", "200 ($\\mu/\\sigma$)", "400 ($\\mu/\\sigma$)", "600 ($\\mu/\\sigma$)", "800 ($\\mu/\\sigma$)"),
-          align = c("l", "l", "l", "c", "c", "c", "c")
+          col.names = c("Task metric", "$S_{1}$", "$S_{2}$", unique(summary$batchSize) %>% paste0(" ($\\mu/\\sigma$)")),
+            align = c("l", "l", "l", rep("c", length(unique(summary$batchSize))))
       ) %>%
-      add_header_above(c(" " = 1, " " = 2, "Batch size" = 4), escape = FALSE) %>%
+      add_header_above(
+        c(" " = 1, " " = 2, "Batch size" = length(unique(summary$batchSize))),
+        escape = FALSE
+      ) %>%
       kable_styling(latex_options = c("hold_position", "scale_down"))
       
   save_kable(summary, paste(FOLDER_PFX_LATEX, "task-metrics-statistics.tex", sep = "/"))
