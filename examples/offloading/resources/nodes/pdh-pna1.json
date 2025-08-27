@@ -1,0 +1,16 @@
+{
+	"nodeType":"ONPREM",
+	"name": "pdh-pna1",
+	"providerName":"default",
+	"hostname":"141.13.163.183",
+	"type": "edge",
+	"country": "Germany",
+	"state": "Bavaria",
+	"city": "Bamberg",
+	"tags": [
+		 {
+			 "key": "properties",
+			 "value": "Java, MySQL"
+		 }
+	]
+}

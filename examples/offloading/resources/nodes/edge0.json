@@ -1,0 +1,16 @@
+{
+	"nodeType":"ONPREM",
+	"name": "edge0",
+	"providerName":"default",
+	"hostname":"127.0.0.1",
+	"type": "edge",
+	"country": "Germany",
+	"state": "Bavaria",
+	"city": "Bamberg",
+	"tags": [
+		 {
+			 "key": "properties",
+			 "value": "Java, MySQL"
+		 }
+	]
+}
