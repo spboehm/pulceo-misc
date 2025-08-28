@@ -286,6 +286,15 @@ class API:
                 return None
             raise Exception(f"Node creation failed: {response.status_code}, {response.text}")
 
+    def read_applications(self):
+        url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/applications"
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"Failed to fetch applications: {response.status_code}, {response.text}")
+            return None
+
     def schedule_task(self, task_id, node_id, status, application_id, application_component_id, properties):
         url = f"{self.scheme}://{self.host}:{self.psm_port}/api/v1/tasks/{task_id}/scheduling"
         payload = {

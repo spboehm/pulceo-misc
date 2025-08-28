@@ -83,7 +83,6 @@ class TaskEmitter:
         if msg.topic == "cmd/tasks":
             self.stop()
         elif msg.topic == "health/response":
-            print("was here")
             self.scheduler_ready_event.set()
         else:
             with self.lock:
@@ -140,7 +139,7 @@ class TaskEmitter:
                     "task_uuid": task_uuid,
                     "timestamp_req": timestamp_req
                 }
-                time.sleep(0.1)
+                time.sleep(0.2)
         # wait, until all messages have been received, then terminate
         self.exit_event.wait()
 

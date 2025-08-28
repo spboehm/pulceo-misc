@@ -12,7 +12,7 @@ import threading
 import itertools
 
 # Configure logging
-logging.basicConfig(level=logging.CRITICAL, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Scheduler(ABC):
     def __init__(self, scheduling_properties):
@@ -116,7 +116,7 @@ class EdgeOnlyScheduler(Scheduler):
     processedTasks = {}
     pendingTasks = []
     PENDING_TASKS_THRESHOLD = 0
-    on_terminate = False
+    on_terminate = True
 
     def deferTasks(self, task):
         self.pendingTasks.append(task)
@@ -194,16 +194,16 @@ class EdgeOnlyScheduler(Scheduler):
                 task_id = task['taskUUID']
                 status = "SCHEDULED"
                 application_id = ""  # TODO: replace dummy
-                if (bool(os.getenv('LOCAL_SCHEDULING')) is True):
-                    if (elected_node == "edge-0"):
-                        application_component_id = "127.0.0.1:8087"
-                    else:
-                        application_component_id = "127.0.0.2:8087"
-                else:
-                    pass
-                    # TODO: resolve workaround, putting the port the application_component_id
-                    application_component_id = "127.0.0.1:8087"
-                # application_component_id = elected_node + "-edge-iot-simulator-component-eis" + ".pulceo.svc.cluster.local:80"
+                # if (bool(os.getenv('LOCAL_SCHEDULING')) is True):
+                #     if (elected_node == "edge-0"):
+                #         application_component_id = "127.0.0.1:8087"
+                #     else:
+                #         application_component_id = "127.0.0.2:8087"
+                # else:
+                #     pass
+                #     # TODO: resolve workaround, putting the port the application_component_id
+                #     application_component_id = "127.0.0.1:8087"
+                application_component_id = elected_node + "-edge-iot-simulator-component-eis" + ".pulceo.svc.cluster.local:80"
                 # schedule
                 self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
                 # add mapping between task_id and node_id to processedTasks for later mapping
@@ -233,8 +233,8 @@ class EdgeOnlyScheduler(Scheduler):
             print("Remaining in buffer from handle_completed_task " + str(len(self.pendingTasks)))
 
     def on_terminate(self):
-        MAX_RETRIES = 1000
         pass
+        # MAX_RETRIES = 1000
         # while (len(self.pendingTasks) > 0):
         #     print("on_terminate")
         #     CURRENT_NUMBER_OF_TASKS = len(self.pendingTasks)

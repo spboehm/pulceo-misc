@@ -1,5 +1,5 @@
 - name: Reset pulceo-node-agent
-  hosts: fog
+  hosts: edge
   become: true
   gather_facts: true
   vars:

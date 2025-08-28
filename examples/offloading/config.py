@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 from dotenv import load_dotenv
+load_dotenv(override=True)
 
 scheme = os.getenv("PULCEO_API_SCHEME", "http")
 host = os.getenv("PULCEO_API_HOST", "localhost")

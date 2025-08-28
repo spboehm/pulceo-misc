@@ -4,7 +4,7 @@
   "applicationComponents": [
     {
       "name": "component-eis",
-      "image": "ghcr.io/spboehm/pulceo-node-agent:feature-1mn-rework",
+      "image": "ghcr.io/spboehm/edge-iot-simulator:v1.2.1",
       "port": 80,
       "protocol": "HTTPS",
       "applicationComponentType": "PUBLIC",
@@ -14,6 +14,7 @@
         "MQTT_TLS": "True",
         "MQTT_USERNAME": "{{ MQTT_USERNAME }}",
         "MQTT_PASSWORD": "{{ MQTT_PASSWORD }}",
+        "WEB_HOSTNAME": "0.0.0.0",
         "WEB_PORT": 80,
         "PNA_TASKS_HOSTNAME": "pulceo-node-agent.default.svc.cluster.local"
       }

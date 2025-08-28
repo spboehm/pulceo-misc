@@ -1,9 +1,9 @@
 {
 	"nodeType":"ONPREM",
 	"type": "edge",
-	"name": "edge1",
+	"name": "edge2",
 	"providerName":"default",
-	"hostname":"h5138.pi.uni-bamberg.de",
+	"hostname":"h5136.pi.uni-bamberg.de",
 	"country": "Germany",
 	"state": "Bavaria",
 	"city": "Bamberg",
