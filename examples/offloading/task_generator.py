@@ -21,9 +21,9 @@ def save_generated_tasks(num_tasks, tasks):
 def generate_tasks(num_tasks):
     # Define the proportions
     task_distribution = {
-        "small": 1.00,
-        "medium": 0.00,
-        "large": 0.00
+        "small": 0.60,
+        "medium": 0.30,
+        "large": 0.10
     }
 
     # Define task properties
@@ -49,7 +49,7 @@ def generate_tasks(num_tasks):
             "payload_length": 50,
             "payload": base64.b64encode(b"50").decode('utf-8'),
             "requirements": {
-                "cpu_shares": 500,
+                "cpu_shares": 250,
                 "memory_size": 0.50,
             },
             "properties": {"task_type": "medium"}
@@ -62,7 +62,7 @@ def generate_tasks(num_tasks):
             "payload_length": 100,
             "payload": base64.b64encode(b"100").decode('utf-8'),
             "requirements": {
-                "cpu_shares": 1000,
+                "cpu_shares": 500,
                 "memory_size": 1.00,
             },
             "properties": {"task_type": "large"}
