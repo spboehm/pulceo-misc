@@ -51,6 +51,13 @@ For `load`, we deployed a few instances of the [edge-iot-simulator](https://gith
   - Prod: [Orchestration report Load](https://spboehm.github.io/pulceo-misc/reports/summersoc2024-prod-load/)
 - For all experiments, version v1.0.0 (see below) has been used.
 
+## Holistic Cloud-Edge Orchestration (Overview)
+
+![Holistic Cloud-Edge Orchestration](./docs/assets/holistic-cloud-edge-orchestration-v3.svg)
+
+- Raw version: [Holistic Cloud-Edge Orchestration (SVG)](https://raw.githubusercontent.com/spboehm/pulceo-misc/main/docs/assets/holistic-cloud-edge-orchestration-v3.svg)
+- PDF version: [Holistic Cloud-Edge Orchestration (PDF)](https://github.com/spboehm/pulceo-misc/blob/main/docs/assets/holistic-cloud-edge-orchestration-v3.pdf)
+
 ## PULCEO Domain Model (UML Class Diagram)
 
 ![PULCEO Domain Model](./docs/assets/domain-model-uml.svg)
