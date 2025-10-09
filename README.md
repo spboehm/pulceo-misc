@@ -5,7 +5,9 @@
 ## Quick Access SummerSoc 2025
 
 Publication: **API-driven Task Scheduling and Offloading with PULCEO: An Extension**  
-Presentation: 🪧 [API-driven Task Scheduling and Offloading with PULCEO: An Extension(online)](https://spboehm.github.io/pulceo-misc/presentations/summersoc2025), [(PDF version)](https://github.com/spboehm/pulceo-misc/blob/main/docs/presentations/summersoc2025/summersoc2025.pdf)  
+Presentation: 🪧 [API-driven Task Scheduling and Offloading with PULCEO: An Extension (online)](https://spboehm.github.io/pulceo-misc/presentations/summersoc2025), [(PDF version)](https://github.com/spboehm/pulceo-misc/blob/main/docs/presentations/summersoc2025/summersoc2025.pdf)  
+Video: 📹 [API-driven Task Scheduling and Offloading with PULCEO: An Extension, Sebastian Böhm, SummerSOC 2025](https://www.youtube.com/watch?v=epEcU7aFFLk)  
+Poster: 📃 [API-driven Task Scheduling and Offloading with PULCEO: An Extension](https://github.com/spboehm/pulceo-misc/blob/main/docs/presentations/summersoc2025/summersoc2025-poster.pdf)  
 - Raw data: [pulceo-data-analytics/raw/summersoc2025](https://github.com/spboehm/pulceo-misc/tree/main/pulceo-data-analytics/raw/summersoc2025)
 - [PULCEO orchestration reports](https://spboehm.github.io/pulceo-misc/reports/): [Orchestration report](https://spboehm.github.io/pulceo-misc/reports/summersoc2025/)
 - For all experiments, the following versions have been used:
@@ -32,8 +34,8 @@ Publication: **Towards an API-driven Approach for Universal and Lightweight Clou
 
 Publication: **API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept**  
 Presentation: 🪧 [API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept (online)](https://spboehm.github.io/pulceo-misc/presentations/summersoc2024), [(PDF version)](https://github.com/spboehm/pulceo-misc/blob/main/docs/presentations/summersoc2024/summersoc2024.pdf)  
-Video: 📹 ["API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept",Sebastian Böhm, SummerSOC 2024](https://www.youtube.com/watch?v=XfjWggOLIBE)  
-Poster: 📃 [API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept](https://github.com/spboehm/pulceo-misc/blob/main/docs/presentations/summersoc2024/summersoc-2024-poster.pdf)  
+Video: 📹 [API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept, Sebastian Böhm, SummerSOC 2024](https://www.youtube.com/watch?v=XfjWggOLIBE)  
+Poster: 📃 [API-driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept](https://github.com/spboehm/pulceo-misc/blob/main/docs/presentations/summersoc2024/summersoc2024-poster.pdf)  
 
 The experiment had to phases, therefore the raw data and the orchestration reports each contain `idle` and `load`.
 For `idle`, we did not apply workloads and load experiments to the platform and analyzed the `idle` behavior of all components.
