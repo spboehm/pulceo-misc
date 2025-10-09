@@ -84,6 +84,6 @@ It is used for the structured literature review to specify the supported metrics
 
 🎓 [Google Scholar - Sebastian Böhm](https://scholar.google.de/citations?user=4RiLaMUAAAAJ&hl=en)
 
-[1] S. Böhm and G. Wirtz, “API-Driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept,” in Service-Oriented Computing, vol. 2221, M. Aiello, J. Barzen, S. Dustdar, and F. Leymann, Eds., in Communications in Computer and Information Science, vol. 2221. , Cham: Springer Nature Switzerland, 2025, pp. 3–23. doi: 10.1007/978-3-031-72578-4_1.
-[2] S. Böhm and G. Wirtz, “Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration,” in 2024 IEEE International Conference on Service-Oriented System Engineering (SOSE), Shanghai, China: IEEE, July 2024, pp. 46–53. doi: 10.1109/SOSE62363.2024.00012.
+[1] S. Böhm and G. Wirtz, “API-Driven Cloud-Edge Orchestration with PULCEO: A Proof of Concept,” in Service-Oriented Computing, vol. 2221, M. Aiello, J. Barzen, S. Dustdar, and F. Leymann, Eds., in Communications in Computer and Information Science, vol. 2221. , Cham: Springer Nature Switzerland, 2025, pp. 3–23. doi: 10.1007/978-3-031-72578-4_1.  
+[2] S. Böhm and G. Wirtz, “Towards an API-driven Approach for Universal and Lightweight Cloud-Edge Orchestration,” in 2024 IEEE International Conference on Service-Oriented System Engineering (SOSE), Shanghai, China: IEEE, July 2024, pp. 46–53. doi: 10.1109/SOSE62363.2024.00012.  
 [3] S. Böhm and G. Wirtz, “PULCEO - A Novel Architecture for Universal and Lightweight Cloud-Edge Orchestration,” in 2023 IEEE International Conference on Service-Oriented System Engineering (SOSE), Athens, Greece: IEEE, July 2023, pp. 37–47. doi: 10.1109/SOSE58276.2023.00011.
