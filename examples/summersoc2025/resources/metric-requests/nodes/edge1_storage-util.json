@@ -1,0 +1,6 @@
+{
+	"resourceId": "edge1", 
+	"type":"storage-util",
+	"recurrence":"60",
+	"enabled":"true"
+}

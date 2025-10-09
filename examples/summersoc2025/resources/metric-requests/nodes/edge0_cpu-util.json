@@ -1,0 +1,6 @@
+{
+	"resourceId": "edge0", 
+	"type":"cpu-util",
+	"recurrence":"60",
+	"enabled":"true"
+}

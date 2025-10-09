@@ -1,0 +1,17 @@
+### Storage
+
+```{r topology-storage-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(storage_resources, removeCols = c("storageCapacity", "storageAllocatable"))
+```
+
+#### Storage capacity 
+
+```{r topology-resources-storage-capacity-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(cbind(nodeName = storage_resources$nodeName, storage_resources$storageCapacity))
+```
+
+#### Storage allocatable
+
+```{r topology-resources-storage-allocatable-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(cbind(nodeName = storage_resources$nodeName, storage_resources$storageAllocatable))
+```

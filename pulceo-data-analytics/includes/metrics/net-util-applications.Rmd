@@ -1,0 +1,18 @@
+```{r metrics-net-utilization-applications-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/net-util-applications.R"))
+```
+
+### Applications
+
+```{r metrics-net-utilization-applications-line-plot, include=TRUE, echo=FALSE}
+(combined_net_util_pods_facet <- ggplot(COMBINED_NET_UTIL_POD_PROCESSED, aes(x = timestamp, y = X_value_final / 1024 / 1024 / 1024, colour = application)) +
+  geom_line() +
+  ylab("Traffic in GB") +
+  xlab("Time in h") +
+  scale_x_datetime(breaks = seq(min(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) - 3600, max(COMBINED_NET_UTIL_POD_PROCESSED$timestamp) + 3600, by = "6 hours"), date_labels = "%H:00") +
+  labs(color = "Applications") +
+  theme_classic() +
+  facet_grid(vars(nodeName), vars(field)) +
+  theme(legend.position = "bottom"))
+SavePlot("combined_net_util_pods_facet.pdf", combined_net_util_pods_facet, 10, 6)
+```

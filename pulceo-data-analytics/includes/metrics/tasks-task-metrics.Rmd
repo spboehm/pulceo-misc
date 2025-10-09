@@ -1,0 +1,127 @@
+### Task Metrics (Scheduling/Offloading Metrics)
+
+#### Waiting Time (Total)
+
+```{r include=TRUE, echo=FALSE}
+waiting_time_total_df <- CalculateTaskSchedulingMetric(TASKS, start_status = "NEW", end_status = "RUNNING", policy, batchSize, layer, Run)
+#CreateScrollableTable(waiting_time_total_df)
+waiting_time_total_stats <- CalculateWaitingTimeStats(waiting_time_total_df, start_status = "NEW", end_status = "RUNNING", "Waiting Time (Total)")
+CreateScrollableTable(waiting_time_total_stats)
+# TODO: save latex table
+```
+
+```{r include=TRUE, echo=FALSE}
+(boxplot_waiting_total <- CreateTaskMetricBoxplot(waiting_time_total_df, "Waiting Time (Total)"))
+SavePlot("waiting_time_total_boxplot.pdf", boxplot_waiting_total, 4, 3)
+```
+
+#### Waiting Time (PSM)
+
+```{r include=TRUE, echo=FALSE}
+waiting_time_on_psm_df <- CalculateTaskSchedulingMetric(TASKS, start_status = "NEW", end_status = "SCHEDULED", policy, batchSize, layer, Run)
+#CreateScrollableTable(waiting_time_on_psm_df)
+waiting_time_on_psm_stats <- CalculateWaitingTimeStats(waiting_time_on_psm_df, start_status = "NEW", end_status = "SCHEDULED", "Waiting Time (PSM)")
+CreateScrollableTable(waiting_time_on_psm_stats)
+# TODO: save latex table
+```
+
+```{r include=TRUE, echo=FALSE}
+(boxplot_waiting_psm <- CreateTaskMetricBoxplot(waiting_time_on_psm_df, "Waiting Time (PSM)"))
+SavePlot("waiting_time_psm_boxplot.pdf", boxplot_waiting_psm, 4, 3)
+```
+
+#### Waiting Time (PNA)
+
+```{r include=TRUE, echo=FALSE}
+waiting_time_on_pna_df <- CalculateTaskSchedulingMetric(TASKS, start_status = "OFFLOADED", end_status = "RUNNING", policy, batchSize, layer, Run)
+#CreateScrollableTable(waiting_time_on_pna_df)
+waiting_time_on_pna_stats <- CalculateWaitingTimeStats(waiting_time_on_pna_df, start_status = "OFFLOADED", end_status = "RUNNING", "Waiting Time (PNA)")
+CreateScrollableTable(waiting_time_on_pna_stats)
+# TODO: save latex table
+```
+
+```{r include=TRUE, echo=FALSE}
+(boxplot_waiting_pna <- CreateTaskMetricBoxplot(waiting_time_on_pna_df, "Waiting Time (PNA)"))
+SavePlot("waiting_time_pna_boxplot.pdf", boxplot_waiting_pna, 4, 3)
+```
+
+#### Task Offloading Time
+
+```{r include=TRUE, echo=FALSE}
+offloading_time_df <- CalculateTaskSchedulingMetric(TASKS, start_status = "SCHEDULED", end_status = "OFFLOADED", policy, batchSize, layer, Run)
+#CreateScrollableTable(offloading_time_df)
+offloading_time_stats <- CalculateWaitingTimeStats(offloading_time_df, start_status = "SCHEDULED", end_status = "OFFLOADED", "Offloading Time")
+CreateScrollableTable(offloading_time_stats)
+# TODO: save latex table
+```
+
+```{r include=TRUE, echo=FALSE}
+(boxplot_offloading_time <- CreateTaskMetricBoxplot(offloading_time_df, "Offloading Time"))
+SavePlot("offloading_time_boxplot.pdf", boxplot_offloading_time, 4, 3)
+```
+
+#### Task Processing Time
+
+```{r include=TRUE, echo=FALSE}
+processing_time_df <- CalculateTaskSchedulingMetric(TASKS, start_status = "RUNNING", end_status = "COMPLETED", policy, batchSize, layer, Run)
+#CreateScrollableTable(processing_time_df)
+processing_time_stats <- CalculateWaitingTimeStats(processing_time_df, start_status = "RUNNING", end_status = "COMPLETED", "Processing Time (Application)")
+CreateScrollableTable(processing_time_stats)
+# TODO: save latex table
+```
+
+```{r include=TRUE, echo=FALSE}
+(boxplot_processing_time <- CreateTaskMetricBoxplot(processing_time_df, "Processing Time (Application)"))
+SavePlot("processing_time_boxplot.pdf", boxplot_processing_time, 4, 3)
+```
+
+#### Task Completion Time (Makespan)
+
+```{r include=TRUE, echo=FALSE}
+completion_time_df <- CalculateTaskSchedulingMetric(TASKS, start_status = "NEW", end_status = "COMPLETED", policy, batchSize, layer, Run)
+#CreateScrollableTable(completion_time_df)
+completion_time_stats <- CalculateWaitingTimeStats(completion_time_df, start_status = "NEW", end_status = "COMPLETED", "Completion Time (Total)")
+CreateScrollableTable(completion_time_stats)
+# TODO: save latex table
+```
+
+```{r include=TRUE, echo=FALSE}
+(boxplot_completion_time <- CreateTaskMetricBoxplot(completion_time_df, "Completion Time (Total)"))
+SavePlot("completion_time_boxplot.pdf", boxplot_completion_time, 4, 3)
+```
+
+```{r include=TRUE, echo=FALSE}
+# TODO: check what is happening here?
+overall_makespan <- CalculateOverallMakespan(completion_time_df, batchSize, layer)
+```
+
+#### Combined Task Metrics (Scheduling/Offloading Metrics)
+
+```{r include=TRUE, echo=FALSE}
+all_task_metrics_stats <- rbind(
+    waiting_time_on_psm_stats,
+    offloading_time_stats,
+    waiting_time_on_pna_stats,
+    waiting_time_total_stats,
+    processing_time_stats,
+    completion_time_stats
+)
+CreateScrollableTable(all_task_metrics_stats)
+SaveLatexTableForTaskMetrics(all_task_metrics_stats, "Task metric statistics for different batch sizes in seconds (s)", "task-metrics-statistics", "task_metrics_statistics.tex")
+```
+
+```{r metrics-combined-tasks-metrics-plot, include=TRUE, echo=FALSE}
+(combined_task_metrics_plot <- ggarrange(
+    boxplot_waiting_psm,
+    boxplot_waiting_pna,
+    boxplot_offloading_time,
+    boxplot_waiting_total,
+    boxplot_processing_time,
+    boxplot_completion_time,
+    nrow = 2,
+    ncol = 3,
+    common.legend = TRUE,
+    legend = "bottom"
+))
+SavePlot("combined_task_metrics.pdf", combined_task_metrics_plot, 8, 6)
+```

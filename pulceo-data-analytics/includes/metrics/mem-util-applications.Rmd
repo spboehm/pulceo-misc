@@ -1,0 +1,23 @@
+```{r metrics-mem-utilization-applications-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/mem-util-applications.R"))
+```
+
+### Applications
+
+```{r metrics-mem-utilization-applications-summary, include=TRUE, echo=FALSE}
+CreateScrollableTable(MEM_UTIL_PODS_SUMMARY_BY_APP)
+```
+
+```{r metrics-mem-utilization-applications-line-plot}
+mem_util_pods_plot <- ggplot(MEM_UTIL_PODS_PROCESSED, aes(x = timestamp, y = X_value, colour = application)) +
+  geom_line() +
+  ggtitle("Memory utilization of applications") +
+  ylab("Utilization (%)") +
+  xlab("Time") +
+  labs(color = "Applications") +
+  theme_classic() +
+  facet_grid(vars(nodeName)) +
+  theme(legend.position = "bottom")
+
+SavePlot("mem_util_plot_pods.pdf", mem_util_pods_plot, 8, 6)
+```

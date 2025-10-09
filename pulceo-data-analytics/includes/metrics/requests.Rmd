@@ -1,0 +1,78 @@
+---
+params:
+  rootfolder: "."
+  subfolder: "sample"
+---
+
+```{r setup-metrics-requests, include=FALSE}
+knitr::opts_knit$set(root.dir = here())
+```
+
+```{r metrics-requests-directories, child = 'directories.Rmd' }
+```
+
+```{r metrics-requests-r, include=FALSE, echo=FALSE}
+source(here("includes/R/tables.R"))
+```
+
+```{r metrics-requests-sources, include=FALSE, echo=FALSE}
+source(here("includes/R/latex.R"))
+source(here("includes/R/plots.R"))
+```
+
+```{r metrics-requests-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/requests.R"))
+```
+
+`r if (HasReqRtt(REQUESTS)) "### Requests"`
+
+`r if (HasReqRtt(REQUESTS)) "#### Application Response Time"`
+
+```{r metrics-requests-application-response-time-summary-table, eval=HasReqRtt(REQUESTS), include=TRUE, echo=FALSE}
+# TODO: HAS either request_type req_rtt or task_rtt
+# TODO: HAS request_type task_rtt
+REQUESTS <- REQUESTS %>% filter(between(timestamp, as.POSIXct(start_timestamp, format = "%Y-%m-%dT%H:%M:%OSZ",  tz = "UTC"), as.POSIXct(end_timestamp, format = "%Y-%m-%dT%H:%M:%OSZ",  tz = "UTC")))
+REQUESTS_SUMMARY <- REQUESTS %>%
+  select(timestamp, sourceHost, destHost, X_value) %>%
+  group_by(sourceHost, destHost) %>%
+  filter(!(abs(X_value - mean(X_value)) > 2 * sd(X_value))) %>%
+  summarise(
+    min = round(min(X_value), 3),
+    avg = round(mean(X_value), 3),
+    max = round(max(X_value), 3),
+    median = round(median(X_value), 3),
+    std = round(sd(X_value), 3), .groups = "drop"
+  ) %>%
+  rename(source = sourceHost, destination = destHost) %>%
+  mutate(SourceDest = paste(source, destination, sep = " -\n"))
+
+if (ART_SHORT_NAMES) {
+  REQUESTS_SUMMARY$SourceDest <- gsub("-eis", "", REQUESTS_SUMMARY$SourceDest)
+  REQUESTS_SUMMARY$SourceDest <- gsub("gateway1", "gw1", REQUESTS_SUMMARY$SourceDest)
+}
+
+names(REQUESTS_SUMMARY) <- c("Source", "Destination", "Min", "Mean", "Max", "Med", "SD", "SourceDest")
+CreateScrollableTable(REQUESTS_SUMMARY)
+SaveLatexTable(REQUESTS_SUMMARY[, 1:7], "Round-trip times between applications", "rtt-between-applications", "requests_summary.tex")
+```
+
+```{r metrics-requests-application-response-time-summary-bar-plot, eval=HasReqRtt(REQUESTS), include=TRUE, echo=FALSE}
+SCALE_FILLS_FOR_REQUESTS <- case_when(
+  grepl("cloud", REQUESTS_SUMMARY$Source, ignore.case = TRUE)   ~ NODE_SCALE_FILLS_MAPPINGS[NODE_SCALE_FILLS_MAPPINGS$type=="CLOUD",]$scale_fills,
+  grepl("fog", REQUESTS_SUMMARY$Source, ignore.case = TRUE)     ~ NODE_SCALE_FILLS_MAPPINGS[NODE_SCALE_FILLS_MAPPINGS$type=="FOG",]$scale_fills,
+  grepl("edge", REQUESTS_SUMMARY$Source, ignore.case = TRUE)    ~ NODE_SCALE_FILLS_MAPPINGS[NODE_SCALE_FILLS_MAPPINGS$type=="EDGE",]$scale_fills,
+  grepl("gateway", REQUESTS_SUMMARY$Source, ignore.case = TRUE) ~ NODE_SCALE_FILLS_MAPPINGS[NODE_SCALE_FILLS_MAPPINGS$type=="GATEWAY",]$scale_fills,
+  TRUE ~ NA_character_
+)
+
+(application_response_time_plot <- ggplot(REQUESTS_SUMMARY, aes(x = SourceDest, y = Mean, fill = SourceDest)) +
+  geom_bar(stat = "identity", width = 0.75) +
+  geom_errorbar(aes(x = SourceDest, ymin = Mean - SD, ymax = Mean + SD), width = 0.3, colour = "blue") +
+  geom_label(aes(label = format(round(Mean, digits = 2), nsmall = 2)), vjust = -1.5, fill = "white") +
+  ylab("Application Response Time (ms)") +
+  xlab("Source Application  - Destination Application") +
+  ylim(0, max(REQUESTS_SUMMARY$Mean + REQUESTS_SUMMARY$SD) * 1.3) +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = SCALE_FILLS_FOR_REQUESTS))
+SavePlot("application_response_time_plot.pdf", application_response_time_plot, ART_PLOT_WIDTH, ART_PLOT_HEIGHT)
+```

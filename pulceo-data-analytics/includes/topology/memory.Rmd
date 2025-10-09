@@ -1,0 +1,17 @@
+### Memory
+
+```{r topology-resources-memory-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(memory_resources, removeCols = c("memoryCapacity", "memoryAllocatable"))
+```
+
+#### Memory capacity
+
+```{r topology-resources-memory-capacity-table, include=TRUE, echo=FALSE}
+CreateScrollableTable((memory_resources$memoryCapacity))
+```
+
+#### Memory allocatable
+
+```{r topology-resources-memory-allocatable-table, include=TRUE, echo=FALSE}
+CreateScrollableTable((memory_resources$memoryAllocatable))
+```

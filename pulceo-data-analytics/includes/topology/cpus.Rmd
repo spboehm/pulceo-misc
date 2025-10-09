@@ -1,0 +1,17 @@
+### CPU
+
+```{r topology-resources-cpu-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(cpu_resources, removeCols = c("cpuCapacity", "cpuAllocatable"))
+```
+
+#### CPU capacity
+
+```{r topology-resources-cpu-capacity-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(cpu_resources$cpuCapacity)
+```
+
+#### CPU allocatable
+
+```{r topology-resources-cpu-allocatable-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(cpu_resources$cpuAllocatable)
+```

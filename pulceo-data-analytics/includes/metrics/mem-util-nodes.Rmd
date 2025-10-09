@@ -1,0 +1,31 @@
+### Nodes
+
+```{r metrics-mem-utilization-nodes-summary, include=TRUE, echo=FALSE}
+MEM_UTIL_nodes_summary <- CreateSummary(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "NODE", "pna-k8s-node"), "Node")
+CreateScrollableTable(MEM_UTIL_nodes_summary)
+SaveLatexTable(MEM_UTIL_nodes_summary, "Idle Memory utilization of all nodes in \\%", "memory-utilization-of-nodes", "mem_util_nodes_summary.tex")
+```
+
+```{r metrics-mem-utilization-nodes-bar-plot, include=TRUE, echo=FALSE}
+# cpu plot
+(mem_util_bar_plot <- GenerateBarPlotPercentage(MEM_UTIL_nodes_summary, "Memory Utilization", 1.4, -1.0))
+SavePlot("mem_util_bar_plot.pdf", mem_util_bar_plot, 4, 3)
+```
+
+```{r metrics-mem-utilization-nodes-boxplot}
+# boxplot
+mem_box_plot <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "NODE", "pna-k8s-node"), aes(x = sourceHost, y = X_value, group = sourceHost)) +
+  geom_boxplot()
+```
+
+```{r metrics-mem-utilization-nodes-line-plot}
+mem_plot_node <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "NODE", "pna-k8s-node"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+mem_plot_node_pulceo_node_agent <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "pulceo-node-agent"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+mem_plot_node_traefik <- ggplot(filterResourceUtilForNode(MEM_UTIL, "usageMemoryPercentage", "POD", "traefik"), aes(x = timestamp, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost))
+```

@@ -1,0 +1,18 @@
+{
+	"nodeType":"ONPREM",
+	"type": "edge",
+	"name": "edge1",
+	"providerName":"default",
+	"hostname":"h5138.pi.uni-bamberg.de",
+	"country": "Germany",
+	"state": "Bavaria",
+	"city": "Bamberg",
+	"latitude": 49.9036,
+	"longitude": 10.8700,
+	"tags": [
+		{
+			"key": "properties",
+			"value": "C++, Linux, Python"
+		}
+	]
+}

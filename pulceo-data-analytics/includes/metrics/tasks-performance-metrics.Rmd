@@ -1,0 +1,82 @@
+### Performance Metrics
+
+#### Average Response Time
+
+```{r}
+average_response_time_df <- CalculateAverageResponseTime(requests_combined, batchSize, layer, Run)
+CreateScrollableTable(average_response_time_df)
+```
+
+```{r}
+(average_response_time_boxplot <- ggplot(requests_combined, aes(x = batchSize, y = X_value, fill = Run)) +
+    geom_boxplot(color = "darkblue") +
+    labs(
+        title = "Task Response Time",
+        x = "Batch Size",
+        y = "Response Time (s)"
+    ) +
+    theme_minimal() +
+    ylim(0, max(requests_combined$X_value * 1.25, na.rm = TRUE)))
+```
+
+#### Throughput (Task requests/s)
+
+```{r}
+throughput_df <- CalculateThroughput(completion_time_df, batchSize, Run)
+CreateScrollableTable(throughput_df)
+```
+
+```{r}
+(throughput_bar_chart <- ggplot(throughput_df, aes(x = batchSize, y = throughput, fill = Run)) +
+    geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
+    geom_errorbar(aes(ymin = throughput - sd(throughput), ymax = throughput + sd(throughput)),
+        position = position_dodge(0.9), width = 0.25, color = "black"
+    ) +
+    labs(
+        title = "Task Throughput",
+        x = "Batch Size",
+        y = "Throughput (tasks/s)"
+    ) +
+    theme_minimal() +
+    ylim(0, max(throughput_df$throughput * 1.25, na.rm = TRUE)))
+```
+
+#### Task Arrival Rate
+
+```{r}
+arrival_rate_df <- CalculateTaskArrivalRate(TASKS, batchSize, Run)
+CreateScrollableTable(arrival_rate_df)
+```
+
+```{r}
+(arrival_rate_bar_chart <- ggplot(arrival_rate_df, aes(x = batchSize, y = arrival_rate, fill = Run)) +
+    geom_bar(stat = "identity", position = "dodge", color = "darkblue") +
+    geom_errorbar(aes(ymin = arrival_rate - sd(arrival_rate), ymax = arrival_rate + sd(arrival_rate)),
+        position = position_dodge(0.9), width = 0.25, color = "black"
+    ) +
+    labs(
+        title = "Task Arrival Rate",
+        x = "Batch Size",
+        y = "Arrival Rate (tasks/s)"
+    ) +
+    theme_minimal() +
+    ylim(0, max(arrival_rate_df$arrival_rate * 1.25, na.rm = TRUE)))
+```
+
+#### Combined Performance Metrics
+
+```{r include=TRUE, echo=FALSE}
+# Arrange all performance-related charts in a grid
+(performance_metrics_combined <- ggarrange(
+    average_response_time_boxplot,
+    arrival_rate_bar_chart,
+    throughput_bar_chart,
+    nrow = 1,
+    ncol = 3,
+    common.legend = TRUE,
+    legend = "bottom"
+))
+
+# Save the combined performance metrics chart
+SavePlot("performance_metrics.pdf", performance_metrics_combined, 8, 3)
+```

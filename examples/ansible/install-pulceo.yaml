@@ -4,13 +4,13 @@
   become: false
   gather_facts: true
   vars:
-    version: v1.3.0
-    PNA_VERSION: v1.3.0
+    version: v1.3.1
+    PNA_VERSION: v1.3.1
     PRM_VERSION: v1.3.0
     PSM_VERSION: v1.3.0
     PMS_VERSION: v1.3.0
   tasks:
-    - name: Copy .env file
+    - name: Template .env file
       ansible.builtin.template:
         src: files/.env-pulceo
         dest: /home/{{ ansible_user }}

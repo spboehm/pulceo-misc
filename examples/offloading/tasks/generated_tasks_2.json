@@ -1,0 +1,18 @@
+[
+    {
+        "task_type": "small",
+        "createdBy": "task_emitter.py",
+        "sizeOfWorkload": 10,
+        "sizeDuringTransmission": 10,
+        "deadline": 50,
+        "payload_length": 10,
+        "payload": "MTA=",
+        "requirements": {
+            "cpu_shares": 250,
+            "memory_size": 0.25
+        },
+        "properties": {
+            "task_type": "small"
+        }
+    }
+]

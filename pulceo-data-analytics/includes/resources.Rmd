@@ -1,0 +1,33 @@
+---
+params:
+  rootfolder: "."
+  subfolder: "sample"
+---
+
+```{r setup-resources, include=FALSE}
+knitr::opts_knit$set(root.dir = here())
+```
+
+```{r resources-directories, child = 'directories.Rmd' }
+```
+
+```{r resources-r, include=FALSE, echo=FALSE}
+source(here("includes/R/tables.R"))
+```
+
+```{r resources-data, include=FALSE, echo=FALSE}
+source(here("includes/resources/cpus.R"))
+source(here("includes/resources/memory.R"))
+source(here("includes/resources/storage.R"))
+```
+
+`r if (CPUS_PRESENT || MEMORY_PRESENT || STORAGE_PRESENT) "## Resources"`
+
+```{r resources-cpus, eval=nrow(cpu_resources) > 0, child = 'includes/topology/cpus.Rmd', include=TRUE, echo=FALSE}
+```
+
+```{r resources-memory, eval=nrow(memory_resources) > 0, child = 'includes/topology/memory.Rmd', include=TRUE, echo=FALSE}
+```
+
+```{r resources-storage, eval=nrow(storage_resources) > 0, child = 'includes/topology/storage.Rmd', include=TRUE, echo=FALSE}
+```

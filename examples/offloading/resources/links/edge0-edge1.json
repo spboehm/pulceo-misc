@@ -1,0 +1,5 @@
+{
+    "name": "edge0-edge1",
+    "srcNodeId": "edge0",
+    "destNodeId": "edge1"
+}

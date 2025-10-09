@@ -1,0 +1,35 @@
+```{r metrics-cpu-utilization-applications-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/cpu-util-applications.R"))
+```
+
+### Applications
+
+```{r metrics-cpu-utilization-applications-summary}
+CreateScrollableTable(CPU_UTIL_PODS_SUMMARY_BY_APP)
+```
+
+```{r metrics-cpu-utilization-applications-line-plot, include=TRUE, echo=FALSE}
+(cpu_util_pods_plot <- ggplot(CPU_UTIL_PODS_PROCESSED, aes(x = id, y = X_value, colour = application)) +
+  geom_line() +
+  # ggtitle("CPU utilization of applications") +
+  ylab("Utilization (%)") +
+  xlab("Time") +
+  labs(color = "Applications") +
+  facet_grid(vars(nodeName)) +
+  theme_classic() +
+  theme(legend.position = "bottom"))
+
+SavePlot("cpu_util_plot_pods.pdf", cpu_util_pods_plot, 8, 6)
+```
+
+```{r metrics-cpu-utilization-applications-line-plots}
+cpu_plot_pod_edg_iot_simulator <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "edge-iot-simulator"), aes(x = timestamp, y = X_value, group = resourceName)) +
+  geom_line() +
+  facet_grid(vars(resourceName))
+cpu_plot_pod_pulceo_node_agent <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "pulceo-node-agent"), aes(x = timestamp, y = X_value, group = resourceName)) +
+  geom_line() +
+  facet_grid(vars(resourceName))
+cpu_plot_pod_traefik <- ggplot(filterResourceUtilForNode(CPU_UTIL, "usageCPUPercentage", "POD", "traefik"), aes(x = timestamp, y = X_value, group = resourceName)) +
+  geom_line() +
+  facet_grid(vars(resourceName))
+```

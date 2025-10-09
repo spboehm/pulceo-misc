@@ -1,12 +1,12 @@
 - name: Reset pulceo-node-agent
-  hosts: fog
+  hosts: edge
   become: true
   gather_facts: true
   vars:
     PRM_VERSION: v1.3.0
     PSM_VERSION: v1.3.0
     PMS_VERSION: v1.3.0
-    PNA_VERSION: v1.3.0
+    PNA_VERSION: v1.3.1
   tasks:
     - name: Delete namespace pulceo
       ansible.builtin.command: sudo kubectl delete namespace pulceo
@@ -33,16 +33,6 @@
       ansible.builtin.copy:
         src: files/resolv.conf
         dest: /home/{{ ansible_user }}
-        owner: "{{ ansible_user }}"
-        mode: "0644"
-      tags:
-        - reinstall
-        - always
-
-    - name: Copy resolv.conf
-      ansible.builtin.copy:
-        src: files/resolv.conf
-        dest: /home/root/resolv.conf
         owner: "{{ ansible_user }}"
         mode: "0644"
       tags:

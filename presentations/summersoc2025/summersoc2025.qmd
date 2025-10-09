@@ -1,0 +1,328 @@
+---
+title: "PULCEO in Action"
+subtitle: "API-driven Task Scheduling and Offloading <br /> with PULCEO: An Extension"
+author: Sebastian Böhm and Guido Wirtz
+institute: University of Bamberg, Germany
+format: 
+  revealjs:
+    smaller: true
+    slide-number: true
+    footer: <https://github.com/spboehm/pulceo-misc>
+    logo: images/dsg.png
+    css: custom.scss
+    template-partials:
+      - title-slide.html
+---
+
+## Task Scheduling / Offloading {.smaller}
+
+![](figures/task-offloading.drawio.svg){fig-align="center"}
+
+
+- IoT / mobile clients, submitting independent / atomic tasks $T$
+- Heterogeneous cloud, edge and fog nodes $N$
+- Tasks $T$ and Nodes $N$ are described by 
+  - Properties $P$: Layer, Location, Costs, ... 
+  - Requirements $R$: CPU, Memory, Bandwidth, ...
+
+## Motivation
+
+::: columns
+::: {.column width="50%"}
+
+Many solutions exist for **task scheduling / offloading**
+
+But, similar to **service placement**:
+
+- **Reproducibility**
+- (General) **Applicability**
+
+are **limited** because of:
+
+- **simulation-based** evaluations
+- **custom** implementations
+- missing **real-world experiments**
+:::
+
+::: {.column width="50%"}
+
+```{r fig.height=7}
+library(ggplot2)
+
+data <- data.frame(
+  Evaluation = c("Implementation", "Numerical", "Simulation"),
+  Count = c(3, 2, 31)
+)
+
+ggplot(data, aes(x = "", y = Count, fill = Evaluation)) +
+  geom_col(color = "black") +
+  geom_text(aes(label = Count),
+            position = position_stack(vjust = 0.5),
+            size = 10) +
+  coord_polar("y") +
+  scale_fill_brewer() +
+  theme_void() + 
+  theme(
+    legend.position = "bottom",
+    legend.text = element_text(size = 24),      # Increase legend text size
+    legend.title = element_text(size = 24)      # Increase legend title size (if any)
+  ) +
+  guides(fill = guide_legend(nrow = 3, byrow = TRUE)) # Line break for categories
+```
+
+Only **3** out of **36** task offloading solutions were using real-world evaluations.[^1]
+:::
+:::
+
+[^1]: S. Dong et al., “Task offloading strategies for mobile edge computing: A survey,” Computer Networks, vol. 254, p. 110791, Dec. 2024, doi: 10.1016/j.comnet.2024.110791.
+
+## Simulations are sufficient?
+
+Selected limitations, addressed by the **authors** of selected solutions:
+
+> Where the value of **CPU weight** and **memory weight** is an **empirical issue**, and **multiple experiments are required** to obtain the optimal value such that α + β = 1. In this paper, all parameters are set to appropriate values.[^4]
+
+> Phare [the scheduling solution] requires updated information on the clusters participating in the federation,
+including **CPU**, **memory**, and **bandwidth usage**. A **real-world implementation** should thus **carefully balance** the resolution of such data and the additional overhead required to process it.[^2]
+
+[^2]: G. Castellano, S. Galantino, F. Risso, and A. Manzalini, “Scheduling Multi-Component Applications Across Federated Edge Clusters With Phare,” IEEE Open J. Commun. Soc., vol. 5, pp. 1814–1826, 2024, doi: 10.1109/OJCOMS.2024.3377917.
+
+[^4]: Y. Dong, G. Xu, M. Zhang, and X. Meng, “A High-Efficient Joint ’Cloud-Edge’ Aware Strategy for Task Deployment and Load Balancing,” IEEE Access, vol. 9, pp. 12791–12802, 2021, doi: 10.1109/ACCESS.2021.3051672.
+
+Consequently, there is a need for **real-world experiments** and **evaluations**.
+
+## Holistic Cloud-Edge Orchestration {.smaller}
+
+![](figures/holistic%20cloud-edge-orchestration-with-pulceo.svg)
+
+# Contributions
+
+1. Task scheduling and offloading in line with holistic cloud-edge orchestration.
+2. A general, universal, and flexible model of tasks.
+3. Integration of task-processing applications.
+4. Automated standard evaluation with metrics for task scheduling and offloading.
+
+## Task: Domain Model
+
+Extension of step **Operation**, supported by **p**ulceo-**s**ervice-**m**anager (**PSM**).
+
+::: columns
+::: {.column width="30%"}
+- *Task* with fixed / variable 
+  - requirements $R$
+  - properties $P$
+- *TaskMetaData*: Internal routing information
+- *TaskScheduling*: Current state of scheduling
+- *TaskStatusLog*: State transitions over time
+:::
+
+::: {.column width="70%"}
+![](figures/pulceo-architecture-domain-model-condensed.drawio.svg)
+:::
+:::
+
+**Example:** NONE -> NEW -> SCHEDULED -> OFFLOADED -> RUNNING -> COMPLETED
+
+# Orchestration Workflow
+
+Experiment ‧ Task Submission, Scheduling, Offloading, Processing, and Completion
+
+## Experiment
+
+![](figures/pulceo-architecture-experimental-setup.drawio.svg){fig-align="center"}
+
+- Decoupled scheduler uses HTTP (`/tasks`) and MQTT (`tasks/+`)
+- $P_{task\_type}(t_i)={S\,(50\%), M\,(30\%), L\,(20\%)} \qquad  batch\_{sizes}=200,...,400$
+- $P_{size}(t_i)={10,50,100} \quad ... \qquad R_{cpu\_shares}(t_i)={250,500,1000} \quad ...$
+- Instance of [edge-iot-simulator](https://github.com/spboehm/edge-iot-simulator)[^3] used for task processing
+
+[^3]: https://github.com/spboehm/edge-iot-simulator
+
+## Task Submission
+
+**Task states:** NONE -> NEW -> <span style="color:gray;"> SCHEDULED -> OFFLOADED -> RUNNING -> COMPLETED</span>
+
+::: columns
+::: {.column width="50%"}
+
+**IoT device submits task:**
+
+`HTTP POST /tasks`
+
+```json
+{
+  "createdBy": "task_emitter.py",
+  "sizeOfWorkload": 50,
+  "sizeDuringTransmission": 50,
+  "deadline": 50,
+  "payload_length": 50,
+  "payload": "payload",
+  "cpu_shares": 500,
+  "memory_size": 0.25,
+  "properties": {
+    "task_type": "small"
+  }
+ }
+```
+
+:::
+
+::: {.column width="50%"}
+![](figures/1-task-submission.drawio.svg){fig-align="center"}
+:::
+:::
+
+## Task Scheduling and Offloading
+
+**Task states:** <span style="color:gray;"> NONE -> </span> NEW -> SCHEDULED -> OFFLOADED <span style="color:gray;"> -> RUNNING -> COMPLETED</span>
+
+::: columns
+::: {.column width="45%"}
+
+**Scheduler assigns node:**
+
+`HTTP PUT /tasks/{id}/scheduling`
+
+```json
+{
+  "nodeId": "0b1c6697-...",
+  "appId": "74e18419-...",
+  "status": "SCHEDULED",
+  "properties": {
+	"batchSize": "100",
+	"layer": "cloud-only",
+	"policy": "dong et al."
+  }
+}
+```
+
+**PSM offloads task:**
+
+`HTTP POST /tasks` (on PNA)
+
+```json
+{
+  "taskId": "831de05b-...",
+  "appId": "74e18419-...",
+  "appComponentId": "6a463804-...",
+  ...
+}
+```
+:::
+
+::: {.column width="55%"}
+![](figures/2-task-scheduling-offloading.drawio.svg){fig-align="center"}
+:::
+:::
+
+## Task Processing
+
+**Task states:** <span style="color:gray;"> NONE -> NEW -> SCHEDULED -> </span> OFFLOADED -> RUNNING -> COMPLETED
+
+::: columns
+::: {.column width="42%"}
+
+**Forward task to application:**
+
+`HTTP POST /endpoint`
+
+```json
+{
+  "taskId": "831de05b-...",
+  "callbackProtocol": "0b1c6697-...",
+  "callbackEndpoint": "74e18419-...",
+  ...
+}
+```
+
+<br >
+
+**Update task status internally:**
+
+`HTTP PUT /internal/tasks/{id}`
+
+```json
+{
+  "taskId": "831de05b-...",
+  "newTaskStatus": "COMPLETED"
+}
+```
+:::
+
+::: {.column width="58%"}
+![](figures/3-task-processing.drawio.svg){fig-align="center"}
+:::
+:::
+
+# Evaluation
+
+Task Metrics ‧ Performance Metrics  
+
+- Provided by the automatically generated orchestration reports
+- On top of already implemented metrics, like CPU, memory, and network-related metrics
+
+## Task Metrics
+
+::: columns
+::: {.column width="65%"}
+![](plots/task_metrics.pdf.svg)
+:::
+
+::: {.column width="35%"}
+Drill-down into overall completion time:
+
+- Scheduling (PSM): $0.05$s
+- Waiting (PNA): $0.05$s
+- Offloading: $0.44$s
+- Waiting (Total): $0.54$s
+
+Overhead:
+
+- Communication (HTTP)
+- Telemetry
+- Proxied application
+
+:::
+:::
+
+## Performance Metrics
+
+- **Task Response Time**: Time between submitting the task and receiving the response
+- **Task Arrival Rate**: Tasks/s arriving at PSM
+- **Task Throughput**: Tasks/s completed by the system
+
+![](plots/performance_metrics.pdf.svg)
+
+## Conclusion & Limitations
+
+::: columns
+::: {.column width="55%"}
+**Contributions**
+
+1. 🚀 Task scheduling and offloading in line with holistic cloud-edge orchestration  
+2. 🌐 A general, universal, and flexible model of tasks  
+3. ✅ Integration of task-processing applications  
+4. 🔄 Automated standard evaluation with  metrics for task scheduling and offloading  
+
+Empirical evaluation with first insights on the overall overhead.
+:::
+
+::: {.column width="45%"}
+
+**Limitations**
+
+- 🚨 Integration of task-processing applications only via HTTP and MQTT
+- 🚨 Centralized, cloud-based, and only partly decentralized orchestration 
+- 🚨 Minimal cloud-edge topology for first evaluation
+
+![](images/qr_code_pulceo_misc.svg){fig-align="center"}
+:::
+:::
+
+## Task Metrics (detailed) {visibility="hidden"}
+
+- Overview of task metrics and corresponding task states
+- Calculation of task metrics $(timestamp(S_2) - timestamp(S_1))$
+- Distribution ($\mu, \sigma, min, max$)^[fully available in the orchestration report] 
+
+![](images/task-metric-statistics.png)

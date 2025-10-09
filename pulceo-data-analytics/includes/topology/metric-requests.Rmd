@@ -1,0 +1,5 @@
+### Metric Requests
+
+```{r topology-metric-requests-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(metric_requests)
+```

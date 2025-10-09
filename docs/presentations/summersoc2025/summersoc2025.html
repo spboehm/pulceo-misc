@@ -205,7 +205,7 @@
 <h2>Task Scheduling / Offloading</h2>
 
 <img data-src="figures/task-offloading.drawio.svg" class="quarto-figure quarto-figure-center r-stretch"><ul>
-<li>IoT / mobile clients, submitting set of independent / atomic tasks <span class="math inline">\(T\)</span></li>
+<li>IoT / mobile clients, submitting independent / atomic tasks <span class="math inline">\(T\)</span></li>
 <li>Heterogeneous cloud, edge and fog nodes <span class="math inline">\(N\)</span></li>
 <li>Tasks <span class="math inline">\(T\)</span> and Nodes <span class="math inline">\(N\)</span> are described by
 <ul>
@@ -337,7 +337,7 @@
 </section>
 <section id="task-scheduling-and-offloading" class="slide level2">
 <h2>Task Scheduling and Offloading</h2>
-<p><strong>Task states:</strong> <span style="color:gray;"> NONE -&gt; NEW -&gt; </span> SCHEDULED -&gt; OFFLOADED <span style="color:gray;"> -&gt; RUNNING -&gt; COMPLETED</span></p>
+<p><strong>Task states:</strong> <span style="color:gray;"> NONE -&gt; </span> NEW -&gt; SCHEDULED -&gt; OFFLOADED <span style="color:gray;"> -&gt; RUNNING -&gt; COMPLETED</span></p>
 <div class="columns">
 <div class="column" style="width:40%;">
 <p><strong>Scheduler assigns node:</strong></p>
@@ -370,7 +370,7 @@
 </section>
 <section id="task-processing" class="slide level2">
 <h2>Task Processing</h2>
-<p><strong>Task states:</strong> <span style="color:gray;"> NONE -&gt; NEW -&gt; SCHEDULED -&gt; OFFLOADED -&gt; </span> RUNNING -&gt; COMPLETED</p>
+<p><strong>Task states:</strong> <span style="color:gray;"> NONE -&gt; NEW -&gt; SCHEDULED -&gt; </span> OFFLOADED -&gt; RUNNING -&gt; COMPLETED</p>
 <div class="columns">
 <div class="column" style="width:42%;">
 <p><strong>Forward task to application:</strong></p>
@@ -422,7 +422,7 @@
 <ul>
 <li>Communication (HTTP)</li>
 <li>Telemetry</li>
-<li>Proxied applications</li>
+<li>Proxied application</li>
 </ul>
 </div></div>
 </section>
@@ -441,9 +441,12 @@
 <div class="column" style="width:55%;">
 <p><strong>Contributions</strong></p>
 <ol type="1">
-<li>🚀 Task scheduling and offloading in line with holistic cloud-edge orchestration</li>
-<li>🌐 A general, universal, and flexible model of tasks</li>
-<li>✅ Integration of task-processing applications</li>
+<li>🚀 Task scheduling and offloading in line with holistic cloud-edge orchestration<br>
+</li>
+<li>🌐 A general, universal, and flexible model of tasks<br>
+</li>
+<li>✅ Integration of task-processing applications<br>
+</li>
 <li>🔄 Automated standard evaluation with metrics for task scheduling and offloading</li>
 </ol>
 <p>Empirical evaluation with first insights on the overall overhead.</p>

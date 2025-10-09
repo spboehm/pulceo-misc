@@ -1,0 +1,23 @@
+```{r metrics-icmp-rtt-load-data-set, include=FALSE, echo=FALSE}
+source(here("includes/resources/metrics/rtt-icmp.R"))
+```
+
+### ICMP
+
+```{r icmp-rtt-summary-table, include=TRUE, echo=FALSE}
+CreateScrollableTable(ICMP_RTT_SUMMARY)
+SaveLatexTable(ICMP_RTT_SUMMARY, "ICMP round-trip time (ms) between nodes.", "rtt-of-nodes", "rtt_nodes_summary.tex")
+```
+
+```{r}
+# icmp_rtt_plot <- ggplot(ICMP_RTT_SUMMARY, aes(nodeName, nodeNameDest, fill= rtt)) +
+#   geom_tile() +
+#   xlab("Source Node") +
+#   ylab("Destinatio Node")
+```
+
+```{r icmp-rtt-plot}
+icmp_rtt_plot <- ggplot(filterICMPRTT(ICMP_RTT, "rttAvg"), aes(x = endTime, y = X_value, group = nodeName)) +
+  geom_line() +
+  facet_grid(vars(nodeName), vars(nodeNameDest))
+```

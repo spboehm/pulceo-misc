@@ -1,0 +1,26 @@
+### UDP
+
+```{r metrics-bw-udp-summary, include=TRUE, echo=FALSE}
+CreateScrollableTable(UDP_BW_SUMMARY)
+SaveLatexTable(UDP_BW_SUMMARY, "UDP bandwidth (Mbps) between nodes.", "udp-bw-between-nodes", "udp_bw_nodes_summary.tex")
+```
+
+#### Jitter
+
+```{r metrics-bw-udp-jitter-summary, include=TRUE, echo=FALSE}
+CreateScrollableTable(UDP_BW_SUMMARY_JITTER)
+SaveLatexTable(UDP_BW_SUMMARY_JITTER, "Jitter (UDP) between nodes in ms.", "jitter-udp-bw-between-nodes", "jitter-udp_bw_nodes_summary.tex")
+```
+
+#### Package Loss
+
+```{r metrics-bw-udp-package-loss-summary, include=TRUE, echo=FALSE}
+CreateScrollableTable(UDP_BW_PACKAGE_LOSS)
+SaveLatexTable(UDP_BW_PACKAGE_LOSS, "Package Loss (UDP) between nodes in %.", "package-loss-udp-bw-between-nodes", "package_loss_udp_bw_nodes_summary.tex")
+```
+
+```{r metrics-bw-udp-plot}
+udp_bw_plot <- ggplot(filterBW(UDP_BW, "bitrate", "SENDER"), aes(x = endTime, y = X_value, group = sourceHost)) +
+  geom_line() +
+  facet_grid(vars(sourceHost), vars(destinationHost))
+```
