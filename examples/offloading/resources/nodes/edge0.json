@@ -1,1 +1,13 @@
-{}
+{
+    "providerName":"default",
+	"nodeType":"ONPREM",
+    "hostname":"localhost",
+	"name": "edge0",
+    "type": "edge",
+	"country": "Germany",
+	"state": "Bavaria",
+	"city": "Bamberg",
+	"latitude": 49.9036,
+	"longitude": 10.8700,
+	"tags": []
+}
