@@ -40,8 +40,6 @@ class TaskEmitter:
         self.batch_size = int(scheduling_properties["batchSize"])
         self.history = {}
         self.mqtt_client = self.init_mqtt()
-        self.mqtt_client.on_connect = self.on_connect
-        self.mqtt_client.on_message = self.on_message
         self.scheduling_properties = scheduling_properties
         self.exit_event = threading.Event()
         self.pulceo_api = API(scheme, host, prm_port, psm_port)

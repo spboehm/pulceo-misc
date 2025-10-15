@@ -20,12 +20,9 @@ class Scheduler(ABC):
         self.mqtt_host = MQTT_SERVER_NAME
         self.mqtt_port = int(MQTT_PORT)
         self.mqtt_client = self.init_mqtt()
-        self.mqtt_client.on_connect = self.on_connect
-        self.mqtt_client.on_message = self.on_message
         self.batch_size = int(scheduling_properties['batchSize'])
         self.total_number_of_tasks = int(scheduling_properties['batchSize'])
         self.pulceo_api = API(scheme, host, prm_port, psm_port)
-        self.on_init()
         self.created_tasks_counter = itertools.count(1)
         self.new_tasks_counter = itertools.count(1)
         self.running_tasks_counter = itertools.count(1)
@@ -102,6 +99,7 @@ class Scheduler(ABC):
         pass
 
     def start(self):
+        self.on_init()
         self.mqtt_client.connect(self.mqtt_host, self.mqtt_port, 60)
         self.mqtt_client.loop_forever()
 
