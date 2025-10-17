@@ -110,11 +110,12 @@ class Scheduler(ABC):
 
 class EdgeOnlyScheduler(Scheduler):
 
-    name = "EdgeOnlyScheduler"
-    processedTasks = {}
-    pendingTasks = []
-    PENDING_TASKS_THRESHOLD = 0
-    on_terminate = True
+    def __init__(self, scheduling_properties):
+        super().__init__(scheduling_properties)
+        self.name = "EdgeOnlyScheduler"
+        self.processedTasks = {}
+        self.pendingTasks = []
+        self.PENDING_TASKS_THRESHOLD = 0
 
     def deferTasks(self, task):
         self.pendingTasks.append(task)
