@@ -112,7 +112,7 @@ class EdgeOnlyScheduler(Scheduler):
 
     def __init__(self, scheduling_properties):
         super().__init__(scheduling_properties)
-        self.name = "EdgeOnlyScheduler"
+        self.name = 'EdgeOnlyScheduler'
         self.processedTasks = {}
         self.pendingTasks = []
         self.PENDING_TASKS_THRESHOLD = 0
@@ -140,7 +140,7 @@ class EdgeOnlyScheduler(Scheduler):
         nodes = self.pulceo_api.read_nodes()
         for node in nodes:
             # set custom resource limits, resources must be left for hypervisor and platform components
-            cpu_on_node = self.pulceo_api.read_allocatable_cpu_by_node_id(node['uuid'])
+            cpu_on_node = self.pulceo_api.read_cpu_by_node_id(node['uuid'])
             self.pulceo_api.update_allocatable_cpu(node['uuid'], 'shares', self.maxAllocatableCPU(cpu_on_node['cpuCapacity']['shares']))
 
             # set custom resource limits, resources must be left for hypervisor and platform components
@@ -148,51 +148,40 @@ class EdgeOnlyScheduler(Scheduler):
             self.pulceo_api.update_allocatable_memory(node['uuid'], 'size', self.maxAllocatableMem((memory_on_node['memoryCapacity']['size'])))
 
     def schedule(self, task, nodeType):
-        # requirements of tasks
+        # task requirements
         req_cpu_share_task = int(task['requirements']['cpu_shares'])
         req_memory_task = float(task['requirements']['memory_size'])
 
-        # find an eligible node
+        # find eligible edge nodes
         # since this is the edge-only scheduler, only edge nodes are required
-        cpu_resources = self.pulceo_api.read_allocatable_cpu_by_node_type(nodeType)
+        cpu_resources = self.pulceo_api.read_cpu_by_node_type(nodeType)
 
         # first, try to find an appropriate node that satisfies the CPU requirements
         try:
-            if (len(cpu_resources) == 0):
-                raise RuntimeError("Severe error: Unable to find a suitable node for task scheduling.")
-            highest_shares_node = max(cpu_resources, key=lambda x: x["cpuAllocatable"]["shares"])
-        except ValueError:
-            logging.error("No eligible nodes found. 'cpu_resources' is empty, unable to determine the node with the highest CPU shares.")
+            highest_shares_node = max(cpu_resources, key=lambda x: x['cpuAllocatable']['shares'])
+        except (ValueError, KeyError, TypeError) as e:
+            logging.error("No eligible nodes found or invalid node entry: %s", e)
             self.pendingTasks.append(task)
             return
         
-        if highest_shares_node["cpuAllocatable"]["shares"] >= req_cpu_share_task:
+        if highest_shares_node['cpuAllocatable']['shares'] >= req_cpu_share_task:
             # CPU requirements are satisfied, now, check for memory resources
-            memory_resources = self.pulceo_api.read_allocatable_memory_by_node_type(nodeType)
-
-            try:
-                if (memory_resources is None or len(memory_resources) == 0):
-                    raise RuntimeError("Severe error: Unable to find a suitable node for task scheduling.")
-                highest_memory_size_node = max(memory_resources, key=lambda x: x["memoryAllocatable"]["size"])
-            except ValueError:
-                logging.error("No eligible nodes found. 'memory_resources' is empty, unable to determine the node with the highest memory size.")
-                self.pendingTasks.append(task)
-                return
+            memory_resources_on_node = self.pulceo_api.read_memory_by_node_id(highest_shares_node['nodeUUID'])
             
-            if highest_memory_size_node['memoryAllocatable']['size'] > req_memory_task:
+            if memory_resources_on_node['memoryAllocatable']['size'] > req_memory_task:
                 # ready to deloy
-                elected_node = highest_memory_size_node["nodeName"]
+                elected_node = memory_resources_on_node['nodeName']
                 print(f"Elected node for task deployment: {elected_node}")
-                node_id = highest_memory_size_node['nodeUUID']
+                node_id = memory_resources_on_node['nodeUUID']
 
                 # update resources
-                self.pulceo_api.update_allocatable_cpu(node_id, "shares", highest_shares_node["cpuAllocatable"]["shares"] - req_cpu_share_task)
-                self.pulceo_api.update_allocatable_memory(node_id, "size", highest_memory_size_node['memoryAllocatable']['size'] - req_memory_task)
+                self.pulceo_api.update_allocatable_cpu(node_id, 'shares', highest_shares_node['cpuAllocatable']['shares'] - req_cpu_share_task)
+                self.pulceo_api.update_allocatable_memory(node_id, 'size', memory_resources_on_node['memoryAllocatable']['size'] - req_memory_task)
                 
                 # prepare for scheduling
                 task_id = task['taskUUID']
-                status = "SCHEDULED"
-                application_id = ""  # TODO: replace dummy
+                status = 'SCHEDULED'
+                application_id = elected_node + '-edge-iot-simulator'
                 # if (bool(os.getenv('LOCAL_SCHEDULING')) is True):
                 #     if (elected_node == "edge-0"):
                 #         application_component_id = "127.0.0.1:8087"
@@ -202,7 +191,7 @@ class EdgeOnlyScheduler(Scheduler):
                 #     pass
                 #     # TODO: resolve workaround, putting the port the application_component_id
                 #     application_component_id = "127.0.0.1:8087"
-                application_component_id = elected_node + "-edge-iot-simulator-component-eis" + ".pulceo.svc.cluster.local:80"
+                application_component_id = application_id + '-component-eis' + '.pulceo.svc.cluster.local:80'
                 # schedule
                 self.pulceo_api.schedule_task(task_id, node_id, status, application_id, application_component_id, self.scheduling_properties)
                 # add mapping between task_id and node_id to processedTasks for later mapping

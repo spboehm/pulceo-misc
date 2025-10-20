@@ -17,7 +17,7 @@ from jinja2 import Template
 # print(update_allocatable_memory("edge-0", "size", 8192))
 # print(read_allocatable_memory())
 # print(read_allocatable_cpu_by_node_id("edge-0"))
-# print(read_allocatable_memory_by_node_id("edge-0"))
+# print(read_memory_by_node_id("edge-0"))
 # release_cpu_on_node("edge-0", "shares", 6000)
 # release_memory_on_node("edge-0", "size",  10.5)
 
@@ -178,7 +178,7 @@ class API:
         with open(path, 'r') as file:
             return json.load(file)
 
-    def read_allocatable_cpu(self):
+    def read_cpu(self):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/cpus"
         response = requests.get(url)
         if response.status_code == 200:
@@ -187,7 +187,7 @@ class API:
             print(f"Failed to fetch allocatable CPUs: {response.status_code}, {response.text}")
             return None
 
-    def read_allocatable_cpu_by_node_id(self, node_id):
+    def read_cpu_by_node_id(self, node_id):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/nodes/{node_id}/cpu"
         response = requests.get(url)
         if response.status_code == 200:
@@ -196,7 +196,7 @@ class API:
             print(f"Failed to fetch allocatable CPU for node {node_id}: {response.status_code}, {response.text}")
             return None
     
-    def read_allocatable_cpu_by_node_type(self, node_type):
+    def read_cpu_by_node_type(self, node_type):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/cpus?type={node_type}"
         response = requests.get(url)
         if response.status_code == 200:
@@ -205,7 +205,7 @@ class API:
             print(f"Failed to fetch allocatable CPU for node type {node_type}: {response.status_code}, {response.text}")
             return None
 
-    def read_allocatable_memory(self):
+    def read_memory(self):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/memory"
         response = requests.get(url)
         if response.status_code == 200:
@@ -214,7 +214,7 @@ class API:
             print(f"Failed to fetch allocatable memory: {response.status_code}, {response.text}")
             return None
         
-    def read_allocatable_memory_by_node_id(self, node_id):
+    def read_memory_by_node_id(self, node_id):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/nodes/{node_id}/memory"
         response = requests.get(url)
         if response.status_code == 200:
@@ -223,7 +223,7 @@ class API:
             print(f"Failed to fetch allocatable memory for node {node_id}: {response.status_code}, {response.text}")
             return None
     
-    def read_allocatable_memory_by_node_type(self, node_type):
+    def read_memory_by_node_type(self, node_type):
         url = f"{self.scheme}://{self.host}:{self.prm_port}/api/v1/resources/memory?type={node_type}"
         response = requests.get(url)
         if response.status_code == 200:
@@ -263,11 +263,11 @@ class API:
         pass
 
     def release_cpu_on_node(self, node_id, key, value):
-        current_allocatable_cpu = self.read_allocatable_cpu_by_node_id(node_id)
+        current_allocatable_cpu = self.read_cpu_by_node_id(node_id)
         self.update_allocatable_cpu(node_id, key, current_allocatable_cpu['cpuAllocatable'][key] + value)
 
     def release_memory_on_node(self, node_id, key, value):
-        current_allocatable_memory = self.read_allocatable_memory_by_node_id(node_id)
+        current_allocatable_memory = self.read_memory_by_node_id(node_id)
         self.update_allocatable_memory(node_id, key, current_allocatable_memory['memoryAllocatable'][key] + value)
 
     def create_application(self, node_id, application_name, path_to_json):
