@@ -73,7 +73,7 @@ For `load`, we deployed a few instances of the [edge-iot-simulator](https://gith
 | 2   | pulceo-monitoring-service | [GitHub](https://github.com/spboehm/pulceo-monitoring-service) | [OpenAPI Specification](https://spboehm.github.io/pulceo-monitoring-service) | [GHCR](https://github.com/spboehm/pulceo-monitoring-service/pkgs/container/pulceo-monitoring-service) | v1.0.0          | v1.2.1          |
 | 3   | pulceo-service-manager    | [GitHub](https://github.com/spboehm/pulceo-service-manager)    | [OpenAPI Specification](https://spboehm.github.io/pulceo-service-manager)    | [GHCR](https://github.com/spboehm/pulceo-service-manager/tree/main)                                   | v1.0.0          | v1.0.0          |
 | 4   | pulceo-node-agent         | [GitHub](https://github.com/spboehm/pulceo-node-agent)         | [OpenAPI Specification](https://spboehm.github.io/pulceo-node-agent/)        | [GHCR](https://github.com/spboehm/pulceo-node-agent/pkgs/container/pulceo-node-agent)                 | v1.0.0          | v1.0.0          |
-| 4   | pulceo-report-service     | [GitHub](https://github.com/spboehm/pulceo-misc/tree/main/prs) | tba                                                                          | [GHCR](https://github.com/spboehm/pulceo-misc/pkgs/container/pulceo-report-service)                   | v1.0.0          | v1.0.0          |
+| 5   | pulceo-report-service     | [GitHub](https://github.com/spboehm/pulceo-misc/tree/main/prs) | tba                                                                          | [GHCR](https://github.com/spboehm/pulceo-misc/pkgs/container/pulceo-report-service)                   | v1.0.0          | v1.0.0          |
 
 ## Semi-structured Literature Review
 
