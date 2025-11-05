@@ -17,6 +17,7 @@ CreateScrollableTable(average_response_time_df)
     ) +
     theme_minimal() +
     ylim(0, max(requests_combined$X_value * 1.25, na.rm = TRUE)))
+SavePlot("task_response_time_plot.pdf", average_response_time_boxplot, 4, 3)
 ```
 
 #### Throughput (Task requests/s)
@@ -39,6 +40,7 @@ CreateScrollableTable(throughput_df)
     ) +
     theme_minimal() +
     ylim(0, max(throughput_df$throughput * 1.25, na.rm = TRUE)))
+SavePlot("task_throughput_plot.pdf", throughput_bar_chart, 4, 3)
 ```
 
 #### Task Arrival Rate
@@ -61,6 +63,7 @@ CreateScrollableTable(arrival_rate_df)
     ) +
     theme_minimal() +
     ylim(0, max(arrival_rate_df$arrival_rate * 1.25, na.rm = TRUE)))
+SavePlot("task_arrival_rate_plot.pdf", arrival_rate_bar_chart, 4, 3)
 ```
 
 #### Combined Performance Metrics
