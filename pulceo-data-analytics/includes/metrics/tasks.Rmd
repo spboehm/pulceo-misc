@@ -20,6 +20,7 @@ source(here("includes/R/links.R"))
 source(here("includes/R/latex.R"))
 source(here("includes/R/statistics.R"))
 source(here("includes/R/plots.R"))
+source(here("includes/R/filter.R"))
 ```
 
 ```{r metrics-tasks-load-data-set, include=FALSE, echo=FALSE}
