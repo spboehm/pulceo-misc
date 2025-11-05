@@ -26,6 +26,7 @@ SavePlot("task_response_time_plot.pdf", average_response_time_boxplot, 4, 3)
 ```{r}
 throughput_df <- CalculateThroughput(completion_time_df, batchSize, Run)
 CreateScrollableTable(throughput_df)
+SaveLatexTable(throughput_df, "Task throughput", "task-throughput", "task_throughput.tex")
 ```
 
 ```{r}
@@ -49,6 +50,7 @@ SavePlot("task_throughput_plot.pdf", throughput_bar_chart, 4, 3)
 ```{r}
 arrival_rate_df <- CalculateTaskArrivalRate(TASKS, batchSize, Run)
 CreateScrollableTable(arrival_rate_df)
+SaveLatexTable(arrival_rate_df, "Task arrival rate", "task-arrival-rate", "task_arrival_rate.tex")
 ```
 
 ```{r}
@@ -83,4 +85,5 @@ SavePlot("task_arrival_rate_plot.pdf", arrival_rate_bar_chart, 4, 3)
 
 # Save the combined performance metrics chart
 SavePlot("combined_performance_metrics.pdf", performance_metrics_combined, 8, 3)
+
 ```
