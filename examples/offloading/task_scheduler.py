@@ -139,11 +139,11 @@ class EdgeOnlyScheduler(Scheduler):
         # read all nodes
         nodes = self.pulceo_api.read_nodes()
         for node in nodes:
-            # set custom resource limits, resources must be left for hypervisor and platform components
+            # set adjusted maximum value for allocatable CPU resources
             cpu_on_node = self.pulceo_api.read_cpu_by_node_id(node['uuid'])
             self.pulceo_api.update_allocatable_cpu(node['uuid'], 'shares', self.maxAllocatableCPU(cpu_on_node['cpuCapacity']['shares']))
 
-            # set custom resource limits, resources must be left for hypervisor and platform components
+            # set adjusted maximum value for allocatable CPU resources
             memory_on_node = self.pulceo_api.read_allocatable_memory_by_node_id(node['uuid'])
             self.pulceo_api.update_allocatable_memory(node['uuid'], 'size', self.maxAllocatableMem((memory_on_node['memoryCapacity']['size'])))
 
@@ -156,7 +156,7 @@ class EdgeOnlyScheduler(Scheduler):
         # since this is the edge-only scheduler, only edge nodes are required
         cpu_resources = self.pulceo_api.read_cpu_by_node_type(nodeType)
 
-        # first, try to find an appropriate node that satisfies the CPU requirements
+        # find node with the highest allocatable CPU shares
         try:
             highest_shares_node = max(cpu_resources, key=lambda x: x['cpuAllocatable']['shares'])
         except (ValueError, KeyError, TypeError) as e:
