@@ -5,6 +5,7 @@
 ```{r}
 average_response_time_df <- CalculateAverageResponseTime(requests_combined, batchSize, layer, Run)
 CreateScrollableTable(average_response_time_df)
+SaveLatexTable(average_response_time_df, "Task Response Time", "task-response-time", "task_response_time.tex")
 ```
 
 ```{r}
