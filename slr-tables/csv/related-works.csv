@@ -1,9 +1,10 @@
-Author;Year;Name;FOSS;Model;API;Creation;Cloud;Edge;Links;Orchestration ;Placement;Configurable;System;Latency;Bandwidth;Response Time;Evaluation;Documentation
-Kumara~\cite{kumaraSODALITERTOrchestratingApplications2021};2021;SODALITE@RT;y;y;p;y;y;y;n;y;y;p;y;n;n;n;n;p
-Orive~\cite{oriveQualityServiceAware2022};2022;ACOA;n;y;p;n;y;y;y;p;y;n;y;y;n;n;n;y
-Pournaropoulos~\cite{pournaropoulosFluidityProvidingFlexible2024};2024;Fluidity;n;n;n;n;y;y;n;p;y;n;y;n;n;y;n;n
-Marchese~\cite{marcheseSophosFrameworkApplication2023};2023;Sophos;n;n;n;n;y;y;n;p;y;n;y;y;n;y;n;n
-Korontanis~\cite{korontanisEdgeCloudMonLightweight2024};2024;EdgeCloudMon;;;;;;;;;;;;;y;;n;
-Koukis~\cite{koukisOpenSourceExperimentationFramework2024};2024;CODECO;y;y;p;p;y;y;y;p;y;n;y;n;y;n;y;y
-Faticanti~\cite{faticantiCuttingThroughputEdge2019};2019;FogAtlas;y;y;p;n;y;y;y;p;y;n;y;n;n;n;n;n
-Our proposal;2024;PULCEO;y;y;y;y;y;y;y;y;y;y;y;y;y;y;y;y
+Author;Year;Name;FOSS;Model;API;Creation;Cloud;Edge;Links;Graph-based;Orchestration ;Placement;Tasks;Configurable Monitoring;System;Latency;Bandwidth;Response Time;Evaluation;Documentation
+HARNESS~\cite{dagliHARNESSHolisticResource2025};2025;HARNESS;;;y;n;;;;y;y;p (binaries);y;;;;;;n;n
+Kumara~\cite{kumaraSODALITERTOrchestratingApplications2021};2021;SODALITE@RT;y;y;p;y;y;y;n;;y;y;;p;y;n;n;n;n;p
+Orive~\cite{oriveQualityServiceAware2022};2022;ACOA;n;y;p;n;y;y;y;;p;y;;n;y;y;n;n;n;y
+Pournaropoulos~\cite{pournaropoulosFluidityProvidingFlexible2024};2024;Fluidity;n;n;n;n;y;y;n;;p;y;;n;y;n;n;y;n;n
+Marchese~\cite{marcheseSophosFrameworkApplication2023};2023;Sophos;n;n;n;n;y;y;n;;p;y;;n;y;y;n;y;n;n
+Korontanis~\cite{korontanisEdgeCloudMonLightweight2024};2024;EdgeCloudMon;;;;;;;;;;;;;;;y;;n;
+Koukis~\cite{koukisOpenSourceExperimentationFramework2024};2024;CODECO;y;y;p;p;y;y;y;;p;y;;n;y;n;y;n;y;y
+Faticanti~\cite{faticantiCuttingThroughputEdge2019};2019;FogAtlas;y;y;p;n;y;y;y;;p;y;;n;y;n;n;n;n;n
+Our proposal;2024;PULCEO;y;y;y;y;y;y;y;;y;y;;y;y;y;y;y;y;y
