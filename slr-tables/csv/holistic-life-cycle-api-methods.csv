@@ -1,0 +1,8 @@
+phase, service,entity, endpoint
+Creation,PSM,Orchestration,/orchestrations
+Creation,PRM,Provider,/providers
+Creation,PRM,Nodes,/nodes
+Creation,PRM,Links,/links
+Monitoring,PMS,Metric Requests,/metric-requests
+Operation,PSM,Applications,/applications
+Operation,PSM,Tasks,/tasks
