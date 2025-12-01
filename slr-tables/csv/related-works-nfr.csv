@@ -1,0 +1,13 @@
+Phase;Entity;Feature;Name;Solution 1;Solution 2;Solution 3;Solution 4;PULCEO
+Creation, Operation, Monitoring;All;\NFRSecurityAPIAuthentication;\NFRNameNameSecurityAPIAuthentication;--;--;--;--;y
+Creation, Operation, Monitoring;All;\NFRSecurityTLS;\NFRNameSecurityTLS;;;;;y
+Monitoring;Metrics, Requests, Events, Tasks;\NFRSecurityTLSMQTT;\NFRNameSecurityTLSMQTT;;;;;y
+Operation;Applications;\NFRSecurityTaskApplicationByProxy;\NFRNameSecurityTaskApplicationByProxy;;;;;y
+Creation;Nodes, Links;\NFRUsabilityCreation;\NFRNameUsabilityCreation;;;;;y
+Operation;Applications, Tasks;\NFRUsabilityOperation;\NFRNameUsabilityOperation;;;;;y
+Monitoring;Nodes, Applications, Tasks;\NFRUsabilityMonitoring;\NFRNameUsabilityMonitoring;;;;;y
+Evaluation;All;\NFRUsabilityEvaluation;\NFRNameUsabilityEvaluation;;;;;y
+Documentation;All;\NFRUsabilityDocumentation;\NFRNameUsabilityDocumentation;;;;;y
+Operation;Applications;\NFRDesignContainerization;\NFRNameDesignContainerization;;;;;y
+Creation;Nodes;\NFRCostEfficiency;\NFRNameCostEfficiency;;;;;y
+Monitoring;Metrics, Requests, Events, Tasks;\NFRLightweightMessaging;\NFRNameLightweightMessaging;;;;;y
