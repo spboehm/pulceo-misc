@@ -1,0 +1,10 @@
+Phase;Entity;Feature;Name;Solution 1;Solution 2;Solution 3;Solution 4;Solution 4
+Creation;Orchestration;--;--;--;--;--;--;--
+Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;--;--;--;--;--
+Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;--;--;--;--;--
+Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;;;;;
+Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;;;;;
+Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;;;;;
+Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;;;;;
+Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;;;;;
+;;;;;;;;

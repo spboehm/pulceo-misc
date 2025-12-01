@@ -10,6 +10,8 @@ LoadPackage("ggpubr")
 LoadPackage("ggplot2")
 ```
 
+### v1
+
 ```{r}
 relatedWorks <- read.csv2("csv/related-works.csv")
 ```
@@ -19,5 +21,19 @@ CreateScrollableTable(t(relatedWorks))
 ```
 
 ```{r echo=FALSE}
-SaveLatexTable(t(relatedWorks), "Comparision of existing solutions and PULCEO.", "comparison-of-existing-solutions-and-pulceo", "comparison-of-existing-solutions-and-pulceo.tex", "tb", "table*")
+SaveLatexTable(t(relatedWorks), "Comparision of existing solutions and PULCEO.", "comparison-of-existing-solutions-and-pulceo", "comparison-of-existing-solutions-and-pulceo.tex", "tb", "table")
+```
+
+### v2
+
+```{r}
+relatedWorks_v2 <- read.csv2("csv/related-works-v2.csv")
+```
+
+```{r echo=FALSE}
+CreateScrollableTable(t(relatedWorks_v2))
+```
+
+```{r echo=FALSE}
+SaveLatexTable(relatedWorks_v2, "Comparision of existing solutions and PULCEO - v2.", "comparison-of-existing-solutions-and-pulceo-v2", "comparison-of-existing-solutions-and-pulceo-v2.tex", "tb", "table")
 ```
