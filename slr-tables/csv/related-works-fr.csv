@@ -4,7 +4,7 @@ Evaluation;Orchestration;\FRlifecycleOrchestration;\FRNameLifecycleOrchestration
 Creation;Orchestration;\FRmetadataOrchestration;\FRNameMetadataOrchestration;\yes;--;--;--;\yes
 Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;\yes;--;--;--;\yes
 Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;\yes;--;--;--;\yes
-Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;--;--;--;--;\yes
+Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;\no;--;--;--;\yes
 Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;\no;--;--;--;\yes
 Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;\no;--;--;--;\yes
 Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;\no;--;--;--;\yes
@@ -17,7 +17,7 @@ Monitoring;MetricRequests;\FRcreateMetricRequestsForLinks;\FRNameCreateMetricReq
 Monitoring;Metrics;\FRstreamingMonitoringData;\FRNameStreamingMonitoringData;\no;--;--;--;\yes
 Monitoring;Requests;\FRretrieveRequests;\FRNameRetrieveRequests;\no;--;--;--;\yes
 Monitoring;Events;\FRretrieveEvents;\FRNameRetrieveEvents;\no;--;--;--;\yes
-Monitoring;--;\FRretrieveHealthStatusNode;\FRNameRetrieveHealthStatusNode;--;--;--;--;\yes
+Monitoring;--;\FRretrieveHealthStatusNode;\FRNameRetrieveHealthStatusNode;\partially;--;--;--;\yes
 Operation;Applications;\FRcreateApplicationsOnNodes;\FRNamecreateApplicationsOnNodes;\partially;--;--;--;\yes
 Operation;Applications;\FRdeleteApplicationsOnNodes;\FRNamedeleteApplicationsOnNodes;\no;--;--;--;\yes
 Operation;Tasks;\FRtaskModel;\FRNameTaskModel;\no;--;--;--;\yes
@@ -29,18 +29,18 @@ All;All;\FRUsabilityRESTfulAPIUniformly;\FRNameUsabilityRESTfulAPIUniformly;\no;
 All;All;\FRUsabilityRESTfulAPIAllPhases;\FRNameUsabilityRESTfulAPIAllPhases;\no;--;--;--;\yes
 Operation;Applications;\FRUsabilityNodeAgentRESTfulAPI;\FRNameUsabilityNodeAgentRESTfulAPI;\no;--;--;--;\yes
 Monitoring;Metrics, Requests, Events, Tasks;\FRUsabilityMQTTPubSub;\FRUsabilityMQTTPubSub;\no;--;--;--;\yes
-Evaluation;;\FREvalOrchestrationMetadata;\FREvalOrchestrationMetadataName;\partially;;;;
-Evaluation;;\FREvalProviderInformation;\FREvalProviderInformationName;\yes;;;;
-Evaluation;;\FREvalTopologyInformation;\FREvalTopologyInformationName;\no;;;;
-Evaluation;;\FREvalRequestedMetrics;\FREvalRequestedMetricsName;\yes;;;;
-Evaluation;;\FREvalSystemEvents;\FREvalSystemEventsName;\no;;;;
-Evaluation;;\FREvalNodeMetrics;\FREvalNodeMetricsName;\yes;;;;
-Evaluation;;\FREvalLinkMetrics;\FREvalLinkMetricsName;\no;;;;
-Evaluation;;\FREvalApplicationMetrics;\FREvalApplicationMetricsName;\yes;;;;
-Evaluation;;\FREvalRequestMetrics;\FREvalRequestMetricsName;\no;;;;
-Evaluation;;\FREvalTaskMetrics;\FREvalTaskMetricsName;\no;;;;
-Documentation;;\FRDocumentationRawEntityFiles;\FRDocumentationRawEntityFilesName;\yes;;;;
-Documentation;;\FRDocumentationRawMetricsFiles;\FRDocumentationRawMetricsFilesName;\yes;;;;
-Documentation;;\FRDocumentationLatexTables;\FRDocumentationLatexTablesName;\no;;;;
-Documentation;;\FRDocumentationChartsPlots;\FRDocumentationChartsPlotsName;\partially;;;;
-Documentation;;\FRDocumentationHtmlReport;\FRDocumentationHtmlReportName;\partially;;;;
+Evaluation;Orchestrations;\FREvalOrchestrationMetadata;\FREvalOrchestrationMetadataName;\partially;--;--;--;\yes
+Evaluation;Providers;\FREvalProviderInformation;\FREvalProviderInformationName;\yes;--;--;--;\yes
+Evaluation;Nodes, Links;\FREvalTopologyInformation;\FREvalTopologyInformationName;\no;--;--;--;\yes
+Evaluation;MetricRequests;\FREvalRequestedMetrics;\FREvalRequestedMetricsName;\yes;--;--;--;\yes
+Evaluation;Events;\FREvalSystemEvents;\FREvalSystemEventsName;\no;--;--;--;\yes
+Evaluation;Metrics;\FREvalNodeMetrics;\FREvalNodeMetricsName;\yes;--;--;--;\yes
+Evaluation;Metrics;\FREvalLinkMetrics;\FREvalLinkMetricsName;\no;--;--;--;\yes
+Evaluation;Metrics;\FREvalApplicationMetrics;\FREvalApplicationMetricsName;\yes;--;--;--;\yes
+Evaluation;Requests;\FREvalRequestMetrics;\FREvalRequestMetricsName;\no;--;--;--;\yes
+Evaluation;Tasks;\FREvalTaskMetrics;\FREvalTaskMetricsName;\no;--;--;--;\yes
+Documentation;Providers, Nodes, Links, Applications;\FRDocumentationRawEntityFiles;\FRDocumentationRawEntityFilesName;\yes;--;--;--;\yes
+Documentation;Metrics, Requests, Tasks;\FRDocumentationRawMetricsFiles;\FRDocumentationRawMetricsFilesName;\yes;--;--;--;\yes
+Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationLatexTables;\FRDocumentationLatexTablesName;\no;--;--;--;\yes
+Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationChartsPlots;\FRDocumentationChartsPlotsName;\partially;--;--;--;\yes
+Documentation;All;\FRDocumentationHtmlReport;\FRDocumentationHtmlReportName;\partially;--;--;--;\yes
