@@ -5,7 +5,7 @@ Creation;Orchestration;\FRmetadataOrchestration;\FRNameMetadataOrchestration;\ye
 Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;\yes;--;--;--;\yes
 Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;\yes;--;--;--;\yes
 Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;--;--;--;--;\yes
-Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;--;--;--;--;\yes
+Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;\no;--;--;--;\yes
 Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;\no;--;--;--;\yes
 Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;\no;--;--;--;\yes
 Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;\yes;--;--;--;\yes
@@ -29,4 +29,18 @@ All;All;\FRUsabilityRESTfulAPIUniformly;\FRNameUsabilityRESTfulAPIUniformly;\no;
 All;All;\FRUsabilityRESTfulAPIAllPhases;\FRNameUsabilityRESTfulAPIAllPhases;\no;--;--;--;\yes
 Operation;Applications;\FRUsabilityNodeAgentRESTfulAPI;\FRNameUsabilityNodeAgentRESTfulAPI;\no;--;--;--;\yes
 Monitoring;Metrics, Requests, Events, Tasks;\FRUsabilityMQTTPubSub;\FRUsabilityMQTTPubSub;\no;--;--;--;\yes
-;;;;;;;;
+Evaluation;;\FREvalOrchestrationMetadata;\FREvalOrchestrationMetadataName;\partially;;;;
+Evaluation;;\FREvalProviderInformation;\FREvalProviderInformationName;\yes;;;;
+Evaluation;;\FREvalTopologyInformation;\FREvalTopologyInformationName;\no;;;;
+Evaluation;;\FREvalRequestedMetrics;\FREvalRequestedMetricsName;\yes;;;;
+Evaluation;;\FREvalSystemEvents;\FREvalSystemEventsName;\no;;;;
+Evaluation;;\FREvalNodeMetrics;\FREvalNodeMetricsName;\yes;;;;
+Evaluation;;\FREvalLinkMetrics;\FREvalLinkMetricsName;\no;;;;
+Evaluation;;\FREvalApplicationMetrics;\FREvalApplicationMetricsName;\yes;;;;
+Evaluation;;\FREvalRequestMetrics;\FREvalRequestMetricsName;\no;;;;
+Evaluation;;\FREvalTaskMetrics;\FREvalTaskMetricsName;\no;;;;
+Documentation;;\FRDocumentationRawEntityFiles;\FRDocumentationRawEntityFilesName;\yes;;;;
+Documentation;;\FRDocumentationRawMetricsFiles;\FRDocumentationRawMetricsFilesName;\yes;;;;
+Documentation;;\FRDocumentationLatexTables;\FRDocumentationLatexTablesName;\no;;;;
+Documentation;;\FRDocumentationChartsPlots;\FRDocumentationChartsPlotsName;\partially;;;;
+Documentation;;\FRDocumentationHtmlReport;\FRDocumentationHtmlReportName;\partially;;;;
