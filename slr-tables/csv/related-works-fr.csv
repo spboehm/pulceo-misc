@@ -1,32 +1,32 @@
 Phase;Entity;Feature;Name;Koukis~\cite{koukisOpenSourceExperimentationFramework2024};Solution 3;Solution 4;Solution 5;PULCEO
-Creation;Orchestration;\FRcreateOrchestration;\FRNameCreateOrchestration;--;--;--;--;\yes
-Evaluation;Orchestration;\FRlifecycleOrchestration;\FRNameLifecycleOrchestration;--;--;--;--;\yes
-Creation;Orchestration;\FRmetadataOrchestration;\FRNameMetadataOrchestration;--;--;--;--;\yes
-Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;--;--;--;--;\yes
-Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;--;--;--;--;\yes
+Creation;Orchestration;\FRcreateOrchestration;\FRNameCreateOrchestration;\yes;--;--;--;\yes
+Evaluation;Orchestration;\FRlifecycleOrchestration;\FRNameLifecycleOrchestration;\no;--;--;--;\yes
+Creation;Orchestration;\FRmetadataOrchestration;\FRNameMetadataOrchestration;\yes;--;--;--;\yes
+Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;\yes;--;--;--;\yes
+Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;\yes;--;--;--;\yes
 Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;--;--;--;--;\yes
 Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;--;--;--;--;\yes
-Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;--;--;--;--;\yes
-Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;--;--;--;--;\yes
-Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;--;--;--;--;\yes
-Creation;Nodes;\FRuseNodesForTopology;\FRNameUseNodesForTopology;--;--;--;--;\yes
-Creation;Links;\FRcreateLinksBetweenNodesForTopology;\FRNameCreateLinksBetweenNodesForTopology;--;--;--;--;\yes
-Monitoring;MetricRequests;\FRcreateMetricRequestsForNodes;\FRNameCreateMetricRequestsForNodes;--;--;--;--;\yes (cpu, mem, disk, net)
-Monitoring;MetricRequests;\FRcreateMetricRequestsForApplications;\FRNameCreateMetricRequestsForApplications;--;--;--;--;\yes (cpu, mem, disk, net)
-Monitoring;MetricRequests;\FRcreateMetricRequestsForLinks;\FRNameCreateMetricRequestsForLinks;--;--;--;--;\yes (rtt, bw)
-Monitoring;Metrics;\FRstreamingMonitoringData;\FRNameStreamingMonitoringData;--;--;--;--;\yes
-Monitoring;Requests;\FRretrieveRequests;\FRNameRetrieveRequests;--;--;--;--;\yes
-Monitoring;Events;\FRretrieveEvents;\FRNameRetrieveEvents;--;--;--;--;\yes
+Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;\no;--;--;--;\yes
+Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;\no;--;--;--;\yes
+Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;\yes;--;--;--;\yes
+Creation;Nodes;\FRuseNodesForTopology;\FRNameUseNodesForTopology;\yes;--;--;--;\yes
+Creation;Links;\FRcreateLinksBetweenNodesForTopology;\FRNameCreateLinksBetweenNodesForTopology;\no;--;--;--;\yes
+Monitoring;MetricRequests;\FRcreateMetricRequestsForNodes;\FRNameCreateMetricRequestsForNodes;\yes, \yes, \no, \no;--;--;--;\yes (cpu, mem, disk, net)
+Monitoring;MetricRequests;\FRcreateMetricRequestsForApplications;\FRNameCreateMetricRequestsForApplications;\yes, \yes, \no, \no;--;--;--;\yes (cpu, mem, disk, net)
+Monitoring;MetricRequests;\FRcreateMetricRequestsForLinks;\FRNameCreateMetricRequestsForLinks;\no, \no;--;--;--;\yes (rtt, bw)
+Monitoring;Metrics;\FRstreamingMonitoringData;\FRNameStreamingMonitoringData;\no;--;--;--;\yes
+Monitoring;Requests;\FRretrieveRequests;\FRNameRetrieveRequests;\no;--;--;--;\yes
+Monitoring;Events;\FRretrieveEvents;\FRNameRetrieveEvents;\no;--;--;--;\yes
 Monitoring;--;\FRretrieveHealthStatusNode;\FRNameRetrieveHealthStatusNode;--;--;--;--;\yes
-Operation;Applications;\FRcreateApplicationsOnNodes;\FRNamecreateApplicationsOnNodes;--;--;--;--;\yes
-Operation;Applications;\FRdeleteApplicationsOnNodes;\FRNamedeleteApplicationsOnNodes;--;--;--;--;\yes
-Operation;Tasks;\FRtaskModel;\FRNameTaskModel;--;--;--;--;\yes
-Operation;Tasks;\FRsubmittedTask;\FRNameSubmittedTask;--;--;--;--;\yes
-Operation;Tasks;\FRoffloadTask;\FRNameOffloadTask;--;--;--;--;\yes
-Operation;Tasks;\FRmonitorTasks;\FRNameMonitorTasks;--;--;--;--;\yes
-Operation;Tasks;\FRmetricTasks;\FRNameMetricTasks;--;--;--;--;\yes
-All;All;\FRUsabilityRESTfulAPIUniformly;\FRNameUsabilityRESTfulAPIUniformly;--;--;--;--;\yes
-All;All;\FRUsabilityRESTfulAPIAllPhases;\FRNameUsabilityRESTfulAPIAllPhases;--;--;--;--;\yes
-Operation;Applications;\FRUsabilityNodeAgentRESTfulAPI;\FRNameUsabilityNodeAgentRESTfulAPI;--;--;--;--;\yes
-Monitoring;Metrics, Requests, Events, Tasks;\FRUsabilityMQTTPubSub;\FRUsabilityMQTTPubSub;--;--;--;--;\yes
+Operation;Applications;\FRcreateApplicationsOnNodes;\FRNamecreateApplicationsOnNodes;\partially;--;--;--;\yes
+Operation;Applications;\FRdeleteApplicationsOnNodes;\FRNamedeleteApplicationsOnNodes;\no;--;--;--;\yes
+Operation;Tasks;\FRtaskModel;\FRNameTaskModel;\no;--;--;--;\yes
+Operation;Tasks;\FRsubmittedTask;\FRNameSubmittedTask;\no;--;--;--;\yes
+Operation;Tasks;\FRoffloadTask;\FRNameOffloadTask;\no;--;--;--;\yes
+Operation;Tasks;\FRmonitorTasks;\FRNameMonitorTasks;\no;--;--;--;\yes
+Operation;Tasks;\FRmetricTasks;\FRNameMetricTasks;\no;--;--;--;\yes
+All;All;\FRUsabilityRESTfulAPIUniformly;\FRNameUsabilityRESTfulAPIUniformly;\no;--;--;--;\yes
+All;All;\FRUsabilityRESTfulAPIAllPhases;\FRNameUsabilityRESTfulAPIAllPhases;\no;--;--;--;\yes
+Operation;Applications;\FRUsabilityNodeAgentRESTfulAPI;\FRNameUsabilityNodeAgentRESTfulAPI;\no;--;--;--;\yes
+Monitoring;Metrics, Requests, Events, Tasks;\FRUsabilityMQTTPubSub;\FRUsabilityMQTTPubSub;\no;--;--;--;\yes
 ;;;;;;;;
