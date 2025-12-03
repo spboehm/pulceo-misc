@@ -43,5 +43,28 @@ CreateScrollableTable(relatedWorksFR)
 ```
 
 ```{r echo=FALSE}
-SaveLatexTable(relatedWorksFR, "Comparision of Related Works and PULCEO", "comparison-related-works-pulceo-fr", "comparison-related-works-pulceo-fr.tex", "tb", "table")
+SaveLatexTable(relatedWorksFR, "Comparision of Functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-fr", "comparison-related-works-pulceo-fr.tex", "tb", "table")
+```
+
+
+### Non-Functional Requirements
+
+```{r}
+file_name <- "csv/related-works-nfr.csv"
+
+# Read the file with skip and manually define column names
+relatedWorksNFR <- read.csv2(file_name, skip = 1, header = FALSE, quote = "")
+
+# Read just the first line separately to extract column names
+header_line <- readLines(file_name, n = 1)
+col_names <- strsplit(header_line, ";")[[1]]
+colnames(relatedWorksNFR) <- col_names
+```
+
+```{r echo=FALSE}
+CreateScrollableTable(relatedWorksNFR)
+```
+
+```{r echo=FALSE}
+SaveLatexTable(relatedWorksNFR, "Comparision of Non-functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-nfr", "comparison-related-works-pulceo-nfr.tex", "tb", "table")
 ```

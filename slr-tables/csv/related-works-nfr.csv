@@ -1,14 +1,13 @@
 Phase;Entity;Feature;Name;Koukis~\cite{koukisOpenSourceExperimentationFramework2024};Solution 2;Solution 3;Solution 4;PULCEO
-Creation, Operation, Monitoring;All;\NFRSecurityAPIAuthentication;\NFRNameNameSecurityAPIAuthentication;--;--;--;--;\yes
-Creation, Operation, Monitoring;All;\NFRSecurityTLS;\NFRNameSecurityTLS;;;;;\yes
-Monitoring;Metrics, Requests, Events, Tasks;\NFRSecurityTLSMQTT;\NFRNameSecurityTLSMQTT;;;;;\yes
-Operation;Applications;\NFRSecurityTaskApplicationByProxy;\NFRNameSecurityTaskApplicationByProxy;;;;;\yes
+Creation, Operation, Monitoring;All;\NFRSecurityAPIAuthentication;\NFRNameNameSecurityAPIAuthentication;\no;--;--;--;\yes
+Creation, Operation, Monitoring;All;\NFRSecurityTLS;\NFRNameSecurityTLS;\no;;;;\yes
+Monitoring;Metrics, Requests, Events, Tasks;\NFRSecurityTLSMQTT;\NFRNameSecurityTLSMQTT;\no;;;;\yes
+Operation;Applications;\NFRSecurityTaskApplicationByProxy;\NFRNameSecurityTaskApplicationByProxy;\yes;;;;\yes
 Creation;Nodes, Links;\NFRUsabilityCreation;\NFRNameUsabilityCreation;\yes;;;;\yes
-Operation;Applications, Tasks;\NFRUsabilityOperation;\NFRNameUsabilityOperation;\partial;;;;\yes
-Monitoring;Nodes, Applications, Tasks;\NFRUsabilityMonitoring;\NFRNameUsabilityMonitoring;\partial;;;;\yes
-Evaluation;All;\NFRUsabilityEvaluation;\NFRNameUsabilityEvaluation;\partial;;;;\yes
-Documentation;All;\NFRUsabilityDocumentation;\NFRNameUsabilityDocumentation;\partial;;;;\yes
+Operation;Applications, Tasks;\NFRUsabilityOperation;\NFRNameUsabilityOperation;\partially;;;;\yes
+Monitoring;Nodes, Applications, Tasks;\NFRUsabilityMonitoring;\NFRNameUsabilityMonitoring;\partially;;;;\yes
+Evaluation;All;\NFRUsabilityEvaluation;\NFRNameUsabilityEvaluation;\partially;;;;\yes
+Documentation;All;\NFRUsabilityDocumentation;\NFRNameUsabilityDocumentation;\partially;;;;\yes
 Operation;Applications;\NFRDesignContainerization;\NFRNameDesignContainerization;\yes;;;;\yes
 Creation;Nodes;\NFRCostEfficiency;\NFRNameCostEfficiency;\yes;;;;\yes
 Monitoring;Metrics, Requests, Events, Tasks;\NFRLightweightMessaging;\NFRNameLightweightMessaging;\no;;;;\yes
-;;;;;;;;

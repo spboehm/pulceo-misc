@@ -1,11 +1,11 @@
 \begin{table}[tb]
 \centering
-\caption{\label{tab:comparison-related-works-pulceo-fr}Comparision of Related Works and PULCEO}
+\caption{\label{tab:comparison-related-works-pulceo-fr}Comparision of Functional Requirements of Related Works and PULCEO}
 \centering
 \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
 \begin{tabular}[t]{lllllllll}
 \toprule
-Phase & Entity & Feature & Name & Koukis~\cite{koukisOpenSourceExperimentationFramework2024} & Solution 3 & Solution 4 & Solution 5 & PULCEO\\
+Phase & Entity & Feature & Name & Koukis~\cite{koukisOpenSourceExperimentationFramework2024} & FogAtlas~\cite{faticantiCuttingThroughputEdge2019} & Solution 4 & Solution 5 & PULCEO\\
 \midrule
 Creation & Orchestration & \FRcreateOrchestration & \FRNameCreateOrchestration & \yes & -- & -- & -- & \yes\\
 Evaluation & Orchestration & \FRlifecycleOrchestration & \FRNameLifecycleOrchestration & \no & -- & -- & -- & \yes\\
@@ -38,8 +38,8 @@ All & All & \FRUsabilityRESTfulAPIAllPhases & \FRNameUsabilityRESTfulAPIAllPhase
 Operation & Applications & \FRUsabilityNodeAgentRESTfulAPI & \FRNameUsabilityNodeAgentRESTfulAPI & \no & -- & -- & -- & \yes\\
 Monitoring & Metrics, Requests, Events, Tasks & \FRUsabilityMQTTPubSub & \FRUsabilityMQTTPubSub & \no & -- & -- & -- & \yes\\
 Evaluation & Orchestrations & \FREvalOrchestrationMetadata & \FREvalOrchestrationMetadataName & \partially & -- & -- & -- & \yes\\
-Evaluation & Providers & \FREvalProviderInformation & \FREvalProviderInformationName & \yes & -- & -- & -- & \yes\\
-Evaluation & Nodes, Links & \FREvalTopologyInformation & \FREvalTopologyInformationName & \no & -- & -- & -- & \yes\\
+Evaluation & Applications & \FREvalApplicationInformation & \FREvalApplicationInformationName & \yes & -- & -- & -- & \yes\\
+Evaluation & Providers, Nodes, Links & \FREvalTopologyInformation & \FREvalTopologyInformationName & \no & -- & -- & -- & \yes\\
 Evaluation & MetricRequests & \FREvalRequestedMetrics & \FREvalRequestedMetricsName & \yes & -- & -- & -- & \yes\\
 Evaluation & Events & \FREvalSystemEvents & \FREvalSystemEventsName & \no & -- & -- & -- & \yes\\
 Evaluation & Metrics & \FREvalNodeMetrics & \FREvalNodeMetricsName & \yes & -- & -- & -- & \yes\\
