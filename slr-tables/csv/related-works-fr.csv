@@ -1,25 +1,25 @@
-No.;Phase;Entity;Feature;Name;CODECO~\cite{koukisOpenSourceExperimentationFramework2024};FogAtlas~\cite{faticantiCuttingThroughputEdge2019};ACOA~\cite{oriveQualityServiceAware2022};SODALITE@RT~\cite{kumaraSODALITERTOrchestratingApplications2021};PULCEO
+No.;Phase;Entity;Feature;Short Name;CODECO~\cite{koukisOpenSourceExperimentationFramework2024};FogAtlas~\cite{faticantiCuttingThroughputEdge2019};ACOA~\cite{oriveQualityServiceAware2022};SODALITE@RT~\cite{kumaraSODALITERTOrchestratingApplications2021};PULCEO
 1;Creation;Orchestration;\FRcreateOrchestration;\FRNameCreateOrchestration;\yes;\yes;\no;\partially;\yes
 2;Evaluation;Orchestration;\FRlifecycleOrchestration;\FRNameLifecycleOrchestration;\no;\no;\no;\no;\yes
 3;Creation;Orchestration;\FRmetadataOrchestration;\FRNameMetadataOrchestration;\yes;\partially;\no;\yes;\yes
 4;Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;\yes;\no;\no;\yes;\yes
 5;Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;\yes;\no;\no;\yes;\yes
 6;Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;\no;\no;\no;\no;\yes
-7;Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;\no;\partially;\yes;\yes;\yes
+7;Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;\yes;\partially;\yes;\yes;\yes
 8;Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;\no;\yes;\partially;\no;\yes
 9;Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;\yes;\no;\no;\no;\yes
 10;Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;\no;\no;\no;\yes;\yes
 11;Creation;Nodes;\FRuseNodesForTopology;\FRNameUseNodesForTopology;\yes;\yes;\yes;\yes;\yes
-12;Creation;Links;\FRcreateLinksBetweenNodesForTopology;\FRNameCreateLinksBetweenNodesForTopology;\no;\no;\yes;\yes;\yes
+12;Creation;Links;\FRcreateLinksBetweenNodesForTopology;\FRNameCreateLinksBetweenNodesForTopology;\yes;\no;\yes;\yes;\yes
 13;Monitoring;MetricRequests;\FRcreateMetricRequestsForNodes;\FRNameCreateMetricRequestsForNodes (cpu, mem, disk, net) ;(\yes, \yes, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\yes, \yes, \yes, \yes)
 14;Monitoring;MetricRequests;\FRcreateMetricRequestsForApplications;\FRNameCreateMetricRequestsForApplications (cpu, mem, disk, net);(\yes, \yes, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\yes, \yes, \yes, \yes)
-15;Monitoring;MetricRequests;\FRcreateMetricRequestsForLinks;\FRNameCreateMetricRequestsForLinks (rtt, bw);\no, \no;(\no, \no);(\partially, \no);(\no, \no);(\yes, \yes)
+15;Monitoring;MetricRequests;\FRcreateMetricRequestsForLinks;\FRNameCreateMetricRequestsForLinks (rtt, bw);(\partially, \partially);(\no, \no);(\partially, \no);(\no, \no);(\yes, \yes)
 16;Monitoring;Metrics;\FRstreamingMonitoringData;\FRNameStreamingMonitoringData;\no;\no;\yes;\yes;\yes
 17;Monitoring;Requests;\FRretrieveRequests;\FRNameRetrieveRequests;\no;\no;\no;\no;\yes
 18;Monitoring;Events;\FRretrieveEvents;\FRNameRetrieveEvents;\no;\no;\no;\no;\yes
 19;Monitoring;--;\FRretrieveHealthStatusNode;\FRNameRetrieveHealthStatusNode;\partially;\yes;\no;\no;\yes
 20;Operation;Applications;\FRcreateApplicationsOnNodes;\FRNamecreateApplicationsOnNodes;\partially;\yes;\yes;\yes;\yes
-21;Operation;Applications;\FRdeleteApplicationsOnNodes;\FRNamedeleteApplicationsOnNodes;\no;\yes;\yes;\yes;\yes
+21;Operation;Applications;\FRdeleteApplicationsOnNodes;\FRNamedeleteApplicationsOnNodes;\partially;\yes;\yes;\yes;\yes
 22;Operation;Tasks;\FRtaskModel;\FRNameTaskModel;\no;\no;\no;\no;\yes
 23;Operation;Tasks;\FRsubmittedTask;\FRNameSubmittedTask;\no;\no;\no;\no;\yes
 24;Operation;Tasks;\FRoffloadTask;\FRNameOffloadTask;\no;\no;\no;\no;\yes
