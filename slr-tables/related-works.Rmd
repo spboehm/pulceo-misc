@@ -43,6 +43,8 @@ CreateScrollableTable(relatedWorksFR)
 ```
 
 ```{r echo=FALSE}
+excluded_columns <- c("Entity")
+
 relatedWorksFR <- relatedWorksFR %>%
     mutate(Phase = factor(Phase,
         levels = c(
@@ -51,7 +53,8 @@ relatedWorksFR <- relatedWorksFR %>%
         ),
         ordered = TRUE
     )) %>%
-    arrange(Phase, Order)
+    arrange(Phase, No.) %>%
+    select(-all_of(excluded_columns)) 
 
 align = c("l","l","l","l","l","l","l","l","l","l","l")
 
