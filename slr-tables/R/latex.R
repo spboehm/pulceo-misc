@@ -24,8 +24,8 @@ SaveLatexTable <- function(data, caption, label, filename, position = "tb", tabl
   save_kable(latex_table, paste("latex", filename, sep = "/"))
 }
 
-SaveMultiRowLatexTable <- function(data, caption, label, filename, position = "tb", table_env = 'table', multi_column) {
-  latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3, table.env = table_env) %>% 
+SaveMultiRowLatexTable <- function(data, caption, label, filename, position = "tb", table_env = 'table', multi_column, align = NULL) {
+  latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3, table.env = table_env, align = align) %>% 
     collapse_rows(columns = multi_column, valign = "middle", latex_hline = "major") %>% 
     kable_styling(latex_options="scale_down")
 

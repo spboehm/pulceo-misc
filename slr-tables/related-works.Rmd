@@ -53,7 +53,9 @@ relatedWorksFR <- relatedWorksFR %>%
     )) %>%
     arrange(Phase, Order)
 
-SaveMultiRowLatexTable(relatedWorksFR, "Comparison of Functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-fr", "comparison-related-works-pulceo-fr.tex", "tb", "table", 2)
+align = c("l","l","l","l","l","l","l","l","l","l","l")
+
+SaveMultiRowLatexTable(relatedWorksFR, "Comparison of Functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-fr", "comparison-related-works-pulceo-fr.tex", "tb", "table", 2, align)
 ```
 
 
