@@ -1,46 +1,47 @@
-Phase;Entity;Feature;Name;CODECO~\cite{koukisOpenSourceExperimentationFramework2024};SOPHOS~\cite{marcheseSophosFrameworkApplication2023};FogAtlas~\cite{faticantiCuttingThroughputEdge2019};Solution 5;PULCEO
-Creation;Orchestration;\FRcreateOrchestration;\FRNameCreateOrchestration;\yes;--;\yes;--;\yes
-Evaluation;Orchestration;\FRlifecycleOrchestration;\FRNameLifecycleOrchestration;\no;--;\no;--;\yes
-Creation;Orchestration;\FRmetadataOrchestration;\FRNameMetadataOrchestration;\yes;--;\partially;--;\yes
-Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;\yes;--;\no;--;\yes
-Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;\yes;--;\no;--;\yes
-Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;\no;--;\no;--;\yes
-Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;\no;--;\partially;--;\yes
-Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;\no;--;\no;--;\yes
-Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;\no;--;\yes;--;\yes
-Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;\yes;--;\no;--;\yes
-Creation;Nodes;\FRuseNodesForTopology;\FRNameUseNodesForTopology;\yes;--;\yes;--;\yes
-Creation;Links;\FRcreateLinksBetweenNodesForTopology;\FRNameCreateLinksBetweenNodesForTopology;\no;--;\no;--;\yes
-Monitoring;MetricRequests;\FRcreateMetricRequestsForNodes;\FRNameCreateMetricRequestsForNodes;\yes, \yes, \no, \no;(\yes,\yes,\no,\yes);(\partially, \partially, \no, \no);--;\yes (cpu, mem, disk, net)
-Monitoring;MetricRequests;\FRcreateMetricRequestsForApplications;\FRNameCreateMetricRequestsForApplications;\yes, \yes, \no, \no;(\yes,\yes,\no,\yes);(\partially, \partially, \no, \no);--;\yes (cpu, mem, disk, net)
-Monitoring;MetricRequests;\FRcreateMetricRequestsForLinks;\FRNameCreateMetricRequestsForLinks;\no, \no;(\yes,\no);(\no, \no);--;\yes (rtt, bw)
-Monitoring;Metrics;\FRstreamingMonitoringData;\FRNameStreamingMonitoringData;\no;--;\no;--;\yes
-Monitoring;Requests;\FRretrieveRequests;\FRNameRetrieveRequests;\no;--;\no;--;\yes
-Monitoring;Events;\FRretrieveEvents;\FRNameRetrieveEvents;\no;--;\no;--;\yes
-Monitoring;--;\FRretrieveHealthStatusNode;\FRNameRetrieveHealthStatusNode;\partially;--;\yes;--;\yes
-Operation;Applications;\FRcreateApplicationsOnNodes;\FRNamecreateApplicationsOnNodes;\partially;--;\yes;--;\yes
-Operation;Applications;\FRdeleteApplicationsOnNodes;\FRNamedeleteApplicationsOnNodes;\no;--;\yes;--;\yes
-Operation;Tasks;\FRtaskModel;\FRNameTaskModel;\no;\no;\no;--;\yes
-Operation;Tasks;\FRsubmittedTask;\FRNameSubmittedTask;\no;\no;\no;--;\yes
-Operation;Tasks;\FRoffloadTask;\FRNameOffloadTask;\no;\no;\no;--;\yes
-Operation;Tasks;\FRmonitorTasks;\FRNameMonitorTasks;\no;\no;\no;--;\yes
-Operation;Tasks;\FRmetricTasks;\FRNameMetricTasks;\no;\no;\no;--;\yes
-All;All;\FRUsabilityRESTfulAPIUniformly;\FRNameUsabilityRESTfulAPIUniformly;\no;--;\partially;--;\yes
-All;All;\FRUsabilityRESTfulAPIAllPhases;\FRNameUsabilityRESTfulAPIAllPhases;\no;--;\no;--;\yes
-Operation;Applications;\FRUsabilityNodeAgentRESTfulAPI;\FRNameUsabilityNodeAgentRESTfulAPI;\no;--;\no;--;\yes
-Monitoring;Metrics, Requests, Events, Tasks;\FRUsabilityMQTTPubSub;\FRUsabilityMQTTPubSub;\no;--;\no;--;\yes
-Evaluation;Orchestrations;\FREvalOrchestrationMetadata;\FREvalOrchestrationMetadataName;\partially;--;\yes;--;\yes
-Evaluation;Applications;\FREvalApplicationInformation;\FREvalApplicationInformationName;\yes;--;\yes;--;\yes
-Evaluation;Providers, Nodes, Links;\FREvalTopologyInformation;\FREvalTopologyInformationName;\no;--;\yes;--;\yes
-Evaluation;MetricRequests;\FREvalRequestedMetrics;\FREvalRequestedMetricsName;\yes;--;\no;--;\yes
-Evaluation;Events;\FREvalSystemEvents;\FREvalSystemEventsName;\no;--;\no;--;\yes
-Evaluation;Metrics;\FREvalNodeMetrics;\FREvalNodeMetricsName;\yes;--;\no;--;\yes
-Evaluation;Metrics;\FREvalLinkMetrics;\FREvalLinkMetricsName;\no;--;\no;--;\yes
-Evaluation;Metrics;\FREvalApplicationMetrics;\FREvalApplicationMetricsName;\yes;--;\no;--;\yes
-Evaluation;Requests;\FREvalRequestMetrics;\FREvalRequestMetricsName;\no;--;\no;--;\yes
-Evaluation;Tasks;\FREvalTaskMetrics;\FREvalTaskMetricsName;\no;--;\no;--;\yes
-Documentation;Providers, Nodes, Links, Applications;\FRDocumentationRawEntityFiles;\FRDocumentationRawEntityFilesName;\yes;--;\no;--;\yes
-Documentation;Metrics, Requests, Tasks;\FRDocumentationRawMetricsFiles;\FRDocumentationRawMetricsFilesName;\yes;--;\no;--;\yes
-Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationLatexTables;\FRDocumentationLatexTablesName;\no;--;\no;--;\yes
-Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationChartsPlots;\FRDocumentationChartsPlotsName;\partially;--;\no;--;\yes
-Documentation;All;\FRDocumentationHtmlReport;\FRDocumentationHtmlReportName;\partially;--;\no;--;\yes
+Phase;Entity;Feature;Name;CODECO~\cite{koukisOpenSourceExperimentationFramework2024};SOPHOS~\cite{marcheseSophosFrameworkApplication2023};FogAtlas~\cite{faticantiCuttingThroughputEdge2019};ACOA~\cite{oriveQualityServiceAware2022};Kumara~\cite{kumaraSODALITERTOrchestratingApplications2021};PULCEO
+All;All;\FRUsabilityRESTfulAPIUniformly;\FRNameUsabilityRESTfulAPIUniformly;\no;--;\partially;\yes;\yes;\yes
+All;All;\FRUsabilityRESTfulAPIAllPhases;\FRNameUsabilityRESTfulAPIAllPhases;\no;--;\no;\no;\yes;\yes
+Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;\no;--;\partially;\yes;\yes;\yes
+Creation;Nodes;\FRuseNodesForTopology;\FRNameUseNodesForTopology;\yes;--;\yes;\yes;\yes;\yes
+Creation;Links;\FRcreateLinksBetweenNodesForTopology;\FRNameCreateLinksBetweenNodesForTopology;\no;--;\no;\yes;\yes;\yes
+Creation;Orchestration;\FRcreateOrchestration;\FRNameCreateOrchestration;\yes;--;\yes;\no;\partially;\yes
+Creation;Orchestration;\FRmetadataOrchestration;\FRNameMetadataOrchestration;\yes;--;\partially;\no;\yes;\yes
+Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;\yes;--;\no;\no;\yes;\yes
+Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;\yes;--;\no;\no;\yes;\yes
+Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;\no;--;\no;\no;\no;\yes
+Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;\no;--;\no;\no;\yes;\yes
+Documentation;Providers, Nodes, Links, Applications;\FRDocumentationRawEntityFiles;\FRDocumentationRawEntityFilesName;\yes;--;\no;\no;\no;\yes
+Documentation;Metrics, Requests, Tasks;\FRDocumentationRawMetricsFiles;\FRDocumentationRawMetricsFilesName;\yes;--;\no;\no;\no;\yes
+Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationLatexTables;\FRDocumentationLatexTablesName;\no;--;\no;\no;\no;\yes
+Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationChartsPlots;\FRDocumentationChartsPlotsName;\partially;--;\no;\no;\no;\yes
+Documentation;All;\FRDocumentationHtmlReport;\FRDocumentationHtmlReportName;\partially;--;\no;\no;\no;\yes
+Evaluation;Applications;\FREvalApplicationInformation;\FREvalApplicationInformationName;\yes;--;\yes;\yes;\yes;\yes
+Evaluation;Orchestration;\FRlifecycleOrchestration;\FRNameLifecycleOrchestration;\no;--;\no;\no;\no;\yes
+Evaluation;Orchestrations;\FREvalOrchestrationMetadata;\FREvalOrchestrationMetadataName;\partially;--;\yes;\no;\yes;\yes
+Evaluation;Providers, Nodes, Links;\FREvalTopologyInformation;\FREvalTopologyInformationName;\no;--;\yes;\no;\yes;\yes
+Evaluation;MetricRequests;\FREvalRequestedMetrics;\FREvalRequestedMetricsName;\yes;--;\no;\no;\no;\yes
+Evaluation;Events;\FREvalSystemEvents;\FREvalSystemEventsName;\no;--;\no;\no;\no;\yes
+Evaluation;Metrics;\FREvalNodeMetrics;\FREvalNodeMetricsName;\yes;--;\no;\no;\no;\yes
+Evaluation;Metrics;\FREvalLinkMetrics;\FREvalLinkMetricsName;\no;--;\no;\no;\no;\yes
+Evaluation;Metrics;\FREvalApplicationMetrics;\FREvalApplicationMetricsName;\yes;--;\no;\no;\no;\yes
+Evaluation;Requests;\FREvalRequestMetrics;\FREvalRequestMetricsName;\no;--;\no;\no;\no;\yes
+Evaluation;Tasks;\FREvalTaskMetrics;\FREvalTaskMetricsName;\no;--;\no;\no;\no;\yes
+Monitoring;Metrics;\FRstreamingMonitoringData;\FRNameStreamingMonitoringData;\no;--;\no;\yes;\yes;\yes
+Monitoring;Requests;\FRretrieveRequests;\FRNameRetrieveRequests;\no;--;\no;\no;\no;\yes
+Monitoring;Events;\FRretrieveEvents;\FRNameRetrieveEvents;\no;--;\no;\no;\no;\yes
+Monitoring;--;\FRretrieveHealthStatusNode;\FRNameRetrieveHealthStatusNode;\partially;--;\yes;\no;\no;\yes
+Monitoring;Metrics, Requests, Events, Tasks;\FRUsabilityMQTTPubSub;\FRUsabilityMQTTPubSub;\no;--;\no;\no;\yes;\yes
+Monitoring;MetricRequests;\FRcreateMetricRequestsForNodes;\FRNameCreateMetricRequestsForNodes;\yes, \yes, \no, \no;(\yes,\yes,\no,\yes);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);\yes (cpu, mem, disk, net)
+Monitoring;MetricRequests;\FRcreateMetricRequestsForApplications;\FRNameCreateMetricRequestsForApplications;\yes, \yes, \no, \no;(\yes,\yes,\no,\yes);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);\yes (cpu, mem, disk, net)
+Monitoring;MetricRequests;\FRcreateMetricRequestsForLinks;\FRNameCreateMetricRequestsForLinks;\no, \no;(\yes,\no);(\no, \no);(\partially, \no);(\no, \no);\yes (rtt, bw)
+Operation;Applications;\FRcreateApplicationsOnNodes;\FRNamecreateApplicationsOnNodes;\partially;--;\yes;\yes;\yes;\yes
+Operation;Applications;\FRdeleteApplicationsOnNodes;\FRNamedeleteApplicationsOnNodes;\no;--;\yes;\yes;\yes;\yes
+Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;\no;--;\yes;\partially;\no;\yes
+Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;\yes;--;\no;\no;\no;\yes
+Operation;Tasks;\FRtaskModel;\FRNameTaskModel;\no;\no;\no;\no;\no;\yes
+Operation;Tasks;\FRsubmittedTask;\FRNameSubmittedTask;\no;\no;\no;\no;\no;\yes
+Operation;Tasks;\FRoffloadTask;\FRNameOffloadTask;\no;\no;\no;\no;\no;\yes
+Operation;Tasks;\FRmonitorTasks;\FRNameMonitorTasks;\no;\no;\no;\no;\no;\yes
+Operation;Tasks;\FRmetricTasks;\FRNameMetricTasks;\no;\no;\no;\no;\no;\yes
+Operation;Applications;\FRUsabilityNodeAgentRESTfulAPI;\FRNameUsabilityNodeAgentRESTfulAPI;\no;--;\no;\no;\no;\yes
+;;;;;;;;;
