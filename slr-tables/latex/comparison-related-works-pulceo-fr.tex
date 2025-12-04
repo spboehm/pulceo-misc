@@ -1,57 +1,101 @@
 \begin{table}[tb]
 \centering
-\caption{\label{tab:comparison-related-works-pulceo-fr}Comparision of Functional Requirements of Related Works and PULCEO}
+\caption{\label{tab:comparison-related-works-pulceo-fr}Comparison of Functional Requirements of Related Works and PULCEO}
 \centering
 \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
-\begin{tabular}[t]{lllllllll}
+\begin{tabular}[t]{rllllllllll}
 \toprule
-Phase & Entity & Feature & Name & Koukis~\cite{koukisOpenSourceExperimentationFramework2024} & FogAtlas~\cite{faticantiCuttingThroughputEdge2019} & Solution 4 & Solution 5 & PULCEO\\
+Order & Phase & Entity & Feature & Name & CODECO~\cite{koukisOpenSourceExperimentationFramework2024} & SOPHOS~\cite{marcheseSophosFrameworkApplication2023} & FogAtlas~\cite{faticantiCuttingThroughputEdge2019} & ACOA~\cite{oriveQualityServiceAware2022} & Kumara~\cite{kumaraSODALITERTOrchestratingApplications2021} & PULCEO\\
 \midrule
-Creation & Orchestration & \FRcreateOrchestration & \FRNameCreateOrchestration & \yes & -- & -- & -- & \yes\\
-Evaluation & Orchestration & \FRlifecycleOrchestration & \FRNameLifecycleOrchestration & \no & -- & -- & -- & \yes\\
-Creation & Orchestration & \FRmetadataOrchestration & \FRNameMetadataOrchestration & \yes & -- & -- & -- & \yes\\
-Creation & Nodes & \FRcreateOnPremNode & \FRNameCreateOnPremNode & \yes & -- & -- & -- & \yes\\
-Creation & Nodes & \FRcreateCloudNode & \FRNameCreateCloudNode & \yes & -- & -- & -- & \yes\\
-Creation & Nodes & \FRcreateNodesWithoutBackend & \FRNameCreateNodesWithoutBackend & \no & -- & -- & -- & \yes\\
-Creation & Nodes & \FRmetadataNode & \FRNameMetadataNode & \no & -- & -- & -- & \yes\\
-Creation & Nodes & \FRmanageNode & \FRNameManageNodeAnytime & \no & -- & -- & -- & \yes\\
-Operation & Nodes & \FRresourcesNodes & \FRNameResourcesNodes & \no & -- & -- & -- & \yes\\
-Operation & Nodes & \FRmaintainNodeWithSSH & \FRNameMaintainNodeWithSSH & \yes & -- & -- & -- & \yes\\
-Creation & Nodes & \FRuseNodesForTopology & \FRNameUseNodesForTopology & \yes & -- & -- & -- & \yes\\
-Creation & Links & \FRcreateLinksBetweenNodesForTopology & \FRNameCreateLinksBetweenNodesForTopology & \no & -- & -- & -- & \yes\\
-Monitoring & MetricRequests & \FRcreateMetricRequestsForNodes & \FRNameCreateMetricRequestsForNodes & \yes, \yes, \no, \no & -- & -- & -- & \yes (cpu, mem, disk, net)\\
-Monitoring & MetricRequests & \FRcreateMetricRequestsForApplications & \FRNameCreateMetricRequestsForApplications & \yes, \yes, \no, \no & -- & -- & -- & \yes (cpu, mem, disk, net)\\
-Monitoring & MetricRequests & \FRcreateMetricRequestsForLinks & \FRNameCreateMetricRequestsForLinks & \no, \no & -- & -- & -- & \yes (rtt, bw)\\
-Monitoring & Metrics & \FRstreamingMonitoringData & \FRNameStreamingMonitoringData & \no & -- & -- & -- & \yes\\
-Monitoring & Requests & \FRretrieveRequests & \FRNameRetrieveRequests & \no & -- & -- & -- & \yes\\
-Monitoring & Events & \FRretrieveEvents & \FRNameRetrieveEvents & \no & -- & -- & -- & \yes\\
-Monitoring & -- & \FRretrieveHealthStatusNode & \FRNameRetrieveHealthStatusNode & \partially & -- & -- & -- & \yes\\
-Operation & Applications & \FRcreateApplicationsOnNodes & \FRNamecreateApplicationsOnNodes & \partially & -- & -- & -- & \yes\\
-Operation & Applications & \FRdeleteApplicationsOnNodes & \FRNamedeleteApplicationsOnNodes & \no & -- & -- & -- & \yes\\
-Operation & Tasks & \FRtaskModel & \FRNameTaskModel & \no & -- & -- & -- & \yes\\
-Operation & Tasks & \FRsubmittedTask & \FRNameSubmittedTask & \no & -- & -- & -- & \yes\\
-Operation & Tasks & \FRoffloadTask & \FRNameOffloadTask & \no & -- & -- & -- & \yes\\
-Operation & Tasks & \FRmonitorTasks & \FRNameMonitorTasks & \no & -- & -- & -- & \yes\\
-Operation & Tasks & \FRmetricTasks & \FRNameMetricTasks & \no & -- & -- & -- & \yes\\
-All & All & \FRUsabilityRESTfulAPIUniformly & \FRNameUsabilityRESTfulAPIUniformly & \no & -- & -- & -- & \yes\\
-All & All & \FRUsabilityRESTfulAPIAllPhases & \FRNameUsabilityRESTfulAPIAllPhases & \no & -- & -- & -- & \yes\\
-Operation & Applications & \FRUsabilityNodeAgentRESTfulAPI & \FRNameUsabilityNodeAgentRESTfulAPI & \no & -- & -- & -- & \yes\\
-Monitoring & Metrics, Requests, Events, Tasks & \FRUsabilityMQTTPubSub & \FRUsabilityMQTTPubSub & \no & -- & -- & -- & \yes\\
-Evaluation & Orchestrations & \FREvalOrchestrationMetadata & \FREvalOrchestrationMetadataName & \partially & -- & -- & -- & \yes\\
-Evaluation & Applications & \FREvalApplicationInformation & \FREvalApplicationInformationName & \yes & -- & -- & -- & \yes\\
-Evaluation & Providers, Nodes, Links & \FREvalTopologyInformation & \FREvalTopologyInformationName & \no & -- & -- & -- & \yes\\
-Evaluation & MetricRequests & \FREvalRequestedMetrics & \FREvalRequestedMetricsName & \yes & -- & -- & -- & \yes\\
-Evaluation & Events & \FREvalSystemEvents & \FREvalSystemEventsName & \no & -- & -- & -- & \yes\\
-Evaluation & Metrics & \FREvalNodeMetrics & \FREvalNodeMetricsName & \yes & -- & -- & -- & \yes\\
-Evaluation & Metrics & \FREvalLinkMetrics & \FREvalLinkMetricsName & \no & -- & -- & -- & \yes\\
-Evaluation & Metrics & \FREvalApplicationMetrics & \FREvalApplicationMetricsName & \yes & -- & -- & -- & \yes\\
-Evaluation & Requests & \FREvalRequestMetrics & \FREvalRequestMetricsName & \no & -- & -- & -- & \yes\\
-Evaluation & Tasks & \FREvalTaskMetrics & \FREvalTaskMetricsName & \no & -- & -- & -- & \yes\\
-Documentation & Providers, Nodes, Links, Applications & \FRDocumentationRawEntityFiles & \FRDocumentationRawEntityFilesName & \yes & -- & -- & -- & \yes\\
-Documentation & Metrics, Requests, Tasks & \FRDocumentationRawMetricsFiles & \FRDocumentationRawMetricsFilesName & \yes & -- & -- & -- & \yes\\
-Documentation & Metrics, Requests, Events, Tasks & \FRDocumentationLatexTables & \FRDocumentationLatexTablesName & \no & -- & -- & -- & \yes\\
-Documentation & Metrics, Requests, Events, Tasks & \FRDocumentationChartsPlots & \FRDocumentationChartsPlotsName & \partially & -- & -- & -- & \yes\\
-Documentation & All & \FRDocumentationHtmlReport & \FRDocumentationHtmlReportName & \partially & -- & -- & -- & \yes\\
+27 &  & All & \FRUsabilityRESTfulAPIUniformly & \FRNameUsabilityRESTfulAPIUniformly & \no & -- & \partially & \yes & \yes & \yes\\
+
+28 & \multirow{-2}{*}{\raggedright\arraybackslash All} & All & \FRUsabilityRESTfulAPIAllPhases & \FRNameUsabilityRESTfulAPIAllPhases & \no & -- & \no & \no & \yes & \yes\\
+\cmidrule{1-11}
+1 &  & Orchestration & \FRcreateOrchestration & \FRNameCreateOrchestration & \yes & -- & \yes & \no & \partially & \yes\\
+
+3 &  & Orchestration & \FRmetadataOrchestration & \FRNameMetadataOrchestration & \yes & -- & \partially & \no & \yes & \yes\\
+
+4 &  & Nodes & \FRcreateOnPremNode & \FRNameCreateOnPremNode & \yes & -- & \no & \no & \yes & \yes\\
+
+5 &  & Nodes & \FRcreateCloudNode & \FRNameCreateCloudNode & \yes & -- & \no & \no & \yes & \yes\\
+
+6 &  & Nodes & \FRcreateNodesWithoutBackend & \FRNameCreateNodesWithoutBackend & \no & -- & \no & \no & \no & \yes\\
+
+7 &  & Nodes & \FRmetadataNode & \FRNameMetadataNode & \no & -- & \partially & \yes & \yes & \yes\\
+
+10 &  & Nodes & \FRmanageNode & \FRNameManageNodeAnytime & \no & -- & \no & \no & \yes & \yes\\
+
+11 &  & Nodes & \FRuseNodesForTopology & \FRNameUseNodesForTopology & \yes & -- & \yes & \yes & \yes & \yes\\
+
+12 & \multirow{-9}{*}{\raggedright\arraybackslash Creation} & Links & \FRcreateLinksBetweenNodesForTopology & \FRNameCreateLinksBetweenNodesForTopology & \no & -- & \no & \yes & \yes & \yes\\
+\cmidrule{1-11}
+13 &  & MetricRequests & \FRcreateMetricRequestsForNodes & \FRNameCreateMetricRequestsForNodes & \yes, \yes, \no, \no & (\yes,\yes,\no,\yes) & (\partially, \partially, \no, \no) & (\partially, \partially, \no, \no) & (\partially, \partially, \no, \no) & \yes (cpu, mem, disk, net)\\
+
+14 &  & MetricRequests & \FRcreateMetricRequestsForApplications & \FRNameCreateMetricRequestsForApplications & \yes, \yes, \no, \no & (\yes,\yes,\no,\yes) & (\partially, \partially, \no, \no) & (\partially, \partially, \no, \no) & (\partially, \partially, \no, \no) & \yes (cpu, mem, disk, net)\\
+
+15 &  & MetricRequests & \FRcreateMetricRequestsForLinks & \FRNameCreateMetricRequestsForLinks & \no, \no & (\yes,\no) & (\no, \no) & (\partially, \no) & (\no, \no) & \yes (rtt, bw)\\
+
+16 &  & Metrics & \FRstreamingMonitoringData & \FRNameStreamingMonitoringData & \no & -- & \no & \yes & \yes & \yes\\
+
+17 &  & Requests & \FRretrieveRequests & \FRNameRetrieveRequests & \no & -- & \no & \no & \no & \yes\\
+
+18 &  & Events & \FRretrieveEvents & \FRNameRetrieveEvents & \no & -- & \no & \no & \no & \yes\\
+
+19 &  & -- & \FRretrieveHealthStatusNode & \FRNameRetrieveHealthStatusNode & \partially & -- & \yes & \no & \no & \yes\\
+
+30 & \multirow{-8}{*}{\raggedright\arraybackslash Monitoring} & Metrics, Requests, Events, Tasks & \FRUsabilityMQTTPubSub & \FRUsabilityMQTTPubSub & \no & -- & \no & \no & \yes & \yes\\
+\cmidrule{1-11}
+8 &  & Nodes & \FRresourcesNodes & \FRNameResourcesNodes & \no & -- & \yes & \partially & \no & \yes\\
+
+9 &  & Nodes & \FRmaintainNodeWithSSH & \FRNameMaintainNodeWithSSH & \yes & -- & \no & \no & \no & \yes\\
+
+20 &  & Applications & \FRcreateApplicationsOnNodes & \FRNamecreateApplicationsOnNodes & \partially & -- & \yes & \yes & \yes & \yes\\
+
+21 &  & Applications & \FRdeleteApplicationsOnNodes & \FRNamedeleteApplicationsOnNodes & \no & -- & \yes & \yes & \yes & \yes\\
+
+22 &  & Tasks & \FRtaskModel & \FRNameTaskModel & \no & \no & \no & \no & \no & \yes\\
+
+23 &  & Tasks & \FRsubmittedTask & \FRNameSubmittedTask & \no & \no & \no & \no & \no & \yes\\
+
+24 &  & Tasks & \FRoffloadTask & \FRNameOffloadTask & \no & \no & \no & \no & \no & \yes\\
+
+25 &  & Tasks & \FRmonitorTasks & \FRNameMonitorTasks & \no & \no & \no & \no & \no & \yes\\
+
+26 &  & Tasks & \FRmetricTasks & \FRNameMetricTasks & \no & \no & \no & \no & \no & \yes\\
+
+29 & \multirow{-10}{*}{\raggedright\arraybackslash Operation} & Applications & \FRUsabilityNodeAgentRESTfulAPI & \FRNameUsabilityNodeAgentRESTfulAPI & \no & -- & \no & \no & \no & \yes\\
+\cmidrule{1-11}
+2 &  & Orchestration & \FRlifecycleOrchestration & \FRNameLifecycleOrchestration & \no & -- & \no & \no & \no & \yes\\
+
+31 &  & Orchestrations & \FREvalOrchestrationMetadata & \FREvalOrchestrationMetadataName & \partially & -- & \yes & \no & \yes & \yes\\
+
+32 &  & Providers, Nodes, Links & \FREvalTopologyInformation & \FREvalTopologyInformationName & \no & -- & \yes & \no & \yes & \yes\\
+
+33 &  & Applications & \FREvalApplicationInformation & \FREvalApplicationInformationName & \yes & -- & \yes & \yes & \yes & \yes\\
+
+34 &  & MetricRequests & \FREvalRequestedMetrics & \FREvalRequestedMetricsName & \yes & -- & \no & \no & \no & \yes\\
+
+35 &  & Events & \FREvalSystemEvents & \FREvalSystemEventsName & \no & -- & \no & \no & \no & \yes\\
+
+36 &  & Metrics & \FREvalNodeMetrics & \FREvalNodeMetricsName & \yes & -- & \no & \no & \no & \yes\\
+
+37 &  & Metrics & \FREvalLinkMetrics & \FREvalLinkMetricsName & \no & -- & \no & \no & \no & \yes\\
+
+38 &  & Metrics & \FREvalApplicationMetrics & \FREvalApplicationMetricsName & \yes & -- & \no & \no & \no & \yes\\
+
+39 &  & Requests & \FREvalRequestMetrics & \FREvalRequestMetricsName & \no & -- & \no & \no & \no & \yes\\
+
+40 & \multirow{-11}{*}{\raggedright\arraybackslash Evaluation} & Tasks & \FREvalTaskMetrics & \FREvalTaskMetricsName & \no & -- & \no & \no & \no & \yes\\
+\cmidrule{1-11}
+41 &  & Providers, Nodes, Links, Applications & \FRDocumentationRawEntityFiles & \FRDocumentationRawEntityFilesName & \yes & -- & \no & \no & \no & \yes\\
+
+42 &  & Metrics, Requests, Tasks & \FRDocumentationRawMetricsFiles & \FRDocumentationRawMetricsFilesName & \yes & -- & \no & \no & \no & \yes\\
+
+43 &  & Metrics, Requests, Events, Tasks & \FRDocumentationLatexTables & \FRDocumentationLatexTablesName & \no & -- & \no & \no & \no & \yes\\
+
+44 &  & Metrics, Requests, Events, Tasks & \FRDocumentationChartsPlots & \FRDocumentationChartsPlotsName & \partially & -- & \no & \no & \no & \yes\\
+
+45 & \multirow{-5}{*}{\raggedright\arraybackslash Documentation} & All & \FRDocumentationHtmlReport & \FRDocumentationHtmlReportName & \partially & -- & \no & \no & \no & \yes\\
 \bottomrule
 \end{tabular}}
 \end{table}

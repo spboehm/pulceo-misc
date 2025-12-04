@@ -43,7 +43,17 @@ CreateScrollableTable(relatedWorksFR)
 ```
 
 ```{r echo=FALSE}
-SaveLatexTable(relatedWorksFR, "Comparision of Functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-fr", "comparison-related-works-pulceo-fr.tex", "tb", "table")
+relatedWorksFR <- relatedWorksFR %>%
+    mutate(Phase = factor(Phase,
+        levels = c(
+            "All", "Creation", "Monitoring",
+            "Operation", "Evaluation", "Documentation"
+        ),
+        ordered = TRUE
+    )) %>%
+    arrange(Phase, Order)
+
+SaveMultiRowLatexTable(relatedWorksFR, "Comparison of Functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-fr", "comparison-related-works-pulceo-fr.tex", "tb", "table", 2)
 ```
 
 
