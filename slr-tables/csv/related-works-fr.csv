@@ -40,7 +40,7 @@ No.;Phase;Entity;Feature;Short Name;CODECO~\cite{koukisOpenSourceExperimentation
 39;Evaluation;Requests;\FREvalRequestMetrics;\FREvalRequestMetricsName;\no;\no;\no;\no;\yes
 40;Evaluation;Tasks;\FREvalTaskMetrics;\FREvalTaskMetricsName;\no;\no;\no;\no;\yes
 41;Documentation;Providers, Nodes, Links, Applications;\FRDocumentationRawEntityFiles;\FRDocumentationRawEntityFilesName;\yes;\no;\no;\no;\yes
-42;Documentation;Metrics, Requests, Tasks;\FRDocumentationRawMetricsFiles;\FRDocumentationRawMetricsFilesName;\yes;\no;\no;\no;\yes
+42;Documentation;Metrics, Requests, Tasks;\FRDocumentationRawMetricsFiles;\FRDocumentationRawMetricsFilesName;\partially;\no;\no;\no;\yes
 43;Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationLatexTables;\FRDocumentationLatexTablesName;\no;\no;\no;\no;\yes
 44;Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationChartsPlots;\FRDocumentationChartsPlotsName;\partially;\no;\no;\no;\yes
 45;Documentation;All;\FRDocumentationHtmlReport;\FRDocumentationHtmlReportName;\partially;\no;\no;\no;\yes
