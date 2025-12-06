@@ -11,7 +11,7 @@ No. & Phase & Feature & Short Name & CODECO~\cite{koukisOpenSourceExperimentatio
 
 28 & \multirow{-2}{*}{\raggedright\arraybackslash All} & \FRUsabilityRESTfulAPIAllPhases & \FRNameUsabilityRESTfulAPIAllPhases & \no & \no & \no & \yes & \yes\\
 \cmidrule{1-9}
-1 &  & \FRcreateOrchestration & \FRNameCreateOrchestration & \yes & \yes & \no & \partially & \yes\\
+1 &  & \FRcreateOrchestration & \FRNameCreateOrchestration & \yes & \no & \no & \partially & \yes\\
 
 3 &  & \FRmetadataOrchestration & \FRNameMetadataOrchestration & \yes & \partially & \no & \yes & \yes\\
 
@@ -27,7 +27,7 @@ No. & Phase & Feature & Short Name & CODECO~\cite{koukisOpenSourceExperimentatio
 
 11 &  & \FRuseNodesForTopology & \FRNameUseNodesForTopology & \yes & \yes & \yes & \yes & \yes\\
 
-12 & \multirow{-9}{*}{\raggedright\arraybackslash Creation} & \FRcreateLinksBetweenNodesForTopology & \FRNameCreateLinksBetweenNodesForTopology & \yes & \no & \yes & \yes & \yes\\
+12 & \multirow{-9}{*}{\raggedright\arraybackslash Creation} & \FRcreateLinksBetweenNodesForTopology & \FRNameCreateLinksBetweenNodesForTopology & \yes & \yes & \yes & \yes & \yes\\
 \cmidrule{1-9}
 13 &  & \FRcreateMetricRequestsForNodes & \FRNameCreateMetricRequestsForNodes (cpu, mem, disk, net) & (\partially, \partially, \no, \no) & (\partially, \partially, \no, \no) & (\partially, \partially, \no, \no) & (\partially, \partially, \no, \no) & (\yes, \yes, \yes, \yes)\\
 
@@ -35,19 +35,19 @@ No. & Phase & Feature & Short Name & CODECO~\cite{koukisOpenSourceExperimentatio
 
 15 &  & \FRcreateMetricRequestsForLinks & \FRNameCreateMetricRequestsForLinks (rtt, bw) & (\yes, \yes) & (\no, \no) & (\partially, \no) & (\no, \no) & (\yes, \yes)\\
 
-16 &  & \FRstreamingMonitoringData & \FRNameStreamingMonitoringData & \no & \no & \yes & \yes & \yes\\
+16 &  & \FRstreamingMonitoringData & \FRNameStreamingMonitoringData & \no & \no & \no & \no & \yes\\
 
 17 &  & \FRretrieveRequests & \FRNameRetrieveRequests & \no & \no & \no & \no & \yes\\
 
 18 &  & \FRretrieveEvents & \FRNameRetrieveEvents & \no & \no & \no & \no & \yes\\
 
-19 &  & \FRretrieveHealthStatusNode & \FRNameRetrieveHealthStatusNode & \partially & \yes & \no & \no & \yes\\
+19 &  & \FRretrieveHealthStatusNode & \FRNameRetrieveHealthStatusNode & \partially & \yes & \yes & \yes & \yes\\
 
-30 & \multirow{-8}{*}{\raggedright\arraybackslash Monitoring} & \FRUsabilityMQTTPubSub & \FRNameUsabilityMQTTPubSub & \no & \no & \no & \yes & \yes\\
+30 & \multirow{-8}{*}{\raggedright\arraybackslash Monitoring} & \FRUsabilityMQTTPubSub & \FRNameUsabilityMQTTPubSub & \no & \no & \no & \no & \yes\\
 \cmidrule{1-9}
-8 &  & \FRresourcesNodes & \FRNameResourcesNodes & \no & \yes & \partially & \no & \yes\\
+8 &  & \FRresourcesNodes & \FRNameResourcesNodes & \no & \yes & \yes & \no & \yes\\
 
-9 &  & \FRmaintainNodeWithSSH & \FRNameMaintainNodeWithSSH & \yes & \no & \no & \no & \yes\\
+9 &  & \FRmaintainNodeWithSSH & \FRNameMaintainNodeWithSSH & \yes & \no & \no & \yes & \yes\\
 
 20 &  & \FRcreateApplicationsOnNodes & \FRNamecreateApplicationsOnNodes & \partially & \yes & \yes & \yes & \yes\\
 
@@ -67,7 +67,7 @@ No. & Phase & Feature & Short Name & CODECO~\cite{koukisOpenSourceExperimentatio
 \cmidrule{1-9}
 2 &  & \FRlifecycleOrchestration & \FRNameLifecycleOrchestration & \no & \no & \no & \no & \yes\\
 
-31 &  & \FREvalOrchestrationMetadata & \FREvalOrchestrationMetadataName & \partially & \yes & \no & \yes & \yes\\
+31 &  & \FREvalOrchestrationMetadata & \FREvalOrchestrationMetadataName & \partially & \yes & \no & \partially & \yes\\
 
 32 &  & \FREvalTopologyInformation & \FREvalTopologyInformationName & \no & \yes & \no & \yes & \yes\\
 
@@ -87,7 +87,7 @@ No. & Phase & Feature & Short Name & CODECO~\cite{koukisOpenSourceExperimentatio
 
 40 & \multirow{-11}{*}{\raggedright\arraybackslash Evaluation} & \FREvalTaskMetrics & \FREvalTaskMetricsName & \no & \no & \no & \no & \yes\\
 \cmidrule{1-9}
-41 &  & \FRDocumentationRawEntityFiles & \FRDocumentationRawEntityFilesName & \yes & \no & \no & \no & \yes\\
+41 &  & \FRDocumentationRawEntityFiles & \FRDocumentationRawEntityFilesName & \yes & \no & \no & \partially & \yes\\
 
 42 &  & \FRDocumentationRawMetricsFiles & \FRDocumentationRawMetricsFilesName & \partially & \no & \no & \no & \yes\\
 

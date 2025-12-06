@@ -1,23 +1,23 @@
 No.;Phase;Entity;Feature;Short Name;CODECO~\cite{koukisOpenSourceExperimentationFramework2024};FogAtlas~\cite{faticantiCuttingThroughputEdge2019};ACOA~\cite{oriveQualityServiceAware2022};SODALITE@RT~\cite{kumaraSODALITERTOrchestratingApplications2021};PULCEO
-1;Creation;Orchestration;\FRcreateOrchestration;\FRNameCreateOrchestration;\yes;\yes;\no;\partially;\yes
+1;Creation;Orchestration;\FRcreateOrchestration;\FRNameCreateOrchestration;\yes;\no;\no;\partially;\yes
 2;Evaluation;Orchestration;\FRlifecycleOrchestration;\FRNameLifecycleOrchestration;\no;\no;\no;\no;\yes
 3;Creation;Orchestration;\FRmetadataOrchestration;\FRNameMetadataOrchestration;\yes;\partially;\no;\yes;\yes
 4;Creation;Nodes;\FRcreateOnPremNode;\FRNameCreateOnPremNode;\yes;\no;\no;\yes;\yes
 5;Creation;Nodes;\FRcreateCloudNode;\FRNameCreateCloudNode;\yes;\no;\no;\yes;\yes
 6;Creation;Nodes;\FRcreateNodesWithoutBackend;\FRNameCreateNodesWithoutBackend;\no;\no;\no;\no;\yes
 7;Creation;Nodes;\FRmetadataNode;\FRNameMetadataNode;\yes;\partially;\yes;\yes;\yes
-8;Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;\no;\yes;\partially;\no;\yes
-9;Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;\yes;\no;\no;\no;\yes
+8;Operation;Nodes;\FRresourcesNodes;\FRNameResourcesNodes;\no;\yes;\yes;\no;\yes
+9;Operation;Nodes;\FRmaintainNodeWithSSH;\FRNameMaintainNodeWithSSH;\yes;\no;\no;\yes;\yes
 10;Creation;Nodes;\FRmanageNode;\FRNameManageNodeAnytime;\no;\no;\no;\yes;\yes
 11;Creation;Nodes;\FRuseNodesForTopology;\FRNameUseNodesForTopology;\yes;\yes;\yes;\yes;\yes
-12;Creation;Links;\FRcreateLinksBetweenNodesForTopology;\FRNameCreateLinksBetweenNodesForTopology;\yes;\no;\yes;\yes;\yes
+12;Creation;Links;\FRcreateLinksBetweenNodesForTopology;\FRNameCreateLinksBetweenNodesForTopology;\yes;\yes;\yes;\yes;\yes
 13;Monitoring;MetricRequests;\FRcreateMetricRequestsForNodes;\FRNameCreateMetricRequestsForNodes (cpu, mem, disk, net) ;(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\yes, \yes, \yes, \yes)
 14;Monitoring;MetricRequests;\FRcreateMetricRequestsForApplications;\FRNameCreateMetricRequestsForApplications (cpu, mem, disk, net);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\partially, \partially, \no, \no);(\yes, \yes, \yes, \yes)
 15;Monitoring;MetricRequests;\FRcreateMetricRequestsForLinks;\FRNameCreateMetricRequestsForLinks (rtt, bw);(\yes, \yes);(\no, \no);(\partially, \no);(\no, \no);(\yes, \yes)
-16;Monitoring;Metrics;\FRstreamingMonitoringData;\FRNameStreamingMonitoringData;\no;\no;\yes;\yes;\yes
+16;Monitoring;Metrics;\FRstreamingMonitoringData;\FRNameStreamingMonitoringData;\no;\no;\no;\no;\yes
 17;Monitoring;Requests;\FRretrieveRequests;\FRNameRetrieveRequests;\no;\no;\no;\no;\yes
 18;Monitoring;Events;\FRretrieveEvents;\FRNameRetrieveEvents;\no;\no;\no;\no;\yes
-19;Monitoring;--;\FRretrieveHealthStatusNode;\FRNameRetrieveHealthStatusNode;\partially;\yes;\no;\no;\yes
+19;Monitoring;--;\FRretrieveHealthStatusNode;\FRNameRetrieveHealthStatusNode;\partially;\yes;\yes;\yes;\yes
 20;Operation;Applications;\FRcreateApplicationsOnNodes;\FRNamecreateApplicationsOnNodes;\partially;\yes;\yes;\yes;\yes
 21;Operation;Applications;\FRdeleteApplicationsOnNodes;\FRNamedeleteApplicationsOnNodes;\partially;\yes;\yes;\yes;\yes
 22;Operation;Tasks;\FRtaskModel;\FRNameTaskModel;\no;\no;\no;\no;\yes
@@ -28,8 +28,8 @@ No.;Phase;Entity;Feature;Short Name;CODECO~\cite{koukisOpenSourceExperimentation
 27;All;All;\FRUsabilityRESTfulAPIUniformly;\FRNameUsabilityRESTfulAPIUniformly;\partially;\partially;\yes;\yes;\yes
 28;All;All;\FRUsabilityRESTfulAPIAllPhases;\FRNameUsabilityRESTfulAPIAllPhases;\no;\no;\no;\yes;\yes
 29;Operation;Applications;\FRUsabilityNodeAgentRESTfulAPI;\FRNameUsabilityNodeAgentRESTfulAPI;\no;\no;\no;\no;\yes
-30;Monitoring;Metrics, Requests, Events, Tasks;\FRUsabilityMQTTPubSub;\FRNameUsabilityMQTTPubSub;\no;\no;\no;\yes;\yes
-31;Evaluation;Orchestrations;\FREvalOrchestrationMetadata;\FREvalOrchestrationMetadataName;\partially;\yes;\no;\yes;\yes
+30;Monitoring;Metrics, Requests, Events, Tasks;\FRUsabilityMQTTPubSub;\FRNameUsabilityMQTTPubSub;\no;\no;\no;\no;\yes
+31;Evaluation;Orchestrations;\FREvalOrchestrationMetadata;\FREvalOrchestrationMetadataName;\partially;\yes;\no;\partially;\yes
 32;Evaluation;Providers, Nodes, Links;\FREvalTopologyInformation;\FREvalTopologyInformationName;\no;\yes;\no;\yes;\yes
 33;Evaluation;Applications;\FREvalApplicationInformation;\FREvalApplicationInformationName;\yes;\yes;\yes;\yes;\yes
 34;Evaluation;MetricRequests;\FREvalRequestedMetrics;\FREvalRequestedMetricsName;\yes;\no;\no;\no;\yes
@@ -39,7 +39,7 @@ No.;Phase;Entity;Feature;Short Name;CODECO~\cite{koukisOpenSourceExperimentation
 38;Evaluation;Metrics;\FREvalApplicationMetrics;\FREvalApplicationMetricsName;\yes;\no;\no;\no;\yes
 39;Evaluation;Requests;\FREvalRequestMetrics;\FREvalRequestMetricsName;\no;\no;\no;\no;\yes
 40;Evaluation;Tasks;\FREvalTaskMetrics;\FREvalTaskMetricsName;\no;\no;\no;\no;\yes
-41;Documentation;Providers, Nodes, Links, Applications;\FRDocumentationRawEntityFiles;\FRDocumentationRawEntityFilesName;\yes;\no;\no;\no;\yes
+41;Documentation;Providers, Nodes, Links, Applications;\FRDocumentationRawEntityFiles;\FRDocumentationRawEntityFilesName;\yes;\no;\no;\partially;\yes
 42;Documentation;Metrics, Requests, Tasks;\FRDocumentationRawMetricsFiles;\FRDocumentationRawMetricsFilesName;\partially;\no;\no;\no;\yes
 43;Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationLatexTables;\FRDocumentationLatexTablesName;\no;\no;\no;\no;\yes
 44;Documentation;Metrics, Requests, Events, Tasks;\FRDocumentationChartsPlots;\FRDocumentationChartsPlotsName;\partially;\no;\no;\no;\yes
