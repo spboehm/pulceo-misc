@@ -84,17 +84,13 @@ CreateScrollableTable(relatedWorksNFR)
 excluded_columns <- c("Entity")
 
 relatedWorksNFR <- relatedWorksNFR %>%
-    mutate(Phase = factor(Phase,
-        levels = c(
-            "All", "Creation", "Monitoring",
-            "Operation", "Evaluation", "Documentation"
-        ),
-        ordered = TRUE
-    )) %>%
-    arrange(Phase, No.) %>%
-    select(-all_of(excluded_columns)) 
+  mutate(
+    Phase = linebreak(gsub(", ", "\n", Phase))  # Convert commas to newlines
+  ) %>%
+  arrange(No.) %>%
+  select(-all_of(excluded_columns)) 
 
 align = c("l","l","l","l","l","l","l","l","l","l","l")
 
-SaveMultiRowLatexTable(relatedWorksNFR, "Comparison of Non-functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-nfr", "comparison-related-works-pulceo-nfr.tex", "tb", "table", 2, align)
+SaveLatexTable(relatedWorksNFR, "Comparison of Non-functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-nfr", "comparison-related-works-pulceo-nfr.tex", "tb", "table")
 ```

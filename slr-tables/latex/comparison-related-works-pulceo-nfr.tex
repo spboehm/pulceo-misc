@@ -3,33 +3,22 @@
 \caption{\label{tab:comparison-related-works-pulceo-nfr}Comparison of Non-functional Requirements of Related Works and PULCEO}
 \centering
 \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
-\begin{tabular}[t]{lllllllll}
+\begin{tabular}[t]{rllllllll}
 \toprule
 No. & Phase & Feature & Short Name & CODECO~\cite{koukisOpenSourceExperimentationFramework2024} & FogAtlas~\cite{faticantiCuttingThroughputEdge2019} & ACOA~\cite{oriveQualityServiceAware2022} & SODALITE@RT~\cite{kumaraSODALITERTOrchestratingApplications2021} & PULCEO\\
 \midrule
-5 &  & \NFRUsabilityCreation & \NFRNameUsabilityCreation & \yes &  &  &  & \yes\\
-
-11 & \multirow{-2}{*}{\raggedright\arraybackslash Creation} & \NFRCostEfficiency & \NFRNameCostEfficiency & \yes &  &  &  & \yes\\
-\cmidrule{1-9}
-3 &  & \NFRSecurityTLSMQTT & \NFRNameSecurityTLSMQTT & \no &  &  &  & \yes\\
-
-7 &  & \NFRUsabilityMonitoring & \NFRNameUsabilityMonitoring & \partially &  &  &  & \yes\\
-
-12 & \multirow{-3}{*}{\raggedright\arraybackslash Monitoring} & \NFRLightweightMessaging & \NFRNameLightweightMessaging & \no &  &  &  & \yes\\
-\cmidrule{1-9}
-4 &  & \NFRSecurityTaskApplicationByProxy & \NFRNameSecurityTaskApplicationByProxy & \yes &  &  &  & \yes\\
-
-6 &  & \NFRUsabilityOperation & \NFRNameUsabilityOperation & \partially &  &  &  & \yes\\
-
-10 & \multirow{-3}{*}{\raggedright\arraybackslash Operation} & \NFRDesignContainerization & \NFRNameDesignContainerization & \yes &  &  &  & \yes\\
-\cmidrule{1-9}
-8 & Evaluation & \NFRUsabilityEvaluation & \NFRNameUsabilityEvaluation & \partially &  &  &  & \yes\\
-\cmidrule{1-9}
-9 & Documentation & \NFRUsabilityDocumentation & \NFRNameUsabilityDocumentation & \partially &  &  &  & \yes\\
-\cmidrule{1-9}
-1 &  & \NFRSecurityAPIAuthentication & \NFRNameNameSecurityAPIAuthentication & \no & -- & -- & -- & \yes\\
-
-2 & \multirow{-2}{*}{\raggedright\arraybackslash NA} & \NFRSecurityTLS & \NFRNameSecurityTLS & \no &  &  &  & \yes\\
+1 & \makecell[l]{Creation\\Operation\\Monitoring} & \NFRSecurityAPIAuthentication & \NFRNameNameSecurityAPIAuthentication & \no & -- & -- & -- & \yes\\
+2 & \makecell[l]{Creation\\Operation\\Monitoring} & \NFRSecurityTLS & \NFRNameSecurityTLS & \no & -- & -- & -- & \yes\\
+3 & Monitoring & \NFRSecurityTLSMQTT & \NFRNameSecurityTLSMQTT & \no & -- & -- & -- & \yes\\
+4 & Operation & \NFRSecurityTaskApplicationByProxy & \NFRNameSecurityTaskApplicationByProxy & \yes & -- & -- & -- & \yes\\
+5 & Creation & \NFRUsabilityCreation & \NFRNameUsabilityCreation & \yes & -- & -- & -- & \yes\\
+6 & Operation & \NFRUsabilityOperation & \NFRNameUsabilityOperation & \partially & -- & -- & -- & \yes\\
+7 & Monitoring & \NFRUsabilityMonitoring & \NFRNameUsabilityMonitoring & \partially & -- & -- & -- & \yes\\
+8 & Evaluation & \NFRUsabilityEvaluation & \NFRNameUsabilityEvaluation & \partially & -- & -- & -- & \yes\\
+9 & Documentation & \NFRUsabilityDocumentation & \NFRNameUsabilityDocumentation & \partially & -- & -- & -- & \yes\\
+10 & Operation & \NFRDesignContainerization & \NFRNameDesignContainerization & \yes & -- & -- & -- & \yes\\
+11 & Creation & \NFRCostEfficiency & \NFRNameCostEfficiency & \yes & -- & -- & -- & \yes\\
+12 & Monitoring & \NFRLightweightMessaging & \NFRNameLightweightMessaging & \no & -- & -- & -- & \yes\\
 \bottomrule
 \end{tabular}}
 \end{table}
