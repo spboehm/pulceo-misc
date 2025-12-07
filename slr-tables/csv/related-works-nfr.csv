@@ -1,13 +1,13 @@
-Phase;Entity;Feature;Name;Koukis~\cite{koukisOpenSourceExperimentationFramework2024};Solution 2;Solution 3;Solution 4;PULCEO
-Creation, Operation, Monitoring;All;\NFRSecurityAPIAuthentication;\NFRNameNameSecurityAPIAuthentication;\no;--;--;--;\yes
-Creation, Operation, Monitoring;All;\NFRSecurityTLS;\NFRNameSecurityTLS;\no;;;;\yes
-Monitoring;Metrics, Requests, Events, Tasks;\NFRSecurityTLSMQTT;\NFRNameSecurityTLSMQTT;\no;;;;\yes
-Operation;Applications;\NFRSecurityTaskApplicationByProxy;\NFRNameSecurityTaskApplicationByProxy;\yes;;;;\yes
-Creation;Nodes, Links;\NFRUsabilityCreation;\NFRNameUsabilityCreation;\yes;;;;\yes
-Operation;Applications, Tasks;\NFRUsabilityOperation;\NFRNameUsabilityOperation;\partially;;;;\yes
-Monitoring;Nodes, Applications, Tasks;\NFRUsabilityMonitoring;\NFRNameUsabilityMonitoring;\partially;;;;\yes
-Evaluation;All;\NFRUsabilityEvaluation;\NFRNameUsabilityEvaluation;\partially;;;;\yes
-Documentation;All;\NFRUsabilityDocumentation;\NFRNameUsabilityDocumentation;\partially;;;;\yes
-Operation;Applications;\NFRDesignContainerization;\NFRNameDesignContainerization;\yes;;;;\yes
-Creation;Nodes;\NFRCostEfficiency;\NFRNameCostEfficiency;\yes;;;;\yes
-Monitoring;Metrics, Requests, Events, Tasks;\NFRLightweightMessaging;\NFRNameLightweightMessaging;\no;;;;\yes
+No.;Phase;Entity;Feature;Short Name;CODECO~\cite{koukisOpenSourceExperimentationFramework2024};FogAtlas~\cite{faticantiCuttingThroughputEdge2019};ACOA~\cite{oriveQualityServiceAware2022};SODALITE@RT~\cite{kumaraSODALITERTOrchestratingApplications2021};PULCEO
+1;Creation, Operation, Monitoring;All;\NFRSecurityAPIAuthentication;\NFRNameNameSecurityAPIAuthentication;\no;--;--;--;\yes
+2;Creation, Operation, Monitoring;All;\NFRSecurityTLS;\NFRNameSecurityTLS;\no;--;--;--;\yes
+3;Monitoring;Metrics, Requests, Events, Tasks;\NFRSecurityTLSMQTT;\NFRNameSecurityTLSMQTT;\no;--;--;--;\yes
+4;Operation;Applications;\NFRSecurityTaskApplicationByProxy;\NFRNameSecurityTaskApplicationByProxy;\yes;--;--;--;\yes
+5;Creation;Nodes, Links;\NFRUsabilityCreation;\NFRNameUsabilityCreation;\yes;--;--;--;\yes
+6;Operation;Applications, Tasks;\NFRUsabilityOperation;\NFRNameUsabilityOperation;\partially;--;--;--;\yes
+7;Monitoring;Nodes, Applications, Tasks;\NFRUsabilityMonitoring;\NFRNameUsabilityMonitoring;\partially;--;--;--;\yes
+8;Evaluation;All;\NFRUsabilityEvaluation;\NFRNameUsabilityEvaluation;\partially;--;--;--;\yes
+9;Documentation;All;\NFRUsabilityDocumentation;\NFRNameUsabilityDocumentation;\partially;--;--;--;\yes
+10;Operation;Applications;\NFRDesignContainerization;\NFRNameDesignContainerization;\yes;--;--;--;\yes
+11;Creation;Nodes;\NFRCostEfficiency;\NFRNameCostEfficiency;\yes;--;--;--;\yes
+12;Monitoring;Metrics, Requests, Events, Tasks;\NFRLightweightMessaging;\NFRNameLightweightMessaging;\no;--;--;--;\yes
