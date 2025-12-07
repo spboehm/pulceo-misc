@@ -92,5 +92,5 @@ relatedWorksNFR <- relatedWorksNFR %>%
 
 align = c("l","l","l","l","l","l","l","l","l","l","l")
 
-SaveLatexTable(relatedWorksNFR, "Comparison of Non-functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-nfr", "comparison-related-works-pulceo-nfr.tex", "tb", "table")
+SaveLatexTable(relatedWorksNFR, "Comparison of Non-functional Requirements of Related Works and PULCEO", "comparison-related-works-pulceo-nfr", "comparison-related-works-pulceo-nfr.tex", "tb", "table", add_rules = c(4, 9))
 ```

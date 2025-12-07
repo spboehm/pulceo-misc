@@ -19,10 +19,23 @@ CreateLaTeXTable <- function(dataframe) {
   # save_kable(sPropsKbl, "latex/nodes-static-properties.tex")
 }
 
-SaveLatexTable <- function(data, caption, label, filename, position = "tb", table_env = 'table') {
-  latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3, table.env = table_env) %>% 
-    kable_styling(latex_options="scale_down")
-  save_kable(latex_table, paste("latex", filename, sep = "/"))
+# SaveLatexTable <- function(data, caption, label, filename, position = "tb", table_env = 'table') {
+#   latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3, table.env = table_env) %>% 
+#     kable_styling(latex_options="scale_down")
+#   save_kable(latex_table, paste("latex", filename, sep = "/"))
+# }
+
+SaveLatexTable <- function(data, caption, label, filename,
+                           position = "tb", table_env = "table",
+                           add_rules = NULL, align = NULL) {
+  latex_table <- kbl(data, "latex", escape = FALSE, caption = caption, booktabs = TRUE, linesep="", vline="", label = label, position = position, digits = 3, table.env = table_env)
+  if (!is.null(add_rules)) {
+    for (r in add_rules) {
+      latex_table <- latex_table |> row_spec(r, extra_latex_after = paste0("\\cmidrule{1-", ncol(data), "}"))
+    }
+  }
+  latex_table |> kable_styling(latex_options = "scale_down") |>
+    save_kable(paste("latex", filename, sep = "/"))
 }
 
 SaveMultiRowLatexTable <- function(data, caption, label, filename, position = "tb", table_env = 'table', multi_column, align = NULL) {
