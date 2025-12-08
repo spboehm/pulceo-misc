@@ -1,12 +1,12 @@
 No.;Phase;Entity;Feature;Short Name;CODECO~\cite{koukisOpenSourceExperimentationFramework2024};FogAtlas~\cite{faticantiCuttingThroughputEdge2019};ACOA~\cite{oriveQualityServiceAware2022};SODALITE@RT~\cite{kumaraSODALITERTOrchestratingApplications2021};PULCEO
 1;Creation, Operation, Monitoring;All;\NFRSecurityAPIAuthentication;\NFRNameNameSecurityAPIAuthentication;\yes;\yes;\yes;\yes;\yes
-2;Creation, Operation, Monitoring;All;\NFRSecurityTLS;\NFRNameSecurityTLS;\yes;--;--;--;\yes
-3;Monitoring;Metrics, Requests, Events, Tasks;\NFRSecurityTLSMQTT;\NFRNameSecurityTLSMQTT;\no;\no;\no;\yes;\yes
+2;Creation, Operation, Monitoring;All;\NFRSecurityTLS;\NFRNameSecurityTLS;\yes;\yes;\yes;\yes;\yes
+3;Monitoring;Metrics, Requests, Events, Tasks;\NFRSecurityTLSMQTT;\NFRNameSecurityTLSMQTT;\no;\no;\no;\no;\yes
 4;Operation;Applications;\NFRSecurityTaskApplicationByProxy;\NFRNameSecurityTaskApplicationByProxy;\no;\no;\no;\no;\yes
 5;Creation;Nodes, Links;\NFRUsabilityCreation;\NFRNameUsabilityCreation;\yes;\no;\no;\yes;\yes
 6;Operation;Applications, Tasks;\NFRUsabilityOperation;\NFRNameUsabilityOperation;\partially;\partially;\partially;\partially;\yes
 7;Monitoring;Nodes, Applications, Tasks;\NFRUsabilityMonitoring;\NFRNameUsabilityMonitoring;\partially;\partially;\partially;\partially;\yes
-8;Evaluation;All;\NFRUsabilityEvaluation;\NFRNameUsabilityEvaluation;\partially;\partially;\no;\partially;\yes
+8;Evaluation;All;\NFRUsabilityEvaluation;\NFRNameUsabilityEvaluation;\yes;\partially;\no;\partially;\yes
 9;Documentation;All;\NFRUsabilityDocumentation;\NFRNameUsabilityDocumentation;\partially;\no;\no;\no;\yes
 10;Operation;Applications;\NFRDesignContainerization;\NFRNameDesignContainerization;\yes;\yes;\yes;\yes;\yes
 11;Creation;Nodes;\NFRCostEfficiency;\NFRNameCostEfficiency;\yes;\yes;\yes;\yes;\yes
